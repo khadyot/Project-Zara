@@ -49,6 +49,18 @@ sources:
     tier: "person"
     signal_type: "person_mention"
 
+  - id: "tavily"
+    type: "paid_api" # paid gap-filler: fires only on person-signal drought
+    pricing_model: "credit_based"
+    free_tier_credits_per_month: 1000
+    queries_per_prospect_cap: 3
+
+  - id: "jina_reader"
+    type: "free_api" # keyless clean-markdown extraction of company homepage
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "firmographic"
+
   - id: "sec_edgar"
     type: "free_api" # Via scoped Exa
     pricing_model: "free"

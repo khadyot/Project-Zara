@@ -244,6 +244,8 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
     from zara.fetchers.news import GoogleNewsFetcher
     from zara.fetchers.compound import CompoundFetcher
+    from zara.fetchers.jina import JinaCompanySiteFetcher
+    from zara.fetchers.tavily import TavilyFetcher
     from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
     from zara.fetchers.apify import (
         ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher, ApifyLinkedInJobsFetcher,
@@ -263,14 +265,14 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
         prospect = dataclasses.replace(prospect, company_domain=resolution.domain)
 
     rung0 = [
-        GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(), 
+        GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(),
         SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher(),
-        CompoundFetcher()
+        CompoundFetcher(), JinaCompanySiteFetcher()
     ]
-    
+
     rung1 = [
         ExaLinkedInFetcher(), ExaNewsFetcher(), ExaBlogFetcher(),
-        ExaEdgarFetcher(), ExaYouTubeFetcher()
+        ExaEdgarFetcher(), ExaYouTubeFetcher(), TavilyFetcher()
     ]
     
     rung2 = []
@@ -295,7 +297,8 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     
     if settings:
         if not settings.get("use_ats", True):
-            rung0 = [f for f in rung0 if not type(f).__name__.endswith("Fetcher") or "News" in type(f).__name__]
+            ats_names = {"GreenhouseFetcher", "LeverFetcher", "AshbyFetcher", "SmartRecruitersFetcher", "RecruiteeFetcher"}
+            rung0 = [f for f in rung0 if type(f).__name__ not in ats_names]
         if not settings.get("use_exa", True):
             rung1 = []
         if not settings.get("use_apify", True):
