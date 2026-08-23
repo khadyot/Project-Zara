@@ -145,8 +145,8 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
             
         prompt += "\nCards:\n"
-        for i, card in to_score:
-            prompt += f"[{i}] {card.snippet}\n\n"
+        for i, card in to_score[:30]:
+            prompt += f"[{i}] {card.snippet[:500]}\n\n"
             
         try:
             

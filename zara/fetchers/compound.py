@@ -5,7 +5,7 @@ import httpx
 from zara.models import Prospect, SourceResult, SignalCard
 
 GROQ_COMPOUND_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_COMPOUND_MODEL = "compound"
+GROQ_COMPOUND_MODEL = "groq/compound"
 
 SYSTEM_PROMPT = (
     "You are a research assistant. Search the web and report only concrete, "

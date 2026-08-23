@@ -248,6 +248,19 @@ def main():
         st.markdown("<br><div class='eyebrow' style='font-size: 14px; margin-bottom: 2px;'>4. Developer Mode</div>", unsafe_allow_html=True)
         admin_pass = st.text_input("Admin Password", type="password")
 
+        st.markdown("---")
+        from zara.utils import budget
+        try:
+            tv = budget.get_credit_usage("tavily")
+            st.markdown(
+                f"<div style='font-size:12px;color:var(--color-stone);'>"
+                f"tavily: <b>{tv['used']}</b>/{tv['limit']} credits ({tv['month']}) · "
+                f"apify spend: <b>${budget.get_mtd_spend():.3f}</b> MTD</div>",
+                unsafe_allow_html=True,
+            )
+        except Exception:
+            pass
+
     settings = {
         "identity": {
             "sender_name": sender_name,
@@ -379,43 +392,168 @@ def main():
             if not name or not company:
                 st.error("Name and Company are required.")
                 return
-                
+
             prospect = Prospect(
                 person_name=name,
                 company=company,
                 company_domain=domain if domain else None,
                 linkedin_url=linkedin if linkedin else None
             )
-            
+
             st.markdown("---")
-            
-            # Async bridge for Streamlit
-            async def run_backend():
-                results, draft_res = await run_end_to_end_pipeline(prospect, profile="standard", settings=settings)
-                return results, draft_res
-                
-            with st.status("Agent researching...", expanded=True) as status:
-                st.write("Initializing fetchers...")
+
+            progress_lines = []
+
+            def on_event(e):
+                if e.get("type") == "stage":
+                    line = f"**{e['name']}** — {e.get('status', '')}" + (f": {e['detail']}" if e.get("detail") else "")
+                elif e.get("type") == "source":
+                    icon = {"ok": "✅", "empty": "⚪", "failed": "❌", "skipped": "⏭️", "running": "⏳"}.get(e["status"], "·")
+                    line = f"{icon} {e['name']} — {e['status']}" + (f" ({e['detail']})" if e.get("detail") else "")
+                elif e.get("type") == "hook":
+                    line = f"★ Hook [{e['strength']:.2f}]: {e['text']}"
+                else:
+                    return
+                progress_lines.append(line)
                 try:
-                    # Use asyncio.run directly (Streamlit handles it well in most recent versions)
+                    st.write(line)
+                except Exception:
+                    pass
+
+            async def run_backend():
+                return await run_end_to_end_pipeline(prospect, profile="standard", settings=settings, on_event=on_event)
+
+            with st.status("Zara is researching...", expanded=True) as status:
+                try:
                     results, draft_res = asyncio.run(run_backend())
-                    
-                    status.update(label="Complete!", state="complete", expanded=False)
-                    
-                    # Render Draft Output
-                    st.markdown("## The Draft")
-                    if draft_res.draft_text:
-                        st.markdown(f"<div class='draft-frame'>{draft_res.draft_text.replace(chr(10), '<br>')}</div>", unsafe_allow_html=True)
-                    else:
-                        st.warning("No draft generated. Signal might have been blocked or no signal was found.")
-                    
-                    # Render Decision Card
-                    st.markdown("## Decision Card")
-                    st.markdown(f"<div class='card-container'>{render_decision_card(draft_res, results).replace(chr(10), '<br>')}</div>", unsafe_allow_html=True)
-                    
+                    st.session_state["zara_cache"] = {
+                        "prospect": prospect, "results": results,
+                        "draft_res": draft_res, "settings": settings,
+                    }
+                    status.update(label="Done — draft ready for review", state="complete", expanded=False)
                 except Exception as e:
                     status.update(label=f"Error: {str(e)}", state="error", expanded=True)
                     st.exception(e)
+                    return
+
+        cache = st.session_state.get("zara_cache")
+        if not cache:
+            st.info("Run the pipeline to generate a draft. You'll get the draft, the hook options behind it, and the full audit trail.")
+            return
+
+        prospect = cache["prospect"]
+        results = cache["results"]
+        settings = cache["settings"]
+        from zara.s2 import process_prospect
+
+        # --- Resolution banner ---
+        res_info = cache["draft_res"].ranked_prospect.resolution
+        if res_info and res_info.input_company.strip() != res_info.resolved_company:
+            st.info(f"Resolved company: '{res_info.input_company}' → '{res_info.resolved_company}'"
+                    + (f" ({res_info.domain})" if res_info.domain else ""))
+
+        # --- Regeneration controls ---
+        st.markdown("### Regenerate")
+        col_style, col_regen, col_deep = st.columns([2, 1, 1])
+        with col_style:
+            style = st.selectbox("Draft style", [
+                "auto", "observation-led", "question-led", "peer-to-peer",
+                "insight-led", "congratulation-led", "story-led",
+            ])
+        with col_regen:
+            regen = st.button("Regenerate", type="primary", use_container_width=True)
+        with col_deep:
+            deep = st.button("Deep Search", use_container_width=True,
+                             help="Force Tavily paid search for more person-level signal.")
+
+        async def redraft(hook=None, style_name="auto"):
+            return await process_prospect(
+                prospect, results,
+                strictness=settings.get("strictness", "strict"),
+                vp_override=settings.get("identity"),
+                resolution=res_info, hook=hook, style=style_name,
+            )
+
+        draft_res = cache["draft_res"]
+
+        if regen:
+            with st.status("Redrafting...", expanded=True):
+                draft_res = asyncio.run(redraft(hook=None, style_name=style))
+                st.session_state["zara_cache"]["draft_res"] = draft_res
+
+        if deep:
+            from zara.fetchers.tavily import TavilyFetcher
+            with st.status("Running Tavily deep search...", expanded=True) as dstat:
+                tav_res = asyncio.run(TavilyFetcher(force=True).fetch(prospect))
+                st.write(f"Tavily: {tav_res.status} ({len(tav_res.cards)} cards)")
+                results = [r for r in results if r.source != "Tavily"] + [tav_res]
+                st.session_state["zara_cache"]["results"] = results
+                draft_res = asyncio.run(redraft(hook=None, style_name=style))
+                st.session_state["zara_cache"]["draft_res"] = draft_res
+                dstat.update(label="Deep search complete", state="complete", expanded=False)
+
+        ranked = draft_res.ranked_prospect
+
+        # --- Confidence badge ---
+        badge_map = {
+            "person_authored": ("● strong — person-authored evidence", "#0d542b"),
+            "person_attributed": ("● medium — person-attributed evidence", "#8a6d1a"),
+            "company_action": ("● company-level evidence", "#8a6d1a"),
+            "database_only": ("● weak — database only", "#a33a1a"),
+            "no_signal": ("● no signal", "#f54320"),
+        }
+        badge_text, badge_color = badge_map.get(draft_res.claim_strength, ("● unknown", "#44403b"))
+        st.markdown(
+            f"<div style='font-family:Inter,sans-serif;font-size:14px;color:{badge_color};"
+            f"font-weight:600;'>{badge_text}</div>",
+            unsafe_allow_html=True,
+        )
+
+        # --- Hook options panel ---
+        st.markdown("### Hook options")
+        if ranked.hooks:
+            for i, h in enumerate(ranked.hooks):
+                with st.expander(f"[{h.strength:.2f}] {h.hook_text}"):
+                    st.markdown(f"**Why it matters:** {h.rationale}")
+                    st.markdown(f"**Bridge to offer:** {h.bridge}")
+                    if st.button(f"Draft with this hook", key=f"hook_{i}", use_container_width=True):
+                        with st.status("Redrafting with selected hook...", expanded=True):
+                            draft_res = asyncio.run(redraft(hook=h, style_name=style))
+                            st.session_state["zara_cache"]["draft_res"] = draft_res
+                        st.rerun()
+        else:
+            st.caption("No alternative hooks articulated for this prospect.")
+
+        # --- Editable draft ---
+        st.markdown("### The draft (editable)")
+        if draft_res.draft_text:
+            edited = st.text_area("Draft", value=draft_res.draft_text, height=260, key="draft_editor",
+                                  label_visibility="collapsed")
+            st.download_button("Download draft", data=edited, file_name="zara_draft.txt",
+                               mime="text/plain", use_container_width=True)
+        else:
+            st.warning("No draft generated. Try Deep Search for more signal, or loosen strictness.")
+
+        # --- Verification status ---
+        if draft_res.verification:
+            v = draft_res.verification
+            if v.passed:
+                st.success(f"Verifier: passed ({v.status})" + (" — self-corrected after one hallucination retry" if v.self_corrected else ""))
+            elif v.status == "blocked_hallucination":
+                st.error(f"Verifier: blocked hallucination. {v.reason or ''}")
+            else:
+                st.warning(f"Verifier: {v.status}. {v.reason or ''}")
+
+        # --- Decision card ---
+        with st.expander("Decision card (full audit trail)"):
+            st.markdown(render_decision_card(draft_res, results))
+
+        # --- Sources ---
+        with st.expander(f"Sources ({len(results)})"):
+            for r in sorted(results, key=lambda x: (x.rung, x.source)):
+                icon = {"ok": "✅", "empty": "⚪", "failed": "❌", "skipped": "⏭️"}.get(r.status, "·")
+                detail = f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")
+                st.markdown(f"{icon} `{r.source}` — **{r.status}** — {detail}")
 
 if __name__ == "__main__":
     main()

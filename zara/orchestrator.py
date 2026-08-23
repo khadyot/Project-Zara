@@ -8,26 +8,37 @@ logger = logging.getLogger(__name__)
 
 BUDGET_CAP = 4.00
 
-async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung: int = 0) -> None:
+async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung: int = 0, on_event=None) -> None:
     if not fetcher_tasks:
         return
-    parallel_results = await asyncio.gather(*(t for _, t in fetcher_tasks), return_exceptions=True)
-    for (f, _), res in zip(fetcher_tasks, parallel_results):
-        if isinstance(res, SourceResult):
-            results.append(res)
-            if res.cost_usd > 0:
-                add_spend(res.cost_usd)
-        elif isinstance(res, Exception):
-            logger.error(f"Fetcher raised exception: {type(res).__name__}: {res}")
-            results.append(SourceResult(
+
+    async def _run_one(f, coro):
+        try:
+            res = await coro
+        except Exception as e:
+            logger.error(f"Fetcher raised exception: {type(e).__name__}: {e}")
+            res = SourceResult(
                 source=f.__class__.__name__,
-                rung=getattr(f, 'rung', rung), # Fallback if rung not present
+                rung=getattr(f, 'rung', rung),
                 status="failed",
-                reason=f"{type(res).__name__}: {res}",
+                reason=f"{type(e).__name__}: {e}",
                 cards=[],
                 cost_usd=0.0,
                 elapsed_ms=0
-            ))
+            )
+        results.append(res)
+        if isinstance(res, SourceResult) and res.cost_usd > 0:
+            add_spend(res.cost_usd)
+        if on_event:
+            on_event({
+                "type": "source", "name": f.__class__.__name__, "status": res.status,
+                "detail": f"{len(res.cards)} cards" if res.status == "ok" else (res.reason or "")[:80],
+            })
+
+    if on_event:
+        for f, _ in fetcher_tasks:
+            on_event({"type": "source", "name": f.__class__.__name__, "status": "running"})
+    await asyncio.gather(*(_run_one(f, t) for f, t in fetcher_tasks))
 
 async def run_pipeline(
     prospect: Prospect,
@@ -37,7 +48,8 @@ async def run_pipeline(
     rung3_fetchers: list,
     rung4_fetchers: list,
     deep_mode: bool = False,
-    gap_filler_gate: bool = False
+    gap_filler_gate: bool = False,
+    on_event=None
 ) -> list[SourceResult]:
     """
     Executes the retrieval pipeline according to the cost-ordered escalation ladder.
@@ -50,12 +62,17 @@ async def run_pipeline(
 
     gate_skip_paid = False
     if gap_filler_gate:
-        await _gather_results(fetcher_tasks, results, rung=0)
+        if on_event:
+            on_event({"type": "stage", "name": "free sources", "status": "running"})
+        await _gather_results(fetcher_tasks, results, rung=0, on_event=on_event)
         fetcher_tasks = []
         person_signal_count = sum(
             1 for r in results if r.status == "ok" for c in r.cards if c.tier == "person"
         )
         gate_skip_paid = person_signal_count >= 2
+        if on_event:
+            on_event({"type": "stage", "name": "gap-filler gate", "status": "done",
+                      "detail": f"{person_signal_count} person signals — paid rungs {'skipped' if gate_skip_paid else 'will run'}"})
         if not gate_skip_paid:
             fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
     else:
@@ -98,7 +115,9 @@ async def run_pipeline(
                 ))
 
         # Execute remaining rungs in parallel
-        await _gather_results(fetcher_tasks, results)
+        if on_event:
+            on_event({"type": "stage", "name": "paid sources", "status": "running"})
+        await _gather_results(fetcher_tasks, results, on_event=on_event)
 
     has_person_profile = False
     has_company_hiring = False
@@ -229,14 +248,18 @@ async def run_pipeline(
             ))
             
     # Classify social signals
+    if on_event:
+        on_event({"type": "stage", "name": "classifying signals", "status": "running"})
     classifier_result = await classify_social_signals(results)
+    if on_event:
+        on_event({"type": "stage", "name": "classifying signals", "status": "done"})
     if classifier_result.status == "failed":
         logger.warning(f"Social classification failed: {classifier_result.reason}")
     results = classifier_result.results
                 
     return results
 
-async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard", settings: dict = None):
+async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard", settings: dict = None, on_event=None):
     """
     Instantiates fetchers based on profile and settings, runs the retrieval pipeline,
     and then processes the prospect through ranking, drafting, and verification.
@@ -316,10 +339,11 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
         rung3_fetchers=rung3,
         rung4_fetchers=rung4,
         deep_mode=(profile == "deep"),
-        gap_filler_gate=True
+        gap_filler_gate=True,
+        on_event=on_event
     )
     
     vp_override = settings.get("identity") if settings else None
-    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution)
+    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution, on_event=on_event)
 
     return results, draft_res

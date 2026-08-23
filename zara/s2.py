@@ -79,13 +79,20 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         
     return "\n".join(md)
 
-async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None, resolution=None, hook=None, style: str = "auto") -> DraftResult:
+async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None, resolution=None, hook=None, style: str = "auto", on_event=None) -> DraftResult:
     # 1. Rank
+    if on_event:
+        on_event({"type": "stage", "name": "ranking signals", "status": "running"})
     ranked_prospect = await rank_prospect(prospect, results, strictness=strictness)
     from dataclasses import replace as _replace
     if resolution is not None:
         ranked_prospect = _replace(ranked_prospect, resolution=resolution)
     claim_strength = compute_claim_strength(ranked_prospect.winning_card)
+    if on_event:
+        on_event({"type": "stage", "name": "ranking signals", "status": "done",
+                  "detail": f"claim strength: {claim_strength}, hooks: {len(ranked_prospect.hooks)}"})
+        for h in ranked_prospect.hooks:
+            on_event({"type": "hook", "text": h.hook_text, "strength": h.strength})
 
     from zara.utils.config import load_value_prop
     vp = load_value_prop()
@@ -93,6 +100,8 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
         vp = {**vp, **vp_override}
 
     # 2. Draft
+    if on_event:
+        on_event({"type": "stage", "name": "writing draft", "status": "running"})
     draft_text = await draft_email(ranked_prospect, vp, strictness=strictness, hook=hook, style=style)
     
     if not draft_text:
@@ -104,7 +113,12 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
         )
         
     # 3. Verify
+    if on_event:
+        on_event({"type": "stage", "name": "verifying draft", "status": "running"})
     verification = await verify_draft(draft_text, ranked_prospect, vp)
+    if on_event:
+        on_event({"type": "stage", "name": "verifying draft", "status": "done",
+                  "detail": verification.status})
     
     if verification.passed:
         return DraftResult(
