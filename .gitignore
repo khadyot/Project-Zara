@@ -1,0 +1,21 @@
+# Secrets — never commit. Real keys live in these files.
+.env.local
+.env.production
+.env*.local
+
+# Dependencies / build output
+node_modules/
+dist/
+build/
+.next/
+*.tsbuildinfo
+
+# Tooling / platform
+.vercel/
+.DS_Store
+
+# Scratch — one entry, not one per file
+scratch/
+.budget.json
+.ats_cache.json
+.budget.json.lock

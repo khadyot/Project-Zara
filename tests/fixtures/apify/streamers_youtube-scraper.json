@@ -1,0 +1,6 @@
+[
+  {
+    "note": "You have set all video limits in the input to 0, and didn't provide any direct video URLs. Please check your input.",
+    "error": "INVALID_INPUT"
+  }
+]

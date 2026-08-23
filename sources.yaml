@@ -1,0 +1,180 @@
+# ZARA SOURCE REGISTRY
+# 
+# Defines all sources available to the retrieval fan-out.
+# All Apify actors must be pay-per-event/usage and cookieless.
+
+sources:
+  # ---------------------------------------------------------
+  # RUNG 0 / FREE APIs
+  # ---------------------------------------------------------
+  - id: "greenhouse"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "hiring"
+
+  - id: "lever"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "hiring"
+
+  - id: "ashby"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "hiring"
+
+  - id: "smartrecruiters"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "hiring"
+
+  - id: "recruitee"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "hiring"
+
+  - id: "google_news_rss"
+    type: "free_api"
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "news"
+
+  - id: "sec_edgar"
+    type: "free_api" # Via scoped Exa
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "news"
+
+  - id: "company_blog"
+    type: "free_api" # Via scoped Exa
+    pricing_model: "free"
+    tier: "company"
+    signal_type: "news"
+
+  - id: "youtube_transcripts"
+    type: "free_api" # Via scoped Exa + youtube-transcript-api
+    pricing_model: "free"
+    tier: "person"
+    signal_type: "social"
+
+  # ---------------------------------------------------------
+  # APIFY ACTORS (16 Total)
+  # ---------------------------------------------------------
+
+  # -- LINKEDIN (x4) --
+  - id: "harvestapi/linkedin-company"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "firmographic"
+    cookieless_proof: "Schema confirms no li_at/JSESSIONID required. 'No cookies or account required... $4 per 1k companies'."
+
+  - id: "supreme_coder/linkedin-profile-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "person"
+    signal_type: "profile"
+    cookieless_proof: "Schema confirms no cookies needed. Undercuts harvestapi at $3 per 1000 profiles."
+
+  - id: "harvestapi/linkedin-profile-posts"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "person"
+    signal_type: "social"
+    cookieless_proof: "Schema confirms no cookies needed. Marketed as 'No Cookies'."
+
+  - id: "curious_coder/linkedin-jobs-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "hiring"
+    cookieless_proof: "Schema confirms cookies are OPTIONAL. KNOWN LIMITATION: Caps at ~400 jobs without cookies. This cap is acceptable; never add cookies to lift it."
+
+  # -- SOCIAL & WEB --
+  - id: "clappi/x-twitter-profile-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "person"
+    signal_type: "social"
+    cookieless_proof: "Schema confirms no auth required. Uses public endpoints."
+
+  - id: "apify/instagram-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company" # or person
+    signal_type: "social"
+    cookieless_proof: "Maintained by Apify, proxy-based, no user cookies required."
+
+  - id: "clockworks/tiktok-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "social"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "streamers/youtube-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "social"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "harshmaur/reddit-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "social"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "apify/facebook-pages-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "social"
+    cookieless_proof: "Maintained by Apify, no cookies required."
+
+  - id: "maximedupre/product-hunt-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "news"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "compass/crawler-google-places"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "firmographic"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "apify/google-search-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company" # Can be both
+    signal_type: "news"
+    cookieless_proof: "Maintained by Apify, no cookies required."
+
+  - id: "misceres/indeed-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "hiring"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "zen-studio/software-review-scraper"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "firmographic"
+    cookieless_proof: "Schema confirms no cookies required."
+
+  - id: "pratikdani/crunchbase-companies-bulk-scraper-no-cookies"
+    type: "apify"
+    pricing_model: "pay_per_event"
+    tier: "company"
+    signal_type: "firmographic"
+    cookieless_proof: "Marketed explicitly as 'No Cookies' bulk scraper."

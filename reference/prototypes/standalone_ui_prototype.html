@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zebra AI - Outreach Agent Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --secondary: #ec4899;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.12), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.12), transparent 25%);
+        }
+
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--surface-color); border-right: 1px solid var(--surface-border); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 24px; z-index: 10; }
+        .logo { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 48px; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-items { display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { padding: 12px 16px; border-radius: 8px; cursor: pointer; color: var(--text-muted); transition: all 0.2s ease; display: flex; align-items: center; gap: 12px; font-weight: 500; }
+        .nav-item:hover, .nav-item.active { background: rgba(255, 255, 255, 0.05); color: var(--text-main); }
+        .nav-item.active { border-left: 3px solid var(--primary); }
+
+        /* Main Content */
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+        .header { margin-bottom: 40px; }
+        .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+        .header p { color: var(--text-muted); }
+        .glass-panel { background: var(--surface-color); border: 1px solid var(--surface-border); border-radius: 16px; padding: 32px; backdrop-filter: blur(16px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); margin-bottom: 24px; }
+        
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group label { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+        .input-group input { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--surface-border); border-radius: 8px; padding: 12px 16px; color: var(--text-main); font-size: 15px; transition: all 0.2s ease; }
+        .input-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-glow); }
+        
+        .btn-primary { background: linear-gradient(135deg, var(--primary), #4f46e5); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px var(--primary-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--primary-glow); }
+
+        /* Pipeline Visualizer */
+        .pipeline-container { margin-top: 40px; display: none; flex-direction: column; gap: 16px; }
+        .stage { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--surface-border); border-radius: 12px; padding: 16px 24px; display: flex; align-items: center; gap: 16px; opacity: 0.5; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .stage.active { opacity: 1; border-color: rgba(99, 102, 241, 0.5); box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1); }
+        .stage.completed { opacity: 1; border-color: rgba(16, 185, 129, 0.3); }
+        
+        .stage-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--surface-color); font-weight: 600; font-size: 14px; transition: all 0.3s ease; }
+        .stage.active .stage-icon { background: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+        .stage.completed .stage-icon { background: var(--success); color: #000; }
+        
+        .stage-details { flex: 1; }
+        .stage-details h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .stage-details p { font-size: 13px; color: var(--text-muted); }
+        
+        .stage-action { display: none; font-size: 13px; font-weight: 500; color: var(--primary); cursor: pointer; text-decoration: none; padding: 8px 12px; border-radius: 6px; background: rgba(99, 102, 241, 0.1); transition: all 0.2s; border: 1px solid rgba(99, 102, 241, 0.2); }
+        .stage.completed .stage-action { display: block; }
+        .stage.completed .stage-action:hover { background: rgba(99, 102, 241, 0.2); color: #fff; }
+        
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: var(--primary); animation: spin 1s linear infinite; display: none; margin-left: auto; }
+        .stage.active .spinner { display: block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .modal-content {
+            background: #0f172a; border: 1px solid var(--surface-border); border-radius: 16px;
+            width: 90%; max-width: 700px; max-height: 85vh; display: flex; flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        
+        .modal-header { padding: 24px; border-bottom: 1px solid var(--surface-border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .modal-close { cursor: pointer; color: var(--text-muted); background: none; border: none; padding: 4px; transition: color 0.2s; }
+        .modal-close:hover { color: white; }
+        
+        .modal-body { padding: 24px; overflow-y: auto; font-size: 14px; color: var(--text-main); }
+        
+        /* Fabricated Data Styles */
+        .log-terminal { background: #000; border-radius: 8px; padding: 16px; font-family: monospace; color: #a3be8c; line-height: 1.6; }
+        .log-error { color: #bf616a; }
+        .log-success { color: #a3be8c; }
+        .log-info { color: #81a1c1; }
+        .log-meta { color: #4c566a; }
+        
+        .crm-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+        .crm-table th, .crm-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--surface-border); }
+        .crm-table th { color: var(--text-muted); font-weight: 500; font-size: 13px; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; display: inline-block; }
+        .badge.green { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge.gray { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--surface-border); }
+        .badge.purple { background: rgba(168, 85, 247, 0.1); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.2); }
+        
+        .evidence-card { background: rgba(0,0,0,0.2); border: 1px solid var(--surface-border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .evidence-meta { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 12px; color: var(--text-muted); }
+        .evidence-quote { font-style: italic; border-left: 2px solid var(--primary); padding-left: 12px; margin-bottom: 12px; color: #e2e8f0; }
+        
+        .scoring-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .score-box { background: rgba(255,255,255,0.03); border: 1px solid var(--surface-border); border-radius: 8px; padding: 16px; text-align: center; }
+        .score-val { font-size: 32px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+        .score-total { grid-column: 1 / -1; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); }
+        .score-total .score-val { color: var(--success); }
+        
+        .email-preview { background: #fff; color: #1e293b; border-radius: 8px; overflow: hidden; }
+        .email-header { background: #f1f5f9; padding: 16px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .email-body { padding: 24px; font-size: 15px; line-height: 1.6; white-space: pre-wrap; }
+        .email-row { margin-bottom: 8px; display: flex; gap: 12px; }
+        .email-label { color: #64748b; width: 60px; font-weight: 500; }
+        .connection-statement { background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); padding: 16px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; color: #cbd5e1; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: url(#gradient)">
+                <defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1" /><stop offset="100%" stop-color="#ec4899" /></linearGradient></defs>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            Zebra AI
+        </div>
+        <div class="nav-items">
+            <div class="nav-item active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Run Pipeline</div>
+            <div class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Dashboard</div>
+            <div class="nav-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Suppression</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Outreach Research Pipeline</h1>
+            <p>Enter a prospect to begin identity resolution, discovery, and confident drafting.</p>
+        </div>
+
+        <div class="glass-panel">
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Prospect Name</label>
+                    <input type="text" id="prospectName" value="Sarah Kim">
+                </div>
+                <div class="input-group">
+                    <label>Company Name</label>
+                    <input type="text" id="companyName" value="Acme Logistics">
+                </div>
+            </div>
+            <button class="btn-primary" onclick="startPipeline()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                Launch Pipeline
+            </button>
+        </div>
+
+        <!-- Pipeline Stages -->
+        <div class="glass-panel pipeline-container" id="pipelineViz">
+            <h2 style="font-size: 18px; margin-bottom: 16px;">Execution Trace</h2>
+            
+            <div class="stage" id="stage-1">
+                <div class="stage-icon">1</div>
+                <div class="stage-details">
+                    <h3>Identity Resolution</h3>
+                    <p>Verifying prospect works at the stated company.</p>
+                </div>
+                <button class="stage-action" onclick="openModal('identity')">View Logs</button>
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="stage" id="stage-2">
+                <div class="stage-icon">2</div>
+                <div class="stage-details">
+                    <h3>CRM Suppression Check</h3>
+                    <p>Cross-referencing against "Do Not Contact" and active deals.</p>
+                </div>
+                <button class="stage-action" onclick="openModal('crm')">View CRM Data</button>
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="stage" id="stage-3">
+                <div class="stage-icon">3</div>
+                <div class="stage-details">
+                    <h3>Enrichment & Discovery</h3>
+                    <p>Fanning out across Exa semantic search, LinkedIn, and reading via Firecrawl.</p>
+                </div>
+                <button class="stage-action" onclick="openModal('evidence')">View Evidence Map</button>
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="stage" id="stage-4">
+                <div class="stage-icon">5</div>
+                <div class="stage-details">
+                    <h3>Scoring & Confidence Gate</h3>
+                    <p>Applying time decay to signals and evaluating ICP fit matrix.</p>
+                </div>
+                <button class="stage-action" onclick="openModal('scoring')">View Scoring</button>
+                <div class="spinner"></div>
+            </div>
+            
+            <div class="stage" id="stage-5">
+                <div class="stage-icon">7</div>
+                <div class="stage-details">
+                    <h3>Angle Selection & Drafting</h3>
+                    <p>Selecting primary hook, stating connection to offer, and drafting email.</p>
+                </div>
+                <button class="stage-action" onclick="openModal('draft')">Review Draft</button>
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Universal Modal -->
+    <div class="modal-overlay" id="dataModal" onclick="if(event.target===this) closeModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Modal Title</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Templates for Fabrication -->
+    <template id="tpl-identity">
+        <div class="log-terminal">
+            <span class="log-meta">[08:22:15.102]</span> <span class="log-info">INITIATE</span> Identity Resolution for "Sarah Kim" at "Acme Logistics"<br>
+            <span class="log-meta">[08:22:15.341]</span> <span class="log-info">QUERY</span> LinkedIn via Exa: "Sarah Kim Acme Logistics"<br>
+            <span class="log-meta">[08:22:16.892]</span> <span class="log-success">MATCH</span> Found profile: Sarah Kim, VP of Supply Chain @ Acme Logistics<br>
+            <span class="log-meta">[08:22:17.105]</span> <span class="log-info">QUERY</span> ZoomInfo Company Directory<br>
+            <span class="log-meta">[08:22:17.450]</span> <span class="log-success">MATCH</span> Verified active employment (Last updated: 12 days ago)<br>
+            <span class="log-meta">[08:22:17.501]</span> <span class="log-success">RESOLVED</span> Identity Confidence: 0.98. Proceeding to Stage 2.
+        </div>
+    </template>
+
+    <template id="tpl-crm">
+        <table class="crm-table">
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Record Found</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Salesforce (CRM)</td>
+                    <td>Acme Logistics</td>
+                    <td><span class="badge gray">No Active Opps</span></td>
+                    <td><span class="log-success" style="font-weight: 600;">PASS</span></td>
+                </tr>
+                <tr>
+                    <td>HubSpot (Marketing)</td>
+                    <td>sarah.k@acmelogistics.com</td>
+                    <td><span class="badge gray">Last contact: 14mo ago</span></td>
+                    <td><span class="log-success" style="font-weight: 600;">PASS</span></td>
+                </tr>
+                <tr>
+                    <td>Stripe (Billing)</td>
+                    <td>Acme Logistics</td>
+                    <td><span class="badge gray">Not a Customer</span></td>
+                    <td><span class="log-success" style="font-weight: 600;">PASS</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 12px; border-radius: 8px; color: var(--success); font-weight: 500;">
+            Suppression Check Cleared. Prospect is eligible for outreach.
+        </div>
+    </template>
+
+    <template id="tpl-evidence">
+        <div class="evidence-card">
+            <div class="evidence-meta">
+                <span class="badge purple">Authored Content</span>
+                <span>LinkedIn Post • 5 days ago</span>
+            </div>
+            <div class="evidence-quote">
+                "We just wrapped up our Q2 supply chain audit at Acme Logistics. The sheer amount of manual data entry happening between our warehouse management system and our ERP is creating a 3-day lag in inventory visibility. We have to automate these workflows."
+            </div>
+            <div style="font-size: 13px; color: var(--primary);">
+                <strong>AI Note:</strong> Direct admission of pain point (manual data entry, workflow lag). Highly relevant to our workflow automation offering.
+            </div>
+        </div>
+        
+        <div class="evidence-card">
+            <div class="evidence-meta">
+                <span class="badge gray">Business Event</span>
+                <span>Press Release • 2 months ago</span>
+            </div>
+            <div class="evidence-quote">
+                "Acme Logistics Announces Expansion into Cold Storage Transport, Opening 3 New Facilities in the Midwest."
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+                <strong>AI Note:</strong> Indicates growth and complexity, but secondary to the explicit workflow pain point. Will use as supporting context.
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-scoring">
+        <div class="scoring-matrix">
+            <div class="score-box">
+                <div>ICP Fit Matrix</div>
+                <div class="score-val">3 / 3</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Enterprise Logistics (Target Tier 1)</div>
+            </div>
+            <div class="score-box">
+                <div>Signal Strength</div>
+                <div class="score-val">3 / 3</div>
+                <div style="font-size: 12px; color: var(--text-muted);">Authored Content < 30 days old</div>
+            </div>
+            <div class="score-box score-total">
+                <div>Total Confidence Score</div>
+                <div class="score-val">9 / 9</div>
+                <div style="font-size: 13px; font-weight: 600;">STATUS: PASSED GATE</div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-draft">
+        <div class="connection-statement">
+            <strong style="color: white; display: flex; align-items: center; gap: 6px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                AI Reasoning Trail (Hook-to-Offer Connection)
+            </strong>
+            <div style="margin-top: 8px;">
+                Sarah explicitly stated she is experiencing a 3-day lag in inventory visibility due to manual data entry between her WMS and ERP. Our product explicitly solves this by automating data transfer between logistics systems to eliminate manual entry lags. The connection is direct and honest.
+            </div>
+        </div>
+        
+        <div class="email-preview">
+            <div class="email-header">
+                <div class="email-row"><span class="email-label">To:</span> Sarah Kim &lt;sarah.k@acmelogistics.com&gt;</div>
+                <div class="email-row"><span class="email-label">Subj:</span> Automating the WMS-to-ERP data lag</div>
+            </div>
+            <div class="email-body">Sarah,
+
+Saw your post last week about the Q2 audit. A 3-day lag in inventory visibility because of manual data entry between your WMS and ERP is a massive bottleneck, especially as you expand into cold storage.
+
+We built a workflow automation layer specifically for ops teams to eliminate this exact manual bridging between disjointed logistics systems. It syncs the data in real-time without requiring a heavy IT implementation.
+
+Are you open to a quick look at how it works?
+
+Best,
+Alex</div>
+        </div>
+    </template>
+
+    <script>
+        async function startPipeline() {
+            const container = document.getElementById('pipelineViz');
+            container.style.display = 'flex';
+            
+            // Reset UI
+            for(let i=1; i<=5; i++) {
+                const el = document.getElementById(`stage-${i}`);
+                el.className = 'stage';
+                el.querySelector('.stage-icon').innerHTML = [1, 2, 3, 5, 7][i-1];
+            }
+
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+            // Simulate Pipeline
+            for(let i=1; i<=5; i++) {
+                const el = document.getElementById(`stage-${i}`);
+                el.classList.add('active');
+                await sleep(i === 3 ? 1500 : 800);
+                el.classList.remove('active');
+                el.classList.add('completed');
+                el.querySelector('.stage-icon').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+            }
+            
+            // Auto open the final draft once completed
+            setTimeout(() => {
+                openModal('draft');
+            }, 600);
+        }
+
+        const modalTitles = {
+            'identity': 'Identity Resolution Logs',
+            'crm': 'CRM Suppression Check',
+            'evidence': 'Scraped Evidence Map',
+            'scoring': 'Confidence Gate Scoring',
+            'draft': 'Draft & Reasoning Trail'
+        };
+
+        function openModal(templateId) {
+            document.getElementById('modalTitle').innerHTML = modalTitles[templateId];
+            const template = document.getElementById(`tpl-${templateId}`);
+            document.getElementById('modalBody').innerHTML = template.innerHTML;
+            document.getElementById('dataModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('dataModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

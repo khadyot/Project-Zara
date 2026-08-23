@@ -1,0 +1,16 @@
+{
+  "scores": [
+    {
+      "index": 0,
+      "matched_pain_id": "close_drag",
+      "score": 0.45,
+      "reason": "Mentions month‑end accruals and accounts payable processes, which align with the close_drag observable (month‑end close mentions) though lacking explicit matching language; moderate relevance."
+    },
+    {
+      "index": 1,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "The snippet contains no observable terms related to any defined pains; no match."
+    }
+  ]
+}

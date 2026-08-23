@@ -1,0 +1,120 @@
+# value_prop.yaml — the relevance lens
+#
+# Compass III: relevance is a three-way join of SIGNAL x WHAT WE SELL x THIS PERSON'S ROLE.
+# Nothing in the ranker is meaningful without this file. It is a required input, not a template.
+#
+# Decided 2026-08-23. Change it deliberately — every ranking decision downstream depends on it.
+
+product: "We help operations teams automate manual, reconciliation-heavy processes"
+
+# Who this lands with. Used to pick the pain angle — a CFO hook is not a VP Ops hook.
+buyer_titles:
+  - VP Operations
+  - Director of Operations
+  - Head of Finance Operations
+  - Controller
+  - VP Finance
+  - RevOps Lead
+  - Head of Supply Chain
+
+# The pains signals get scored against.
+#
+# These are PAINS, not triggers. A trigger is something observable (they posted a job);
+# a pain is what hurts. Keeping them distinct is what gives the ranker something to join on —
+# if pains were triggers, signal and pain collapse into one thing and ranking loses its meaning.
+#
+# Narrow on purpose. Vague pains match every signal, which looks like coverage and is
+# actually the loss of discrimination.
+pains:
+  - id: close_drag
+    statement: "Month-end close drags because matching is manual across systems"
+    observable_via:
+      - job postings for accountants/analysts mentioning close, matching, or month-end
+      - hiring in finance ops without corresponding revenue growth
+
+  - id: silent_breaks
+    statement: "Payment, ledger, and bank reconciliation breaks silently and surfaces late"
+    observable_via:
+      - job postings mentioning PSP, ledger, settlement, or payment ops
+      - new payment methods, providers, or geographies in news or product announcements
+
+  - id: linear_headcount
+    statement: "Ops headcount scales linearly with transaction volume"
+    observable_via:
+      - repeated or bulk hiring of ops/fulfilment/analyst roles
+      - volume, GMV, or growth milestones in news
+
+  - id: spreadsheet_exceptions
+    statement: "Exceptions are handled in spreadsheets with no audit trail"
+    observable_via:
+      - job descriptions naming Excel/Google Sheets as a core tool for a finance/ops role
+      - ERP or finance-system migration signals
+
+# ICP rubric — ratified from reference/research_results/, expressed as rules with vetoes
+# so it is actually computable rather than prose. LinkedIn Company Details supplies
+# headcount and industry; without it, icp_fit degrades to `unknown`, never a guess.
+icp:
+  role_terms:
+    - finance
+    - accounting
+    - accountant
+    - analyst
+    - controller
+    - reconciliation
+    - payment
+    - settlement
+    - ledger
+    - billing
+    - treasury
+    - fp&a
+    - revenue
+    - bookkeeping
+    - ops
+  headcount:
+    min: 50
+    max: 500
+  sectors:
+    - payments
+    - fintech
+    - logistics
+    - e-commerce
+    - retail operations
+    - marketplaces
+    - billing-heavy SaaS
+  # Any veto -> not_a_fit, regardless of other scores.
+  vetoes:
+    - public sector / government
+    - headcount outside the 50-500 band
+    - non-profit
+    - pre-revenue / pre-seed
+
+# Compass X: relevance is not permission.
+#
+# These score HIGHEST on naive relevance and are unusable. A layoff is the most
+# "relevant" signal a company ever emits and referencing it is disqualifying.
+# Hard veto in the ranker, applied before scoring, independent of score.
+# Data, not a buried constant, so it can be argued with.
+never_reference:
+  - id: layoffs
+    terms: [layoff, layoffs, laid off, lay off, redundanc, restructur, downsiz, job cuts, workforce reduction, headcount reduction, rif]
+  - id: bereavement
+    terms: [passed away, obituary, bereavement, in memoriam, condolence, death of, funeral]
+  - id: illness
+    terms: [medical leave, illness, diagnosed with, hospitalised, hospitalized, sick leave, cancer]
+  - id: litigation
+    terms: [lawsuit, litigation, sued, court filing, legal dispute, class action, subpoena]
+  - id: discrimination_claim
+    terms: [discrimination, harassment, hostile work environment, retaliation claim, eeoc]
+  - id: regulatory_action
+    terms: [enforcement action, investigation by, consent order, cease and desist, fined by, regulatory probe, sanctions against]
+  - id: forced_departure
+    terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
+
+# DECIDED: omit. Inventing a customer name or a metric is precisely the fabrication the
+# verification layer exists to catch, and a 60-120 word email does not need one.
+# Set this only when a real, checkable proof point exists.
+proof_point: null
+
+# DECIDED 2026-08-23 by the human: sign as the company.
+# The drafter must sign exactly as configured and must not invent a human signer.
+sender_name: "Zamp"
