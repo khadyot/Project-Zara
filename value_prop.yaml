@@ -7,15 +7,9 @@
 
 product: "We help operations teams automate manual, reconciliation-heavy processes"
 
-# Who this lands with. Used to pick the pain angle — a CFO hook is not a VP Ops hook.
-buyer_titles:
-  - VP Operations
-  - Director of Operations
-  - Head of Finance Operations
-  - Controller
-  - VP Finance
-  - RevOps Lead
-  - Head of Supply Chain
+# Who this lands with. Guidance only — never a gate. Best-effort tie to the person's
+# actual role when known; if unknown or unrelated, hook company-level and say so.
+buyer_functions: "anyone owning or influencing operations/finance processes (CEO, CFO, COO, Controller, VP/Director of Ops or Finance, Chief Strategy, RevOps, or adjacent)"
 
 # The pains signals get scored against.
 #
@@ -58,43 +52,13 @@ pains:
       - M&A activity or corporate restructuring
       - reports of turning profitable or significant quarterly growth
 
-# ICP rubric — ratified from reference/research_results/, expressed as rules with vetoes
-# so it is actually computable rather than prose. LinkedIn Company Details supplies
-# headcount and industry; without it, icp_fit degrades to `unknown`, never a guess.
+# ICP rubric — INFORMATIONAL ONLY. Never rejects a prospect. Deviations are computed
+# and surfaced on the decision card ("it is what it is" — stated, not gated).
+# LinkedIn Company Details supplies headcount; without it, icp_fit degrades to `unknown`, never a guess.
 icp:
-  role_terms:
-    - finance
-    - accounting
-    - accountant
-    - analyst
-    - controller
-    - reconciliation
-    - payment
-    - settlement
-    - ledger
-    - billing
-    - treasury
-    - fp&a
-    - revenue
-    - bookkeeping
-    - ops
   headcount:
-    min: 50
-    max: 500
-  sectors:
-    - payments
-    - fintech
-    - logistics
-    - e-commerce
-    - retail operations
-    - marketplaces
-    - billing-heavy SaaS
-  # Any veto -> not_a_fit, regardless of other scores.
-  vetoes:
-    - public sector / government
-    - headcount outside the 50-500 band
-    - non-profit
-    - pre-revenue / pre-seed
+    preferred_min: 50
+    preferred_max: 2000
 
 # Compass X: relevance is not permission.
 #

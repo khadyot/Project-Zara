@@ -452,6 +452,11 @@ def main():
             st.info(f"Resolved company: '{res_info.input_company}' → '{res_info.resolved_company}'"
                     + (f" ({res_info.domain})" if res_info.domain else ""))
 
+        # --- Deviations (informational, never blocking) ---
+        icp_notes = getattr(cache["draft_res"].ranked_prospect, "icp_notes", None)
+        if icp_notes:
+            st.caption("Deviations: " + " · ".join(icp_notes))
+
         # --- Regeneration controls ---
         st.markdown("### Regenerate")
         col_style, col_regen, col_deep = st.columns([2, 1, 1])

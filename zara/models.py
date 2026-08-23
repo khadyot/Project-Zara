@@ -77,10 +77,11 @@ class HookProposal:
 class RankedProspect:
     prospect: Prospect
     cards: list[RankedCard]
-    icp_fit: Literal["fit", "not_a_fit", "unknown"]
+    icp_fit: Literal["fit", "unknown"]
     winning_card: RankedCard | None
     hooks: list[HookProposal] = field(default_factory=list)
     resolution: ResolutionInfo | None = None
+    icp_notes: list[str] = field(default_factory=list)
 
 @dataclass(frozen=True)
 class VerificationResult:

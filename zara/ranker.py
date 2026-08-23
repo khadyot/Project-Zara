@@ -24,13 +24,13 @@ def _parse_firmographic(snippet: str) -> dict:
         res['sector'] = sec_match.group(1).strip().lower()
     return res
 
-def _compute_icp_fit(cards: list[SignalCard], value_prop: dict) -> Literal["fit", "not_a_fit", "unknown"]:
+def _compute_icp_fit(cards: list[SignalCard], value_prop: dict) -> tuple[Literal["fit", "unknown"], list[str]]:
+    """Informational only — never rejects. Returns (verdict, deviations) where
+    deviations are surfaced on the decision card, not used to gate anything."""
     icp = value_prop.get('icp', {})
-    hc_min = icp.get('headcount', {}).get('min', 50)
-    hc_max = icp.get('headcount', {}).get('max', 500)
-    vetoes = [v.lower() for v in icp.get('vetoes', [])]
-    target_sectors = [s.lower() for s in icp.get('sectors', [])]
-    
+    hc_pref_min = icp.get('headcount', {}).get('preferred_min', 50)
+    hc_pref_max = icp.get('headcount', {}).get('preferred_max', 2000)
+
     headcount = None
     sector = None
     for c in cards:
@@ -38,22 +38,17 @@ def _compute_icp_fit(cards: list[SignalCard], value_prop: dict) -> Literal["fit"
             data = _parse_firmographic(c.snippet)
             if 'headcount' in data: headcount = data['headcount']
             if 'sector' in data: sector = data['sector']
-            
-    if headcount is None or sector is None:
-        return "unknown"
-        
-    if headcount < hc_min or headcount > hc_max:
-        return "not_a_fit"
-        
-    for v in vetoes:
-        if v in sector:
-            return "not_a_fit"
-            
-    for ts in target_sectors:
-        if ts in sector:
-            return "fit"
-            
-    return "not_a_fit"
+
+    notes: list[str] = []
+    if headcount is None:
+        return "unknown", ["headcount unknown — could not verify"]
+
+    if headcount < hc_pref_min or headcount > hc_pref_max:
+        notes.append(f"headcount {headcount} — outside preferred {hc_pref_min}-{hc_pref_max} band")
+    else:
+        notes.append(f"headcount {headcount} — within preferred band")
+
+    return "fit", notes
 
 def _compute_proximity(card: SignalCard) -> Literal["authored", "attributed", "company_action", "database"]:
     if card.tier == "person":
@@ -96,7 +91,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     for r in results:
         all_cards.extend(r.cards)
         
-    icp_fit = _compute_icp_fit(all_cards, vp)
+    icp_fit, icp_notes = _compute_icp_fit(all_cards, vp)
     
     ranked_cards_map = {}
     to_score = []
@@ -226,7 +221,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
 
     return RankedProspect(
         prospect=prospect, cards=final_cards, icp_fit=icp_fit,
-        winning_card=winning_card, hooks=hooks
+        winning_card=winning_card, hooks=hooks, icp_notes=icp_notes
     )
 
 
@@ -248,8 +243,8 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
 
     offer = vp.get("product", "")
     prompt = (
-        f"For each research card below about {prospect.person_name} at {prospect.company}, "
-        f"write an outreach hook.\n\n"
+        f"For each research card below about {prospect.person_name} (role: {prospect.title or 'unknown'}) "
+        f"at {prospect.company}, write an outreach hook.\n\n"
         f"WHAT WE SELL: {offer}\n\n"
         f"CARDS (index, verbatim snippet):\n"
     )
@@ -257,7 +252,10 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         prompt += f"\n[{idx}] {c.card.snippet[:600]}\n"
     prompt += (
         "\nFor each card output: hook_text (one sentence stating the specific fact to lead with), "
-        "rationale (why this matters to THIS person in THEIR role), bridge (how it connects to what we sell), "
+        "rationale (why this matters to THIS person — tie it to their actual role when the role is known "
+        "and related to the pain; if the role is unknown or unrelated, hook on the company-level fact and "
+        "say so plainly in the rationale — never invent a role connection), "
+        "bridge (how it connects to what we sell), "
         "strength (0.0-1.0 overall hook quality). Only use facts present in the snippets."
     )
 

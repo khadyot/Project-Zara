@@ -16,6 +16,12 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     if res_info and res_info.input_company.strip() != res_info.resolved_company:
         md.append(f"Resolved company: '{res_info.input_company}' → '{res_info.resolved_company}' ({res_info.method}{', ' + res_info.domain if res_info.domain else ''})")
     md.append(f"Claim strength: {draft_res.claim_strength}  ·  ICP: {draft_res.ranked_prospect.icp_fit}  ·  Cost: ${sum(r.cost_usd for r in results):.4f}")
+    icp_notes = getattr(draft_res.ranked_prospect, "icp_notes", None)
+    if icp_notes:
+        md.append("")
+        md.append("## Deviations (informational, never blocking)")
+        for n in icp_notes:
+            md.append(f"- {n}")
     md.append("")
     md.append("## Draft")
     if draft_res.draft_text:

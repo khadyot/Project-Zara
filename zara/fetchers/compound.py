@@ -7,6 +7,10 @@ from zara.models import Prospect, SourceResult, SignalCard
 GROQ_COMPOUND_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_COMPOUND_MODEL = "groq/compound"
 
+
+class _CapacitySkip(Exception):
+    pass
+
 SYSTEM_PROMPT = (
     "You are a research assistant. Search the web and report only concrete, "
     "recent, factual findings relevant to the query. No speculation. "
@@ -29,9 +33,9 @@ class CompoundFetcher:
 
         queries = [
             (
-                f'"{prospect.person_name}" {prospect.company} {prospect.title or ""} — recent news, '
-                f"interviews, podcast appearances, talks, LinkedIn posts, quotes, promotion, or "
-                f"career moves in the last 12 months",
+                f'"{prospect.person_name}" {prospect.company} — recent news, interviews, '
+                f"podcast appearances, talks, quotes, promotion, or career moves "
+                f"in the last 12 months",
                 "person",
                 "person_mention",
             ),
@@ -44,7 +48,12 @@ class CompoundFetcher:
         ]
 
         async def run_query(query: str, tier: str, signal_type: str) -> list[SignalCard]:
-            text = await self._compound_search(query, api_key)
+            try:
+                text = await self._compound_search(query, api_key)
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 429:
+                    raise _CapacitySkip("groq tpm budget consumed")
+                raise
             if "NO_RESULTS" in text or not text:
                 return []
             return self._parse(text, tier, signal_type)
@@ -57,7 +66,12 @@ class CompoundFetcher:
         cards: list[SignalCard] = []
         errors: list[str] = []
         for out in outcomes:
-            if isinstance(out, Exception):
+            if isinstance(out, _CapacitySkip):
+                return SourceResult(
+                    source="Compound", rung=0, status="skipped", reason=f"model capacity: {out}",
+                    cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start) * 1000)
+                )
+            elif isinstance(out, Exception):
                 errors.append(f"{type(out).__name__}: {out}")
             else:
                 cards.extend(out)
