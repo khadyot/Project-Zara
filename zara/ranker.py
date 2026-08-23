@@ -106,9 +106,10 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         recency = _compute_recency(card.published_date)
         
         excluded = None
+        guardrail_hit = None
         if card.eligibility in ("personal", "ambiguous", "unknown"):
             excluded = f"eligibility: {card.eligibility}"
-            
+
         if not excluded:
             lower_text = f"{card.claim} {card.snippet}".lower()
             for nr in never_reference:
@@ -117,21 +118,25 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 for t in terms:
                     pattern = r'\b' + re.escape(t.lower())
                     if re.search(pattern, lower_text):
-                        excluded = f"never_reference: {nr_id}"
+                        if strictness == "permissive":
+                            guardrail_hit = f"never_reference (soft): {nr_id}"
+                        else:
+                            excluded = f"never_reference: {nr_id}"
                         break
-                if excluded:
+                if excluded or guardrail_hit:
                     break
-                    
+
         if not excluded:
             to_score.append((i, card))
-            
+
         ranked_cards_map[i] = RankedCard(
             card=card,
             pain_match=None,
             proximity=proximity,
             recency_days=recency,
             score=0.0,
-            excluded=excluded
+            excluded=excluded,
+            guardrail_hit=guardrail_hit
         )
         
     if to_score:
@@ -162,14 +167,19 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                     rc = ranked_cards_map[s.index]
                     if s.matched_pain_id and s.score > 0:
                         pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
+                        final_score = s.score
+                        if rc.guardrail_hit:
+                            final_score = round(s.score * 0.5, 4)
                         ranked_cards_map[s.index] = RankedCard(
                             card=rc.card, pain_match=pm, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=s.score, excluded=None
+                            recency_days=rc.recency_days, score=final_score, excluded=None,
+                            guardrail_hit=rc.guardrail_hit
                         )
                     else:
                         ranked_cards_map[s.index] = RankedCard(
                             card=rc.card, pain_match=None, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop"
+                            recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop",
+                            guardrail_hit=rc.guardrail_hit
                         )
         except ProviderProbeFailedError as e:
             # Mark as unscored with reason
@@ -177,7 +187,8 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 rc = ranked_cards_map[i]
                 ranked_cards_map[i] = RankedCard(
                     card=rc.card, pain_match=None, proximity=rc.proximity,
-                    recency_days=rc.recency_days, score=0.0, excluded=f"scoring unavailable ({str(e)})"
+                    recency_days=rc.recency_days, score=0.0, excluded=f"scoring unavailable ({str(e)})",
+                    guardrail_hit=rc.guardrail_hit
                 )
     
     final_cards = list(ranked_cards_map.values())
@@ -193,12 +204,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     seen_tiers = set()
     for c in eligible:
         if c.card.tier in seen_tiers:
-            # Modify it in final_cards to be excluded
             for i, fc in enumerate(final_cards):
                 if fc is c:
                     final_cards[i] = RankedCard(
                         card=c.card, pain_match=c.pain_match, proximity=c.proximity,
-                        recency_days=c.recency_days, score=c.score, excluded="same hook kind as winner (Compass VI swap test)"
+                        recency_days=c.recency_days, score=c.score,
+                        excluded="same hook kind as winner (Compass VI swap test)",
+                        guardrail_hit=c.guardrail_hit
                     )
         else:
             seen_tiers.add(c.card.tier)
@@ -209,5 +221,63 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     if remaining_eligible:
         remaining_eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score), reverse=True)
         winning_card = remaining_eligible[0]
-        
-    return RankedProspect(prospect=prospect, cards=final_cards, icp_fit=icp_fit, winning_card=winning_card)
+
+    hooks = await _articulate_hooks(prospect, remaining_eligible[:3], vp)
+
+    return RankedProspect(
+        prospect=prospect, cards=final_cards, icp_fit=icp_fit,
+        winning_card=winning_card, hooks=hooks
+    )
+
+
+class HookOutput(BaseModel):
+    card_index: int
+    hook_text: str
+    rationale: str
+    bridge: str
+    strength: float
+
+class HooksOutput(BaseModel):
+    hooks: list[HookOutput]
+
+
+async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp: dict) -> list:
+    from zara.models import HookProposal
+    if not top_cards:
+        return []
+
+    offer = vp.get("product", "")
+    prompt = (
+        f"For each research card below about {prospect.person_name} at {prospect.company}, "
+        f"write an outreach hook.\n\n"
+        f"WHAT WE SELL: {offer}\n\n"
+        f"CARDS (index, verbatim snippet):\n"
+    )
+    for idx, c in enumerate(top_cards):
+        prompt += f"\n[{idx}] {c.card.snippet[:600]}\n"
+    prompt += (
+        "\nFor each card output: hook_text (one sentence stating the specific fact to lead with), "
+        "rationale (why this matters to THIS person in THEIR role), bridge (how it connects to what we sell), "
+        "strength (0.0-1.0 overall hook quality). Only use facts present in the snippets."
+    )
+
+    try:
+        resp = await generate_content_with_retry(
+            prompt=prompt,
+            schema=HooksOutput,
+            system_instruction="You are an expert B2B outreach strategist. Never invent facts."
+        )
+        hooks = []
+        resp_hooks = getattr(resp, "hooks", None) or []
+        for h in resp_hooks:
+            if 0 <= h.card_index < len(top_cards):
+                hooks.append(HookProposal(
+                    card_index=h.card_index,
+                    hook_text=h.hook_text,
+                    rationale=h.rationale,
+                    bridge=h.bridge,
+                    strength=max(0.0, min(1.0, h.strength)),
+                ))
+        return hooks
+    except Exception:
+        return []

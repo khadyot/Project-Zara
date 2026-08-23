@@ -12,6 +12,9 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     md = []
     prospect = draft_res.ranked_prospect.prospect
     md.append(f"# {prospect.person_name} @ {prospect.company}")
+    res_info = draft_res.ranked_prospect.resolution
+    if res_info and res_info.input_company.strip() != res_info.resolved_company:
+        md.append(f"Resolved company: '{res_info.input_company}' → '{res_info.resolved_company}' ({res_info.method}{', ' + res_info.domain if res_info.domain else ''})")
     md.append(f"Claim strength: {draft_res.claim_strength}  ·  ICP: {draft_res.ranked_prospect.icp_fit}  ·  Cost: ${sum(r.cost_usd for r in results):.4f}")
     md.append("")
     md.append("## Draft")
@@ -39,7 +42,20 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     if not not_chosen:
         md.append("*None*")
     for c in not_chosen:
-        md.append(f"- {c.card.claim} — {c.excluded or 'eligible but outscored'}")
+        reason = c.excluded or 'eligible but outscored'
+        if c.guardrail_hit:
+            reason = f"{reason} · {c.guardrail_hit}"
+        md.append(f"- {c.card.claim} — {reason}")
+    md.append("")
+
+    md.append("## Hook options")
+    if draft_res.ranked_prospect.hooks:
+        for i, h in enumerate(draft_res.ranked_prospect.hooks):
+            md.append(f"{i+1}. [{h.strength:.2f}] {h.hook_text}")
+            md.append(f"   _Why: {h.rationale}_")
+            md.append(f"   _Bridge: {h.bridge}_")
+    else:
+        md.append("*None articulated.*")
     md.append("")
     
     md.append("## Retrieval")
@@ -63,18 +79,21 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         
     return "\n".join(md)
 
-async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None) -> DraftResult:
+async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None, resolution=None, hook=None, style: str = "auto") -> DraftResult:
     # 1. Rank
     ranked_prospect = await rank_prospect(prospect, results, strictness=strictness)
+    from dataclasses import replace as _replace
+    if resolution is not None:
+        ranked_prospect = _replace(ranked_prospect, resolution=resolution)
     claim_strength = compute_claim_strength(ranked_prospect.winning_card)
-    
+
     from zara.utils.config import load_value_prop
     vp = load_value_prop()
     if vp_override:
         vp = {**vp, **vp_override}
-        
+
     # 2. Draft
-    draft_text = await draft_email(ranked_prospect, vp, strictness=strictness)
+    draft_text = await draft_email(ranked_prospect, vp, strictness=strictness, hook=hook, style=style)
     
     if not draft_text:
         return DraftResult(
@@ -97,7 +116,7 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
         
     # Retry on failure (blocked_hallucination)
     if verification.status == "blocked_hallucination" and verification.first_pass_hallucinations:
-        draft_text_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations)
+        draft_text_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations, hook=hook, style=style)
         if draft_text_retry:
             verification_retry = await verify_draft(draft_text_retry, ranked_prospect, vp)
             if verification_retry.passed:

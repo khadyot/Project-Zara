@@ -253,6 +253,14 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
         ApifyGoogleSearchFetcher, ApifyIndeedFetcher, ApifyG2CapterraFetcher, ApifyCrunchbaseFetcher
     )
     from zara.s2 import process_prospect
+    from zara.utils.resolve import resolve_company_entity
+    import dataclasses
+
+    resolution = await resolve_company_entity(prospect.company)
+    if resolution.resolved_company and resolution.resolved_company != prospect.company:
+        prospect = dataclasses.replace(prospect, company=resolution.resolved_company)
+    if resolution.domain and not prospect.company_domain:
+        prospect = dataclasses.replace(prospect, company_domain=resolution.domain)
 
     rung0 = [
         GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(), 
@@ -309,6 +317,6 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     )
     
     vp_override = settings.get("identity") if settings else None
-    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override)
-    
+    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution)
+
     return results, draft_res

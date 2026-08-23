@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Literal
 
+from zara.utils.resolve import ResolutionInfo
+
 RetrievalStatus = Literal["ok", "empty", "failed", "skipped"]
 
 @dataclass(frozen=True)
@@ -61,6 +63,15 @@ class RankedCard:
     recency_days: int | None
     score: float
     excluded: str | None
+    guardrail_hit: str | None = None
+
+@dataclass(frozen=True)
+class HookProposal:
+    card_index: int
+    hook_text: str
+    rationale: str
+    bridge: str
+    strength: float
 
 @dataclass(frozen=True)
 class RankedProspect:
@@ -68,6 +79,8 @@ class RankedProspect:
     cards: list[RankedCard]
     icp_fit: Literal["fit", "not_a_fit", "unknown"]
     winning_card: RankedCard | None
+    hooks: list[HookProposal] = field(default_factory=list)
+    resolution: ResolutionInfo | None = None
 
 @dataclass(frozen=True)
 class VerificationResult:

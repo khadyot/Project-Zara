@@ -22,25 +22,33 @@ def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_a
         return "person_authored"
     return "no_signal"
 
-async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None) -> str | None:
+async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None, hook: object = None, style: str = "auto") -> str | None:
     winning_card = ranked_prospect.winning_card
     sender_name = value_prop.get("sender_name", "Zamp")
     offer = value_prop.get("product", "")
-    
+
     if not winning_card:
         # no_signal honest note
         return f"Hi {ranked_prospect.prospect.person_name},\n\nI looked across the web, your LinkedIn, and news sources to find what you're focusing on right now, but couldn't find a strong signal. If you're open to it, I'd love to learn what's top of mind for you. {offer}. Let me know if you're open to a chat.\n\nBest,\n{sender_name}"
-        
+
     pain_statement = ""
     for p in value_prop.get("pains", []):
         if p["id"] == winning_card.pain_match.pain_id:
             pain_statement = p["statement"]
             break
-            
+
     prompt = (
         f"Draft a 60-120 word email to {ranked_prospect.prospect.person_name} at {ranked_prospect.prospect.company}.\n"
         f"Use this EXACT syllogism logic:\n"
         f"1. Hook: based ONLY on this snippet: '{winning_card.card.snippet}'\n"
+    )
+    if hook is not None:
+        prompt += (
+            f"   Lead with this hook (its facts must match the snippet): {hook.hook_text}\n"
+            f"   Why it matters to them: {hook.rationale}\n"
+            f"   Bridge to the offer: {hook.bridge}\n"
+        )
+    prompt += (
         f"2. Pain: {pain_statement}\n"
         f"3. Offer: {offer}\n\n"
         f"Constraints:\n"
@@ -48,6 +56,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         f"- Do NOT invent a human signer or job title.\n"
         f"- Quote or compress the snippet, but never embellish.\n"
     )
+    if style and style != "auto":
+        prompt += f"- Email opening style: {style}.\n"
     
     if strictness == "strict":
         prompt += "- Do NOT invent proof points or customer metrics.\n"
