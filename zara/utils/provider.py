@@ -235,10 +235,61 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
     print(f"WARNING: Groq failed, falling back to Gemini. Error: {groq_error}", file=sys.stderr)
     try:
         return await _generate_gemini(prompt, schema, system_instruction, schema_dict)
-    except Exception:
-        if groq_error is not None:
-            raise groq_error
-        raise
+    except Exception as gemini_error:
+        print(f"WARNING: Gemini failed, falling back to Z.ai. Error: {gemini_error}", file=sys.stderr)
+        try:
+            return await _generate_zai(prompt, schema, system_instruction, schema_dict)
+        except Exception:
+            if groq_error is not None:
+                raise groq_error
+            raise
+
+
+async def _generate_zai(prompt: str, schema, system_instruction: str, schema_dict: dict):
+    api_key = os.environ.get("ZAI_API_KEY")
+    if not api_key:
+        raise ProviderAuthError("ZAI_API_KEY is missing from environment variables.")
+
+    schema_prompt = (
+        f"{prompt}\n\n"
+        f"You must respond with a single JSON object matching this JSON schema exactly "
+        f"(all properties required, no additional properties):\n"
+        f"{json.dumps(schema_dict, indent=2)}"
+    )
+
+    payload = {
+        "model": "glm-4.5-flash",
+        "messages": [
+            {"role": "system", "content": system_instruction},
+            {"role": "user", "content": schema_prompt}
+        ],
+        "response_format": {"type": "json_object"},
+        "temperature": 0.0
+    }
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+            json=payload, headers=headers, timeout=60.0
+        )
+
+    if resp.status_code != 200:
+        raise ProviderProbeFailedError(f"Z.ai fallback failed: {resp.status_code} {resp.text}")
+
+    content = resp.json()["choices"][0]["message"]["content"]
+    if "</think>" in content:
+        content = content.split("</think>", 1)[1]
+    content = content.strip()
+    if not content:
+        raise ProviderProbeFailedError("Z.ai fallback returned empty content")
+
+    _record_fixture(prompt, system_instruction, content)
+    return _parse_content(content, schema)
 
 async def run_probe():
     # Only for the startup check
