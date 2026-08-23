@@ -85,7 +85,7 @@ class CardScoreOutput(BaseModel):
 class BatchScoreOutput(BaseModel):
     scores: list[CardScoreOutput]
 
-async def rank_prospect(prospect: Prospect, results: list[SourceResult]) -> RankedProspect:
+async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict") -> RankedProspect:
     from zara.utils.config import load_value_prop
     vp = load_value_prop()
         
@@ -144,10 +144,17 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult]) -> Rank
             prompt += f"[{i}] {card.snippet}\n\n"
             
         try:
+            
+            sys_prompt = "You are an expert sales ranker."
+            if strictness == "permissive":
+                sys_prompt += " You are allowed to use structural pattern recognition (e.g. inferring system evaluation windows from new executive appointments, debt/funding facilities, or M&A). You do not need explicit verbatim complaints to score a match."
+            else:
+                sys_prompt += " You must be extremely strict. Only match if the snippet explicitly proves the 'observable_via' condition. Do not make inferential leaps."
+                
             resp = await generate_content_with_retry(
                 prompt=prompt,
                 schema=BatchScoreOutput,
-                system_instruction="You are an expert sales ranker."
+                system_instruction=sys_prompt
             )
             scores = resp.scores
             for s in scores:
@@ -180,7 +187,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult]) -> Rank
     eligible = [c for c in final_cards if c.excluded is None]
     
     # Sort eligible by proximity priority then score.
-    prox_val = {"authored": 4, "attributed": 3, "company_action": 2, "database": 1}
+    prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "company_action": 2, "database": 1})
     eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score), reverse=True)
     
     seen_tiers = set()

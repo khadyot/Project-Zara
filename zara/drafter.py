@@ -22,7 +22,7 @@ def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_a
         return "person_authored"
     return "no_signal"
 
-async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, feedback_tokens: list[str] = None) -> str | None:
+async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None) -> str | None:
     winning_card = ranked_prospect.winning_card
     sender_name = value_prop.get("sender_name", "Zamp")
     offer = value_prop.get("product", "")
@@ -46,9 +46,17 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, feedbac
         f"Constraints:\n"
         f"- Sign exactly as: {sender_name}\n"
         f"- Do NOT invent a human signer or job title.\n"
-        f"- Do NOT invent proof points or customer metrics.\n"
         f"- Quote or compress the snippet, but never embellish.\n"
     )
+    
+    if strictness == "strict":
+        prompt += "- Do NOT invent proof points or customer metrics.\n"
+    elif strictness == "permissive":
+        pp = value_prop.get("proof_point")
+        if pp:
+            prompt += f"- You may use this proof point: {pp}\n"
+        else:
+            prompt += "- Do NOT invent proof points or customer metrics.\n"
     
     if feedback_tokens:
         prompt += "\nWARNING: Your previous attempt hallucinated these tokens. Ensure they are removed or replaced with grounded facts:\n"

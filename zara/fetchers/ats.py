@@ -99,6 +99,11 @@ class GreenhouseFetcher:
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             data = resp.json()
+            if isinstance(data, dict) and data.get("error"):
+                return SourceResult(
+                    source="Greenhouse", rung=2, status="failed", reason=f"API error: {data['error']}",
+                    cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
+                )
             jobs = data.get("jobs", [])
             if not jobs:
                 return SourceResult(

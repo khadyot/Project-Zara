@@ -8,6 +8,16 @@ from exa_py import Exa
 
 CACHE_FILE = ".ats_cache.json"
 
+def guess_slug(company: str) -> str:
+    """Best-effort slug for a company name: lowercase, strip separators/suffix noise."""
+    name = company.lower()
+    name = re.sub(r'[\s\.\,\-]+', '', name)
+    for suffix in ('inc', 'llc', 'co', 'hq'):
+        if name.endswith(suffix) and len(name) > len(suffix):
+            name = name[: -len(suffix)]
+            break
+    return name
+
 class ATSDiscoverer:
     def __init__(self):
         self.cache = self._load_cache()

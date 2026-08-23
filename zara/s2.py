@@ -63,16 +63,18 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         
     return "\n".join(md)
 
-async def process_prospect(prospect: Prospect, results: list[SourceResult]) -> DraftResult:
+async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None) -> DraftResult:
     # 1. Rank
-    ranked_prospect = await rank_prospect(prospect, results)
+    ranked_prospect = await rank_prospect(prospect, results, strictness=strictness)
     claim_strength = compute_claim_strength(ranked_prospect.winning_card)
     
     from zara.utils.config import load_value_prop
     vp = load_value_prop()
+    if vp_override:
+        vp = {**vp, **vp_override}
         
     # 2. Draft
-    draft_text = await draft_email(ranked_prospect, vp)
+    draft_text = await draft_email(ranked_prospect, vp, strictness=strictness)
     
     if not draft_text:
         return DraftResult(
@@ -95,7 +97,7 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult]) -> D
         
     # Retry on failure (blocked_hallucination)
     if verification.status == "blocked_hallucination" and verification.first_pass_hallucinations:
-        draft_text_retry = await draft_email(ranked_prospect, vp, feedback_tokens=verification.first_pass_hallucinations)
+        draft_text_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations)
         if draft_text_retry:
             verification_retry = await verify_draft(draft_text_retry, ranked_prospect, vp)
             if verification_retry.passed:

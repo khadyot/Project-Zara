@@ -19,3 +19,14 @@ scratch/
 .budget.json
 .ats_cache.json
 .budget.json.lock
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Vendored reference repo
+project-zen/
+
+# Local-only test harness
+test_ui.py

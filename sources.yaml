@@ -43,6 +43,12 @@ sources:
     tier: "company"
     signal_type: "news"
 
+  - id: "groq_compound"
+    type: "free_api" # Groq 'compound' agentic web search model
+    pricing_model: "free"
+    tier: "person"
+    signal_type: "person_mention"
+
   - id: "sec_edgar"
     type: "free_api" # Via scoped Exa
     pricing_model: "free"

@@ -3,12 +3,12 @@ import asyncio
 import httpx
 import os
 import subprocess
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
 
 from zara.models import Prospect, SourceResult, SignalCard
 from zara.orchestrator import run_pipeline
 from zara.fetchers.ats import GreenhouseFetcher
-from zara.utils.slug import guess_slug
+from zara.utils.discovery import guess_slug
 
 # 1. SourceResult invariants
 def test_source_result_invariants():
@@ -30,7 +30,13 @@ def test_source_result_invariants():
 async def test_greenhouse_empty_vs_failed():
     fetcher = GreenhouseFetcher()
     prospect = Prospect("John", "Acme")
-    
+
+    # Bypass ATS discovery (networked) — we only want to test response handling
+    discover = patch(
+        "zara.fetchers.ats.ATSDiscoverer.discover",
+        new=AsyncMock(return_value=("greenhouse", "acme")),
+    )
+
     # Mock a 200 response that actually contains an error object
     class MockResponse:
         def __init__(self, status, json_data):
@@ -40,13 +46,13 @@ async def test_greenhouse_empty_vs_failed():
             return self._json
 
     # Test Failed (200 but error body)
-    with patch("httpx.AsyncClient.get", return_value=MockResponse(200, {"error": "Invalid board"})):
+    with discover, patch("httpx.AsyncClient.get", return_value=MockResponse(200, {"error": "Invalid board"})):
         res = await fetcher.fetch(prospect)
         assert res.status == "failed"
         assert "Invalid board" in res.reason
 
     # Test Empty (200 but no jobs)
-    with patch("httpx.AsyncClient.get", return_value=MockResponse(200, {"jobs": []})):
+    with discover, patch("httpx.AsyncClient.get", return_value=MockResponse(200, {"jobs": []})):
         res = await fetcher.fetch(prospect)
         assert res.status == "empty"
         assert "no open jobs" in res.reason

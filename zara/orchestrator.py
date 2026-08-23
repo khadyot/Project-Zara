@@ -8,6 +8,27 @@ logger = logging.getLogger(__name__)
 
 BUDGET_CAP = 4.00
 
+async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung: int = 0) -> None:
+    if not fetcher_tasks:
+        return
+    parallel_results = await asyncio.gather(*(t for _, t in fetcher_tasks), return_exceptions=True)
+    for (f, _), res in zip(fetcher_tasks, parallel_results):
+        if isinstance(res, SourceResult):
+            results.append(res)
+            if res.cost_usd > 0:
+                add_spend(res.cost_usd)
+        elif isinstance(res, Exception):
+            logger.error(f"Fetcher raised exception: {type(res).__name__}: {res}")
+            results.append(SourceResult(
+                source=f.__class__.__name__,
+                rung=getattr(f, 'rung', rung), # Fallback if rung not present
+                status="failed",
+                reason=f"{type(res).__name__}: {res}",
+                cards=[],
+                cost_usd=0.0,
+                elapsed_ms=0
+            ))
+
 async def run_pipeline(
     prospect: Prospect,
     rung0_fetchers: list,
@@ -15,64 +36,70 @@ async def run_pipeline(
     rung2_fetchers: list,
     rung3_fetchers: list,
     rung4_fetchers: list,
-    deep_mode: bool = False
+    deep_mode: bool = False,
+    gap_filler_gate: bool = False
 ) -> list[SourceResult]:
     """
     Executes the retrieval pipeline according to the cost-ordered escalation ladder.
+    With gap_filler_gate=True, rung 0 executes first; if it yields >= 2 person-tier
+    cards, all paid rungs are skipped with a gap_filler reason.
     """
     results: list[SourceResult] = []
-    
-    # 1. Budget check for Rung 2
-    mtd_spend = get_mtd_spend()
-    # Rung 2 projected cost is ~$0.002
-    projected_spend = 0.002
-    
-    fetcher_tasks = []
-    # Rung 0 (Always fires, free)
-    for f in rung0_fetchers:
-        fetcher_tasks.append((f, f.fetch(prospect)))
-        
-    # Rung 1 (Always fires, free tier)
-    for f in rung1_fetchers:
-        fetcher_tasks.append((f, f.fetch(prospect)))
-        
-    # Rung 2 (Always fires if budget permits)
-    rung2_allowed = (mtd_spend + projected_spend) <= BUDGET_CAP
-    for f in rung2_fetchers:
-        if rung2_allowed:
-            fetcher_tasks.append((f, f.fetch(prospect)))
-        else:
-            # We must return a skipped result if gated
-            results.append(SourceResult(
-                source=f.__class__.__name__,
-                rung=2,
-                status="skipped",
-                reason="budget guard",
-                cards=[],
-                cost_usd=0.0,
-                elapsed_ms=0
-            ))
-            
-    # Execute Rung 0, 1, 2 in parallel
-    if fetcher_tasks:
-        parallel_results = await asyncio.gather(*(t for _, t in fetcher_tasks), return_exceptions=True)
-        for (f, _), res in zip(fetcher_tasks, parallel_results):
-            if isinstance(res, SourceResult):
-                results.append(res)
-                if res.cost_usd > 0:
-                    add_spend(res.cost_usd)
-            elif isinstance(res, Exception):
-                logger.error(f"Fetcher raised exception: {type(res).__name__}: {res}")
+
+    fetcher_tasks = [(f, f.fetch(prospect)) for f in rung0_fetchers]
+
+    gate_skip_paid = False
+    if gap_filler_gate:
+        await _gather_results(fetcher_tasks, results, rung=0)
+        fetcher_tasks = []
+        person_signal_count = sum(
+            1 for r in results if r.status == "ok" for c in r.cards if c.tier == "person"
+        )
+        gate_skip_paid = person_signal_count >= 2
+        if not gate_skip_paid:
+            fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
+    else:
+        # Rung 1 (Always fires, free tier)
+        fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
+
+    if gate_skip_paid:
+        for rung_num, fetchers in ((1, rung1_fetchers), (2, rung2_fetchers), (3, rung3_fetchers), (4, rung4_fetchers)):
+            for f in fetchers:
                 results.append(SourceResult(
                     source=f.__class__.__name__,
-                    rung=getattr(f, 'rung', 0), # Fallback if rung not present
-                    status="failed",
-                    reason=f"{type(res).__name__}: {res}",
+                    rung=rung_num,
+                    status="skipped",
+                    reason="gap_filler: sufficient person signal from free rungs",
                     cards=[],
                     cost_usd=0.0,
                     elapsed_ms=0
                 ))
-                
+    else:
+        # 1. Budget check for Rung 2
+        mtd_spend = get_mtd_spend()
+        # Rung 2 projected cost is ~$0.002
+        projected_spend = 0.002
+
+        # Rung 2 (Always fires if budget permits)
+        rung2_allowed = (mtd_spend + projected_spend) <= BUDGET_CAP
+        for f in rung2_fetchers:
+            if rung2_allowed:
+                fetcher_tasks.append((f, f.fetch(prospect)))
+            else:
+                # We must return a skipped result if gated
+                results.append(SourceResult(
+                    source=f.__class__.__name__,
+                    rung=2,
+                    status="skipped",
+                    reason="budget guard",
+                    cards=[],
+                    cost_usd=0.0,
+                    elapsed_ms=0
+                ))
+
+        # Execute remaining rungs in parallel
+        await _gather_results(fetcher_tasks, results)
+
     has_person_profile = False
     has_company_hiring = False
     discovered_linkedin_url = None
@@ -91,68 +118,71 @@ async def run_pipeline(
         prospect = replace(prospect, linkedin_url=discovered_linkedin_url)
     
     # Rung 3: LinkedIn Jobs (if no hiring), LinkedIn Profile (if no profile)
-    rung3_tasks = []
-    mtd_spend = get_mtd_spend()
-    projected_spend = 0.004 # roughly per rung 3 call
-    
-    # We differentiate LinkedIn Profile vs Jobs based on the fetcher name for now
-    for f in rung3_fetchers:
-        is_profile = "Profile" in f.__class__.__name__ or "LinkedInScraper" in f.__class__.__name__
-        is_jobs = "Jobs" in f.__class__.__name__
+    if not gate_skip_paid:
+        rung3_tasks = []
+        mtd_spend = get_mtd_spend()
+        projected_spend = 0.004 # roughly per rung 3 call
         
-        should_fire = False
-        if is_profile and not has_person_profile:
-            should_fire = True
-        if is_jobs and not has_company_hiring:
-            should_fire = True
+        # We differentiate LinkedIn Profile vs Jobs based on the fetcher name for now
+        for f in rung3_fetchers:
+            is_profile = "Profile" in f.__class__.__name__ or "LinkedInScraper" in f.__class__.__name__
+            is_jobs = "Jobs" in f.__class__.__name__
             
-        if should_fire:
-            if (mtd_spend + projected_spend) <= BUDGET_CAP:
-                rung3_tasks.append((f, f.fetch(prospect)))
+            should_fire = False
+            if is_profile and not has_person_profile:
+                should_fire = True
+            if is_jobs and not has_company_hiring:
+                should_fire = True
+                
+            if should_fire:
+                if (mtd_spend + projected_spend) <= BUDGET_CAP:
+                    rung3_tasks.append((f, f.fetch(prospect)))
+                else:
+                    results.append(SourceResult(
+                        source=f.__class__.__name__,
+                        rung=3,
+                        status="skipped",
+                        reason="budget guard",
+                        cards=[],
+                        cost_usd=0.0,
+                        elapsed_ms=0
+                    ))
             else:
                 results.append(SourceResult(
                     source=f.__class__.__name__,
                     rung=3,
                     status="skipped",
-                    reason="budget guard",
+                    reason="cheaper rung succeeded",
                     cards=[],
                     cost_usd=0.0,
                     elapsed_ms=0
                 ))
-        else:
-            results.append(SourceResult(
-                source=f.__class__.__name__,
-                rung=3,
-                status="skipped",
-                reason="cheaper rung succeeded",
-                cards=[],
-                cost_usd=0.0,
-                elapsed_ms=0
-            ))
 
-    if rung3_tasks:
-        rung3_results = await asyncio.gather(*(t for _, t in rung3_tasks), return_exceptions=True)
-        for (f, _), res in zip(rung3_tasks, rung3_results):
-            if isinstance(res, SourceResult):
-                results.append(res)
-                if res.cost_usd > 0:
-                    add_spend(res.cost_usd)
-            elif isinstance(res, Exception):
-                logger.error(f"Rung 3 Fetcher raised exception: {type(res).__name__}: {res}")
-                results.append(SourceResult(
-                    source=f.__class__.__name__,
-                    rung=3,
-                    status="failed",
-                    reason=f"{type(res).__name__}: {res}",
-                    cards=[],
-                    cost_usd=0.0,
-                    elapsed_ms=0
-                ))
+        if rung3_tasks:
+            rung3_results = await asyncio.gather(*(t for _, t in rung3_tasks), return_exceptions=True)
+            for (f, _), res in zip(rung3_tasks, rung3_results):
+                if isinstance(res, SourceResult):
+                    results.append(res)
+                    if res.cost_usd > 0:
+                        add_spend(res.cost_usd)
+                elif isinstance(res, Exception):
+                    logger.error(f"Rung 3 Fetcher raised exception: {type(res).__name__}: {res}")
+                    results.append(SourceResult(
+                        source=f.__class__.__name__,
+                        rung=3,
+                        status="failed",
+                        reason=f"{type(res).__name__}: {res}",
+                        cards=[],
+                        cost_usd=0.0,
+                        elapsed_ms=0
+                    ))
                 
     # Rung 4: Deep mode or total miss
     # Total miss means no usable cards from Rung 0, 1, 3
     total_has_cards = any(len(r.cards) > 0 for r in results)
-    if not total_has_cards or deep_mode:
+    if gate_skip_paid:
+        pass # already skipped with gap_filler reason above
+    elif not total_has_cards or deep_mode:
         mtd_spend = get_mtd_spend()
         if (mtd_spend + 0.005) <= BUDGET_CAP:
             rung4_tasks = [(f, f.fetch(prospect)) for f in rung4_fetchers]
@@ -206,13 +236,14 @@ async def run_pipeline(
                 
     return results
 
-async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard"):
+async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard", settings: dict = None):
     """
-    Instantiates fetchers based on profile, runs the retrieval pipeline,
+    Instantiates fetchers based on profile and settings, runs the retrieval pipeline,
     and then processes the prospect through ranking, drafting, and verification.
     """
     from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
     from zara.fetchers.news import GoogleNewsFetcher
+    from zara.fetchers.compound import CompoundFetcher
     from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
     from zara.fetchers.apify import (
         ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher, ApifyLinkedInJobsFetcher,
@@ -225,7 +256,8 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard")
 
     rung0 = [
         GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(), 
-        SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher()
+        SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher(),
+        CompoundFetcher()
     ]
     
     rung1 = [
@@ -252,6 +284,19 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard")
             ApifyG2CapterraFetcher(), ApifyCrunchbaseFetcher()
         ])
     
+    
+    if settings:
+        if not settings.get("use_ats", True):
+            rung0 = [f for f in rung0 if not type(f).__name__.endswith("Fetcher") or "News" in type(f).__name__]
+        if not settings.get("use_exa", True):
+            rung1 = []
+        if not settings.get("use_apify", True):
+            rung2 = []
+            rung3 = []
+            rung4 = []
+            
+    strictness = settings.get("strictness", "strict") if settings else "strict"
+    
     results = await run_pipeline(
         prospect,
         rung0_fetchers=rung0,
@@ -259,9 +304,11 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard")
         rung2_fetchers=rung2,
         rung3_fetchers=rung3,
         rung4_fetchers=rung4,
-        deep_mode=(profile == "deep")
+        deep_mode=(profile == "deep"),
+        gap_filler_gate=True
     )
     
-    draft_res = await process_prospect(prospect, results)
+    vp_override = settings.get("identity") if settings else None
+    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override)
     
     return results, draft_res

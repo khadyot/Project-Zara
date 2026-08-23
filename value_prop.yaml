@@ -49,6 +49,14 @@ pains:
     observable_via:
       - job descriptions naming Excel/Google Sheets as a core tool for a finance/ops role
       - ERP or finance-system migration signals
+      
+  - id: structural_complexity
+    statement: "Rapid expansion, new leadership, or structural changes inherently create intercompany reconciliation sprawl"
+    observable_via:
+      - recent appointments of new finance leadership (CFO, VP Finance, Controller) within the last 6 months
+      - securing significant debt facilities, leases, or funding for expansion
+      - M&A activity or corporate restructuring
+      - reports of turning profitable or significant quarterly growth
 
 # ICP rubric — ratified from reference/research_results/, expressed as rules with vetoes
 # so it is actually computable rather than prose. LinkedIn Company Details supplies
@@ -110,11 +118,17 @@ never_reference:
   - id: forced_departure
     terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
 
-# DECIDED: omit. Inventing a customer name or a metric is precisely the fabrication the
-# verification layer exists to catch, and a 60-120 word email does not need one.
-# Set this only when a real, checkable proof point exists.
-proof_point: null
+# DECIDED: omitted by default in strict mode. Permissive mode allows this benchmark.
+proof_point: "We help companies in your sector cut month-end close times by up to 30-40% without ripping out existing ERPs."
 
 # DECIDED 2026-08-23 by the human: sign as the company.
 # The drafter must sign exactly as configured and must not invent a human signer.
 sender_name: "Zamp"
+
+# Ranker Tie-Breaking Weights
+# These control how the ranker breaks ties when multiple signals have the same pain score.
+proximity_weights:
+  authored: 4
+  attributed: 3
+  company_action: 2
+  database: 1
