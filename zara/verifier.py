@@ -15,6 +15,24 @@ def _normalize(text: str) -> str:
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
+def build_evidence_list(prospect: RankedProspect, value_prop: dict) -> list[str]:
+    evidence = []
+    if prospect.prospect.person_name:
+        evidence.append(prospect.prospect.person_name)
+    if prospect.prospect.company:
+        evidence.append(prospect.prospect.company)
+    if prospect.prospect.title:
+        evidence.append(prospect.prospect.title)
+    
+    for k, v in value_prop.items():
+        if isinstance(v, str):
+            evidence.append(v)
+            
+    for c in prospect.cards:
+        evidence.append(c.card.snippet)
+        
+    return evidence
+
 def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict) -> list[str]:
     # Extract numbers, dates, quoted strings, URLs, and multi-word proper nouns
     # For a simple deterministic pass, we'll extract tokens that look like these.
@@ -39,22 +57,7 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict)
     candidates = set(numbers + urls + quotes + proper_nouns)
     
     # Gather all evidence text
-    evidence = []
-    if prospect.prospect.person_name:
-        evidence.append(prospect.prospect.person_name)
-    if prospect.prospect.company:
-        evidence.append(prospect.prospect.company)
-    if prospect.prospect.title:
-        evidence.append(prospect.prospect.title)
-    
-    for k, v in value_prop.items():
-        if isinstance(v, str):
-            evidence.append(v)
-            
-    # Include EVERY retrieved card's snippet, regardless of exclusion
-    for c in prospect.cards:
-        evidence.append(c.card.snippet)
-            
+    evidence = build_evidence_list(prospect, value_prop)
     evidence_text = " ".join(evidence)
     norm_evidence = _normalize(evidence_text)
     
@@ -75,15 +78,15 @@ class Pass2Output(BaseModel):
     passed: bool
     reason: str
 
-async def pass2_llm_judge(draft_text: str, prospect: RankedProspect) -> VerificationResult:
+async def pass2_llm_judge(draft_text: str, prospect: RankedProspect, value_prop: dict) -> VerificationResult:
     # Prompt the LLM
     prompt = (
         "You are a strict verifier. Verify the draft email is supported ONLY by the provided evidence snippets.\n\n"
         "Evidence snippets:\n"
     )
-    for c in prospect.cards:
-        if not c.excluded:
-            prompt += f"- {c.card.snippet}\n"
+    evidence = build_evidence_list(prospect, value_prop)
+    for ev in evidence:
+        prompt += f"- {ev}\n"
             
     prompt += f"\nDraft Email:\n{draft_text}\n\n"
     prompt += "Does the draft email invent any factual claims, metrics, or customer names not present in the evidence? Answer passed=False if there are unsupported claims."
@@ -122,4 +125,4 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
         )
         
     # Pass 2
-    return await pass2_llm_judge(draft_text, prospect)
+    return await pass2_llm_judge(draft_text, prospect, value_prop)

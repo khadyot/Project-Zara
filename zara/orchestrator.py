@@ -205,3 +205,63 @@ async def run_pipeline(
     results = classifier_result.results
                 
     return results
+
+async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard"):
+    """
+    Instantiates fetchers based on profile, runs the retrieval pipeline,
+    and then processes the prospect through ranking, drafting, and verification.
+    """
+    from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
+    from zara.fetchers.news import GoogleNewsFetcher
+    from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
+    from zara.fetchers.apify import (
+        ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher, ApifyLinkedInJobsFetcher,
+        ApifyLinkedInPostsFetcher, ApifyTwitterFetcher, ApifyInstagramFetcher,
+        ApifyTikTokFetcher, ApifyYouTubeFetcher, ApifyRedditFetcher,
+        ApifyFacebookFetcher, ApifyProductHuntFetcher, ApifyGoogleMapsFetcher,
+        ApifyGoogleSearchFetcher, ApifyIndeedFetcher, ApifyG2CapterraFetcher, ApifyCrunchbaseFetcher
+    )
+    from zara.s2 import process_prospect
+
+    rung0 = [
+        GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(), 
+        SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher()
+    ]
+    
+    rung1 = [
+        ExaLinkedInFetcher(), ExaNewsFetcher(), ExaBlogFetcher(),
+        ExaEdgarFetcher(), ExaYouTubeFetcher()
+    ]
+    
+    rung2 = []
+    rung3 = []
+    rung4 = []
+    
+    if profile in ["standard", "social", "deep"]:
+        rung2.append(ApifyLinkedInCompanyFetcher())
+        rung3.extend([ApifyLinkedInProfileFetcher(), ApifyLinkedInJobsFetcher()])
+        rung4.append(ApifyLinkedInPostsFetcher())
+        
+    if profile in ["social", "deep"]:
+        rung4.extend([ApifyTwitterFetcher(), ApifyYouTubeFetcher(), ApifyRedditFetcher(), ApifyInstagramFetcher()])
+        
+    if profile == "deep":
+        rung4.extend([
+            ApifyTikTokFetcher(), ApifyFacebookFetcher(), ApifyProductHuntFetcher(), 
+            ApifyGoogleMapsFetcher(), ApifyGoogleSearchFetcher(), ApifyIndeedFetcher(),
+            ApifyG2CapterraFetcher(), ApifyCrunchbaseFetcher()
+        ])
+    
+    results = await run_pipeline(
+        prospect,
+        rung0_fetchers=rung0,
+        rung1_fetchers=rung1,
+        rung2_fetchers=rung2,
+        rung3_fetchers=rung3,
+        rung4_fetchers=rung4,
+        deep_mode=(profile == "deep")
+    )
+    
+    draft_res = await process_prospect(prospect, results)
+    
+    return results, draft_res

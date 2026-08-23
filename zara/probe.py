@@ -37,71 +37,11 @@ async def main():
     print(f"Prospect: {prospect.person_name} @ {prospect.company}")
     print(f"Profile: {args.profile}")
     print(f"============================")
-    
-    # ---------------------------
-    # Rung 0: ATS & Free APIs
-    # ---------------------------
-    from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
-    from zara.fetchers.news import GoogleNewsFetcher
-    rung0 = [
-        GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(), 
-        SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher()
-    ]
-    
-    # ---------------------------
-    # Rung 1: Scoped Exa
-    # ---------------------------
-    from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
-    rung1 = [
-        ExaLinkedInFetcher(), ExaNewsFetcher(), ExaBlogFetcher(),
-        ExaEdgarFetcher(), ExaYouTubeFetcher()
-    ]
-    
-    # ---------------------------
-    # Rung 2, 3, 4: Apify
-    # ---------------------------
-    from zara.fetchers.apify import (
-        ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher, ApifyLinkedInJobsFetcher,
-        ApifyLinkedInPostsFetcher, ApifyTwitterFetcher, ApifyInstagramFetcher,
-        ApifyTikTokFetcher, ApifyYouTubeFetcher, ApifyRedditFetcher,
-        ApifyFacebookFetcher, ApifyProductHuntFetcher, ApifyGoogleMapsFetcher,
-        ApifyGoogleSearchFetcher, ApifyIndeedFetcher, ApifyG2CapterraFetcher, ApifyCrunchbaseFetcher
-    )
-    
-    rung2 = []
-    rung3 = []
-    rung4 = []
-    
-    if args.profile in ["standard", "social", "deep"]:
-        rung2.append(ApifyLinkedInCompanyFetcher())
-        rung3.extend([ApifyLinkedInProfileFetcher(), ApifyLinkedInJobsFetcher()])
-        rung4.append(ApifyLinkedInPostsFetcher())
-        
-    if args.profile in ["social", "deep"]:
-        rung4.extend([ApifyTwitterFetcher(), ApifyYouTubeFetcher(), ApifyRedditFetcher(), ApifyInstagramFetcher()])
-        
-    if args.profile == "deep":
-        rung4.extend([
-            ApifyTikTokFetcher(), ApifyFacebookFetcher(), ApifyProductHuntFetcher(), 
-            ApifyGoogleMapsFetcher(), ApifyGoogleSearchFetcher(), ApifyIndeedFetcher(),
-            ApifyG2CapterraFetcher(), ApifyCrunchbaseFetcher()
-        ])
-    
-    results = await run_pipeline(
-        prospect,
-        rung0_fetchers=rung0,
-        rung1_fetchers=rung1,
-        rung2_fetchers=rung2,
-        rung3_fetchers=rung3,
-        rung4_fetchers=rung4,
-        deep_mode=(args.profile == "deep")
-    )
+    from zara.orchestrator import run_end_to_end_pipeline
+    results, draft_res = await run_end_to_end_pipeline(prospect, profile=args.profile)
     
     # Calculate run cost
     run_cost = sum(r.cost_usd for r in results)
-    
-    # Slice 2: Process prospect
-    draft_res = await process_prospect(prospect, results)
     
     if args.json:
         import dataclasses

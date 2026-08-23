@@ -9,6 +9,14 @@ from zara.utils.config import load_value_prop
 def _extract_dense_snippet(text: str) -> str:
     if not text:
         return "No description"
+        
+    lower_text = text.lower()
+    for boilerplate in ["equal opportunity", "benefits", "compensation", "what we offer", "perks"]:
+        idx = lower_text.find(boilerplate)
+        if idx != -1:
+            text = text[:idx]
+            lower_text = lower_text[:idx]
+            
     if len(text) <= 500:
         return text
     
@@ -79,7 +87,7 @@ class GreenhouseFetcher:
         
         if platform != "greenhouse" or not slug:
             return SourceResult(
-                source="Greenhouse", rung=0, status="empty", reason="not on greenhouse", 
+                source="Greenhouse", rung=2, status="empty", reason="not on greenhouse", 
                 cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
             
@@ -87,14 +95,14 @@ class GreenhouseFetcher:
             resp = await client.get(f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true")
             if resp.status_code != 200:
                 return SourceResult(
-                    source="Greenhouse", rung=0, status="empty", reason=f"http {resp.status_code}", 
+                    source="Greenhouse", rung=2, status="empty", reason=f"http {resp.status_code}", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             data = resp.json()
             jobs = data.get("jobs", [])
             if not jobs:
                 return SourceResult(
-                    source="Greenhouse", rung=0, status="empty", reason="no open jobs", 
+                    source="Greenhouse", rung=2, status="empty", reason="no open jobs", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
@@ -104,14 +112,14 @@ class GreenhouseFetcher:
             
             if cards is None:
                 return SourceResult(
-                    source="Greenhouse", rung=0, status="empty", reason=f"{total} roles, none ICP-relevant", 
+                    source="Greenhouse", rung=2, status="empty", reason=f"{total} roles, none ICP-relevant", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
             reason = f"({len(cards)} of {rel} relevant roles shown)" if rel > len(cards) else None
                 
             return SourceResult(
-                source="Greenhouse", rung=0, status="ok", reason=reason, 
+                source="Greenhouse", rung=2, status="ok", reason=reason, 
                 cards=cards, cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
 
@@ -124,7 +132,7 @@ class LeverFetcher:
         
         if platform != "lever" or not slug:
             return SourceResult(
-                source="Lever", rung=0, status="empty", reason="not on lever", 
+                source="Lever", rung=2, status="empty", reason="not on lever", 
                 cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
             
@@ -132,13 +140,13 @@ class LeverFetcher:
             resp = await client.get(f"https://api.lever.co/v0/postings/{slug}?mode=json")
             if resp.status_code != 200:
                 return SourceResult(
-                    source="Lever", rung=0, status="empty", reason=f"http {resp.status_code}", 
+                    source="Lever", rung=2, status="empty", reason=f"http {resp.status_code}", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             data = resp.json()
             if not data:
                 return SourceResult(
-                    source="Lever", rung=0, status="empty", reason="no open jobs", 
+                    source="Lever", rung=2, status="empty", reason="no open jobs", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
@@ -148,14 +156,14 @@ class LeverFetcher:
             
             if cards is None:
                 return SourceResult(
-                    source="Lever", rung=0, status="empty", reason=f"{total} roles, none ICP-relevant", 
+                    source="Lever", rung=2, status="empty", reason=f"{total} roles, none ICP-relevant", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
             reason = f"({len(cards)} of {rel} relevant roles shown)" if rel > len(cards) else None
                 
             return SourceResult(
-                source="Lever", rung=0, status="ok", reason=reason, 
+                source="Lever", rung=2, status="ok", reason=reason, 
                 cards=cards, cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
 
@@ -168,30 +176,29 @@ class AshbyFetcher:
         
         if platform != "ashby" or not slug:
             return SourceResult(
-                source="Ashby", rung=0, status="empty", reason="not on ashby", 
+                source="Ashby", rung=2, status="empty", reason="not on ashby", 
                 cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
             
         async with httpx.AsyncClient() as client:
-            resp = await client.post("https://jobs.ashbyhq.com/api/non-user-graphql", json={
-                "operationName": "JobBoardWithPostings",
-                "variables": {"organizationHostedJobsPageName": slug},
-                "query": "query JobBoardWithPostings($organizationHostedJobsPageName: String!) { jobBoard: jobBoardWithPostings(organizationHostedJobsPageName: $organizationHostedJobsPageName) { jobPostings { id title publishedAt jobUrl descriptionHtml } } }"
-            })
+            resp = await client.get(f"https://api.ashbyhq.com/posting-api/job-board/{slug}")
             if resp.status_code != 200:
                 return SourceResult(
-                    source="Ashby", rung=0, status="empty", reason=f"http {resp.status_code}", 
+                    source="Ashby", rung=2, status="empty", reason=f"http {resp.status_code}", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             try:
                 data = resp.json()
-                jobs = data["data"]["jobBoard"]["jobPostings"]
-            except Exception:
-                jobs = []
+                jobs = data.get("jobs", [])
+            except Exception as e:
+                return SourceResult(
+                    source="Ashby", rung=2, status="failed", reason=str(e), 
+                    cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
+                )
                 
             if not jobs:
                 return SourceResult(
-                    source="Ashby", rung=0, status="empty", reason="no open jobs", 
+                    source="Ashby", rung=2, status="empty", reason="no open jobs", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
@@ -201,14 +208,14 @@ class AshbyFetcher:
             
             if cards is None:
                 return SourceResult(
-                    source="Ashby", rung=0, status="empty", reason=f"{total} roles, none ICP-relevant", 
+                    source="Ashby", rung=2, status="empty", reason=f"{total} roles, none ICP-relevant", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
             reason = f"({len(cards)} of {rel} relevant roles shown)" if rel > len(cards) else None
                 
             return SourceResult(
-                source="Ashby", rung=0, status="ok", reason=reason, 
+                source="Ashby", rung=2, status="ok", reason=reason, 
                 cards=cards, cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
 
@@ -221,7 +228,7 @@ class SmartRecruitersFetcher:
         
         if platform != "smartrecruiters" or not slug:
             return SourceResult(
-                source="SmartRecruiters", rung=0, status="empty", reason="not on smartrecruiters", 
+                source="SmartRecruiters", rung=2, status="empty", reason="not on smartrecruiters", 
                 cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
             
@@ -229,14 +236,14 @@ class SmartRecruitersFetcher:
             resp = await client.get(f"https://api.smartrecruiters.com/v1/companies/{slug}/postings")
             if resp.status_code != 200:
                 return SourceResult(
-                    source="SmartRecruiters", rung=0, status="empty", reason=f"http {resp.status_code}", 
+                    source="SmartRecruiters", rung=2, status="empty", reason=f"http {resp.status_code}", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             data = resp.json()
             jobs = data.get("content", [])
             if not jobs:
                 return SourceResult(
-                    source="SmartRecruiters", rung=0, status="empty", reason="no open jobs", 
+                    source="SmartRecruiters", rung=2, status="empty", reason="no open jobs", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
@@ -246,14 +253,14 @@ class SmartRecruitersFetcher:
             
             if cards is None:
                 return SourceResult(
-                    source="SmartRecruiters", rung=0, status="empty", reason=f"{total} roles, none ICP-relevant", 
+                    source="SmartRecruiters", rung=2, status="empty", reason=f"{total} roles, none ICP-relevant", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
             reason = f"({len(cards)} of {rel} relevant roles shown)" if rel > len(cards) else None
                 
             return SourceResult(
-                source="SmartRecruiters", rung=0, status="ok", reason=reason, 
+                source="SmartRecruiters", rung=2, status="ok", reason=reason, 
                 cards=cards, cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
 
@@ -262,11 +269,11 @@ class RecruiteeFetcher:
     async def fetch(self, prospect: Prospect) -> SourceResult:
         start = time.time()
         discoverer = ATSDiscoverer()
-        platform, slug, url = await discoverer.discover(prospect.company)
+        platform, slug = await discoverer.discover(prospect.company, prospect.company_domain)
         
         if platform != "recruitee" or not slug:
             return SourceResult(
-                source="Recruitee", rung=0, status="empty", reason="not on recruitee", 
+                source="Recruitee", rung=2, status="empty", reason="not on recruitee", 
                 cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
             )
             
@@ -274,14 +281,14 @@ class RecruiteeFetcher:
             resp = await client.get(f"https://{slug}.recruitee.com/api/offers")
             if resp.status_code != 200:
                 return SourceResult(
-                    source="Recruitee", rung=0, status="empty", reason=f"http {resp.status_code}", 
+                    source="Recruitee", rung=2, status="empty", reason=f"http {resp.status_code}", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
             data = resp.json()
             jobs = data.get("offers", [])
             if not jobs:
                 return SourceResult(
-                    source="Recruitee", rung=0, status="empty", reason="no open jobs", 
+                    source="Recruitee", rung=2, status="empty", reason="no open jobs", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
@@ -291,13 +298,13 @@ class RecruiteeFetcher:
             
             if cards is None:
                 return SourceResult(
-                    source="Recruitee", rung=0, status="empty", reason=f"{total} roles, none ICP-relevant", 
+                    source="Recruitee", rung=2, status="empty", reason=f"{total} roles, none ICP-relevant", 
                     cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
                 )
                 
             reason = f"({len(cards)} of {rel} relevant roles shown)" if rel > len(cards) else None
                 
             return SourceResult(
-                source="Recruitee", rung=0, status="ok", reason=reason, 
+                source="Recruitee", rung=2, status="ok", reason=reason, 
                 cards=cards, cost_cost=0.0, elapsed_ms=int((time.time() - start)*1000)
             )

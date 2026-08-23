@@ -38,7 +38,7 @@ async def test_1_zero_network_calls_under_fixtures(use_fixtures, monkeypatch):
     monkeypatch.setattr("httpx.AsyncClient.post", mock_raise)
     
     prospect = Prospect("Test", "ShipBob")
-    from zara.record_mock import load_snapshot
+    from scripts.record_mock import load_snapshot
     snapshot = load_snapshot()
         
     res = await rank_prospect(prospect, [snapshot])
