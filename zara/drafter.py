@@ -63,11 +63,15 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             return f"Hi {ranked_prospect.prospect.person_name},\n\nI looked across the web, your LinkedIn, and news sources to find what you're focusing on right now, but couldn't find a strong signal. If you're open to it, I'd love to learn what's top of mind for you. {offer}. Let me know if you're open to a chat.\n\nBest,\n{sender_name}"
 
     pain_statement = ""
-    if winning_card.pain_match and winning_card.pain_match.pain_id == "general_news":
+    # pain_match is None when the ranker's scorer response omitted this card's
+    # index (it stayed eligible with no pain matched). Same degradation as
+    # general_news: state the conversation-opener, never crash.
+    pm = winning_card.pain_match
+    if pm is None or pm.pain_id == "general_news":
         pain_statement = "We don't know their specific pain yet, but we want to start a conversation about how we help companies in their space."
     else:
         for p in value_prop.get("pains", []):
-            if p["id"] == winning_card.pain_match.pain_id:
+            if p["id"] == pm.pain_id:
                 pain_statement = p["statement"]
                 break
 

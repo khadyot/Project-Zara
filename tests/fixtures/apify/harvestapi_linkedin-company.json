@@ -1,679 +1,409 @@
 [
   {
-    "id": "1007729",
-    "universalName": "source-logistics",
-    "linkedinUrl": "https://www.linkedin.com/company/source-logistics/",
-    "name": "Source Logistics",
-    "tagline": "The go-to logistics partner that bridges cultures to bring global products to U.S. consumers.",
-    "website": "http://www.sourcelogistics.com",
-    "phone": {
-      "number": "+1 (323) 887-3884",
-      "extension": null
-    },
-    "logo": "https://media.licdn.com/dms/image/v2/C510BAQFZTsdcstHb5g/company-logo_400_400/company-logo_400_400/0/1631308726252?e=1788998400&v=beta&t=1D4BazXxQ155e6X5MtHzZOPIyVA1asoR-h7rUEdomdE",
+    "id": "18769344",
+    "universalName": "modern-treasury",
+    "linkedinUrl": "https://www.linkedin.com/company/modern-treasury/",
+    "name": "Modern Treasury",
+    "tagline": "The most trusted infrastructure for global money movement",
+    "website": "https://www.moderntreasury.com",
+    "logo": "https://media.licdn.com/dms/image/v2/D560BAQHXK2fiJ3IwxA/company-logo_400_400/company-logo_400_400/0/1695333122719/modern_treasury_logo?e=1788998400&v=beta&t=a4Lh1oYvOP4sUdOuMP_ZGtltEdP_vqQxXP7yokv2VdI",
     "foundedOn": {
       "month": null,
-      "year": 1999,
+      "year": 2018,
       "day": null
     },
-    "employeeCount": 196,
+    "employeeCount": 124,
     "employeeCountRange": {
       "start": 51,
       "end": 200
     },
-    "followerCount": 7492,
-    "description": "Source Logistics is the go-to U.S. logistics partner for internationally celebrated brands, bridging cultures and supply chains to help global companies connect with American consumers. \n\nWith over 25 years of experience and a 93.8% customer retention rate, Source Logistics is a trusted, award-winning 3PL provider for some of the world\u2019s most recognized food, beverage, health, beauty, and consumer product brands. From artisan producers to Fortune 500, we help our clients scale with confidence through flexible, integrated, and tech-enabled logistics solutions. \n\nOur services are purpose-built to support brands entering or expanding in the U.S. market: \n\nWarehousing \n25 U.S. facilities spanning over 5.8 million sq ft offer dry, ambient, refrigerated, and frozen storage. Our operations include cross-docking, pick & pack, lot and expiration tracking, and real-time visibility through our new customer portal. \n\nTransportation Management \nOur end-to-end freight services include carrier procurement and optimization, rate negotiation, freight consolidation, and load planning. Integrated TMS and WMS platforms provide full transparency, shipment tracking, and KPI reporting. \n\nEcommerce Fulfillment \nSource Logistics powers scalable, tech-driven B2B and B2C omnichannel fulfillment with platform integrations, custom kitting, branded packaging, and returns management, plus discounted shipping through national and regional carriers. \n\nValue-Added Services \nFrom kitting, bundling, and labeling to temperature-sensitive handling, retail display builds, and quality inspections, we offer tailored services to meet the unique needs of industries like food, healthcare, retail, and CPG. \n\nAt Source Logistics, we combine cultural fluency with logistics expertise, giving global brands a trusted, U.S.-based partner with decades of international experience that\u2019s as invested in their growth as they are. ",
+    "followerCount": 18744,
+    "description": "Modern Treasury provides the most trusted infrastructure for global money movement. Trusted by leading enterprises and financial institutions, the platform helps businesses launch and scale payment experiences in days, not months, with best-in-class developer tools and a single API for both fiat and stablecoin transactions. With built-in compliance, ledgering, and reporting, Modern Treasury enables instant, reliable, and scalable money movement for companies of all sizes.\n\nBacked by leading investors including Benchmark, Altimeter, and Salesforce Ventures, Modern Treasury has powered over $400 billion in payments for hundreds of organizations.\n",
     "companyType": "Privately Held",
     "locations": [
       {
         "country": "US",
-        "city": "City of Industry",
-        "geographicArea": "California",
-        "line1": "13060 Temple Avenue",
-        "line2": null,
-        "postalCode": "91746",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Industry, PA, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Pennsylvania",
-          "city": "Industry"
-        }
-      },
-      {
-        "country": "US",
-        "city": "City of Industry",
-        "geographicArea": "California",
-        "line1": "2225 Workman Mill Rd",
-        "line2": null,
-        "postalCode": "90601",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Industry, PA, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Pennsylvania",
-          "city": "Industry"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Montebello",
-        "geographicArea": "California",
-        "line1": "812 Union St",
-        "line2": null,
-        "postalCode": "90640",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Montebello, CA, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "California",
-          "city": "Montebello"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Montebello",
-        "geographicArea": "California",
-        "line1": "2100 Yates Ave",
-        "line2": null,
-        "postalCode": "90040",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Montebello, CA, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "California",
-          "city": "Montebello"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Portland",
-        "geographicArea": "Oregon",
-        "line1": "15849 N Columbia Blvd",
-        "line2": "Ste 100",
-        "postalCode": "97203",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Portland, OR, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Oregon",
-          "city": "Portland"
-        }
-      },
-      {
-        "country": "US",
-        "city": "West Chicago",
-        "geographicArea": "Illinois",
-        "line1": "1800 Hawthorne Ln",
-        "line2": null,
-        "postalCode": "60185",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Chicago, IL, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Illinois",
-          "city": "Chicago"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Laredo",
-        "geographicArea": "Texas",
-        "line1": "11302A East Point Drive",
-        "line2": null,
-        "postalCode": "78045",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Laredo, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Laredo"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Laredo",
-        "geographicArea": "Texas",
-        "line1": "401 Logistics Drive",
-        "line2": "Suite 105",
-        "postalCode": "78045",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Laredo, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Laredo"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Laredo",
-        "geographicArea": "Texas",
-        "line1": "1402 Carriers Drive",
-        "line2": "Building #2",
-        "postalCode": "78045",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Laredo, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Laredo"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Laredo",
-        "geographicArea": "Texas",
-        "line1": "13819 Humphrey Rd",
-        "line2": null,
-        "postalCode": "78045",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Laredo, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Laredo"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Laredo",
-        "geographicArea": "Texas",
-        "line1": "1310 Vidal Cantu",
-        "line2": null,
-        "postalCode": "78045",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Laredo, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Laredo"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Monroe",
-        "geographicArea": "New Jersey",
-        "line1": "2 Middlesex Avenue",
-        "line2": "Suite A",
-        "postalCode": "08831",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Monroe, LA, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Louisiana",
-          "city": "Monroe"
-        }
-      },
-      {
-        "country": "US",
-        "city": "South Brunswick",
-        "geographicArea": "New Jersey",
-        "line1": "5 Nicholas Court",
-        "line2": null,
-        "postalCode": "08810",
-        "headquarter": false,
-        "description": null,
-        "parsed": {
-          "text": "Brunswick, OH, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Ohio",
-          "city": "Brunswick"
-        }
-      },
-      {
-        "country": "US",
-        "city": "The Woodlands",
-        "geographicArea": "Texas",
-        "line1": "2001 Timberloch Pl",
-        "line2": "300",
-        "postalCode": "77380",
+        "city": "San Francisco",
+        "geographicArea": "CA",
+        "line1": "77 Geary",
+        "line2": "Floor 4",
+        "postalCode": "94105",
         "headquarter": true,
-        "description": "HQ",
-        "parsed": {
-          "text": "The Woodlands, TX, United States",
-          "countryCode": "US",
-          "regionCode": null,
-          "country": "United States",
-          "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "The Woodlands"
-        }
-      },
-      {
-        "country": "US",
-        "city": "Houston",
-        "geographicArea": "Texas",
-        "line1": "22003 Cypress Slough Road",
-        "line2": "Suite 100",
-        "postalCode": "77073",
-        "headquarter": false,
         "description": null,
         "parsed": {
-          "text": "Houston, TX, United States",
+          "text": "San Francisco, CA, United States",
           "countryCode": "US",
           "regionCode": null,
           "country": "United States",
           "countryFull": "United States of America",
-          "state": "Texas",
-          "city": "Houston"
+          "state": "California",
+          "city": "San Francisco"
         }
       }
     ],
     "specialities": [],
     "industries": [
       {
-        "id": "116",
-        "name": "Transportation, Logistics, Supply Chain and Storage",
-        "urn": "urn:li:fsd_industryV2:116",
-        "title": "Transportation, Logistics, Supply Chain and Storage",
-        "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+        "id": "6",
+        "name": "Technology, Information and Internet",
+        "urn": "urn:li:fsd_industryV2:6",
+        "title": "Technology, Information and Internet",
+        "hierarchy": "Technology, Information and Media > Technology, Information and Internet"
       }
     ],
     "logos": [
       {
-        "url": "https://media.licdn.com/dms/image/v2/C510BAQFZTsdcstHb5g/company-logo_400_400/company-logo_400_400/0/1631308726252?e=1788998400&v=beta&t=1D4BazXxQ155e6X5MtHzZOPIyVA1asoR-h7rUEdomdE",
+        "url": "https://media.licdn.com/dms/image/v2/D560BAQHXK2fiJ3IwxA/company-logo_400_400/company-logo_400_400/0/1695333122719/modern_treasury_logo?e=1788998400&v=beta&t=a4Lh1oYvOP4sUdOuMP_ZGtltEdP_vqQxXP7yokv2VdI",
         "width": 400,
         "height": 400
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/C510BAQFZTsdcstHb5g/company-logo_200_200/company-logo_200_200/0/1631308726252?e=1788998400&v=beta&t=H3WBGtgriwHTvZHjQBk0zHYJ6bCPLsO9of3GM_wi7cM",
+        "url": "https://media.licdn.com/dms/image/v2/D560BAQHXK2fiJ3IwxA/company-logo_200_200/company-logo_200_200/0/1695333122719/modern_treasury_logo?e=1788998400&v=beta&t=xnEYCkfvKLpFCWEp5kUq4Hi_zr_U2TFrEq512lvnEIk",
         "width": 200,
         "height": 200
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/C510BAQFZTsdcstHb5g/company-logo_100_100/company-logo_100_100/0/1631308726252?e=1788998400&v=beta&t=TfiR3hUv563e9sRwKC4bZ2TINIhBOjTiqPmCfGSky-c",
+        "url": "https://media.licdn.com/dms/image/v2/D560BAQHXK2fiJ3IwxA/company-logo_100_100/company-logo_100_100/0/1695333122719/modern_treasury_logo?e=1788998400&v=beta&t=qHFr_TjrNnCFPg-YO5REkZDuMxj2uZb38NFMELS98AY",
         "width": 100,
         "height": 100
       }
     ],
-    "backgroundCover": "https://media.licdn.com/dms/image/v2/D4D1BAQF0HCr8xdGTfQ/company-background_10000/B4DZhu4kiVH4AU-/0/1754206980752/source_logistics_cover?e=1788210000&v=beta&t=6hXYdZ7ESoj_zmEiM2wSiK7KhRUd7q3qjZCrPLcAqj8",
+    "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGZf0hKVe_feQ/company-background_10000/B56ZbpZYS0H4Ac-/0/1747672467170/modern_treasury_cover?e=1788213600&v=beta&t=kfTydo00ImAUu0tt1OCe9DNKRO4cmdQ_lnQGhtilmhc",
     "backgroundCovers": [
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQF0HCr8xdGTfQ/company-background_10000/B4DZhu4kiVH4AU-/0/1754206980752/source_logistics_cover?e=1788210000&v=beta&t=6hXYdZ7ESoj_zmEiM2wSiK7KhRUd7q3qjZCrPLcAqj8",
-        "width": 1128,
-        "height": 191
+        "url": "https://media.licdn.com/dms/image/v2/D561BAQGZf0hKVe_feQ/company-background_10000/B56ZbpZYS0H4Ac-/0/1747672467170/modern_treasury_cover?e=1788213600&v=beta&t=kfTydo00ImAUu0tt1OCe9DNKRO4cmdQ_lnQGhtilmhc",
+        "width": 3168,
+        "height": 792
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQF0HCr8xdGTfQ/company-background_400/B4DZhu4kiVH4AY-/0/1754206980752/source_logistics_cover?e=1788210000&v=beta&t=4EBcwlkDJSMXkE21HPhcLInzMx_vU_XtYNbi-avie90",
+        "url": "https://media.licdn.com/dms/image/v2/D561BAQGZf0hKVe_feQ/company-background_400/B56ZbpZYS0H4Ag-/0/1747672467170/modern_treasury_cover?e=1788213600&v=beta&t=9IVHvVIVD0Ki8Cb74pJ3jzzvsjw6p0qXTEtLUpfQOCU",
         "width": 400,
-        "height": 67
+        "height": 100
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQF0HCr8xdGTfQ/company-background_200/B4DZhu4kiVH4Ac-/0/1754206980752/source_logistics_cover?e=1788210000&v=beta&t=xOtYFoiRTnChhcNg77Fp7Vggm153sLTR8se_1sCYNlU",
+        "url": "https://media.licdn.com/dms/image/v2/D561BAQGZf0hKVe_feQ/company-background_200/B56ZbpZYS0H4Ak-/0/1747672467170/modern_treasury_cover?e=1788213600&v=beta&t=fskLJhFCmHG5Wrb2EcLBJ-2HqigJ1P8iFAqzVuiKGIw",
         "width": 200,
-        "height": 33
+        "height": 50
       }
     ],
     "active": true,
-    "jobSearchUrl": "https://www.linkedin.com/jobs/search?geoId=92000000&f_C=1007729",
+    "jobSearchUrl": "https://www.linkedin.com/jobs/search?geoId=92000000&f_C=18769344",
     "pageVerified": true,
     "pageType": "COMPANY",
     "showcase": false,
     "paidCompany": false,
     "autoGenerated": false,
-    "callToActionUrl": "http://www.sourcelogistics.com",
+    "callToActionUrl": "https://www.moderntreasury.com",
     "similarOrganizations": [
       {
-        "id": "105511157",
-        "universalName": "npl-25",
-        "linkedinUrl": "https://www.linkedin.com/company/npl-25/",
-        "name": "Next Project Logistics",
+        "id": "7144084",
+        "universalName": "anchorage",
+        "linkedinUrl": "https://www.linkedin.com/company/anchorage/",
+        "name": "Anchorage Digital",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQF3TSHH4c8dZw/company-logo_400_400/B4EZhmgn50HgAg-/0/1754066485151/npl_25_logo?e=1788998400&v=beta&t=sF4m7_1dMiHRl6qZ1EYv4LBUmOgiTZ1yEJ5tmgvLTSc",
+        "logo": "https://media.licdn.com/dms/image/v2/C560BAQEo7grcVqnaXQ/company-logo_400_400/company-logo_400_400/0/1669736498018/anchorage_logo?e=1788998400&v=beta&t=NEzPrssTZuHXUbPytTL0xSPhjlGvoQbJEClcq5eWgXU",
         "employeeCountRange": {
-          "start": 2,
-          "end": 10
+          "start": 501,
+          "end": 1000
         },
-        "followerCount": 80,
-        "description": "Your all-in-one solution for freight, warehousing and installation. Next Project Logistics specializes in seamless transportation and secure storage, ensuring your goods are managed efficiently from pickup to delivery. Simplify your projects with a partner who handles it all!",
+        "followerCount": 66186,
+        "description": "Anchorage Digital is a crypto platform that enables institutions to participate in digital assets through custody, staking, trading, governance, settlement, and the industry\u2019s leading security infrastructure. Home to Anchorage Digital Bank N.A., the first federally chartered crypto bank in the U.S., Anchorage Digital also serves institutions through Anchorage Digital Singapore, which is licensed by the Monetary Authority of Singapore; Anchorage Digital New York, which holds a BitLicense from the New York Department of Financial Services; and self-custody wallet Porto by Anchorage Digital. The company is funded by leading institutions including Andreessen Horowitz, GIC, Goldman Sachs, KKR, and Visa, with its Series D valuation over $3 billion. Founded in 2017 in San Francisco, California, Anchorage Digital has offices in New York, New York; Porto, Portugal; Singapore; and Sioux Falls, South Dakota. \n\nFor disclosures, please visit: https://www.anchorage.com/legal",
         "industries": [
           {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHe-bSG2eoPGw/company-background_10000/B4EZhmcWzwGoAY-/0/1754065369627/npl_25_cover?e=1788210000&v=beta&t=bs6bZWofYdrt5J76OzzRG-AVAlShIU38nhRi6V2UGOA",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4D1BAQFP1UBPOF_Slw/company-background_10000/B4DZjhy_XaGsAk-/0/1756134897525/anchorage_cover?e=1788213600&v=beta&t=gxTFG-mgbtSyXr34tv3nItpwECp_qXXCDj-yj_LQq1w",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "492850",
-        "universalName": "tellworks-logistics",
-        "linkedinUrl": "https://www.linkedin.com/company/tellworks-logistics/",
-        "name": "Tellworks Logistics",
+        "id": "80086817",
+        "universalName": "joinblock",
+        "linkedinUrl": "https://www.linkedin.com/company/joinblock/",
+        "name": "Block",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQEbqKZuhmtPLg/company-logo_400_400/company-logo_400_400/0/1630551131891/tellworks_communications_llc_logo?e=1788998400&v=beta&t=Wwwfle4bL_-oMP1-1sS6r7TZ7rArE85if0JE0KmdNw8",
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEDq04RNiX3Ag/company-logo_400_400/B56Zbp3paWGsAY-/0/1747680401683/joinblock_logo?e=1788998400&v=beta&t=MdbnElZ8rwaIFF31hUiYw37nB_dmlKNDujhYia9ehB0",
+        "employeeCountRange": {
+          "start": 10001,
+          "end": null
+        },
+        "followerCount": 194388,
+        "description": "Block is one company built from many blocks, all united by the same purpose of economic empowerment. The blocks that form our foundational teams \u2014 People, Finance, Counsel, Hardware, Information Security, Platform Infrastructure Engineering, and more \u2014 provide support and guidance at the corporate level. They work across business groups and around the globe, spanning time zones and disciplines to develop inclusive People policies, forecast finances, give legal counsel, safeguard systems, nurture new initiatives, and more. Every challenge creates possibilities, and we need different perspectives to see them all. Bring yours to Block. ",
+        "industries": [
+          {
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFyvwCy1U4hDw/company-background_10000/B56ZbphAyfGsAY-/0/1747674468215/joinblock_cover?e=1788213600&v=beta&t=mqQjcqFb0Gmj0R0usjh454mkW5en_wey_tav1_UmK-8",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "76090617",
+        "universalName": "bvnk",
+        "linkedinUrl": "https://www.linkedin.com/company/bvnk/",
+        "name": "BVNK",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQE_oXznTMso9g/company-logo_400_400/B4EZ_Hud_EH4AU-/0/1785762275523/bvnk_logo?e=1788998400&v=beta&t=16APkXVhTpGhVEH6fXRFXt_UxuZa8jSzSUfteSLuvCs",
         "employeeCountRange": {
           "start": 201,
           "end": 500
         },
-        "followerCount": 2922,
-        "description": "Headquartered in Atlanta, Georgia, Tellworks Logistics is a trusted provider of end-to-end supply chain solutions. With over 20 years of experience, we help mid-sized to Fortune 100 companies streamline operations, improve visibility, and drive efficiency across their logistics networks.\n\nThrough our integrated ecosystem\u2014including sister companies Makt-Trans and AIMSPlus\u2014we deliver a seamless combination of transportation, warehousing, and technology solutions. This unified approach enables our clients to increase accuracy, enhance operational performance, and ensure on-time delivery at every stage of the supply chain.\n\nAt Tellworks, we don\u2019t just move products\u2014we optimize the entire supply chain. Our team partners closely with clients to design scalable, flexible solutions tailored to their unique business needs.\n",
+        "followerCount": 43763,
+        "description": "BVNK accelerates global money movement using stablecoins. \nWe make it easy for businesses to integrate stablecoins into their payments stack.\n\nNote: BVNK will never ask a candidate to pay a verification fee.",
         "industries": [
           {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/C4D1BAQGTdzpP6lDgng/company-background_10000/company-background_10000/0/1601854125449/tellworks_communications_llc_cover?e=1788210000&v=beta&t=_qQNBkz85b_TogMnxH0NSO39W8RLBAZHbixbAdPNA94",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQEJOto1YFGmlA/company-background_10000/B4EZ_HubQjKsAI-/0/1785762264348/bvnk_cover?e=1788213600&v=beta&t=nQkTvBmj6wBuDjYgaranBUYE5YNpkUN-Yjin8cJUrDI",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "5025943",
-        "universalName": "genproinc",
-        "linkedinUrl": "https://www.linkedin.com/company/genproinc/",
-        "name": "Genpro Inc.",
+        "id": "3110635",
+        "universalName": "checkout",
+        "linkedinUrl": "https://www.linkedin.com/company/checkout/",
+        "name": "Checkout.com",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQFV8OLr0xMFWw/company-logo_400_400/company-logo_400_400/0/1661011528026/genproinc_logo?e=1788998400&v=beta&t=82ZCxTlmoll-dwhQ7q13bk4yHqI9dbGnBUB6N6Ffpno",
-        "employeeCountRange": {
-          "start": 51,
-          "end": 200
-        },
-        "followerCount": 9099,
-        "description": "                Elevate Your Logistics Journey with a Strategic Partnership\nWorking with us, you\u2019re not just choosing a transportation solution \u2013 you\u2019re gaining a strategic partner committed to your supply chain\u2019s success. With a comprehensive suite of services and an experienced team, we\u2019re ready to elevate your logistics operations to new heights.\n\n. \n\nWe're recognized as a trusted advisor, liaison, and partner for logistics planning and solutions in the most demanding, competitive and time sensitive applications.\n\nWe believe in combining our technology, transportation service, and supply chain expertise in a packaged managed service engagement. We phase each approach, starting with a customer-specific solution design and implementation, followed by ongoing business reviews to ensure continual optimization.   Real-time intelligence keeps our shippers and carriers up-to-date on current pricing, availability and market trends.  \n\nOur advanced technology facilitates data connectivity across platforms and systems  Transform your supply chain operations with The Grid, Genpro\u2019s cutting-edge technology suite.  The Grid seamlessly connects all facets of transportation services by delivering unparalleled value to our customers and setting industry standards",
-        "industries": [
-          {
-            "id": "92",
-            "name": "Truck Transportation",
-            "urn": "urn:li:fsd_industryV2:92",
-            "title": "Truck Transportation",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage > Truck Transportation"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHhblYZP8x-Lg/company-background_10000/company-background_10000/0/1734644819076/genproinc_cover?e=1788210000&v=beta&t=RK05qqWt6C5D0QDdG_rvqrW8q6RvgqJDGWEViB8kQYg",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "1917445",
-        "universalName": "cold-chain-news",
-        "linkedinUrl": "https://www.linkedin.com/company/cold-chain-news/",
-        "name": "Cold Chain News",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQHkRUDYw1qKKQ/company-logo_400_400/B4EZy5SNdhGcAY-/0/1772635085016/cold_chain_news_logo?e=1788998400&v=beta&t=rqRR8DAAoFk4u9q7g0IbQHPrSH4Oj-42_0HN13mYmoc",
-        "employeeCountRange": {
-          "start": 2,
-          "end": 10
-        },
-        "followerCount": 3834,
-        "description": "Cold Chain News is dedicated to the UK's temperature controlled road transport and logistics industry.\n\nCold Chain News, provides an integral link between operators, buyers and equipment suppliers in the UK road transport temperature controlled industry with news, comment, analysis, technical and legal reports on all matters relating to temperature controlled logistics.\n\nCold Chain News provides incisive news and comment, together with cutting edge features tailored to reader need.",
-        "industries": [
-          {
-            "id": "82",
-            "name": "Book and Periodical Publishing",
-            "urn": "urn:li:fsd_industryV2:82",
-            "title": "Book and Periodical Publishing",
-            "hierarchy": "Technology, Information and Media > Media and Telecommunications > Book and Periodical Publishing"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHPrvUJEr1Esg/company-background_10000/B4EZ5FM6ljHQAI-/0/1779277474588/cold_chain_news_cover?e=1788210000&v=beta&t=j9rbIExILTZ-wzr09OJLahOKgE3OJkLcSczF-yh3ym0",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "40753884",
-        "universalName": "yukon-real-estate-partners",
-        "linkedinUrl": "https://www.linkedin.com/company/yukon-real-estate-partners/",
-        "name": "Yukon Real Estate Partners",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C560BAQHK_KGdibO7sw/company-logo_400_400/company-logo_400_400/0/1653577293856/yukon_cold_storage_logo?e=1788998400&v=beta&t=LrPkjcWC1QV6CnFPgFzKZokOPfMyFTC3EHuFEScq-_U",
-        "employeeCountRange": {
-          "start": 2,
-          "end": 10
-        },
-        "followerCount": 1491,
-        "description": "Yukon Real Estate Partners is a fully integrated real estate investment and development company focused on the development and acquisition of cold storage and food logistic focused assets. \n\nRecognizing a severely restricted supply and an increasing demand for space from users of all sizes and maturities, Yukon set out to bridge the cold storage supply gap by providing operators with tailored space solutions for their cold supply chain needs.\n\nA critical link in America\u2019s fresh and frozen food supply chain, cold storage has been historically underbuilt and underfinanced due to the complexities and costs required to keep the cold chain unbroken. Yukon is dedicated to growing the cold storage industry and to bolstering America\u2019s food supply chain.\n\nYukon is an associate member of the Global Cold Chain Alliance (GCCA) and International Association of Refrigerated Warehouses (IARW).",
-        "industries": [
-          {
-            "id": "44",
-            "name": "Real Estate",
-            "urn": "urn:li:fsd_industryV2:44",
-            "title": "Real Estate",
-            "hierarchy": "Real Estate and Equipment Rental Services > Real Estate"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQHoe6fbIxL56w/company-background_10000/company-background_10000/0/1653577484810/yukon_real_estate_partners_cover?e=1788210000&v=beta&t=X-F-ezDu9O_FMjdOFIpnZAhNbg5RWwjjJlLYQt-bHAY",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "1689",
-        "universalName": "exxonmobil",
-        "linkedinUrl": "https://www.linkedin.com/company/exxonmobil/",
-        "name": "ExxonMobil",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQE_IRWZ2qVHpw/company-logo_400_400/company-logo_400_400/0/1631303598129?e=1788998400&v=beta&t=K9_0LdwhF63hNGCej-bx834Q_awjKIncfdkWXBDM-Dw",
-        "employeeCountRange": {
-          "start": 501,
-          "end": 1000
-        },
-        "followerCount": 3925233,
-        "description": "The need for energy is universal. That's why ExxonMobil scientists and engineers are pioneering new research and pursuing new technologies to reduce emissions while creating more efficient fuels. \n\nWe're committed to responsibly meeting the world's energy needs.\n\nWe aim to achieve #netzero emissions from our operated assets by 2050 (for Scope 1 and 2 greenhouse gas emissions) and are taking a comprehensive approach to create emission-reduction roadmaps for major operated assets. \n\nFind us also on:\nYouTube.com/ExxonMobil\n\nFind our latest Privacy Policy at https://corporate.exxonmobil.com/Global-legal-pages/privacy-policy\n\nSee our terms and conditions at https://corporate.exxonmobil.com/global-legal-pages/terms-and-conditions \n\nFind resources on our GHG emission reduction efforts here: https://corporate.exxonmobil.com/resources\n ",
-        "industries": [
-          {
-            "id": "57",
-            "name": "Oil and Gas",
-            "urn": "urn:li:fsd_industryV2:57",
-            "title": "Oil and Gas",
-            "hierarchy": "Oil, Gas, and Mining > Oil and Gas"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQEkskzq2cT7dg/company-background_10000/B4EZmg_5SfIIAY-/0/1759342730108/exxonmobil_cover?e=1788210000&v=beta&t=njtXqkHJE22lexybZ5i5lB60wchDWW6t_CTT3Jz9JLs",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "86651",
-        "universalName": "the-rdi-group",
-        "linkedinUrl": "https://www.linkedin.com/company/the-rdi-group/",
-        "name": "The RDI Group",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQHmcfY4iuWanw/company-logo_400_400/company-logo_400_400/0/1631328063817?e=1788998400&v=beta&t=hN0OvOdd4drUgA389sCrVtKvzJZcCdlFEb2Kb20tu8o",
-        "employeeCountRange": {
-          "start": 51,
-          "end": 200
-        },
-        "followerCount": 1255,
-        "description": "The RDI Group operates four business units specializing in the design and manufacture of systems for the asphalt roofing, construction, telecommunications, power, metal coil processing industries, and medical industries. The machinery and manufacturing solutions designed, built and commissioned by Reichel & Drews, Chicago Slitter, RDI Laser Blanking Systems and RDI Enclosures & Systems have been helping customers improve productivity and profits since the early 1900s.\n\nTo remain focused and best serve customers in these diverse markets, each business unit maintains dedicated product management, sales and marketing, engineering, customer service, field service, and research and development functions. The business units of The RDI Group share resources including facilities, operations and manufacturing staff and other corporate functions. This shared resource strategy allows the company to provide customers with the highest value and best technology available in each industry. By actively practicing teamwork with customers and suppliers, the men and women of The RDI Group are creating competitively superior products and solutions.\n\nThe world headquarters, technical center and manufacturing operations for The RDI Group are housed in a 120,000 square foot (11,150 sq. meter) facility in Itasca, Illinois, just 30 miles (48 km) northwest of Chicago and minutes from O\u2019Hare International Airport. Internationally, The RDI Group maintains offices in China, as well as supporting a strong network of agents and representatives worldwide.",
-        "industries": [
-          {
-            "id": "55",
-            "name": "Machinery Manufacturing",
-            "urn": "urn:li:fsd_industryV2:55",
-            "title": "Machinery Manufacturing",
-            "hierarchy": "Manufacturing > Machinery Manufacturing"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQEZufJNu_3Wbg/company-background_10000/company-background_10000/0/1724095070851/the_rdi_group_cover?e=1788210000&v=beta&t=sUSNTW2dWAfs3DPg_HjVddB9mY8D-TLz_bYMAgv4PI0",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "166649",
-        "universalName": "university-of-london",
-        "linkedinUrl": "https://www.linkedin.com/school/university-of-london/",
-        "name": "University of London",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQEOzeRRDtb0PA/company-logo_400_400/B4EZfvR0X.GwAk-/0/1752066115520/university_of_london_logo?e=1788998400&v=beta&t=H5SV-Yx7N6vIOkUGY1accG4dRyT7aD04qMnDPWIKUDs",
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQE46oNy-pwnuw/company-logo_400_400/B4EZkZBgeXGYAY-/0/1757061450052/checkout_logo?e=1788998400&v=beta&t=HUraEh7lTTgIJ-uvphjQSIIgi1Ttqsw6qAlkOv91nQo",
         "employeeCountRange": {
           "start": 1001,
           "end": 5000
         },
-        "followerCount": 329030,
-        "description": "The University of London is the UK\u2019s largest provider of international online and distance education, which it delivers in partnership with 17 federation member universities, to improve access to higher education around the world.\n\nThe University\u2019s purpose is to increase access to education, champion research excellence and deliver social good.\n\nMore than 40,000 students in over 190 countries around the world are studying University of London programmes.\n\nThe federation of the University of London is made up of 17 renowned higher education institutions. Collectively this federation contributes to making London the global capital for Higher Education; London is home to more top-ranking universities than any other city worldwide.\n\nThe University of London is also a national leader in the humanities, promoting and facilitating research across disciplines and advocating for the humanities and their importance to society.\n\nWhile rooted in London, the University was founded on the ideals of inclusivity, diversity and collaboration and its global community is united by a common belief: that the power of collective expertise can transform people\u2019s lives.",
+        "followerCount": 287447,
+        "description": "Checkout.com processes payments for thousands of companies that shape the digital economy. Our global digital payments network supports over 145 currencies and delivers high-performance payment solutions across the world, processing billions of transactions annually. In 2025, Checkout.com processed more than $300bn in ecommerce payments volume.\n\nWe help enterprise merchants boost acceptance rates, combat fraud, and turn payments into a major revenue driver. Headquartered in London and with 19 offices worldwide, Checkout.com is trusted by leading brands such as Spotify, HelloFresh, eBay, Uber, Pinterest, Vinted, Klarna, Financial Times, and Sony.\n\nCheckout.com. Where the world checks out.",
         "industries": [
           {
-            "id": "68",
-            "name": "Higher Education",
-            "urn": "urn:li:fsd_industryV2:68",
-            "title": "Higher Education",
-            "hierarchy": "Education > Higher Education"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQEbqjoLNInSvQ/company-background_10000/company-background_10000/0/1656416947241/university_of_london_cover?e=1788210000&v=beta&t=eGZaJ-axTKk86MMCUPsKmF53h__M3gZY8jPfV8gGcKY",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHWY681bQ5EFA/company-background_10000/B4EZwiqWuqGkAY-/0/1770108057224/checkout_cover?e=1788213600&v=beta&t=Njd5F-8dPhYGf1_RZtWG3IIuUPXbri_kvGJShAcgVQE",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "9182589",
-        "universalName": "lee-&-associates-of-illinois",
-        "linkedinUrl": "https://www.linkedin.com/company/lee-&-associates-of-illinois/",
-        "name": "Lee & Associates of Illinois",
+        "id": "10928677",
+        "universalName": "paxos",
+        "linkedinUrl": "https://www.linkedin.com/company/paxos/",
+        "name": "Paxos",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C560BAQFb2z1nG7O7PA/company-logo_400_400/company-logo_400_400/0/1630631124904/lee__associates_of_illinois_logo?e=1788998400&v=beta&t=X1EmgfJFutrs7kae0oHsu_GSE2cbTMU2tlxyAJK4MeQ",
+        "logo": "https://media.licdn.com/dms/image/v2/C560BAQFN7Ng1BStNqQ/company-logo_400_400/company-logo_400_400/0/1639359558768/paxos_logo?e=1788998400&v=beta&t=NWsqQ1MXVrQa99ixXR_OCltp3BkW5R9WJlWht97phpo",
         "employeeCountRange": {
-          "start": 11,
-          "end": 50
+          "start": 201,
+          "end": 500
         },
-        "followerCount": 2148,
-        "description": "Lee & Associates of Illinois specializes in providing world class commercial brokerage services to the industrial, retail, multi-family, office, land and investment sectors of the Chicagoland commercial real estate market. The Chicago office was established in 2002 and is now recognized as one of the most successful commercial brokerage firms in the state. Each of our nationwide Lee & Associates offices has a strong local ownership combined with a powerful platform from the national Lee & Associates network.  \n\nLOCAL EXPERTISE | INTERNATIONAL REACH | WORLD CLASS",
+        "followerCount": 58753,
+        "description": "Paxos is the leading regulated blockchain infrastructure and tokenization platform. Its products are the foundation for a new, open financial system that can operate faster and more efficiently. Today, trillions of dollars are locked in inefficient, outdated financial plumbing that is inaccessible to millions of people. Paxos is replatforming the financial system to enable assets to instantaneously move anywhere in the world, at any time, in a trustworthy way.\n\nPaxos partners with leading global enterprises to tokenize, custody and trade assets. Its blockchain solutions are used by leaders like PayPal, Interactive Brokers, Mastercard, Mercado Libre and Nubank. Paxos is licensed to engage in virtual currency business activity and is the issuer of numerous digital assets including PayPal USD (PYUSD), Pax Dollar (USDP) and Pax Gold (PAXG). Global Dollar (USDG) is issued by Paxos Digital Singapore, which is a Major Payments Institution supervised by the Monetary Authority of Singapore. USDG is also issued by Paxos Issuance Europe under the supervision of FIN-FSA and in compliance with MiCA. USDG is also available on Solana. \n\nPrudentially regulated by FIN-FSA in Europe, the OCC in the US, and the MAS in Singapore, Paxos is a leading fintech company with more than $500 million raised from leading investors including Oak HC/FT, Declaration Partners, Founders Fund and PayPal Ventures.",
         "industries": [
           {
-            "id": "128",
-            "name": "Leasing Non-residential Real Estate",
-            "urn": "urn:li:fsd_industryV2:128",
-            "title": "Leasing Non-residential Real Estate",
-            "hierarchy": "Real Estate and Equipment Rental Services > Real Estate > Leasing Non-residential Real Estate"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/C4E1BAQF8niO-AOGQOA/company-background_10000/company-background_10000/0/1583939014804?e=1788210000&v=beta&t=eZZeQBTcZoueuwtHkQXY48Y5qHLv_MkrC0BTUseuQ1A",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQEPAGRA3H-UnA/company-background_10000/company-background_10000/0/1688741292241/paxos_cover?e=1788213600&v=beta&t=Wn_EZwtAoj16J4cdIzYf8sjryyPtfMGXorUlRs_KiZ0",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "40697032",
-        "universalName": "refrigerated-frozen-foods-magazine",
-        "linkedinUrl": "https://www.linkedin.com/company/refrigerated-frozen-foods-magazine/",
-        "name": "Refrigerated & Frozen Foods Magazine",
+        "id": "10774599",
+        "universalName": "alloy-apis",
+        "linkedinUrl": "https://www.linkedin.com/company/alloy-apis/",
+        "name": "Alloy",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQE7SEIqOSooLA/company-logo_400_400/company-logo_400_400/0/1630609673753/refrigerated_frozen_foods_magazine_logo?e=1788998400&v=beta&t=CxQ0ZnTBgivgfy-5_lLxKskZwp_7GZpFYggidG4rMo4",
+        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQEw5A-k39KSDg/company-logo_400_400/company-logo_400_400/0/1630656674888/alloy_apis_logo?e=1788998400&v=beta&t=-_G3gAqyN-TSoCYvpLVTBbG6nunZX3rMY4yyd5nQCYw",
         "employeeCountRange": {
-          "start": 51,
-          "end": 200
+          "start": 201,
+          "end": 500
         },
-        "followerCount": 14899,
-        "description": "Refrigerated & Frozen Foods is the only publication dedicated to one of the fastest growing segments of the food and beverage manufacturing market\u2014the value-added convenience chilled and frozen foods channel.\n\nRefrigerated & Frozen Foods reaches more than 14,000 operation, engineering, production and logistics executives in the North American market through its extensive network of digital, social and event media, covering topics that range from new product development, supply chain and logistics and food safety to packaging and energy management.\n\nThis group is intended for key decision-makers within the cold storage and logistics sector around the world to interact with each other, share ideas, suggest story concepts to our editors and generally discuss the latest happenings in the industry.",
+        "followerCount": 28587,
+        "description": "Automate smarter risk decisions across the customer lifecycle with Alloy, the AI-powered identity and fraud prevention platform that accelerates onboarding, stops fraud, and scales compliance. More than 900 of the world\u2019s leading financial institutions and fintechs trust Alloy for smarter risk management that drives growth.",
         "industries": [
           {
-            "id": "1594",
-            "name": "Technology, Information and Media",
-            "urn": "urn:li:fsd_industryV2:1594",
-            "title": "Technology, Information and Media",
-            "hierarchy": "Technology, Information and Media"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/C4D1BAQG_kn1rRVvEdg/company-background_10000/company-background_10000/0/1639581419955/refrigerated_frozen_foods_magazine_cover?e=1788210000&v=beta&t=2IlTW5aVoNkGLbUFVzNfM3NHyL-muOAfjKP9vLmYQTk",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQEObGWIAm2nrg/company-background_10000/B4EZ6AsjVFHsAQ-/0/1780275623806/alloy_apis_cover?e=1788213600&v=beta&t=mSgKyJzPUM-ZbKvDyb_i_poBZY0ptXDrEqVA-aJekwc",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "15252285",
-        "universalName": "food-processing-magazine",
-        "linkedinUrl": "https://www.linkedin.com/showcase/food-processing-magazine/",
-        "name": "Food Processing",
+        "id": "279565",
+        "universalName": "adyen",
+        "linkedinUrl": "https://www.linkedin.com/company/adyen/",
+        "name": "Adyen",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQE0_A_uhUe2-g/company-logo_400_400/company-logo_400_400/0/1641385966009/food_processing_magazine_logo?e=1788998400&v=beta&t=FyF6Of0fNH_U7m-jfkn2yjBuwCZb6vHvi0DiUwnbLec",
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGkcf7qKLd6mQ/company-logo_400_400/B4EZpKb3XwKkAk-/0/1762185410414/adyen_logo?e=1788998400&v=beta&t=ggU-fAYovazZt7RHUeAGbAthyQz7R3mLrD07Ax1VtOg",
+        "employeeCountRange": {
+          "start": 1001,
+          "end": 5000
+        },
+        "followerCount": 413651,
+        "description": "Adyen (AMS: ADYEN) is the financial technology platform of choice for leading companies. By providing end-to-end payments capabilities, data-driven insights, and financial products in a single global solution, Adyen helps businesses achieve their ambitions faster. With offices around the world, Adyen works with the likes of Meta, Uber, H&M, eBay, and Microsoft.\n\nFor support visit: https://support.adyen.com",
+        "industries": [
+          {
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQElQmaXXcP1Tg/company-background_10000/B4EZpKb_kTIQAU-/0/1762185443982/adyen_cover?e=1788213600&v=beta&t=4RD6wgreZwqR1Hl1yYmj9S6jKRNxVegupDGSyu0MeCo",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "3509899",
+        "universalName": "circle-internet-financial",
+        "linkedinUrl": "https://www.linkedin.com/company/circle-internet-financial/",
+        "name": "Circle",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQFONRpP_VBB_g/company-logo_400_400/company-logo_400_400/0/1665523815027/circle_internet_financial_logo?e=1788998400&v=beta&t=gavgeMzSJ2x51hbAfRKP3EdxGbqyZZsi1yYFOw0U46Y",
+        "employeeCountRange": {
+          "start": 1001,
+          "end": 5000
+        },
+        "followerCount": 230710,
+        "description": "We\u2019re building an open economy for everyone.\n\nCircle\u2019s full-stack internet financial platform brings together Arc, Digital Assets like USDC, and Apps to help builders and organizations create innovative financial experiences and expand opportunities for people worldwide.\n\nThousands of companies and millions of people have already settled trillions with Circle. What will you build in the open economy?\n\nArc Testnet provided by Circle Technology Services, LLC, a software provider. Not a financial or advisory service. Not reviewed or approved by NYDFS. Users responsible for their own compliance. See arc.network for more.\n\nUSDC is issued by regulated affiliates of Circle. See Circle\u2019s list of regulatory authorizations: https://www.circle.com/legal/licenses\n\nUSDC lifetime onchain transaction volume as of Mar 23, 2026 8:00 PM.\n",
+        "industries": [
+          {
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFfYQrRXWBWEg/company-background_10000/B56Znz2z3aHkAY-/0/1760732856202/circle_internet_financial_cover?e=1788213600&v=beta&t=CTtvVsZlNOXrAMGRFTzbnwXv0y9EgAxFrKN2bWYXz2A",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "10886362",
+        "universalName": "smithrx",
+        "linkedinUrl": "https://www.linkedin.com/company/smithrx/",
+        "name": "SmithRx",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQFWZIPh2YasPw/company-logo_400_400/company-logo_400_400/0/1721234541027/smithrx_logo?e=1788998400&v=beta&t=quVYX7rfYrMWnS779Hv3xDv2hRuXIRIJQsJwYg2sRnU",
         "employeeCountRange": {
           "start": 501,
           "end": 1000
         },
-        "followerCount": 8882,
-        "description": "Your multimedia source for news, trends, and innovation for the entire food and beverage industry. Learn more https://linktr.ee/foodprocessingmag",
+        "followerCount": 20555,
+        "description": "Our mission is to reduce the cost and complexity of pharmacy benefits for America\u2019s employers and patients.  \n\nPharmacy benefits are broken. The overly complex monopolies built by big PBMs only serve their bottom lines. SmithRx is a transparent, pass-through pharmacy benefits manager for self-insured employers. We operate independently from insurance companies and pharmacies so that our incentives are 100% aligned with our customers. Our modern technology and innovative cost savings programs connect our members to the lowest cost drugs.\n\nGet in touch with us to today to learn how to save on your pharmacy spend!",
         "industries": [
           {
-            "id": "23",
-            "name": "Food and Beverage Manufacturing",
-            "urn": "urn:li:fsd_industryV2:23",
-            "title": "Food and Beverage Manufacturing",
-            "hierarchy": "Manufacturing > Food and Beverage Manufacturing"
+            "id": "14",
+            "name": "Hospitals and Health Care",
+            "urn": "urn:li:fsd_industryV2:14",
+            "title": "Hospitals and Health Care",
+            "hierarchy": "Hospitals and Health Care"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/C4E1BAQEGjcmHo1SYbA/company-background_10000/company-background_10000/0/1604963555841/food_processing_magazine_cover?e=1788210000&v=beta&t=fHLu_GIG_JrRglkeRdMOZvJSE80WLDkx68o5zIqYvxs",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQHL24ukmhxe9Q/company-background_10000/company-background_10000/0/1721234347019/smithrx_cover?e=1788213600&v=beta&t=jqefzcNb3OrxC0iJsKuEf9wkkBDTCq-1jlrNcFtwWFk",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
       {
-        "id": "37899679",
-        "universalName": "robust-ai",
-        "linkedinUrl": "https://www.linkedin.com/company/robust-ai/",
-        "name": "Robust.AI",
+        "id": "2857634",
+        "universalName": "coinbase",
+        "linkedinUrl": "https://www.linkedin.com/company/coinbase/",
+        "name": "Coinbase",
         "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQH1Ol98ZsMtBg/company-logo_400_400/B4EZnn_77lIwAY-/0/1760533921824/robust_ai_logo?e=1788998400&v=beta&t=MRiZToCfVudJDgykPCcOE47KFaAqIZCYxlXR4UwUK-Q",
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQHQJxIt9C0pHA/company-logo_400_400/B4EZ755_FYJIAU-/0/1782309188194/coinbase_logo?e=1788998400&v=beta&t=xo2loTdCXx-BHwoyxcNwBcI_S-udlLj3tFkroS3wiA4",
         "employeeCountRange": {
-          "start": 51,
-          "end": 200
+          "start": 1001,
+          "end": 5000
         },
-        "followerCount": 15515,
-        "description": "Collaborative productivity and Physical AI.\n\nRobust.AI is founded and led by a world-class robotics team. We bring AI, robotics, and human-centered design together to make robots broadly useful, effortless to adopt, and delightful to use. \n\nCarter\u2122 is novel form of collaborative mobile robot that allows for seamless collaboration with people across picking, putaway and value added service. \n\nEasy to deploy, Carter integrates with existing systems and requires no infrastructure changes. Real-world adaptability enables our solution to improve throughput, reduce strain on workers, and help retail, e-commerce, and 3PL operations scale smarter and faster.",
+        "followerCount": 1461653,
+        "description": "Coinbase (NASDAQ: COIN) is on a mission to increase economic freedom in the world. The most trusted crypto platform, Coinbase stores more digital assets than any other company and is building the everything exchange \u2014 one place to access crypto, equities, derivatives, prediction markets, and more. Coinbase serves consumers through its suite of financial apps, institutions through Coinbase Prime, and developers through the Coinbase Developer Platform. Every experience runs on Coinbase's full-stack platform powering the future of finance: secure custody, deep exchange liquidity, stablecoin infrastructure, and global settlement rails \u2014 all built on a decade-plus foundation of security and compliance.",
         "industries": [
           {
-            "id": "3248",
-            "name": "Robotics Engineering",
-            "urn": "urn:li:fsd_industryV2:3248",
-            "title": "Robotics Engineering",
-            "hierarchy": "Professional Services > Engineering Services > Robotics Engineering"
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQHVKbpCgrAmBw/company-background_10000/B56Z.ur8SQGUAI-/0/1785342183010/robust_ai_cover?e=1788210000&v=beta&t=r7Tnq9RS1EA3_T2Ctp83ZNc7Wg50UsOJ5svdg9J3MQo",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHClMnEsc9FSA/company-background_10000/B4EZ755tpGJEAM-/0/1782309116742/coinbase_cover?e=1788213600&v=beta&t=I_lycHUR5LXaTGS7bJMyGoAEmY5e2KIgv3DECgY4OBQ",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "65275184",
+        "universalName": "federal-reserve-financial-services",
+        "linkedinUrl": "https://www.linkedin.com/company/federal-reserve-financial-services/",
+        "name": "Federal Reserve Financial Services",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQGOim1jHq9SyA/company-logo_400_400/company-logo_400_400/0/1683147671470/federal_reserve_financial_services_logo?e=1788998400&v=beta&t=-aLnraG09GJDfScQJEn_qSZ7ddRqU6a-oE-Cc-Kkkqc",
+        "employeeCountRange": {
+          "start": 1001,
+          "end": 5000
+        },
+        "followerCount": 15299,
+        "description": "The Federal Reserve, the central bank of the United States, was founded by Congress in 1913 to provide the nation with a safer, more flexible and more stable monetary and financial system.\n\nThe Financial Services division of the Federal Reserve Banks is focused on meeting the evolving needs of payment system users, while remaining true to our longstanding mission to foster the integrity, efficiency and accessibility of the U.S. payment system.\n\nFederal Reserve Financial Services provides services to banks, credit unions and savings and loans in the same way these depository institutions provide services to their customers. These services include electronically transferring funds, collecting checks, and distributing and receiving cash and coin.\n\nStarting in July 2023, the Federal Reserve provides an instant payment offering that enables real-time fund transfer and interbank settlement on a 24x7x365 basis. The FedNow\u00ae Service joins a family of Federal Reserve products and services that includes:\n\n\u2022 Accounting Information Services (AIS): Provides timely information about entries debited or credited to an institution\u2019s account\n\u2022 Check Services: Offers a suite of electronic and paper check processing options.\n\u2022 FedACH\u00ae Services:  Offers electronic exchange of debit and credit transactions through the Automated Clearing House (ACH) network\n\u2022 FedCash\u00ae Services: Ensures a sufficient supply of currency and coin for depository institutions\n\u2022 Fedwire\u00ae Securities and Fedwire Funds Services: Provides issuance, maintenance, transfer and settlement services, as well as electronic funds transfer service for mission-critical, same-day transactions\n\u2022 National Settlement Services: Provides multilateral settlement to depository institutions with a Federal Reserve master account that settle for participants in private-sector clearing and/or settlement arrangements\n\nThis profile is managed by the Federal Reserve Bank of Chicago on behalf of the 12 Federal Reserve Banks.",
+        "industries": [
+          {
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/C4D1BAQFpmtSGUsYfBw/company-background_10000/company-background_10000/0/1585939144090/federal_reserve_financial_services_cover?e=1788213600&v=beta&t=UQY1NY3uG0J4kePnQ2pGf1oMroGdS6uf421BdMJERQ8",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "1030330",
+        "universalName": "marqeta",
+        "linkedinUrl": "https://www.linkedin.com/company/marqeta/",
+        "name": "Marqeta",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGbFMpZcIiKvw/company-logo_400_400/B4EZf5u7etHsAY-/0/1752241519702/marqeta_logo?e=1788998400&v=beta&t=34wzGSu92Y18CCZu_2fXh51y3IMVvRdC98oINmKZwYY",
+        "employeeCountRange": {
+          "start": 501,
+          "end": 1000
+        },
+        "followerCount": 148508,
+        "description": "Modern life is fueled by modern financial solutions that are so seamlessly woven into our daily lives, you almost forget they are there. At Marqeta, we don\u2019t just think about how we transact, we think about how those transactions can unlock delight with every digital experience. Our modern card issuing platform enables our world-class customers to create tailored and embedded financial solutions that cater to the evolving needs of today\u2019s consumers. \n\nMarqeta is a flexible-first company with headquarters in Oakland, CA. We\u2019re passionate about empowering our people to make a significant impact and do the best work of their lives, all while revolutionizing the way millions experience the movement of money. ",
+        "industries": [
+          {
+            "id": "43",
+            "name": "Financial Services",
+            "urn": "urn:li:fsd_industryV2:43",
+            "title": "Financial Services",
+            "hierarchy": "Financial Services"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHtsq8t6HLAKw/company-background_10000/B4EZoTJIy4KMAY-/0/1761257754720/marqeta_cover?e=1788213600&v=beta&t=VtXLto_CAJI1bjyhe3ZxsRIRtxdcfilxo_Bkjaw907Y",
         "callToActionUrl": null,
         "affiliatedPages": []
       }
@@ -685,63 +415,63 @@
         "values": [
           {
             "title": "United States",
-            "count": 167
-          },
-          {
-            "title": "Texas, United States",
-            "count": 70
-          },
-          {
-            "title": "Greater Houston",
-            "count": 37
+            "count": 110
           },
           {
             "title": "California, United States",
-            "count": 33
+            "count": 45
           },
           {
-            "title": "Los Angeles Metropolitan Area",
-            "count": 33
+            "title": "San Francisco Bay Area",
+            "count": 38
           },
           {
-            "title": "Laredo, TX",
-            "count": 20
-          },
-          {
-            "title": "Greater Laredo Area",
-            "count": 20
-          },
-          {
-            "title": "Houston, TX",
-            "count": 15
-          },
-          {
-            "title": "New Jersey, United States",
-            "count": 14
+            "title": "San Francisco, CA",
+            "count": 25
           },
           {
             "title": "New York City Metropolitan Area",
-            "count": 14
+            "count": 22
           },
           {
-            "title": "Spring, TX",
-            "count": 11
+            "title": "New York, United States",
+            "count": 16
           },
           {
-            "title": "Florida, United States",
+            "title": "New York, NY",
             "count": 10
           },
           {
-            "title": "Los Angeles, CA",
-            "count": 9
-          },
-          {
-            "title": "Arkansas, United States",
-            "count": 9
+            "title": "Minnesota, United States",
+            "count": 6
           },
           {
             "title": "Illinois, United States",
-            "count": 8
+            "count": 5
+          },
+          {
+            "title": "Washington, United States",
+            "count": 5
+          },
+          {
+            "title": "Greater Chicago Area",
+            "count": 5
+          },
+          {
+            "title": "Greater Seattle Area",
+            "count": 5
+          },
+          {
+            "title": "Florida, United States",
+            "count": 4
+          },
+          {
+            "title": "New Jersey, United States",
+            "count": 4
+          },
+          {
+            "title": "Brooklyn, NY",
+            "count": 4
           }
         ]
       },
@@ -749,64 +479,64 @@
         "statTitle": "School",
         "values": [
           {
-            "title": "University of Houston",
+            "title": "Cornell University",
+            "count": 5
+          },
+          {
+            "title": "Dartmouth College",
             "count": 4
           },
           {
-            "title": "Tecnol\u00f3gico de Monterrey",
+            "title": "University of Illinois Urbana-Champaign",
             "count": 4
           },
           {
-            "title": "Lone Star College",
+            "title": "University of Wisconsin-Madison",
+            "count": 4
+          },
+          {
+            "title": "Columbia University",
             "count": 3
           },
           {
-            "title": "Laredo Community College",
+            "title": "California Polytechnic State University-San Luis Obispo",
             "count": 2
           },
           {
-            "title": "St. Mary's University",
+            "title": "San Francisco State University",
             "count": 2
           },
           {
-            "title": "Texas A&M University",
+            "title": "Santa Clara University",
             "count": 2
           },
           {
-            "title": "Harvard Business School",
+            "title": "Stanford University",
             "count": 2
           },
           {
-            "title": "Rio Hondo College",
+            "title": "University of California, Berkeley, Haas School of Business",
             "count": 2
           },
           {
-            "title": "California State University, Fullerton",
+            "title": "University of Washington",
             "count": 2
           },
           {
-            "title": "New Mexico State University",
-            "count": 1
+            "title": "University of Phoenix",
+            "count": 2
           },
           {
-            "title": "Purdue University Northwest",
-            "count": 1
+            "title": "The City College of New York",
+            "count": 2
           },
           {
-            "title": "Mission College",
-            "count": 1
+            "title": "The University of Texas at Austin",
+            "count": 2
           },
           {
-            "title": "Universidad Autonoma de Tamaulipas",
-            "count": 1
-          },
-          {
-            "title": "Austin Community College",
-            "count": 1
-          },
-          {
-            "title": "Universidad de Los Andes",
-            "count": 1
+            "title": "University of Minnesota",
+            "count": 2
           }
         ]
       },
@@ -814,64 +544,64 @@
         "statTitle": "Current Function",
         "values": [
           {
-            "title": "Operations",
-            "count": 78
-          },
-          {
-            "title": "Customer Success and Support",
-            "count": 23
+            "title": "Engineering",
+            "count": 44
           },
           {
             "title": "Business Development",
-            "count": 21
+            "count": 14
           },
           {
             "title": "Sales",
-            "count": 19
+            "count": 13
           },
           {
-            "title": "Information Technology",
+            "title": "Customer Success and Support",
             "count": 11
           },
           {
-            "title": "Accounting",
-            "count": 10
+            "title": "Information Technology",
+            "count": 9
           },
           {
-            "title": "Administrative",
-            "count": 8
+            "title": "Finance",
+            "count": 6
           },
           {
             "title": "Human Resources",
             "count": 6
           },
           {
-            "title": "Finance",
-            "count": 5
-          },
-          {
-            "title": "Program and Project Management",
-            "count": 5
-          },
-          {
-            "title": "Education",
-            "count": 3
-          },
-          {
-            "title": "Engineering",
-            "count": 3
+            "title": "Marketing",
+            "count": 6
           },
           {
             "title": "Entrepreneurship",
+            "count": 6
+          },
+          {
+            "title": "Legal",
+            "count": 4
+          },
+          {
+            "title": "Product Management",
+            "count": 4
+          },
+          {
+            "title": "Accounting",
             "count": 3
           },
           {
-            "title": "Marketing",
-            "count": 2
+            "title": "Media and Communication",
+            "count": 3
           },
           {
-            "title": "Research",
-            "count": 2
+            "title": "Operations",
+            "count": 3
+          },
+          {
+            "title": "Arts and Design",
+            "count": 3
           }
         ]
       },
@@ -879,64 +609,64 @@
         "statTitle": "Skill Explicit",
         "values": [
           {
-            "title": "Customer Service",
-            "count": 39
-          },
-          {
-            "title": "Leadership",
-            "count": 33
+            "title": "Python (Programming Language)",
+            "count": 41
           },
           {
             "title": "Microsoft Office",
-            "count": 33
+            "count": 35
           },
           {
-            "title": "Logistics Management",
+            "title": "JavaScript",
             "count": 32
           },
           {
-            "title": "Microsoft Excel",
+            "title": "Java",
             "count": 31
           },
           {
-            "title": "Management",
-            "count": 30
+            "title": "Leadership",
+            "count": 29
           },
           {
-            "title": "Operations Management",
+            "title": "SQL",
+            "count": 28
+          },
+          {
+            "title": "Customer Service",
+            "count": 28
+          },
+          {
+            "title": "Microsoft Excel",
             "count": 27
           },
           {
-            "title": "Sales",
+            "title": "Management",
             "count": 26
           },
           {
-            "title": "Inventory Management",
-            "count": 25
+            "title": "Public Speaking",
+            "count": 23
           },
           {
-            "title": "Warehouse Operations",
-            "count": 25
+            "title": "HTML",
+            "count": 22
           },
           {
-            "title": "Supply Chain Management",
-            "count": 25
+            "title": "Amazon Web Services (AWS)",
+            "count": 18
           },
           {
-            "title": "Communication",
-            "count": 24
+            "title": "Git",
+            "count": 16
           },
           {
             "title": "Teamwork",
-            "count": 20
+            "count": 16
           },
           {
-            "title": "Sales Management",
-            "count": 17
-          },
-          {
-            "title": "Account Management",
-            "count": 17
+            "title": "Salesforce.com",
+            "count": 14
           }
         ]
       },
@@ -944,7 +674,7 @@
         "statTitle": "Service categories",
         "values": [
           {
-            "title": "Pricing Strategy",
+            "title": "Real Estate",
             "count": 1
           },
           {
@@ -956,15 +686,47 @@
             "count": 1
           },
           {
+            "title": "Marketing",
+            "count": 1
+          },
+          {
+            "title": "Program Management",
+            "count": 1
+          },
+          {
+            "title": "Financial Consulting",
+            "count": 1
+          },
+          {
+            "title": "Ghostwriting",
+            "count": 1
+          },
+          {
             "title": "Business Consulting",
             "count": 1
           },
           {
-            "title": "Operations",
+            "title": "Content Strategy",
             "count": 1
           },
           {
-            "title": "Outsourcing",
+            "title": "Software Development",
+            "count": 1
+          },
+          {
+            "title": "Business Analytics",
+            "count": 1
+          },
+          {
+            "title": "Content Marketing",
+            "count": 1
+          },
+          {
+            "title": "Blogging",
+            "count": 1
+          },
+          {
+            "title": "Operations",
             "count": 1
           },
           {
@@ -977,73 +739,73 @@
         "statTitle": "Field of Study",
         "values": [
           {
+            "title": "Computer Science",
+            "count": 31
+          },
+          {
+            "title": "Computational Science",
+            "count": 26
+          },
+          {
             "title": "Business Administration and Management, General",
             "count": 9
           },
           {
-            "title": "Accounting",
-            "count": 6
+            "title": "Marketing",
+            "count": 9
           },
           {
-            "title": "Mathematics",
-            "count": 5
-          },
-          {
-            "title": "Business/Commerce, General",
-            "count": 5
-          },
-          {
-            "title": "Logistics, Materials, and Supply Chain Management",
-            "count": 5
-          },
-          {
-            "title": "Accounting and Related Services",
-            "count": 5
-          },
-          {
-            "title": "Finance, General",
-            "count": 5
-          },
-          {
-            "title": "International Business/Trade/Commerce",
-            "count": 5
-          },
-          {
-            "title": "Industrial Engineering",
-            "count": 4
-          },
-          {
-            "title": "Computer Science",
-            "count": 3
-          },
-          {
-            "title": "Computational Science",
-            "count": 3
-          },
-          {
-            "title": "Business Administration, Management and Operations",
-            "count": 3
-          },
-          {
-            "title": "Information Technology",
-            "count": 2
-          },
-          {
-            "title": "General Studies",
-            "count": 2
+            "title": "Psychology",
+            "count": 8
           },
           {
             "title": "Economics",
-            "count": 2
+            "count": 7
+          },
+          {
+            "title": "Finance, General",
+            "count": 7
+          },
+          {
+            "title": "Information Technology",
+            "count": 6
+          },
+          {
+            "title": "Communication, General",
+            "count": 3
+          },
+          {
+            "title": "Journalism",
+            "count": 3
+          },
+          {
+            "title": "Computer Software Engineering",
+            "count": 3
+          },
+          {
+            "title": "Mathematics and Computer Science",
+            "count": 3
+          },
+          {
+            "title": "Chemistry",
+            "count": 3
+          },
+          {
+            "title": "Entrepreneurship/Entrepreneurial Studies",
+            "count": 3
+          },
+          {
+            "title": "History",
+            "count": 3
           }
         ]
       }
     ],
     "originalQuery": {
-      "search": "Source Logistics",
+      "search": "Modern Treasury",
       "location": "",
       "scrapePeopleTab": "true"
     },
-    "requestId": "e2b34ff0-3e6b-4839-9274-bf7a3289251f"
+    "requestId": "8153073b-d1f4-4a60-9d52-eedf9b81997e"
   }
 ]

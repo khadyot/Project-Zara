@@ -1,0 +1,74 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "PSP product announcement"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "Faster payments product announcement"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding news, no specific pain observable"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding round-up, no specific pain observable"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Investment/acquisition news, not matching pains"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Capital projects grant info, unrelated"
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "Integrated PSP launch, new payment method"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "Hybrid money payments platform announcement"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "Polygon USDC integration, new payment method"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "structural_complexity",
+        "score": 1.0,
+        "reason": "Acquisition indicates M&A activity"
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "silent_breaks",
+        "score": 1.0,
+        "reason": "Stablecoin payments unification announcement"
+      }
+    ]
+  },
+  "prompt_tokens": 2083,
+  "completion_tokens": 1749
+}

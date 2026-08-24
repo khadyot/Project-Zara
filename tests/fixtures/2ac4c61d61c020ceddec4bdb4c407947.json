@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I noticed Sam Aaron, Modern Treasury\u2019s co\u2011founder and CTO, talking about the company\u2019s push into fiat, stablecoins and building a PSP.",
+        "rationale": "Dimitri\u2019s role isn\u2019t specified, so the hook leans on a clear company\u2011level initiative that signals Modern Treasury\u2019s focus on hybrid\u2011money infrastructure.",
+        "bridge": "Our automation platform helps operations teams eliminate manual, reconciliation\u2011heavy steps that arise when handling both fiat and stablecoin flows.",
+        "strength": 0.73
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your recent Tearsheet piece on Modern Treasury building a payments platform for a hybrid\u2011money world stood out to me.",
+        "rationale": "Without a known role for Dimitri, the hook references a public company narrative that highlights Modern Treasury\u2019s strategic direction.",
+        "bridge": "We enable operations teams to automate the complex reconciliation processes that such a hybrid\u2011money payments platform inevitably generates.",
+        "strength": 0.68
+      }
+    ]
+  },
+  "prompt_tokens": 746,
+  "completion_tokens": 527
+}
