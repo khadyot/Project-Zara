@@ -135,47 +135,83 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         )
         
     if to_score:
-        prompt = "Score each card against the following pains (0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. Output null for matched_pain_id if it matches no pain.\n\nPains:\n"
-        for p in pains:
-            prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
-            
-        prompt += "\nCards:\n"
-        for i, card in to_score[:30]:
-            prompt += f"[{i}] {card.snippet[:500]}\n\n"
-            
-        try:
-            
-            sys_prompt = "You are an expert sales ranker."
-            if strictness == "permissive":
-                sys_prompt += " You are allowed to use structural pattern recognition (e.g. inferring system evaluation windows from new executive appointments, debt/funding facilities, or M&A). You do not need explicit verbatim complaints to score a match."
-            else:
-                sys_prompt += " You must be extremely strict. Only match if the snippet explicitly proves the 'observable_via' condition. Do not make inferential leaps."
-                
-            resp = await generate_content_with_retry(
-                prompt=prompt,
-                schema=BatchScoreOutput,
-                system_instruction=sys_prompt
+        prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "company_action": 2, "database": 1})
+        to_score.sort(key=lambda item: (
+            prox_val.get(_compute_proximity(item[1]), 0), 
+            _compute_recency(item[1].published_date) is not None,
+            -(_compute_recency(item[1].published_date) or 9999)
+        ), reverse=True)
+        
+        # Hard cap to top 15 cards
+        for i, card in to_score[15:]:
+            rc = ranked_cards_map[i]
+            ranked_cards_map[i] = RankedCard(
+                card=rc.card, pain_match=None, proximity=rc.proximity,
+                recency_days=rc.recency_days, score=0.0, excluded="hard cap limit exceeded",
+                guardrail_hit=rc.guardrail_hit
             )
-            scores = resp.scores
-            for s in scores:
-                if s.index in ranked_cards_map:
-                    rc = ranked_cards_map[s.index]
-                    if s.matched_pain_id and s.score > 0:
-                        pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
-                        final_score = s.score
-                        if rc.guardrail_hit:
-                            final_score = round(s.score * 0.5, 4)
-                        ranked_cards_map[s.index] = RankedCard(
-                            card=rc.card, pain_match=pm, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=final_score, excluded=None,
-                            guardrail_hit=rc.guardrail_hit
-                        )
-                    else:
-                        ranked_cards_map[s.index] = RankedCard(
+        to_score = to_score[:15]
+
+        sys_prompt = "You are an expert sales ranker."
+        if strictness == "permissive":
+            sys_prompt += " You are allowed to use structural pattern recognition (e.g. inferring system evaluation windows from new executive appointments, debt/funding facilities, or M&A). You do not need explicit verbatim complaints to score a match. If the snippet has interesting company/person news but DOES NOT map to a specific pain point, map it to 'general_news' with a score of 0.4."
+        else:
+            sys_prompt += " You must be extremely strict. Only match if the snippet explicitly proves the 'observable_via' condition. Do not make inferential leaps. If the snippet has interesting company/person news but DOES NOT map to a specific pain point, you may map it to 'general_news' with a score of 0.3."
+            
+        chunk_size = 5
+        try:
+            for chunk_idx in range(0, len(to_score), chunk_size):
+                chunk = to_score[chunk_idx:chunk_idx + chunk_size]
+                
+                prompt = "Score each card against the following pains (0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. Output 'general_news' for matched_pain_id if it matches no pain but is interesting company/person news.\n\nPains:\n"
+                for p in pains:
+                    prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
+                    
+                prompt += "\nCards:\n"
+                for i, card in chunk:
+                    prompt += f"[{i}] {card.snippet[:500]}\n\n"
+                    
+                resp = await generate_content_with_retry(
+                    prompt=prompt,
+                    schema=BatchScoreOutput,
+                    system_instruction=sys_prompt
+                )
+                
+                scores = resp.scores
+                found_strong_hook = False
+                for s in scores:
+                    if s.index in ranked_cards_map:
+                        rc = ranked_cards_map[s.index]
+                        if s.matched_pain_id and s.score > 0:
+                            pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
+                            final_score = s.score
+                            if rc.guardrail_hit:
+                                final_score = round(s.score * 0.5, 4)
+                            ranked_cards_map[s.index] = RankedCard(
+                                card=rc.card, pain_match=pm, proximity=rc.proximity,
+                                recency_days=rc.recency_days, score=final_score, excluded=None,
+                                guardrail_hit=rc.guardrail_hit
+                            )
+                            if final_score >= 0.8:
+                                found_strong_hook = True
+                        else:
+                            ranked_cards_map[s.index] = RankedCard(
+                                card=rc.card, pain_match=None, proximity=rc.proximity,
+                                recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop",
+                                guardrail_hit=rc.guardrail_hit
+                            )
+                
+                if found_strong_hook:
+                    # Early exit: Mark the rest of the cards as skipped
+                    for remain_idx in range(chunk_idx + chunk_size, len(to_score)):
+                        i, _ = to_score[remain_idx]
+                        rc = ranked_cards_map[i]
+                        ranked_cards_map[i] = RankedCard(
                             card=rc.card, pain_match=None, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop",
+                            recency_days=rc.recency_days, score=0.0, excluded="skipped due to early exit (strong hook found)",
                             guardrail_hit=rc.guardrail_hit
                         )
+                    break
         except ProviderProbeFailedError as e:
             # Mark as unscored with reason
             for i, card in to_score:

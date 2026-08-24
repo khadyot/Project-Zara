@@ -29,7 +29,15 @@ class ExaBaseFetcher:
                 "num_results": 2
             }
             if self.include_domains:
-                kwargs["include_domains"] = self.include_domains
+                # Validate domains (Exa expects valid URLs/domains, not raw text with spaces)
+                valid_domains = [d for d in self.include_domains if " " not in d and "." in d]
+                if not valid_domains and self.include_domains:
+                    return SourceResult(
+                        source=source_name, rung=rung, status="skipped", reason="invalid domains provided", 
+                        cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000)
+                    )
+                if valid_domains:
+                    kwargs["include_domains"] = valid_domains
 
             response = await asyncio.to_thread(
                 self.exa.search_and_contents,

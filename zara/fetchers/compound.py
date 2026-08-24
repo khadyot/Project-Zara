@@ -102,7 +102,6 @@ class CompoundFetcher:
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": query},
             ],
-            "max_tokens": 1500,
         }
         headers = {
             "Authorization": f"Bearer {api_key}",

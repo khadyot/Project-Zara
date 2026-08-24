@@ -1,0 +1,95 @@
+**Reasoning**
+
+To score each card we compared its content with the observable conditions defined for each pain:
+
+| Pain ID | Observable condition |
+|---------|----------------------|
+| **close_drag** | Job postings for accountants/analysts mentioning close, matching, or month‑end; finance‑ops hiring without revenue growth |
+| **silent_breaks** | Job postings mentioning PSP, ledger, settlement, or payment ops; news about new payment methods/providers/geographies |
+| **linear_headcount** | Repeated or bulk hiring of ops/fulfilment/analyst roles; volume/GMV or growth milestones in news |
+| **spreadsheet_exceptions** | Job descriptions naming Excel/Google Sheets as core tools; ERP/finance‑system migration signals |
+| **structural_complexity** | Recent appointments of new finance leadership (CFO, VP Finance, Controller) within 6 months; securing significant debt facilities, leases, or funding for expansion; M&A activity or corporate restructuring; reports of turning profitable or strong quarterly growth |
+
+**Card‑by‑card analysis**
+
+| Card index | Content highlights | Matching pain (if any) | Score | Reason |
+|------------|-------------------|------------------------|-------|--------|
+| 12 | “Chief Financial Officer and Executive Leader … Glen Braganza … CFO of EasyPark Group” | **structural_complexity** (new finance leadership) | 1.0 | Direct mention of a CFO appointment. |
+| 13 | EDGAR search results – generic filing metadata, no leadership change or hiring signals. | none | 0.0 | No observable condition present. |
+| 14 | EDGAR filing document – only filing details, no leadership or hiring info. | none | 0.0 | No observable condition present. |
+| 15 | Press release announcing Glen Braganza as CFO of Versapay. | **structural_complexity** | 1.0 | Explicit CFO appointment. |
+| 16 | Duplicate of the press release in [15]. | **structural_complexity** | 1.0 | Same explicit CFO appointment. |
+| 17 | Description of Versapay’s AI‑driven invoice‑to‑cash platform; no leadership or hiring cues. | none | 0.0 | No observable condition present. |
+| 18 | Article stating Versapay named Glen Braganza CFO. | **structural_complexity** | 1.0 | Direct CFO appointment announcement. |
+| 19 | Versapay’s 2026 Annual Cash Flow Clarity Report – survey results, no leadership or hiring cues. | none | 0.0 | No observable condition present. |
+| 20 | News roundup about investments and rankings – unrelated to finance leadership or hiring. | none | 0.0 | No observable condition present. |
+| 21 | Summary of Versapay’s funding history (4 rounds, institutional investors). | **structural_complexity** (significant funding for expansion) | 0.8 | Indicates substantial financing activity, a key signal for structural complexity, though less direct than a leadership appointment. |
+
+**Final JSON output (conforms to the required schema)**
+
+```json
+{
+  "scores": [
+    {
+      "index": 12,
+      "matched_pain_id": "structural_complexity",
+      "score": 1.0,
+      "reason": "Direct mention of Glen Braganza as Chief Financial Officer and Executive Leader."
+    },
+    {
+      "index": 13,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "No direct observable condition mentioned."
+    },
+    {
+      "index": 14,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "No direct observable condition mentioned."
+    },
+    {
+      "index": 15,
+      "matched_pain_id": "structural_complexity",
+      "score": 1.0,
+      "reason": "Announces Glen Braganza as Chief Financial Officer."
+    },
+    {
+      "index": 16,
+      "matched_pain_id": "structural_complexity",
+      "score": 1.0,
+      "reason": "Announces Glen Braganza as Chief Financial Officer."
+    },
+    {
+      "index": 17,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "No direct observable condition mentioned."
+    },
+    {
+      "index": 18,
+      "matched_pain_id": "structural_complexity",
+      "score": 1.0,
+      "reason": "Discusses Glen Braganza's appointment as CFO."
+    },
+    {
+      "index": 19,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "No direct observable condition mentioned."
+    },
+    {
+      "index": 20,
+      "matched_pain_id": null,
+      "score": 0.0,
+      "reason": "No direct observable condition mentioned."
+    },
+    {
+      "index": 21,
+      "matched_pain_id": "structural_complexity",
+      "score": 0.8,
+      "reason": "Mentions Versapay has raised funding over 4 rounds, indicating significant financing activity."
+    }
+  ]
+}
+```

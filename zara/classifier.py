@@ -75,17 +75,24 @@ async def classify_social_signals(results: list[SourceResult]) -> ClassifierResu
     if not to_classify:
         return ClassifierResult(status="skipped", reason="no social signals", results=results)
         
-    prompt = "Classify the following social media snippets as professional, personal, or ambiguous. Professional: B2B relevance, industry thought leadership, product launch. Personal: family, politics, pets, vacations, non-B2B.\n\n"
-    for i, (_, _, card) in enumerate(to_classify):
-        prompt += f"[{i}] {card.snippet}\n\n"
-        
     try:
-        classifications_obj = await generate_content_with_retry(
-            prompt=prompt,
-            schema=ClassificationsResponse,
-            system_instruction="You are an expert B2B sales classifier."
-        )
-        classifications = classifications_obj.results
+        classifications = []
+        chunk_size = 15
+        
+        for chunk_idx in range(0, len(to_classify), chunk_size):
+            chunk = to_classify[chunk_idx:chunk_idx + chunk_size]
+            
+            prompt = "Classify the following social media snippets as professional, personal, or ambiguous. Professional: B2B relevance, industry thought leadership, product launch. Personal: family, politics, pets, vacations, non-B2B.\n\n"
+            for i, (_, _, card) in enumerate(chunk):
+                abs_i = chunk_idx + i
+                prompt += f"[{abs_i}] {card.snippet[:500]}\n\n"
+                
+            classifications_obj = await generate_content_with_retry(
+                prompt=prompt,
+                schema=ClassificationsResponse,
+                system_instruction="You are an expert B2B sales classifier."
+            )
+            classifications.extend(classifications_obj.results)
         
         # Apply classifications by replacing the frozen dataclasses
         new_results = list(results)

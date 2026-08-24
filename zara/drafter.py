@@ -28,14 +28,41 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     offer = value_prop.get("product", "")
 
     if not winning_card:
-        # no_signal honest note
-        return f"Hi {ranked_prospect.prospect.person_name},\n\nI looked across the web, your LinkedIn, and news sources to find what you're focusing on right now, but couldn't find a strong signal. If you're open to it, I'd love to learn what's top of mind for you. {offer}. Let me know if you're open to a chat.\n\nBest,\n{sender_name}"
+        # FALLBACK: Draft a generic company-level email using the LLM
+        fallback_prompt = (
+            f"Draft a generic 60-120 word B2B sales email to {ranked_prospect.prospect.person_name} "
+            f"at their company, {ranked_prospect.prospect.company}.\n"
+            f"Since we couldn't find a specific personal hook, frame the email around the general value we provide "
+            f"to companies in their space.\n\n"
+            f"WHAT WE SELL: {offer}\n"
+            f"Constraints:\n"
+            f"- Sign exactly as: {sender_name}\n"
+            f"- Do NOT invent a human signer or job title.\n"
+            f"- Do NOT invent specific company news (like funding or leadership changes) since none was verified.\n"
+        )
+        if style and style != "auto":
+            fallback_prompt += f"- Email opening style: {style}.\n"
+            
+        fallback_system = "You are an expert B2B SDR drafting concise, generic outreach emails."
+        try:
+            resp = await generate_content_with_retry(
+                prompt=fallback_prompt,
+                schema=DraftOutput,
+                system_instruction=fallback_system
+            )
+            return resp.draft_text
+        except ProviderProbeFailedError as e:
+            print(f"WARNING: Drafter fallback model failed: {e}", file=sys.stderr)
+            return f"Hi {ranked_prospect.prospect.person_name},\n\nI looked across the web, your LinkedIn, and news sources to find what you're focusing on right now, but couldn't find a strong signal. If you're open to it, I'd love to learn what's top of mind for you. {offer}. Let me know if you're open to a chat.\n\nBest,\n{sender_name}"
 
     pain_statement = ""
-    for p in value_prop.get("pains", []):
-        if p["id"] == winning_card.pain_match.pain_id:
-            pain_statement = p["statement"]
-            break
+    if winning_card.pain_match and winning_card.pain_match.pain_id == "general_news":
+        pain_statement = "We don't know their specific pain yet, but we want to start a conversation about how we help companies in their space."
+    else:
+        for p in value_prop.get("pains", []):
+            if p["id"] == winning_card.pain_match.pain_id:
+                pain_statement = p["statement"]
+                break
 
     prompt = (
         f"Draft a 60-120 word email to {ranked_prospect.prospect.person_name} at {ranked_prospect.prospect.company}.\n"

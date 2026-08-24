@@ -157,37 +157,46 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
             data = json.load(f)
         return schema(**data)
         
-    api_key = _get_api_key()
-
     schema_dict = schema.model_json_schema()
     walk_schema(schema_dict)
+    
+    for attempt in range(8):
+        try:
+            return await _generate_zai(prompt, schema, system_instruction, schema_dict)
+        except Exception as e:
+            if "1302" in str(e) or "429" in str(e):
+                print(f"WARNING: Z.ai 429 Rate Limit, retrying in 30s. Error: {e}", file=sys.stderr)
+                await asyncio.sleep(30)
+            else:
+                raise
+
+    schema_prompt = (
+        f"{prompt}\n\n"
+        f"You must respond with a single JSON object matching this JSON schema exactly "
+        f"(all properties required, no additional properties):\n"
+        f"{json.dumps(schema_dict, indent=2)}"
+    )
 
     payload = {
-        "model": "openai/gpt-oss-120b",
+        "model": "groq/compound",
         "messages": [
             {"role": "system", "content": system_instruction},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": schema_prompt}
         ],
-        "response_format": {
-            "type": "json_schema",
-            "json_schema": {
-                "name": schema.__name__,
-                "schema": schema_dict,
-                "strict": True
-            }
-        },
+        "response_format": {"type": "json_object"},
         "temperature": 0.0
     }
+    print(f"PROMPT LENGTH (chars): {len(schema_prompt + system_instruction)}", file=sys.stderr)
 
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
 
-    retries = [2, 4, 60]
+    retries = [2, 4, 15, 30, 60, 60, 60]
     groq_error = None
 
-    for attempt in range(4):
+    for attempt in range(8):
         try:
             async with httpx.AsyncClient() as client:
                 resp = await client.post("https://api.groq.com/openai/v1/chat/completions", json=payload, headers=headers, timeout=60.0)
@@ -197,7 +206,7 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
 
             if resp.status_code == 429:
                 if attempt < len(retries):
-                    print(f"WARNING: Groq 429 Rate Limit, retrying in {retries[attempt]}s", file=sys.stderr)
+                    print(f"WARNING: Groq 429 Rate Limit (Response: {resp.text}), retrying in {retries[attempt]}s", file=sys.stderr)
                     await asyncio.sleep(retries[attempt])
                     continue
                 else:
@@ -299,7 +308,7 @@ async def run_probe():
     api_key = _get_api_key()
     
     payload = {
-        "model": "openai/gpt-oss-120b",
+        "model": "groq/compound",
         "messages": [
             {"role": "user", "content": "probe"}
         ],

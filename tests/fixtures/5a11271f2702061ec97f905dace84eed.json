@@ -1,1 +1,12 @@
-{"results":[{"index":0,"classification":"professional"},{"index":1,"classification":"professional"}]}
+{
+  "results": [
+    {
+      "index": 0,
+      "classification": "professional"
+    },
+    {
+      "index": 1,
+      "classification": "professional"
+    }
+  ]
+}

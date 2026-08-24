@@ -1,0 +1,15 @@
+First Name,Last Name,Email,Company,Job Title,Phone,Website,Industry,City,State,Country,LinkedIn,Notes
+John,Doe,john.doe@example.com,Acme Corp,CEO,555-0101,acme.com,Technology,San Francisco,CA,USA,linkedin.com/in/johndoe,Normal well-formed lead
+Jane,Smith,,Tech Innovators,CTO,555-0102,tech-innovators.com,Software,Austin,TX,USA,,Missing email address
+José,Müller,jose.muller@global.eu,Global Enterprises,"VP, Sales",+44 20 7946 0958,global.eu,Manufacturing,London,,UK,linkedin.com/in/josem,Unicode characters and comma in job title
+"Alice ""The Boss""",Johnson,alice.j@startup.io,Super Fast Startup Inc. Which Has An Extremely Long Name That Might Break UI Layouts,Founder & CEO,555-0103,startup.io,Internet,Seattle,WA,USA,linkedin.com/in/alicej,Quotes in name and extremely long company name
+Bob,,bob@missinglastname.com,No Last Name Corp,Developer,555-0104,missinglastname.com,IT,Denver,CO,USA,,Missing last name
+   Charlie   ,Brown   ,charlie.b@spaces.com, Spacey Inc ,  Manager  ,555-0105,spaces.com,Aerospace,Houston,TX,USA,linkedin.com/in/charlieb,Leading and trailing spaces in fields
+David,Jones,invalid-email-format,Bad Email Inc,Tester,555-0106,bademail.com,QA,Boston,MA,USA,,Invalid email format
+eMMa,wATson,emma.w@case.com,mIXED cASE lLC,aNaLySt,555-0107,case.com,Finance,New York,NY,USA,,Mixed case
+John,Doe,john.doe@example.com,Acme Corp,CEO,555-0101,acme.com,Technology,San Francisco,CA,USA,linkedin.com/in/johndoe,Duplicate of the first row
+X Æ A-12,Musk,x@mars.com,SpaceX,Future Overlord,555-0108,spacex.com,Space,,,,,Special characters in name
+,,no.name@company.com,Nameless,Ghost,555-0109,,,,,,,Missing first and last name
+田中,一郎,ichiro.tanaka@japan.co.jp,Tokyo Tech,Engineer,03-1234-5678,japan.co.jp,Hardware,Tokyo,,Japan,,Non-Latin characters
+,,,Empty Row Corp,,,,,,,,,Missing almost all fields
+Jane,Doe,jane.doe@example.com,Acme Corp,CFO,555-0111,"http://acme.com/about?user=jane&id=123",Technology,San Francisco,CA,USA,,URL with query parameters
