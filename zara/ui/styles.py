@@ -132,7 +132,7 @@ h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
     margin-bottom: 1rem !important;
 }
 
-p, .stMarkdown p, label, .st-emotion-cache-10trblm {
+p, .stMarkdown p, label {
     color: var(--color-stone) !important;
 }
 
@@ -172,7 +172,9 @@ h1 {
     background-color: var(--color-lime-sprout) !important;
     border: none !important;
     color: var(--color-midnight-ink) !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
+    padding: 12px 24px !important;
+    border-radius: var(--radius-lg) !important;
 }
 .stButton > button[kind="primary"]:hover {
     background-color: var(--color-lime-sprout) !important;
@@ -183,9 +185,9 @@ h1 {
 
 /* Input Fields */
 .stTextInput > div > div > input, .stTextArea textarea, .stSelectbox > div > div {
-    background-color: #ffffff !important;
+    background-color: var(--color-pure-white) !important;
     border: 1px solid var(--color-fog) !important;
-    border-radius: 8px !important;
+    border-radius: var(--radius-lg) !important;
     color: var(--color-true-black) !important;
     font-family: 'Inter', sans-serif !important;
 }
@@ -201,20 +203,32 @@ h1 {
     letter-spacing: 0.05em;
     font-size: 18px;
     color: var(--color-midnight-ink);
-    text-decoration: underline wavy var(--color-ember-coral) 2px;
-    text-underline-offset: 6px;
+    position: relative;
+    text-decoration: none;
     display: inline-block;
     margin-bottom: 16px;
     margin-top: 16px;
 }
+.eyebrow::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 60%;
+    height: 3px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 3"><path d="M 0 1.5 Q 3 0 6 1.5 T 12 1.5" stroke="%23f54320" stroke-width="2" fill="none"/></svg>');
+    background-repeat: repeat-x;
+    background-size: 12px 3px;
+}
 
 /* Alerts / Notifications */
 div[data-testid="stAlert"] {
-    background-color: #ffffff !important;
+    background-color: var(--color-pure-white) !important;
     border: 1px solid var(--color-fog) !important;
-    border-radius: 8px !important;
-    padding: 16px !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 24px !important;
     color: var(--color-stone) !important;
+    box-shadow: none !important;
 }
 div[data-testid="stAlert"] p, div[data-testid="stAlert"] div {
     color: var(--color-stone) !important;
@@ -232,13 +246,15 @@ div[data-baseweb="tab-highlight"] {
     display: none !important;
 }
 button[data-baseweb="tab"] {
-    border-radius: 9999px !important;
+    border-radius: var(--radius-pills) !important;
     background-color: transparent !important;
     color: var(--color-true-black) !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 400 !important;
+    font-size: 14px !important;
+    letter-spacing: 0.02em !important;
     border: none !important;
-    padding: 6px 16px !important;
+    padding: 4px 12px !important;
     margin-right: 0px !important;
 }
 button[data-baseweb="tab"][aria-selected="true"] {
@@ -256,9 +272,10 @@ section[data-testid="stSidebar"] {
 
 /* Expanders */
 div[data-testid="stExpander"] {
+    background-color: var(--color-pure-white) !important;
     border: 1px solid var(--color-fog) !important;
-    border-radius: 8px !important;
-    background-color: transparent !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: none !important;
 }
 div[data-testid="stExpander"] summary {
     background-color: transparent !important;
@@ -269,22 +286,59 @@ div[data-testid="stExpander"] summary:hover {
 
 /* Custom Containers (Cards) */
 .card-container {
-    background-color: #ffffff;
+    background-color: var(--color-pure-white);
     border: 1px solid var(--color-fog);
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-24);
+    margin-bottom: var(--spacing-24);
+    box-shadow: none;
 }
+
+/* Metrics (Run History stat cards) */
+div[data-testid="stMetric"] {
+    background-color: var(--color-pure-white);
+    border: 1px solid var(--color-fog);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+}
+div[data-testid="stMetricLabel"] p {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 12px !important;
+    letter-spacing: 0.05em !important;
+    color: var(--color-stone) !important;
+}
+div[data-testid="stMetricValue"] {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    color: var(--color-midnight-ink) !important;
+}
+
+/* Status Dots (source/verification status markers — emoji-free) */
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-pills);
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.status-ok { background-color: #b9ff78; }
+.status-empty { background-color: #d6d3d1; }
+.status-failed { background-color: #f54320; }
+.status-skipped { background-color: transparent; border: 2px solid #d6d3d1; box-sizing: border-box; }
+.status-running { background-color: #008236; }
 
 /* Product Screenshot Frame (for Drafts) */
 .draft-frame {
     border: 2px solid var(--color-ember-coral);
-    border-radius: 24px;
+    border-radius: var(--radius-3xl);
     padding: 32px;
-    background-color: #ffffff;
+    background-color: var(--color-pure-white);
     box-shadow: 0 24px 48px rgba(245, 67, 32, 0.15);
-    margin-top: 24px;
-    margin-bottom: 32px;
+    margin-top: var(--spacing-24);
+    margin-bottom: var(--spacing-32);
 }
 </style>
 """
