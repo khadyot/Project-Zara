@@ -12,7 +12,25 @@
    - `Lime Sprout` (`#b9ff78`) ONLY for primary action buttons or interactive states (like the active Tab Pill).
 4. **Follow `savvycal_style.md`**: Before making ANY visual changes, check `reference/savvycal_style.md`. Do not invent new styles or use default Streamlit styling.
 
-## CSS Enforcement
-- We use a massive `CUSTOM_CSS` block in `app.py` to overwrite Streamlit's defaults.
-- All new Streamlit components (`st.button`, `st.text_input`, etc.) will automatically inherit the SavvyCal styling. You rarely need to write inline styles.
-- If a component looks weird, update `CUSTOM_CSS` instead of hardcoding inline styles in `app.py`.
+## Where the CSS lives
+
+`CUSTOM_CSS` and `render_hero()` are in **`zara/ui/styles.py`**, not `app.py`. They were
+split out so look-and-feel and app logic can be worked on by different agents without
+editing the same file. `app.py` imports them and owns behaviour only.
+
+- All new Streamlit components (`st.button`, `st.text_input`, etc.) inherit the SavvyCal
+  styling automatically. You rarely need inline styles.
+- If a component looks wrong, update `CUSTOM_CSS` in `zara/ui/styles.py` rather than
+  hardcoding inline styles in `app.py`.
+
+## Which document governs
+
+`reference/savvycal_style.md` is the **exhaustive** design system — tokens, type scale,
+components, surfaces, elevation, and the do's and don'ts. Treat it as the source of truth
+for any visual question.
+
+This file is the short list of *project-specific* constraints that the style reference does
+not cover (the emoji ban, the Streamlit-override approach, where the CSS lives). It does not
+replace the style reference.
+
+`brief/ZAMP_DESIGN_SYSTEM.md` is superseded and should be ignored for UI work.
