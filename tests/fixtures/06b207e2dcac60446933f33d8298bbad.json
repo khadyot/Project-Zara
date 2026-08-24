@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Snippet explicitly announces a new CFO appointment, which directly satisfies the observable condition for structural_complexity (recent finance leadership hire)."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.95,
+        "reason": "Detailed announcement of Glen Braganza joining as CFO and reference to a recent acquisition; both meet the observable criteria for recent finance leadership appointments and expansion activity."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Content describes product/AI features of Versapay but does not contain any observable trigger for the defined pains; treated as general company news."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Headline confirms a new CFO appointment, fulfilling the observable condition for structural_complexity."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Announcement of CFO appointment aligns directly with the observable requirement for recent finance leadership hires."
+      }
+    ]
+  },
+  "prompt_tokens": 1178,
+  "completion_tokens": 828
+}

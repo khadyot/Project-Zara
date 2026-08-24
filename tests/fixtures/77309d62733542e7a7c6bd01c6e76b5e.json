@@ -1,1 +1,16 @@
-{"results":[{"index":0,"classification":"professional"},{"index":1,"classification":"professional"}]}
+{
+  "content": {
+    "results": [
+      {
+        "index": 0,
+        "classification": "professional"
+      },
+      {
+        "index": 1,
+        "classification": "professional"
+      }
+    ]
+  },
+  "prompt_tokens": 609,
+  "completion_tokens": 234
+}

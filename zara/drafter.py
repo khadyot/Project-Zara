@@ -9,7 +9,7 @@ from zara.utils.provider import generate_content_with_retry, ProviderProbeFailed
 class DraftOutput(BaseModel):
     draft_text: str
 
-def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_authored", "person_attributed", "company_action", "database_only", "no_signal"]:
+def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_authored", "person_attributed", "colleague_authored", "company_action", "database_only", "no_signal"]:
     if not winning_card:
         return "no_signal"
     if winning_card.proximity == "database":
@@ -17,9 +17,15 @@ def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_a
     if winning_card.proximity == "company_action":
         return "company_action"
     if winning_card.proximity == "authored":
-        if winning_card.card.signal_type == "person_mention":
-            return "person_attributed"
         return "person_authored"
+    if winning_card.proximity == "colleague_authored":
+        return "colleague_authored"
+    if winning_card.proximity == "attributed":
+        # ranker.py assigns "attributed" to every person-tier card that is not
+        # social or profile -- i.e. every person_mention, the most common person
+        # card there is. Without this branch it fell through to "no_signal", so a
+        # found, ranked, drafted person hook reported "no signal" on its face.
+        return "person_attributed"
     return "no_signal"
 
 async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None, hook: object = None, style: str = "auto") -> str | None:
@@ -69,6 +75,25 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         f"Use this EXACT syllogism logic:\n"
         f"1. Hook: based ONLY on this snippet: '{winning_card.card.snippet}'\n"
     )
+
+    # Whose words are these? Getting this wrong produces a confident fabrication
+    # that reads as deep personalisation, which is the worst output this system
+    # can emit. State it explicitly rather than letting the model assume.
+    if winning_card.proximity == "colleague_authored":
+        speaker = winning_card.attributed_to or f"a colleague at {ranked_prospect.prospect.company}"
+        prompt += (
+            f"   ATTRIBUTION -- CRITICAL: the snippet is NOT the recipient speaking. "
+            f"It is {speaker}. You MUST attribute it to them explicitly "
+            f"(for example: \"your {speaker.split(',')[-1].strip()} said ...\"). "
+            f"NEVER write \"you said\", \"I saw you\", \"your view that\", or any second-person "
+            f"phrasing that implies {ranked_prospect.prospect.person_name} said or wrote this.\n"
+        )
+    elif winning_card.proximity in ("company_action", "database"):
+        prompt += (
+            f"   ATTRIBUTION: this is a company-level fact, not something "
+            f"{ranked_prospect.prospect.person_name} personally said or did. Reference it as "
+            f"company news. Never imply they authored or said it.\n"
+        )
     if hook is not None:
         prompt += (
             f"   Lead with this hook (its facts must match the snippet): {hook.hook_text}\n"
@@ -96,7 +121,7 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             prompt += "- Do NOT invent proof points or customer metrics.\n"
     
     if feedback_tokens:
-        prompt += "\nWARNING: Your previous attempt hallucinated these tokens. Ensure they are removed or replaced with grounded facts:\n"
+        prompt += "\nREVISE. Fix each issue below. Items prefixed FORMAT are style problems, not factual errors; everything else is an unsupported claim that must be removed or replaced with a grounded fact:\n"
         prompt += "\n".join(feedback_tokens)
     
     prompt += f"Product/Offer: {value_prop.get('product', '')}\n"

@@ -120,15 +120,13 @@ async def run_pipeline(
         await _gather_results(fetcher_tasks, results, on_event=on_event)
 
     has_person_profile = False
-    has_company_hiring = False
+    has_company_hiring = True   # ruling #7: job postings retired, never escalate for hiring
     discovered_linkedin_url = None
     
     for r in results:
         for card in r.cards:
             if card.tier == "person" and card.signal_type in ("profile", "person_mention"):
                 has_person_profile = True
-            if card.tier == "company" and card.signal_type == "hiring":
-                has_company_hiring = True
             if not discovered_linkedin_url and "linkedin.com/in/" in card.source_url:
                 discovered_linkedin_url = card.source_url
                 
@@ -259,23 +257,37 @@ async def run_pipeline(
                 
     return results
 
+# One run gets one budget. Baseline for the prior build was p50 5.7s / max 24.5s;
+# without a ceiling, ~7 LLM calls each paying their own retry ladder turned that
+# into multi-minute hangs.
+RUN_DEADLINE_SECONDS = 180.0
+
+
 async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard", settings: dict = None, on_event=None):
     """
     Instantiates fetchers based on profile and settings, runs the retrieval pipeline,
     and then processes the prospect through ranking, drafting, and verification.
     """
+    from zara.utils.provider import set_deadline, clear_deadline
+    _dl_token = set_deadline(float((settings or {}).get("deadline_seconds") or RUN_DEADLINE_SECONDS))
+    try:
+        return await _run_end_to_end(prospect, profile, settings, on_event)
+    finally:
+        clear_deadline(_dl_token)
+
+
+async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_event):
     from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
     from zara.fetchers.news import GoogleNewsFetcher
-    from zara.fetchers.compound import CompoundFetcher
     from zara.fetchers.jina import JinaCompanySiteFetcher
     from zara.fetchers.tavily import TavilyFetcher
     from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
     from zara.fetchers.apify import (
-        ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher, ApifyLinkedInJobsFetcher,
+        ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher,
         ApifyLinkedInPostsFetcher, ApifyTwitterFetcher, ApifyInstagramFetcher,
         ApifyTikTokFetcher, ApifyYouTubeFetcher, ApifyRedditFetcher,
         ApifyFacebookFetcher, ApifyProductHuntFetcher, ApifyGoogleMapsFetcher,
-        ApifyGoogleSearchFetcher, ApifyIndeedFetcher, ApifyG2CapterraFetcher, ApifyCrunchbaseFetcher
+        ApifyGoogleSearchFetcher, ApifyG2CapterraFetcher, ApifyCrunchbaseFetcher
     )
     from zara.s2 import process_prospect
     from zara.utils.resolve import resolve_company_entity
@@ -287,10 +299,14 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     if resolution.domain and not prospect.company_domain:
         prospect = dataclasses.replace(prospect, company_domain=resolution.domain)
 
+    # CompoundFetcher unwired 2026-08-25: `groq/compound` is agentic and its
+    # server-side tool expansion 413s on every call -- 0/5 successes across every
+    # recorded run, at ~9-12s of latency each. It also shares the Groq token
+    # bucket the ranker needs.
     rung0 = [
         GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(),
         SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher(),
-        CompoundFetcher(), JinaCompanySiteFetcher()
+        JinaCompanySiteFetcher()
     ]
 
     rung1 = [
@@ -304,7 +320,7 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     
     if profile in ["standard", "social", "deep"]:
         rung2.append(ApifyLinkedInCompanyFetcher())
-        rung3.extend([ApifyLinkedInProfileFetcher(), ApifyLinkedInJobsFetcher()])
+        rung3.extend([ApifyLinkedInProfileFetcher()])
         rung4.append(ApifyLinkedInPostsFetcher())
         
     if profile in ["social", "deep"]:
@@ -313,7 +329,7 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
     if profile == "deep":
         rung4.extend([
             ApifyTikTokFetcher(), ApifyFacebookFetcher(), ApifyProductHuntFetcher(), 
-            ApifyGoogleMapsFetcher(), ApifyGoogleSearchFetcher(), ApifyIndeedFetcher(),
+            ApifyGoogleMapsFetcher(), ApifyGoogleSearchFetcher(),
             ApifyG2CapterraFetcher(), ApifyCrunchbaseFetcher()
         ])
     

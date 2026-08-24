@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Versapay\u2019s Cash Application solution accelerates reconciliation of any payment\u2014checks, ACH, or wires.",
+        "rationale": "As VP of Finance, Glen is responsible for cash flow accuracy and reducing manual reconciliation effort; faster, automated matching directly eases his team\u2019s workload and improves financial visibility.",
+        "bridge": "Our platform similarly automates manual, reconciliation\u2011heavy processes for operations teams, extending the same efficiency gains across the organization.",
+        "strength": 0.85
+      }
+    ]
+  },
+  "prompt_tokens": 702,
+  "completion_tokens": 388
+}

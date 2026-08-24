@@ -41,18 +41,52 @@ class ApifyBaseFetcher:
             with open(fixture_path, "w") as f:
                 json.dump(dataset_items.items, f, indent=2)
                 
+            cards = self._parse_items(dataset_items.items, source_name, tier, signal_type)
+            if not cards:
+                # "ok with 0 cards" hid a broken actor input for weeks. Found
+                # nothing is `empty`; it is never `ok`.
+                return SourceResult(
+                    source=source_name, rung=rung, status="empty",
+                    reason=f"actor returned {len(dataset_items.items)} items, 0 usable cards",
+                    cards=[], cost_usd=projected_cost, elapsed_ms=int((time.time() - start)*1000)
+                )
             return SourceResult(
-                source=source_name, rung=rung, status="ok", reason=None, 
-                cards=self._parse_items(dataset_items.items, source_name, tier, signal_type), 
+                source=source_name, rung=rung, status="ok", reason=None,
+                cards=cards,
                 cost_usd=projected_cost, elapsed_ms=int((time.time() - start)*1000)
             )
         except Exception as e:
             return SourceResult(source=source_name, rung=rung, status="failed", reason=str(e), cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000))
             
+    _HEADCOUNT_KEYS = ("employeeCount", "employeesCount", "staffCount", "companySize", "size")
+    _SECTOR_KEYS = ("industry", "industries", "sector")
+
+    def _firmographic_snippet(self, item: dict) -> str | None:
+        """_compute_icp_fit parses 'headcount: N' / 'sector: X' out of the snippet.
+        Dumping raw JSON never matched, so icp_fit was permanently `unknown`."""
+        hc = next((item.get(k) for k in self._HEADCOUNT_KEYS if isinstance(item.get(k), int)), None)
+        sec = next((item.get(k) for k in self._SECTOR_KEYS if isinstance(item.get(k), str) and item.get(k)), None)
+        if hc is None and not sec:
+            return None
+        bits = []
+        if hc is not None:
+            bits.append(f"headcount: {hc}")
+        if sec:
+            bits.append(f"sector: {sec}")
+        name = item.get("name") or item.get("companyName") or ""
+        desc = (item.get("description") or "")[:600]
+        return f"{name} — " + ", ".join(bits) + (f". {desc}" if desc else "")
+
     def _parse_items(self, items: list, source_name: str, tier: str, signal_type: str) -> list[SignalCard]:
         cards = []
         for i, item in enumerate(items[:5]):
-            snippet = json.dumps(item)[:1500] # Fallback parser
+            if signal_type == "firmographic" and isinstance(item, dict):
+                fs = self._firmographic_snippet(item)
+                if not fs:
+                    continue
+                snippet = fs
+            else:
+                snippet = json.dumps(item)[:1500] # Fallback parser
             cards.append(SignalCard(
                 claim=f"Data from {source_name}",
                 signal_type=signal_type,
@@ -69,7 +103,11 @@ class ApifyBaseFetcher:
 # ---------------------------------------------------------
 class ApifyLinkedInCompanyFetcher(ApifyBaseFetcher):
     async def fetch(self, prospect: Prospect) -> SourceResult:
-        run_input = {"urls": [f"https://www.linkedin.com/company/{prospect.company_domain.split('.')[0] if prospect.company_domain else prospect.company}"]}
+        # Verified against the actor build schema 2026-08-25: it accepts
+        # `companies` (LinkedIn URLs) or `searches` (names). We were sending
+        # `urls`, which it ignored -- hence "No companies provided to scrape",
+        # 8.5s of latency and an `ok` with zero cards on every run.
+        run_input = {"searches": [prospect.company]}
         return await self._run_actor("harvestapi/linkedin-company", run_input, "ApifyLinkedInCompany", 2, 0.004, "company", "firmographic")
 
 # ---------------------------------------------------------
@@ -82,10 +120,9 @@ class ApifyLinkedInProfileFetcher(ApifyBaseFetcher):
         run_input = {"urls": [prospect.linkedin_url]}
         return await self._run_actor("supreme_coder/linkedin-profile-scraper", run_input, "ApifyLinkedInProfile", 3, 0.003, "person", "profile")
 
-class ApifyLinkedInJobsFetcher(ApifyBaseFetcher):
-    async def fetch(self, prospect: Prospect) -> SourceResult:
-        run_input = {"companyNames": [prospect.company]}
-        return await self._run_actor("curious_coder/linkedin-jobs-scraper", run_input, "ApifyLinkedInJobs", 3, 0.004, "company", "hiring")
+# ApifyLinkedInJobsFetcher and ApifyIndeedFetcher removed 2026-08-25 under ruling
+# #7 (job postings are out of the product). Both were also sending input keys the
+# actors rejected, costing ~10s each per run to return nothing.
 
 # ---------------------------------------------------------
 # RUNG 4: Deep Search (The rest of the 16 actors)
@@ -142,7 +179,7 @@ class ApifyGoogleSearchFetcher(ApifyBaseFetcher):
         run_input = {"queries": f"{prospect.person_name} {prospect.company}", "resultsPerPage": 2}
         return await self._run_actor("apify/google-search-scraper", run_input, "ApifyGoogleSearch", 4, 0.005, "company", "news")
 
-class ApifyIndeedFetcher(ApifyBaseFetcher):
+class _RemovedApifyIndeedFetcher(ApifyBaseFetcher):   # ruling #7, unwired
     async def fetch(self, prospect: Prospect) -> SourceResult:
         run_input = {"queries": [prospect.company]}
         return await self._run_actor("misceres/indeed-scraper", run_input, "ApifyIndeed", 4, 0.004, "company", "hiring")

@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I noticed you\u2019re taking a funnel\u2011oriented view of the client journey to bring greater clarity to metrics and educate your team.",
+        "rationale": "As VP of Finance, clear, measurable milestones are essential for accurate reporting, forecasting, and aligning financial goals with operational performance.",
+        "bridge": "Our automation of reconciliation\u2011heavy processes gives you real\u2011time, accurate data across each funnel stage, turning those metrics into actionable insight.",
+        "strength": 0.8
+      }
+    ]
+  },
+  "prompt_tokens": 668,
+  "completion_tokens": 497
+}

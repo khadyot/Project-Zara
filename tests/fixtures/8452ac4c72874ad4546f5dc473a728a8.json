@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The email mentions \"intercompany reconciliation sprawl\" as a hidden bottleneck, which is not present in the provided evidence snippets. All other statements are supported, but this specific claim is unsupported."
+  },
+  "prompt_tokens": 692,
+  "completion_tokens": 771
+}

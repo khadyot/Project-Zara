@@ -1,0 +1,14 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Hiring announcement for a software engineer does not match any observable finance/ops pain; treated as general news."
+      }
+    ]
+  },
+  "prompt_tokens": 800,
+  "completion_tokens": 432
+}

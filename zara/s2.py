@@ -6,7 +6,7 @@ import yaml
 from zara.models import Prospect, SourceResult, DraftResult, RankedCard
 from zara.ranker import rank_prospect
 from zara.drafter import draft_email, compute_claim_strength
-from zara.verifier import verify_draft
+from zara.verifier import verify_draft, check_format
 
 def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) -> str:
     md = []
@@ -118,6 +118,16 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
             claim_strength=claim_strength
         )
         
+    # 2b. Format is fixed by rewriting, never by blocking (ruling #6).
+    fmt = check_format(draft_text)
+    if fmt:
+        retry = await draft_email(
+            ranked_prospect, vp, strictness=strictness, hook=hook, style=style,
+            feedback_tokens=[f"FORMAT (not a factual error): {n}" for n in fmt],
+        )
+        if retry and not check_format(retry):
+            draft_text = retry
+
     # 3. Verify
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "running"})

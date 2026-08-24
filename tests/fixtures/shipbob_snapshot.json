@@ -1,30 +1,368 @@
 {
-  "source": "Greenhouse",
-  "rung": 0,
-  "status": "ok",
-  "reason": null,
-  "cards": [
+  "prospect": "ShipBob",
+  "results": [
     {
-      "claim": "Hiring for Manager, Accounting",
-      "signal_type": "hiring",
-      "source_url": "https://job-boards.greenhouse.io/shipbobinc/jobs/4712820005",
-      "published_date": "2026-08-20T09:48:00-04:00",
-      "snippet": "ting\u00a0will be instrumental in helping\u00a0to\u00a0set up processes, creating\u00a0efficiencies, and\u00a0providing\u00a0professional development\u00a0for\u00a0all reports within the department to position itself for exponential growth in the coming years.\u00a0This role\u00a0reports to the Director, Accounting. What\u00a0you\u2019ll\u00a0do: Own the end-to-end\u00a0accounts\u00a0payable\u00a0(AP)\u00a0function, including invoice processing, vendor payment runs, subledger-to-GL reconciliations, aging review, and month-end accruals. Oversee\u00a0and develop the AP team \u2014 including",
-      "tier": "company",
       "source": "Greenhouse",
-      "eligibility": "eligible"
+      "rung": 2,
+      "status": "empty",
+      "reason": "70 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1873
     },
     {
-      "claim": "Hiring for Senior Financial Analyst",
-      "signal_type": "hiring",
-      "source_url": "https://job-boards.greenhouse.io/shipbobinc/jobs/4633389005",
-      "published_date": "2026-08-21T18:04:40-04:00",
-      "snippet": " the Company's discretionary bonus plan based on Company's plans and in accordance with Company\u2019s policies. We recognize that people come with a wealth of experience and talent beyond just the technical requirements of a job. If your experience is close to what you see listed here, please still consider applying. Diversity of experience and skills combined with passion is a key to innovation and excellence; therefore, we encourage people from all backgrounds to apply to our positions. About You:",
-      "tier": "company",
-      "source": "Greenhouse",
-      "eligibility": "eligible"
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1608
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1407
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1552
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2163
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: ShipBob Launches First Anthropic-Verified Fulfillment Connector, Anchoring its AI Suite - PR Newswire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNZjlSOGE1UFFRclN0VWVvUlNiLVlBREd5VGxWdFIyLWFfMS12OXEyNWViQnhLYkVad0hqTXYxcG9Yd1JTRVdYUVItVHpsWkxTNDRULWFiOUI2WEliSS0tbHpDVUQwUXNXc0MwbGZCS2pjaUlMYl9Tb2Q1U3Z6VWFZeXVzSmNLY3hZamRsZTM2VHFkbVk1aHZpTGJrOXItalEtVl9Bdmc5aHhRa2VkNGEzTVk5ZmhWU0k4bE5mQTBqR05MVkhWQWZrb0RxalNLRHBCWkNRN3AwZkxwUQ?oc=5",
+          "published_date": "Tue, 04 Aug 2026 07:00:00 GMT",
+          "snippet": "ShipBob Launches First Anthropic-Verified Fulfillment Connector, Anchoring its AI Suite PR Newswire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipBob Data Analyst Salaries in Bangor, ME - Comparably",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPMDNVLTduTWs5Y2E4aTZrT1ZfVmZ4aFRLNmhSV3hvRWgyeDk2MmJnbHo2UmVPNDhmcjlVUVJ1b1FJa05GRC1TRzdjN1pGYzY0amswU0ljU0RHSmcwUTI4a1oxdDBBRm1PNmxFTWpjVmZabWZzWjVjelMydWc5bUh4cWFwS3Rxdw?oc=5",
+          "published_date": "Thu, 20 Aug 2026 20:41:52 GMT",
+          "snippet": "ShipBob Data Analyst Salaries in Bangor, ME Comparably",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipBob's Spring 2026 Release: Delivery Dates Brands Can Promise, Tracking Consumers Can Trust, and AI That Ships in Days - PR Newswire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxORHl1ZVBGYkFjS0p5bC1zdFJqeE1FaW1wdFBFSEFnUEg1cXVmeEZSbTgxV0lGNnloOEhCNDQzRXY3aXE2MDdJd1owcXFOMEZ5LXM3czJuYlkyRHU4ZmFQZDIybTRHdjVmWF94Z3lESWZYaWstb2RIeUctTUFnbVdSNWRLU2U2TlhXM3diV20xNlI4bElUV2hwY2cyYXY0cUNYRUxsSEZ2TnBSdXpXVUlaelVYdUVGdXZyY3hQdWQwMFA2ZHdHaEtYQktIQmowaUN4c1c1RG1oVUhLSHRJdXZ0RXdtY0xkdy1zTVQyR2ZSOXhwS09KX1lXdmt6UWltYnc4V3NB?oc=5",
+          "published_date": "Tue, 12 May 2026 07:00:00 GMT",
+          "snippet": "ShipBob's Spring 2026 Release: Delivery Dates Brands Can Promise, Tracking Consumers Can Trust, and AI That Ships in Days PR Newswire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipBob Revenue 2024: $97.7M Est. ARR, $1B Valuation - GetLatka",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBxZ1pxb0NyUWNTS0RiY0REN2JoRWJNT1BFdTU3LXZTbUhOUlh2cERtNHM4NHlqb2duVVg1VnNYVkFJUzdxdkVOUWJfNHNhWjA?oc=5",
+          "published_date": "Fri, 28 Nov 2025 08:00:00 GMT",
+          "snippet": "ShipBob Revenue 2024: $97.7M Est. ARR, $1B Valuation GetLatka",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: E-commerce startup ShipBob seeks to hire banks for 2024 IPO -sources - Reuters",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNY2E3dGpFMWRDS2ZndzRFVlVkVlZzNEpUMW5wSnVZV04wbmRjS1JNX2w2UnRNUVdXanZVYU9jNGtfMWtUeXl5ODJPQzB1dnZpUGY0dnNsSXotUVMwbU1DU3FiWkNQNDNnRUY3ZFdpSzhMMTVTdG54SkctUHhzVlZ5MUxCb292R3hFTzhoamhOUjQtOFVOREVsWlptc2s0eVV6bU1XVHB3Nmc?oc=5",
+          "published_date": "Mon, 05 Feb 2024 08:00:00 GMT",
+          "snippet": "E-commerce startup ShipBob seeks to hire banks for 2024 IPO -sources Reuters",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: E-commerce fulfillment startup ShipBob snags new chief supply chain officer from Amazon - Business Insider",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPUmluSGFUU2poWnZxSVp2V0NtR1dXYVBIQlBFNmFqMG5ra1pPSmYyemJxMzJ1MjJLV3hsbjVxU1pCUFF4Q0ZLbW9seXZJc3BYY0VtOF8tS25BSWQ0MXZzT2t5T3ZEOVVYRHhSNUc1dnp6MHdFcXA2LXd1TVQ4TkJHbWJDUkZDZXZDVGdoM0ZfejZuWXdkRWtTZDhzTnFHRl9KQjg5NVpHOVNSdw?oc=5",
+          "published_date": "Tue, 27 Jun 2023 07:00:00 GMT",
+          "snippet": "E-commerce fulfillment startup ShipBob snags new chief supply chain officer from Amazon Business Insider",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 779
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 12320
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "ShipBob website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://shipbob.com",
+          "published_date": null,
+          "snippet": "Title: Global Ecommerce Fulfillment Solution | ShipBob\n\nURL Source: https://shipbob.com/\n\nMarkdown Content:\n## Deliver faster. Sell more.\n\n*   ![Image 1](https://res.cloudinary.com/spiralyze/image/upload/f_svg/v1780000288/shipbob/2003/icon_1.svg)\n**Fast fulfillment.** ShipBob picks, packs, customizes, and ships from 50+ fulfillment centers worldwide.\n\n*   ![Image 2](https://res.cloudinary.com/spiralyze/image/upload/f_svg/v1780000288/shipbob/2003/icon_1.svg)\n**Smart inventory management.** Track stock in real time, monitor performance, and set reorder alerts so you never run out of inventory.\n\n*   ![Image 3](https://res.cloudinary.com/spiralyze/image/upload/f_svg/v1780000288/shipbob/2003/icon_1.svg)\n**Delivery your customers trust.** Show delivery dates before checkout, turn tracking into a branded experience, and make returns painless.\n\n[Get a Quote](https://shipbob.com/quote/)\n\n![Image 4: Global Ecommerce Fulfillment Solution | ShipBob](https://res.cloudinary.com/spiralyze/image/upload/f_auto/shipbob/2003/hero-image-variant-1440_1.webp)\n\n## Disruption-proof Chaos-proof your fulfillment with ShipBob\n\n*   **Best-in-class fulfillment**to add stability, protecting you from the never-ending changes across tariffs, de minimis values, and carrier surcharges.\n*   **Drive more revenue** with fast delivery promises, beautiful unboxing experiences, and scalable omnichannel and global capabilities.\n*   **Save money** by tapping into the scale of ShipBob, and having us distribute your inventory across our network to reduce costs and speeds.\n\n![Image 5: Image Media](https://www.shipbob.com/wp-content/uploads/2025/10/b3018365eccf3d53a93cc33cda41b32c.png?w=1280px)\n\nAli Shahid,\n\nCOO of Our Place\n\n> By leveraging ShipBob\u2019s fulfillment network, we cut our shipping costs by $1.5 million and reduced shipping speeds by half.\n\n###### You\u2019re in good hands\n\n## **Join industry-leaders who have partnered with ShipBob to power their order fulfillment.**\n\n## **Grow as fast as you can sell.**\n\n",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 16091
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: shipbob",
+          "signal_type": "profile",
+          "source_url": "https://linkedin.com/company/shipbob",
+          "published_date": "2026-06-22T00:00:00.000Z",
+          "snippet": "# ShipBob (Shipbob, Inc.)\n\nShipBob is a Transportation, Logistics, Supply Chain and Storage company. ShipBob is an ecommerce fulfillment solution that offers order fulfillment services, warehousing, packing, shipping, tracking, and returns. It integrates with major ecommerce platforms and marketplaces, and provides omnichannel integration with all major ecommerce platforms and marketplaces. ShipBob aims to empower businesses to scale, offer 2-day shipping, and manage inventory and shipments. ShipBob employs 944 people (+20.6% YoY, +281 people) and has an annual revenue of $215.3M, founded in 2014. Headquartered in chicago, illinois, United States, with presence in United Kingdom and Australia. Its workforce is distributed across 19 countries (including United States, India, United Kingdom, Australia, and Spain). Has $334.6M in total funding, with 8 prior funding rounds.\n\n## About\n\nFounded in 2014, ShipBob offers best-in-class supply chain and fulfillment capabilities for thousands of brands. ShipBob has an international fulfillment network across the US, Canada, UK, EU, and Australia. ShipBob's proprietary technology combines order and inventory management, warehouse management, predictive data and analytics, as well as optimized shipping for ecommerce companies.\n\n## Company Details\n- Industry: Transportation, Logistics, Supply Chain and Storage\n- Type: Privately Held\n- Headquarters: chicago, United States\n- Founded Year: 2014\n- Homepage: shipbob.com\n- Status: active\n- Owners",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Anshu Rathi",
+          "signal_type": "profile",
+          "source_url": "https://linkedin.com/in/anshu-rathi",
+          "published_date": "2026-07-31T00:00:00.000Z",
+          "snippet": "# Anshu Rathi\n\nSoftware Development Engineer Test II\n\nDelhi, India (IN)\n\n170 connections \u2022 175 followers\n\n## About\n\nWith 9 years of Quality Assurance experience in both Agile and Waterfall methodologies, I bring a diverse range of skills and expertise to any organization. I have experience in automating web applications on a Keyword-driven framework using Excel, Selenium Web driver, and TestNG, as well as automating APIs using a BDD framework using Cucumber and Gherkin language. I have worked extensively on API testing for SOAP and REST, writing UI and API automated test scripts, and manual test cases. My experience also includes database testing. As an experienced leader, I have expertise in leading teams, creating Test Plans, Test Strategies, Test Scenarios, Test Cases, and Test Data. I have automated the Regression, Smoke, and Functional Test Cases, and have a strong understanding of Defect Life Cycle Management, including Defect creation, modification, tracking, and reporting using ALM and JIRA. I am passionate about improving quality assurance processes and contributing to the success of an organization. My skills and experience make me a valuable asset for any team looking to enhance their testing capabilities.\n\nTotal Experience: 11 years and 6 months\n\n## Experience\n\n### Senior Software Development Engineer Test - [ShipBob](https://www.linkedin.com/company/shipbob) (Current)\n\nMar 2022 - Present (4 years and 4 months) in Delhi, India\n\n- Evaluated project requirements and",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2119
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: SoftBank-backed ShipBob raises $200 mln in Bain-led ...",
+          "signal_type": "news",
+          "source_url": "https://www.reuters.com/technology/softbank-backed-shipbob-raises-200-mln-bain-led-round-turns-unicorn-2021-06-29/",
+          "published_date": "2021-06-29T00:00:00.000Z",
+          "snippet": "SoftBank-backed ShipBob raises $200 mln in Bain-led round, turns unicorn | Reuters\n\nSkip to main content\n\nExclusive news, data and analytics for financial market professionalsLearn more aboutRefinitiv\n\nJune 29 (Reuters) - Cloud-based logistics platform ShipBob said on Tuesday it had raised $200 million in a late-stage funding round led by Bain Capital Ventures that more than doubled its valuation, lifting it to unicorn status.\n\nOther participants in the latest round include existing investors SoftBank Group Corp(9984.T), opens new tab, Menlo Ventures, Hyde Park Venture Partners, Hyde Park Angels and Silicon Valley Bank.\n\nSign up here.\n\nShipBob had raised $68 million in a SoftBank Vision Fund 2 led-round in September. Bain Capital Ventures, the venture capital division of the Boston-based private equity firm, had also led ShipBob's Series B round in June 2017.\n\nThe company's offering brings together leading e-commerce platforms and marketplaces including Amazon.com(AMZN.O), opens new ta",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: ShipBob nabs $200M at a $1B+ valuation to help e- ...",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2021/06/29/shipbob-nabs-200m-at-a-1b-valuation-to-help-e-commerce-companies-run-logistics-like-amazons/",
+          "published_date": "2021-06-29T00:00:00.000Z",
+          "snippet": "ShipBob nabs $200M at a $1B+ valuation to help e-commerce companies run logistics like Amazon's | TechCrunch\n\n# ShipBob nabs $200M at a $1B+ valuation to help e-commerce companies run logistics like Amazon\u2019s\n\n2:00 AM PDT \u00b7 June 29, 2021\n\nE-commerce saw a massive surge of activity and growth in 2020; and while we may hear a lot about how big companies like Amazon got even bigger during the COVID-19 pandemic, that rising tide also lifted a lot of smaller boats. And that, in turn, has had a big impact on the wider e-commerce ecosystem.\n\nIn the latest development, ShipBob, which has built an operation and tech platform that today works with some 5,000 e-commerce businesses to run shipping and logistics like their bigger rivals, has raised $200 million. ShipBob is already profitable, but it will be using this money to double down on newer areas of business: both in terms of expanding geographically, and technically, with more R&D around software, robotics and autonomous systems.\n\n\u201cWe constantly evaluate the needs of our merchants today, where we believe their needs will evolve in the future, and prioritize what can drive the most impact to help make them successful and differentiate from their competitors,\u201d said Dhruv Saxena, the company\u2019s CEO, in an interview.\n\nChicago-based ShipBob has confirmed that the round pushes its valuation to over $1 billion, doubling its valuation compared to its last round, a Series D that it closed in September 2020.\n\nBain Capital Ventures is leading ",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1966
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no domain",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: EDGAR Search Results",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&filenum=021-264022",
+          "published_date": null,
+          "snippet": "EDGAR Search Results\n\n# EDGAR Company Search Results\n\n- SEC Home\u00bb\n- Company Search\u00bb\n- Current Page\n\nMailing Address 2156 WEST FULTON ST. CHICAGO IL 60612\n\nBusiness Address 2156 WEST FULTON ST. CHICAGO IL 60612 217-819-8539\n\nShipbob, Inc. CIK#: 0001675807 (see all company filings)\n\nState location: IL| State of Inc.: DE | Fiscal Year End: 1231File Number: 021-264022\n\n| Filter Results | | | | Search Within Files |\n| --- | --- | --- | --- | --- |\n| Filing Type: | Prior to: (YYYYMMDD) | Ownership?includeexcludeonly | Limit Results Per Page 10 Entries 20 Entries 40 Entries 80 Entries 100 Entries | Enter keywordsSearch |\n\n| Items 1 - 1 RSS Feed |\n| --- |\n\n| Filings | Format | Description | Filing Date | File/Film Number |\n| --- | --- | --- | --- | --- |\n| D | Documents | Notice of Exempt Offering of Securities, item 06b Acc-no: 0001675807-16-000001 (33 Act) Size: 7 KB | 2016-05-27 | 021-264022161681312 |\n\nhttps://www.sec.gov/cgi-bin/browse-edgar\n\nModified 07/18/2014",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1675807/0001675807-16-000001.txt",
+          "published_date": null,
+          "snippet": "0001675807-16-000001.txt : 20160527\n 0001675807-16-000001.hdr.sgml : 20160527\n 20160527130214\nACCESSION NUMBER: 0001675807-16-000001\nCONFORMED SUBMISSION TYPE: D\nPUBLIC DOCUMENT COUNT: 1\nITEM INFORMATION: 06b\nFILED AS OF DATE: 20160527\nDATE AS OF CHANGE: 20160527\nEFFECTIVENESS DATE: 20160527\n\nFILER:\n\n COMPANY DATA: \n COMPANY CONFORMED NAME: Shipbob, Inc.\n CENTRAL INDEX KEY: 0001675807\n IRS NUMBER: 000000000\n STATE OF INCORPORATION: DE\n FISCAL YEAR END: 1231\n\n FILING VALUES:\n FORM TYPE: D\n SEC ACT: 1933 Act\n SEC FILE NUMBER: 021-264022\n FILM NUMBER: 161681312\n\n BUSINESS ADDRESS: \n STREET 1: 2156 WEST FULTON ST.\n CITY: CHICAGO\n STATE: IL\n ZIP: 60612\n BUSINESS PHONE: 217-819-8539\n\n MAIL ADDRESS: \n STREET 1: 2156 WEST FULTON ST.\n CITY: CHICAGO\n STATE: IL\n ZIP: 60612\n \n \n D\n 1\n primary_doc.xml\n \n \n \n \n\n X0707 \n\n D \n\n LIVE \n\n \n 0001675807 \n Shipbob, Inc. \n \n 2156 WEST FULTON ST. \n CHICAGO \n IL \n ILLINOIS \n 60612 \n \n 217-819-8539 \n DELAWARE \n \n None \n \n \n None \n \n Corporation \n \n true \n 2014 \n \n \n\n \n \n \n Dhruv \n Saxena \n \n \n 2156 West Fulton Street \n Chicago \n IL \n ILLINOIS \n 60612 \n \n \n Executive Officer \n Director \n \n \n \n \n \n Divey \n Gulati \n \n \n 2156 West Fulton Street \n Chicago \n IL \n ILLINOIS \n 60612 \n \n \n Executive Officer \n Director \n \n \n \n \n \n Ira \n Weiss \n \n \n 440 N. Wells Street, Suite 420 \n Chicago \n IL \n ILLINOIS \n 60654 \n \n \n Director \n \n \n \n \n\n \n \n Other \n \n \n Decline to Disclose \n \n \n 06b \n \n \n \n false \n \n \n 2016-05-17 \n \n \n \n false \n \n \n true \n \n \n false \n \n \n 1000 \n",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1627
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Justin Clark of Romperjack | ShipBob Ecommerce Operators Series: Season 2, Episode 6",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=864pSJsw2K4",
+          "published_date": null,
+          "snippet": "welcome everybody back to operators i think this is episode four five of season two i've been uh looking forward to this one for a while we've got justin the ceo and and founder of romperjack where i have a lot of questions um and then we also have adam who runs partnerships over at route which is a close partner of ours and i'll share a little bit more on both of them shortly but first things first as you all know um drop in where you're calling in from i'll go first i am in orange county california just south of los angeles um let's see uh i'm excited to see where we've got people coming in from international waters as well we always have people coming from overseas um i don't know why the canadians usually wait to go last and then pile it all on so we'll see we've got new york la we've got tennessee texas i know justin was in l.a for a while and recently moved over to texas like the rest of california um and so um awesome we've got so as i mentioned with justin here um he is the founder of romperjack they're an apparel company that surprise surprise sells men's rompers and jumpsuits uh they also have added a sister company uh with romper jill and so we'll dive into that as well and what that looks like um i'm pretty interested there because obviously men's rompers is kind of creating its own category um and you know women have been wearing rompers for for quite a while i jokingly told my colleague earlier that i was asking my wife if i could borrow her romper for this epis",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: ShipBob CTO on Driver: 500 Repos, 20M Lines of Code, 3x Engineering Output - YouTube",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=z1obHTMlGIw",
+          "published_date": "2026-06-24T00:00:00.000Z",
+          "snippet": "J, you can go first. I'm like, when you say scale, like what do you mean when you're talking about scale? And like what is the velocity of your engineering team related to this? Yeah. Um so scale, I think I think Adam and his team uh got a surprise. Early on, we we we just started working with Adam and and Driver and uh we realized the the value that it was driving, you know, I think in the first few days. And I told one of my engineers, I was like, no, we have to put all like 500 repositories in here like by the end of the week. Like we got to do this. Didn't really give Adam a huge heads-up, so they were they were But it was a good load test. [laughter] It's a good load test. When you Yeah, they suddenly loaded up 500 code bases and it was at like 1:00 in the morning. [laughter] Surprise. Um so yeah, so, you know, five 400 code bases, 20-some million lines of code. Um Cross like 27 different teams, you know, about 250 software engineering people all the way around there. Um and yeah, we've seen, you know, measurably from the beginning of the year until now like our our uh velocity for uh we we use a tool a different tool to measure some velocity, but it's like a it's like a PR request, but it's kind of weighted with the complexity. Right? So that's gone up by like 3x over the, you know, between now and and when we started with Driver. Um we've seen a lot a lot of drops too in other areas. So um just the the time from commit until push has dropped by like 50% just because we",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1614
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Sandbox Simulations | ShipBob Developer API",
+          "signal_type": "person_mention",
+          "source_url": "https://developer.shipbob.com/sandbox/simulations",
+          "published_date": null,
+          "snippet": "ShipBob\u2019s Simulation Terminal is now available in all sandbox accounts. It lets you simulate the full lifecycle of ShipBob operations \u2014 fulfillment, receiving, and inventory adjustments \u2014 directly from the merchant dashboard, without needing real warehouse activity.\n\nThis is the fastest way to test your integration end-to-end and build confidence before going live.\n\n## Before You Start\n\nMake sure the following conditions are met before running a simulation.\n\n###### Fulfill Order [...] The `/fulfill-order` workflow is the most commonly used simulation. It walks a shipment through every stage of the fulfillment pipeline \u2014 from picking to delivery \u2014 so you can test webhook handlers, polling logic, and UI state transitions without touching real inventory.\n\n### Step 1: Get a Shipment ID\n\nFrom the Orders page in your sandbox, find a shipment in `Awaiting Pick` status and copy its Shipment ID (e.g., `106675083`).\n\n### Step 2: Start the workflow\n\nIn the Simulation Terminal, type: [...] ## Other Workflows\n\n### `/receive-wro`\n\nSimulates a Warehouse Receiving Order being processed at a ShipBob fulfillment center. Useful for testing inventory replenishment flows and WRO webhook events.\n\n```\n\n|",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipBob is rated \"Great\" with 4 / 5 on Trustpilot",
+          "signal_type": "person_mention",
+          "source_url": "https://www.trustpilot.com/review/shipbob.com",
+          "published_date": null,
+          "snippet": "We first started working with ShipBob in 2020 when we launched our first crowdfunding campaign on IndieGoGo and have been partners ever since. We particularly appreciate their user-friendly interface, customer support and account management team, and their ability to process a large number of orders in a single day. Naturally, we had some disputes in early days, especially over the packaging quality. Our main products are hardcover books, which require special care. However, this aspect [...] This has been one of the worst vendor experiences we have ever had. ShipBob went from being a trusted fulfillment partner to a costly, obstructive adversary that lost our inventory, damaged our products, overcharged us, resisted legitimate reimbursements, and then made leaving almost as painful as staying. [...] Customer service is now handled almost entirely through AI-driven responses that rarely solve anything. Every ticket seems to come back asking for another document, another photograph, another explanation, or some piece of information ShipBob should already have. The problem is repeatedly bounced back to the customer until you become too exhausted to continue pursuing it.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Peak season shipping & fulfillment guide | Shippo \u00d7 ShipBob",
+          "signal_type": "person_mention",
+          "source_url": "https://goshippo.com/blog/how-to-pressure-test-your-fulfillment-shipping",
+          "published_date": null,
+          "snippet": "Place inventory closer to customers to cut zones and delivery times.\n Ask your 3PL to run heatmaps showing where your orders actually ship to.\n Consider splitting SKUs across multiple regions if your volume allows.\n\n2. Stress test beyond pick/pack\n\n Receiving and stowing delays cascade into order backlogs. Track how long inbound pallets take to be received, labeled, and shelved.\n Run a dry test where you \u201cpretend\u201d 2x the normal inbound volume arrives \u2014 can your systems and team handle it? [...] Sobrina Crawford\n\nPeak season can expose every weak point in your operations. Andy Hopper, Principal Solutions Architect at Shippo, and Francesca DeCastris, Senior Partner Manager at ShipBob, share how to pressure test your fulfillment and shipping before BFCM. Their tactical advice covers how to simulate spikes, track weak points, and build resilience into your stack so you can deliver on time, even when volumes surge.\n\n## Why pressure testing matters [...] The takeaway: pressure testing protects both holiday revenue and long-term customer trust.\n\n## Stress test your fulfillment accuracy and speed\n\nMany brands focus on speed under pressure, but neglect accuracy. Wrong-item shipments drive r",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Global Ecommerce Fulfillment Solution | ShipBob",
+          "signal_type": "person_mention",
+          "source_url": "https://www.shipbob.com",
+          "published_date": null,
+          "snippet": "An action layer, not another chatbot. ShipBob AI makes smarter network calls on its own, and with ShipBob MCP and Bobby, turns your live fulfillment data into action faster than before.\n Meets your team where they work. Use it in Claude, in the ShipBob dashboard, or the AI tools you already work in.\n Grounded in a stack we own. Every call runs on ShipBob\u2019s own network and data, built and operated in-house since 2014.\n\nLearn More\n\n### 300M+\n\nOrders fulfilled\n\nthrough the ShipBob Network [...] ### 50+\n\nFulfillment centers\n\nacross the world\n\n### 99.97%\n\nAccuracy rate\n\nin fulfilling orders\n\n### 200+\n\nRetail channels\n\nsupported\n\n###### ECOMMERCE FULFILLMENT solutions\n\n## ShipBob is an end-to-end fulfillment provider\n\nImage Media\n\n## Inventory distribution\n\nPlace inventory across different US regions via one hub, with automated replenishment.\n\nImage Media\n\n## Order fulfillment\n\nGet best-in-class picking, packing, shipping, returns, and more across 50+ fulfillment centers.\n\nImage Media [...] Skip to content\n\n# Disruption-proofChaos-proof your fulfillment with ShipBob\n\n Best-in-class fulfillment to add stability, protecting you from the never-ending changes across tariffs, de minimis value",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Startup News: ShipBob raises $68 Million in Series D funding - Supply Chain Management Review",
+          "signal_type": "person_mention",
+          "source_url": "https://www.scmr.com/article/startup_news_shipbob_raises_68_million_in_series_d_funding",
+          "published_date": null,
+          "snippet": "\u00a9 Copyright 2026 Supply Chain Management Review, a division of Peerless Media. All Rights Reserved.\n\n\u00d7)\n\n## Search\n\nSearch\n\n## Sourcing & Procurement\n\nInventory Management Risk Management Global Trade Ports & Shipping\n\n## Business Management\n\nSupply Chain TMS WMS 3PL Government & Regulation Sustainability Finance\n\n## Software & Technology\n\nArtificial Intelligence Automation Cloud IoT Robotics Software\n\n## The Academy\n\nExecutive Education Associations Institutions Universities & Colleges [...] Warehouse Automation Buyer\u2019s Guide 2026\n\nChoosing a warehouse automation partner is about more than comparing robot specifications. The right solution needs to support your workflows\u2026\n\nDownload\n\nLatest News\n\n### Explore\n\n##### Topics  News  ShipBob  Startup News  Trends\n\n##### Latest Supply Chain News [...] NextGen Supply Chain Conference: Retail leaders take center stage at 2026 NextGen Supply Chain Conference\n Research: Coordinating AI-enabled supply chain operations\n More news",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipBob revenue, valuation & funding | Sacra",
+          "signal_type": "news",
+          "source_url": "https://sacra.com/c/shipbob",
+          "published_date": null,
+          "snippet": "ShipBob's current product roadmap continues to deepen its platform capabilities. A Retailer Compliance Module for EDI and marketplace merchants is launching in June 2026 alongside SKU-level inventory thresholds. The Public Order API supports editing of order line items and addresses, and additional API capabilities include FBA order creation, kitting order creation, and Quarantine Lot Management (in beta as of April 2026). [...] ShipBob is expanding deeper into Europe, with a Madrid fulfillment center opened in Q1 2026 enabling 2-day shipping across Spain, Portugal, Italy, and France\u2014markets ShipBob pegs at nearly $200 billion in combined ecommerce value\u2014providing Southern Europe coverage alongside the company's existing Northern European presence. The company has also grown UK fulfillment square footage by 50%, strengthening its position in its largest international market. International momentum was visible in BFCM [...] ShipBob's 2026 State of Order Fulfillment report, drawing on surveys of 416 ecommerce executives, reveals structural demand for expanded fulfillment: 85.82% of brands already sell on 2+ sales channels, 43.99% plan to increase the number of fulfillment centers the",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipBob in the Media: The Latest Press Coverage & News",
+          "signal_type": "person_mention",
+          "source_url": "https://www.shipbob.com/press",
+          "published_date": null,
+          "snippet": "May 12, 2026\n\n#### ShipBob\u2019s Spring 2026 Release: Delivery Dates Brands Can Promise, Tracking Consumers Can Trust, and AI That Ships in Days\n\nShipBob\u2019s largest seasonal release introduces ShipBob Promise, an operationally backed delivery date engine; TrackBob, a unified, branded tracking experience that takes consumers from pick to porch; and a wave of returns improvements designed to give brands more control, lower costs, and a better experience for the consumers buying from them. [...] ShipBob is an e-commerce fulfillment startup with more than $300 million in funding from SoftBank and Bain Capital Ventures, among others. It provides software, warehousing, and packing and shipping services to small online sellers. In October, it started piloting a program to help online sellers get goods from China to the US ahead of Black Friday, at the request of anxious sellers concerned that low inventories would jeopardize their sales. \u201cThese big retailers like Amazon\u2019s of the world \u2014 [...] Read more on PR Newswire.\n\nImage Media\n\nFebruary 5, 2026\n\n#### ShipBob\u2019s 2026 State of Ecommerce Fulfillment Report Offers 200+ Data Points, Finds that Omnichannel is King and Global Network Design is the",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipBob's Spring 2026 Release: Delivery Dates Brands Can Promise, Tracking Consumers Can Trust, and AI That Ships in Days",
+          "signal_type": "news",
+          "source_url": "https://www.prnewswire.com/news-releases/shipbobs-spring-2026-release-delivery-dates-brands-can-promise-tracking-consumers-can-trust-and-ai-that-ships-in-days-302769033.html",
+          "published_date": null,
+          "snippet": "CHICAGO, May 12, 2026 /PRNewswire/ -- ShipBob, the global supply chain and fulfillment platform powering thousands of consumer brands, today announced its Spring 2026 Release, the company's largest seasonal product release to date. The release headlines with ShipBob Promise, a new delivery date engine that gives brands accurate dates to display across the consumer journey, from warehouse floor to their customer's door, to increase conversion rates and the consumer experience. It also introduces",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2240
     }
-  ],
-  "cost_usd": 0.0,
-  "elapsed_ms": 533
+  ]
 }

@@ -35,13 +35,15 @@ async def test_1_zero_network_calls_under_fixtures(use_fixtures, monkeypatch):
     def mock_raise(*args, **kwargs):
         raise RuntimeError("NETWORK CALL ATTEMPTED!")
         
+    monkeypatch.setattr("httpx.AsyncClient.send", mock_raise)
     monkeypatch.setattr("httpx.AsyncClient.post", mock_raise)
+    monkeypatch.setattr("httpx.AsyncClient.get", mock_raise)
     
     prospect = Prospect("Test", "ShipBob")
     from scripts.record_mock import load_snapshot
-    snapshot = load_snapshot()
-        
-    res = await rank_prospect(prospect, [snapshot])
+    snapshot = load_snapshot()   # returns a list[SourceResult]
+
+    res = await rank_prospect(prospect, snapshot)
     assert res is not None
 
 @pytest.mark.asyncio
@@ -74,7 +76,25 @@ async def test_3_card_matching_no_pain_excluded(use_fixtures, monkeypatch):
     result = SourceResult(source="Test", rung=0, status="ok", reason=None, cards=[card], cost_usd=0, elapsed_ms=0)
     
     res = await rank_prospect(prospect, [result])
-    assert res.cards[0].excluded == "matches no pain in value_prop"
+    rc = res.cards[0]
+
+    # CONTRACT CHANGED, DELIBERATELY, AND THIS TEST NOW RECORDS THE NEW ONE.
+    # Before `general_news` was added to the ranker prompt, a card evidencing no
+    # pain came back with no match and was excluded as "matches no pain in
+    # value_prop". The recorded fixture shows the model now reasons correctly
+    # ("does not match any observable finance/ops pain") and then, as the prompt
+    # instructs, labels it general_news @ 0.3 -- so `excluded` is None and the
+    # old assertion is unreachable in strict mode.
+    #
+    # What this test protects is the invariant, not the mechanism: a card that
+    # evidences no pain must never become a usable hook. OPEN QUESTION for the
+    # product (plan Q4): does general_news survive at all, and if so must it be
+    # labelled as an icebreaker on the face of the output? See C_to_AG_18 §2.
+    if rc.excluded is None:
+        assert rc.pain_match is not None and rc.pain_match.pain_id == "general_news"
+        assert rc.score <= 0.4, "a no-pain card must not reach hook-worthy score"
+    else:
+        assert rc.excluded == "matches no pain in value_prop"
 
 @pytest.mark.asyncio
 async def test_4_two_same_kind_hooks_collapse():

@@ -92,7 +92,10 @@ sender_name: "Zamp"
 # Ranker Tie-Breaking Weights
 # These control how the ranker breaks ties when multiple signals have the same pain score.
 proximity_weights:
-  authored: 4
-  attributed: 3
+  authored: 4               # the prospect's own words, name verified in the content
+  attributed: 3             # the prospect named by someone else
+  colleague_authored: 2.5   # a named exec at the company on the record -- real
+                            # evidence about how the org runs, but NOT the prospect's
+                            # voice. Never draft this in the second person.
   company_action: 2
   database: 1

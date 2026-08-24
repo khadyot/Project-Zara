@@ -1,5 +1,9 @@
 # Project Zara — Session Handoff
 
+> **Superseded in part.** Read `HANDOFF-2026-08-25.md` alongside this file — it corrects two
+> entries in §4 below and records the current state. This file remains accurate on everything
+> else.
+
 **Written:** 2026-08-23 · **For:** the next Claude session picking this up mid-flight.
 
 Read this first, then `value_prop.yaml`, then the latest `agent_transfer/C_to_AG_*.md`. Do not re-derive anything in §4 — it was verified with live calls and cost real time.
@@ -87,14 +91,21 @@ All confirmed with live calls this session.
 | `gemini-flash-latest` | ✅ works — **use this** |
 | `gemini-3-flash-preview` | ✅ works |
 | `gemini-2.5-pro` | ❌ 404, retired for new users |
-| `gemini-2.5-flash` | ❌ 404 |
+| `gemini-2.5-flash` | ⚠️ **CORRECTED 2026-08-25: returns 200, works.** The 404 below was wrong or transient. Verified live. |
 | `gemini-3.1-pro-preview` | ⚠️ 429, free-tier quota |
 
 **`gemini-2.5-pro` appears in `models.list()` but 404s on `generateContent`.** Listing ≠ callable.
 
+> **CORRECTION 2026-08-25.** Verified live against our key: `gemini-2.5-flash`,
+> `gemini-flash-latest` and `gemini-3.1-flash-lite` all return **200**. Only models showing a
+> `0` RPM limit in the AI Studio dashboard (`gemini-2.5-pro`, `gemini-3.1-pro`, `gemini-2-flash`)
+> are genuinely unavailable. The `gemini-2.5-flash` target in `provider.py` is correct — do not
+> "fix" it. Ground truth: `Gemini API Key Rate Limits.md` and `Groq API Key Rate Limit.md` at
+> repo root. Full detail in `HANDOFF-2026-08-25.md` §5.
+
 **`gemini-flash-latest` returns `503 UNAVAILABLE` intermittently and often** — 3/3 probe calls in one run, 2/3 in an isolated test, on a key where the real call then succeeded. **503 is the failure mode to design for, not 404.** Retry with backoff; never treat it as fatal and never let it silently pass through as success.
 
-**Free Gemini tier is 20 requests PER DAY per model** (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`, quotaValue 20) — not per minute. `gemini-flash-latest` now resolves to `gemini-3.7-flash`. At ~4 calls per prospect that is 5 prospects/day; no measurement run is possible.
+**Free Gemini tier is 20 requests PER DAY per model** — RECONFIRMED 2026-08-25 from the AI Studio "Peak requests per day (RPD)" chart, which shows the limit line at 20. It is *not* in the dashboard's rate-limit table, only in the trend chart. Gemini therefore cannot be the primary provider (~3 prospects/day). (`GenerateRequestsPerDayPerProjectPerModel-FreeTier`, quotaValue 20) — not per minute. `gemini-flash-latest` now resolves to `gemini-3.7-flash`. At ~4 calls per prospect that is 5 prospects/day; no measurement run is possible.
 
 **DECIDED 2026-08-23: all model calls move to Groq.** `GROQ_API_KEY` is in `.env.local` and works. Model **`openai/gpt-oss-120b`** (verified via `/openai/v1/models`), OpenAI-compatible endpoint. Free tier 8,000 TPM — per minute, so a 429 means wait a full minute. Groq strict structured output **requires `additionalProperties: false` and a full `required` array on every object including `$defs`**; Pydantic's `model_json_schema()` omits both, so walk the schema. Remember `env -u GROQ_API_KEY` for the shell placeholder.
 

@@ -1,0 +1,368 @@
+{
+  "prospect": "Modern Treasury",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on greenhouse",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2437
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2373
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "8 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2393
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2353
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2010
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: How Modern Treasury is building a payments platform for a hybrid money world - Tearsheet",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNYlhURG1XWWRwUFlrVWhiTXBrbVBYbkRxQ1UwUzRTRTItMWRGLXJ2MVprNFF5dlBpT0EzU01fM1dDbWNpMjlMZ2ZRTkw4ZEpEbzBnV3FWTDRkTlRtVDVtcllfQlNrUzZORXRPMTgyajI1OG9nUEotMU1BQURiRnRWYklYeEVYR2xweUZKQmF6S0ZXcEJILVRLVE9hNmVuSEJaMk1kUTRjdnVOUQ?oc=5",
+          "published_date": "Tue, 10 Mar 2026 07:00:00 GMT",
+          "snippet": "How Modern Treasury is building a payments platform for a hybrid money world Tearsheet",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: GrowIt Selects Modern Treasury to Power Payments for Real Estate Capital Raises - Business Wire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPYkRJcjFYNWtmVmcxeEprdVlfMmhCTVhYc1N5cnZfYjJRUEpoakxzU2pSUmJzXzlRaUp0V2NCdzVWbEpxck5LQUxrVFdyUWlkN1IxelpVeGNzQ2daU29MejRyR2hNZ1dTZVJOZURhdEdaN0lOVXFuRVA1VmhGNnZ5bEZtQ1VpMlZkTlMzVTZCYXJJTV93bHE5VVB1LUxNampkS3NLR3huUjlrSDQ2RklpQktlemRFXy1NZFpXSWk2N2VnZW9MV3kzMjFiY1psMnJKeVE?oc=5",
+          "published_date": "Wed, 29 Jul 2026 07:00:00 GMT",
+          "snippet": "GrowIt Selects Modern Treasury to Power Payments for Real Estate Capital Raises Business Wire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Modern Treasury Integrates With Polygon for USDC Payments - Polygon Labs",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOU21kQkVrMEg3cWhVSjNXOTVzZkF4c3hoZEZqbllSV2RyeGpONUdtZHlYR19vRDVLYWd3emNfWkhjcWZmTm1PdjBUOFRqMExGdE94MjJHVkl6ekxTUXRFYlFacEJzNlNVdC1vUjhyRFk1aEN2em9wcVkzeWQ4UTlIM0xtT1V0WDUzWjF4ZXRJNmc1NU0tN3puS2FXQm54NWtGUWc?oc=5",
+          "published_date": "Wed, 29 Apr 2026 07:00:00 GMT",
+          "snippet": "Modern Treasury Integrates With Polygon for USDC Payments Polygon Labs",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: How is Modern Treasury Unifying Stablecoin Payments? - FinTech Magazine",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQbkVXY3RYSExxanpsNUdoWjZscTdSakp3VUVuU2owQTFTaUdpQ2lteEs4OUdnS0toVHdRX0N0RlZlM3JIR19iRlR6NVNFUUhZMkxkYXNpZmZzOWpPUThZNjJBaTJLSUdjaUpSbDlfT3RVRWxLNmRhRkpQcFhyaG5zZzE3LUd3T19MY1JkUg?oc=5",
+          "published_date": "Thu, 19 Feb 2026 08:00:00 GMT",
+          "snippet": "How is Modern Treasury Unifying Stablecoin Payments? FinTech Magazine",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Modern Treasury launches integrated PSP for fiat and stablecoins - Finextra Research",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPc1NDUXBObUczSU0wWlE5bnhsSHBjSFNWcWpDMUN2MUFPZk9iTzdKeW16THZWZ25FUXUzc2locWhZYXVfRzJ0b3Z1ZDY5dW9QMXdUTkFzNC1qcVlFNEZsdEk5NGRLUkQ2V0oxR2gyakFIOHd4VzBmVk1nUUZlcUMxUk1WUHd5VV9NeWZjbWVPZGFpX00yNTBnWk5Ial9BMFp6X093T2xCdHExX28?oc=5",
+          "published_date": "Thu, 19 Feb 2026 08:00:00 GMT",
+          "snippet": "Modern Treasury launches integrated PSP for fiat and stablecoins Finextra Research",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Modern Treasury Acquires Beam to Bring Stablecoins and Fiat Under a Single API - Finovate",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNUlh1MDlFUEs2QUZCY3JEdnExQ1JIYzd6X2J3YXZKTkJTWW1GRlk5Rmdfc1YyZ2RvbGRUejhQa0RRWWZVcGVqdTJwNUl2dkp0T3VBNVFNY3JicEhtcktnWjBQd01rU1JDbnU2SFQ0dHJ3WHRMM0dFc3daT0MySmJJNURQNm9pV3Y2UEk5eVpocXE4MEs0ZkVfTlIwSUcxUWNEWGc?oc=5",
+          "published_date": "Fri, 24 Oct 2025 07:00:00 GMT",
+          "snippet": "Modern Treasury Acquires Beam to Bring Stablecoins and Fiat Under a Single API Finovate",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 963
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 12946
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Modern Treasury website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://moderntreasury.com",
+          "published_date": null,
+          "snippet": "Title: Modern Treasury - Build Products That Move Money\n\nURL Source: https://moderntreasury.com/\n\nMarkdown Content:\n[](https://moderntreasury.com/)\n\n*   Products\n*   Solutions\n*   Resources\n*   Docs\n*   [Customers](https://moderntreasury.com/customers)\n*   [Pricing](https://moderntreasury.com/pricing)\n\n[Log in](https://app.moderntreasury.com/login)[Start building](https://app.moderntreasury.com/sign_up)[Talk to us](https://moderntreasury.com/talk-to-us)\n\nProducts\n\n*   [Payments](https://moderntreasury.com/products/payments)\n*   [Stablecoins](https://moderntreasury.com/products/stablecoins)\n*   [Ledgers](https://moderntreasury.com/products/ledgers)\n\nSolutions\n\n*   [Cross-Border](https://moderntreasury.com/solutions/cross-border)\n*   [Digital Wallets](https://moderntreasury.com/solutions/digital-wallets)\n*   [Embedded ACH](https://moderntreasury.com/solutions/embedded-ach)\n*   [Global USD Accounts](https://moderntreasury.com/solutions/global-usd-accounts)\n*   [Lending](https://moderntreasury.com/solutions/lending)\n*   [Payroll](https://moderntreasury.com/solutions/payroll)\n*   [Rewards & Points](https://moderntreasury.com/solutions/rewards-points)\n*   [Stablecoin Orchestration](https://moderntreasury.com/solutions/stablecoin-orchestration)\n*   [Programmatic Sub-Accounts](https://moderntreasury.com/solutions/sub-accounts)\n\nResources\n\n*   [Library](https://moderntreasury.com/resources)\n*   [Journal](https://moderntreasury.com/journal)\n*   [Newsroom](https://moderntreasury.com/newsroom)\n\nDocs\n\n*   [Payments](https://docs.moderntreasury.com/payments/docs/overview)\n*   [Ledgers](https://docs.moderntreasury.com/ledgers/docs/overview)\n*   [API Reference](https://docs.moderntreasury.com/platform/reference/getting-started)\n*   [Release Notes](https://docs.moderntreasury.com/platform/changelog)\n\n[Customers](https://moderntreasury.com/customers)[Pricing](https://moderntreasury.com/pricing)\n\n[Log in](https://app.moderntreasury.com/login)[Start building](https://app.moderntreasury",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2186
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: modern treasury",
+          "signal_type": "profile",
+          "source_url": "https://linkedin.com/company/modern-treasury",
+          "published_date": "2026-06-25T00:00:00.000Z",
+          "snippet": "# Modern Treasury (Modern Treasury Corp.)\n\nModern Treasury is a Technology, Information and Internet company. Modern Treasury provides payment operations built for the instant economy, with faster payments, smart workflows, and real-time visibility powered by ai. Modern Treasury employs 88 people and has an annual revenue of $74.5M, founded in 2018. Headquartered in San Francisco, California, United States. Its workforce is distributed across United States and Spain. Has $183M in total funding, with 5 prior funding rounds.\n\n## About\n\nModern Treasury provides the most trusted infrastructure for global money movement. Trusted by leading enterprises and financial institutions, the platform helps businesses launch and scale payment experiences in days, not months, with best-in-class developer tools and a single API for both fiat and stablecoin transactions. With built-in compliance, ledgering, and reporting, Modern Treasury enables instant, reliable, and scalable money movement for companies of all sizes.\n\nBacked by leading investors including Benchmark, Altimeter, and Salesforce Ventures, Modern Treasury has powered over $400 billion in payments for hundreds of organizations.\n\n\n## Company Details\n- Industry: Technology, Information and Internet\n- Type: Privately Held\n- Headquarters: San Francisco, United States\n- Founded Year: 2018\n- Homepage: moderntreasury.com\n- Status: active\n- Ownership: Private\n- Aliases: modern treasury, modern treasury corp.\n- LinkedIn: linkedin.com/compa",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Matt Marcus - Co-Founder & CEO at Modern Treasury",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/in/matthew-marcus-bb1b9460",
+          "published_date": "2026-08-07T11:18:10.000Z",
+          "snippet": "# Matt Marcus\n\nCo-Founder & CEO at Modern Treasury\n\nSan Francisco, California, United States (US)\n\n500 connections \u2022 4,273 followers\n\n## About\n\nCo-Founder & CEO at Modern Treasury\n\nTotal Experience: 12 years and 5 months\n\n## Experience\n\n### [Modern Treasury](https://www.linkedin.com/company/modern-treasury)\n\n#### Co-Founder & CEO (Current)\n\nJul 2025 - Present (1 year and 1 month) in San Francisco, California, United States\n\nDepartment: General Management \u2022 Level: Founder\n\n#### Co-Founder & CPO\n\nMay 2018 - Jul 2025 (7 years and 2 months) in San Francisco, California\n\nRunning product (PM, design). Also briefly ran sales.\n\nDepartment: Product \u2022 Level: Founder\n\nModern Treasury is a Technology, Information and Internet company. Modern Treasury provides payment operations built for the instant economy, with faster payments, smart workflows, and real-time visibility powered by ai. Modern Treasury has 80-90 employees and has annual revenue in the $70M-$80M range, founded in 2018. Headquartered in San Francisco, California, United States. Its workforce is distributed across United States and Spain. Has $183M in total funding, with 5 prior funding rounds.\n\n### [LendingHome](https://www.linkedin.com/company/kiavi)\n\n#### Senior Software Engineer\n\nJul 2017 - May 2018 (10 months) in San Francisco Bay Area\n\nDepartment: Engineering and Technical \u2022 Level: Senior\n\n#### Software Engineer\n\nJun 2015 - Jul 2017 (2 years and 1 month) in San Francisco\n\nDepartment: Engineering and Technical\n\nKiavi is",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2913
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Modern Treasury's Valuation Tops $2 Billion After Altimeter ...",
+          "signal_type": "news",
+          "source_url": "https://www.bloomberg.com/news/articles/2021-10-06/modern-treasury-s-valuation-tops-2-billion-after-new-financing",
+          "published_date": "2021-10-06T00:00:00.000Z",
+          "snippet": "Modern Treasury\u2019s Valuation Tops $2 Billion After New Financing - Bloomberg\n\nDeals\n\nModern Treasury executives Matt Marcus, chief product officer and co-founder, from left, Dimitri Dadiomov, chief executive officer and co-founder, and Sam Aarons, chief technology officer and co-founder.\n\nGift this article\n\nAdd us on Google\n\nContact us:Provide news feedback or report an error\n\nConfidential tip?Send a tip to our reporters\n\nSite feedback:Take our Survey\n\nOctober 6, 2021 at 12:30 PM UTC\n\nSave\n\nTranslate\n\nThis article is for subscribers only.\n\nPayments software provider Modern Treasury said it\u2019s valued at more than $2 billion after a funding round led by Altimeter Capital.\n\nThe $85 million investment also included existing investors Benchmark and Quiet Capital, giving the San Francisco-based startup a big jump in its valuation. Modern Treasury was valued at around $300 million at the beginning of the year, according to co-founder and Chief Executive Officer Dimitri Dadiomov.\n\nBefore it's he",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Why Salesforce And Silicon Valley Bank Are Pouring $50 ...",
+          "signal_type": "news",
+          "source_url": "https://www.forbes.com/sites/kenrickcai/2022/03/30/modern-treasury-salesforce-and-silicon-valley-bank-are-pouring-50-million-series-c/",
+          "published_date": "2022-03-30T00:00:00.000Z",
+          "snippet": "Why Salesforce And Silicon Valley Bank Are Pouring $50 Million Into This Fintech Startup\n\n# Why Salesforce And Silicon Valley Bank Are Pouring $50 Million Into This Fintech Startup\n\nBy Kenrick Cai,\n\nFormer Staff.\n\nI'm a staff writer covering venture capital, startups and AI.\n\nMar 30, 2022, 09:00am EDTApr 14, 2022, 02:05pm EDT\n\nAdd Forbes on Google\n\nThis article is more than 4 years old.\n\nModern Treasury\u2019s founders are Sam Aarons, Dimitri Dadiomov and Matt Marcus. Aarons and Marcus were named to the 30 Under 30 for Finance in 2022.\n\nModern Treasury\n\nFintech startup Modern Treasury has brought on two Silicon Valley heavyweights as new partners in a bid to expand its business into the enterprise. The venture arms of Salesforce and Silicon Valley Bank\u2019s holding company each put about $25 million into the San Francisco-based startup, which makes software to help companies manage cash flow and bank payments.\n\nCofounder and CEO Dimitri Dadiomov is not counting this fresh capital as a new fund",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1910
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no domain",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Ea0255921 8k kindly.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1946573/000121390025084677/ea0255921-8k_kindly.htm",
+          "published_date": null,
+          "snippet": "UNITED STATES\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C.\n\nFORM 8-K\n\nCURRENT REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934\n\nDate of Report (Date of earliest event reported): September 3, 2025\n\nKindly MD, Inc.\n\n(Exact name of registrant as specified in its charter)\n\n| 001-42103 | 84-3829824 |\n| --- | --- |\n| (Commission File Number) | (IRS Employer Identification Number) |\n| 5097 South 900 East, Suite 100, Salt Lake City, UT | 84117 |\n| (Address of Principal Executive Offices) | (Zip Code) |\n\n(385) 388-8220 (Registrant\u2019s telephone number, including area code)\n\nN/A (Former name or former address, if changed since last report)\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n\n\u2610 Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n\u2610 Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n\n\u2610 Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR240.14d-2(b))\n\n\u2610 Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR240.13e-4(c))\n\nSecurities registered pursuant to Section 12(b) of the Act:\n\n| Title of Each Class | Trading Symbol(s) | Name of Each Exchange on Which Registered |\n| --- | --- | --- |\n| Common Stock, par value $0.001 | NAKA | The Nasdaq Stock Market LLC |\n| Tradeable Warrants t",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1898722/000121390026022118/ea0274087-1aa2_modern.htm",
+          "published_date": null,
+          "snippet": "AN OFFERING STATEMENT PURSUANT TO REGULATION A RELATING TO THESE SECURITIES HAS BEEN FILED WITH THE SECURITIES AND EXCHANGE COMMISSION. INFORMATION CONTAINED IN THIS PRELIMINARY OFFERING CIRCULAR IS SUBJECT TO COMPLETION OR AMENDMENT. THESE SECURITIES MAY NOT BE SOLD NOR MAY OFFERS TO BUY BE ACCEPTED BEFORE THE OFFERING STATEMENT FILED WITH THE COMMISSION IS QUALIFIED. THIS PRELIMINARY OFFERING CIRCULAR SHALL NOT CONSTITUTE AN OFFER TO SELL OR THE SOLICITATION OF AN OFFER TO BUY NOR MAY THERE BE ANY SALES OF THESE SECURITIES IN ANY STATE IN WHICH SUCH OFFER, SOLICITATION OR SALE WOULD BE UNLAWFUL BEFORE REGISTRATION OR QUALIFICATION UNDER THE LAWS OF SUCH STATE. THE COMPANY MAY ELECT TO SATISFY ITS OBLIGATION TO DELIVER A FINAL OFFERING CIRCULAR BY SENDING YOU A NOTICE WITHIN TWO BUSINESS DAYS AFTER THE COMPLETION OF THE COMPANY\u2019S SALE TO YOU THAT CONTAINS THE URL WHERE THE FINAL OFFERING CIRCULAR OR THE OFFERING STATEMENT IN WHICH SUCH FINAL OFFERING CIRCULAR WAS FILED MAY BE OBTAINED.\n\nPRELIMINARY OFFERING CIRCULAR\n\nSUBJECT TO COMPLETION; DATED MARCH 2, 2026\n\nModern Mining Technology Corp.\n\nModern Mining Technology Corp.\n\n1055 West Georgia Street, 1500 Royal Centre\n\nVancouver, British Columbia, V6E 4N7, Canada\n\nTel: +1 (984) 235-6778\n\nwww.modernmining.com\n\nUP TO 7,058,823 COMMON SHARES\n\nAGENT WARRANT FOR THE PURCHASE OF UP TO 211,764 COMMON SHARES\n\nUP TO 211,764 COMMON SHARES UNDERLYING AGENT WARRANT\n\nPRICE: $4.25 PER SHARE\n\nThe minimum investment in this offering is 200 Co",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2536
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: The Founders on Fiat, Stablecoins, and Building the PSP",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=et_Bc6hwwas",
+          "published_date": "2026-05-22T00:00:00.000Z",
+          "snippet": "# The Founders on Fiat, Stablecoins, and Building the PSP\n\n- Channel: Modern Treasury\n- Length: 01:00:44\n- Views: 33\n- Likes: 0\n- Published: 2026-05-22T07:00:09-07:00\n- Category: Science & Technology\n- Language: en\n\n## Transcript\n\nAll right, everyone. We'll give everyone just a few seconds to join in and we can we can start.\nOkay.\nUh I'll kick us off just as people are starting to flow in. Uh hi everyone. My name is Sam Aaron. I'm the co-founder and CTO of Modern Treasury. I just want to set up a little bit about today and what to expect. First of all, I want to welcome everyone. Today that we're going to be talking about payments infrastructure, how it's changing and what it means if you're building something where money needs to move from A to B.\nUh joining me today are my co-founders Matt Marcus, who is our CEO, and Dimitri Dadiomov, who is our president. Uh today is also a very special day for Modern Treasury because we're celebrating Modern Treasury's eighth birthday today.\nSo, we figured there's no better way to celebrate than to sit down with you all and reflect on what we've built, what we've learned, and and where the future of Modern Treasury is going.\nUm so, just some quick housekeeping notes just before we really dive into the meat of the discussion.\nThis session is being recorded. After the session is over, we'll send a link around to everyone with the recording so they have that for their future reference. If you have any questions that come up while we're talki",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Why Modern Treasury Was Built",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=-rWqM-nN70Q",
+          "published_date": "2026-03-01T00:00:00.000Z",
+          "snippet": "# Why Modern Treasury Was Built\n\n- Channel: Sam Boboev\n- Length: 00:49\n- Views: 129\n- Likes: 0\n- Published: 2026-03-01T02:00:00-08:00\n- Category: People & Blogs\n- Language: en\n\n## Description\n\nIn this clip from my podcast with Modern Treasury, co-founder Matt Marcus explains the real problem they set out to solve.\n\nBefore starting the company, the founders experienced firsthand how painful money movement was inside a mortgage lender \u2014 wires for loan funding, ACH for servicing, manual processes across banks.\n\nTheir conclusion: bank payments infrastructure was broken.\n\nModern Treasury was built as an API-first platform to simplify ACH, wires, and checks for fintechs, marketplaces, and any company embedding payments into their product.\n\nThis is about turning fragmented bank rails into scalable infrastructure.\n\n#fintech #payments #banking\n\n## Transcript\n\nWhat do you guys do? Actually, what problems are you solving?\n>> I can kick us off. So, Sam, myself, and our third co-founder worked at a a mortgage lender before we started Modern Treasury. We lived all these pain points around money movement, sending wires for funding loans, servicing our loans, and we realized that there's this huge unsolved problem around payments, especially in the world of bank payments. So, think like ah and wires and checks. And so we started Modern Treasury to be that simple, easy to use payments platform for fintex or marketplaces or anybody with embedded payments or really payments that scale in their ",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2252
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Security | Modern Treasury",
+          "signal_type": "person_mention",
+          "source_url": "https://www.moderntreasury.com/security",
+          "published_date": null,
+          "snippet": "Modern Treasury takes a proactive approach to test our systems. One important aspect of this approach is regular third-party penetration testing. This process involves simulating real-world attacks on our systems by penetration testers to identify and address any potential vulnerabilities.\n\nWe make sure that our testing providers are industry-leading, meaning that they have a team of experts with the necessary knowledge, experience, and tools to conduct a thorough and comprehensive testing. [...] ### Secure Software Development Lifecycle (SDLC)\n\n#### Comprehensive Scanning\n\nModern Treasury performs comprehensive scanning during our application development process to check our products for any vulnerabilities. Our testing includes a combination of static application security testing (SAST), dynamic application security testing (DAST), and software composition analysis (SCA). [...] Our team works closely with these security professionals to simulate various types of attacks and identify any weaknesses in our systems. We also make sure all our attack surfaces are covered by the testing, both external application penetration testing on our web dashboard and API and internal penetration",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Pipe is creating a new asset class with help from Modern Treasury",
+          "signal_type": "person_mention",
+          "source_url": "https://www.moderntreasury.com/customers/pipe",
+          "published_date": null,
+          "snippet": "They evaluated a number of third-party solutions but didn\u2019t find any with the feature set, ease of use, and API support they needed, until they came across Modern Treasury. \u201cOur CTO took it upon himself to test Modern Treasury using the public API documentation and he was able to build a basic integration in an afternoon,\u201d said Lukas. [...] They need to provide both parties complete visibility into payment statuses and, to minimize payment failures and returns, also need to verify the bank account details of both buyers and sellers.\n\n> \u201cOur CTO took it upon himself to test Modern Treasury using the public API documentation and he was able to build a basic integration in an afternoon.\u201d\n>\n> Lukas Wagner, CFO at Pipe\n\n## Finding the right solution",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "GitHub - Modern-Treasury/modern-treasury-go: Go library for the Modern Treasury API \u00b7 GitHub",
+          "signal_type": "person_mention",
+          "source_url": "https://github.com/Modern-Treasury/modern-treasury-go",
+          "published_date": null,
+          "snippet": "| moderntreasury.go | moderntreasury.go |  |  |\n| moderntreasury\\_test.go | moderntreasury\\_test.go |  |  |\n| paginationauto\\_test.go | paginationauto\\_test.go |  |  |\n| paginationmanual\\_test.go | paginationmanual\\_test.go |  |  |\n| paymentaction.go | paymentaction.go |  |  |\n| paymentaction\\_test.go | paymentaction\\_test.go |  |  |\n| paymentflow.go | paymentflow.go |  |  |\n| paymentflow\\_test.go | paymentflow\\_test.go |  |  |\n| paymentorder.go | paymentorder.go |  |  |\n|  | [...] | ledgertransaction\\_test.go | ledgertransaction\\_test.go |  |  |\n| ledgertransactionversion.go | ledgertransactionversion.go |  |  |\n| ledgertransactionversion\\_test.go | ledgertransactionversion\\_test.go |  |  |\n| legalentity.go | legalentity.go |  |  |\n| legalentity\\_test.go | legalentity\\_test.go |  |  |\n| legalentityassociation.go | legalentityassociation.go |  |  |\n| lineitem.go | lineitem.go |  |  |\n| lineitem\\_test.go | lineitem\\_test.go |  |  | [...] | expectedpayment\\_test.go | expectedpayment\\_test.go |  |  |\n| externalaccount.go | externalaccount.go |  |  |\n| externalaccount\\_test.go | externalaccount\\_test.go |  |  |\n| field.go | field.go |  |  |\n| foreignexchangequote.go | foreignexchangequ",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Auth - Modern Treasury | Plaid Docs",
+          "signal_type": "person_mention",
+          "source_url": "https://plaid.com/docs/auth/partnerships/modern-treasury",
+          "published_date": null,
+          "snippet": "When testing in the Sandbox, you have the option to use the `/sandbox/public_token/create` endpoint instead of the end-to-end Link flow to create a `public_token`. When using the `/sandbox/public_token/create`-based flow, the Account Select flow will be bypassed and the `accounts` array will not be populated. On Sandbox, instead of using the `accounts` array, you can call `/accounts/get` and test with any returned account ID associated with an account with the subtype `checking` or `savings`. [...] To test the integration in Sandbox mode, simply use the Plaid Sandbox credentials along when launching Link with a `link_token` created in the Sandbox environment. [...] Sandbox (): test simulated users\n Production (): production environment for when you're ready to go live and have valid Modern Treasury Production credentials\n\nProcessor token create request",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Press Releases | Modern Treasury",
+          "signal_type": "news",
+          "source_url": "https://www.moderntreasury.com/newsroom/press-releases",
+          "published_date": null,
+          "snippet": "Read more\u2192\n\n## GrowIt Selects Modern Treasury to Power Payments for Real Estate Capital Raises\n\nJuly 29, 2026\n\nThe partnership enables GrowIt customers to collect, manage, and distribute investor funds through a single Payments API supporting ACH, RTP, FedNow, and wire transfers.\n\nRead more\u2192\n\n## Depa Finance Selects Modern Treasury to Power Its Stablecoin-Native Cross-Border Payments Infrastructure\n\nJuly 8, 2026 [...] June 17, 2026\n\nThe partnership enables Symphony to deliver fixed 5% APY savings, automated deposits, rewards on every dollar saved, and seamless money movement between traditional fiat and stablecoin rails\n\nRead more\u2192\n\n## Modern Treasury Adds USDC on Base, Expanding Stablecoin Support\n\nJune 4, 2026\n\nThis integration combines Modern Treasury\u2019s payment service provider with USDC on Base, enabling developers to move and manage stablecoin and fiat payments via a single API.\n\nRead more\u2192 [...] Read more\u2192\n\n## Palus Finance Selects Modern Treasury to Power Multi-Rail Payments for Treasury Management\n\nMay 27, 2026\n\nPalus uses Modern Treasury's Payments API to orchestrate wire, ACH, and RTP payments across operating accounts and bond portfolios, helping companies earn higher yi",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Modern Treasury lands $50m in Series C extension",
+          "signal_type": "news",
+          "source_url": "https://www.fintechfutures.com/venture-capital-funding/modern-treasury-lands-50m-in-series-c-extension",
+          "published_date": null,
+          "snippet": "Image 13: Clearco - FinTech NewsVenture Capital Funding\n\nClearco secures $100m Macquarie facility to target $900m in e-commerce advancesClearco secures $100m Macquarie facility to target $900m in e-commerce advances\n\nbyTyler Pathe\n\nAug 19, 2026\n\n1 Min Read\n\nImage 14: Creditspring - FinTech NewsRegulations & Compliance\n\nFCA grants credit broker status to subscription lender CreditspringFCA grants credit broker status to subscription lender Creditspring\n\nbyCameron Emanuel-Burns\n\nAug 14, 2026 [...] Former MoneyLion execs debut wealthtech infrastructure venture Astraeus with $10m in total fundingFormer MoneyLion execs debut wealthtech infrastructure venture Astraeus with $10m in total funding\n\nbyTyler Pathe\n\nAug 19, 2026\n\n2 Min Read\n\nLendTech keyboard_arrow_down\n\n#### Related Topics\n\n   Commercial & SME Lending\n   Fintech Lending\n   P2P Lending\n\n   Personal Lending & Mortgages\n   Credit Scoring\n\n#### Recent inLendTech\n\nSEE ALL chevron_right [...] Aug 21, 2026\n\nImage 19: ICYMI - FinTech Funding News\n\nVenture Capital Funding\n\nICYMI fintech funding round-up: Rezolv AI, Salad, Noggin HQ, and more\n\nICYMI fintech funding round-up: Rezolv AI, Salad, Noggin HQ, and more\n\nAug 21, 2026\n\nImage 20",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Modern Treasury Launches Global USD Accounts, Enabling Platforms to Serve Users in 90+ Countries",
+          "signal_type": "news",
+          "source_url": "https://www.moderntreasury.com/newsroom/press-releases/modern-treasury-launches-global-usd-accounts-enabling-platforms-to-serve-users-in-90-countries",
+          "published_date": null,
+          "snippet": "San Francisco, CA \u2014 [May 18, 2026] \u2014 Modern Treasury today launched Global USD Accounts, enabling platforms to offer named U.S. accounts to eligible individuals and businesses in more than 90 countries.\n\nEach account includes unique routing and account numbers and supports collecting, holding, and sending funds across ACH, wire, RTP, FedNow, and stablecoin rails through a single API. [...] Press Releases\n\n\u2022May 18, 2026\n\n# Modern Treasury Launches Global USD Accounts, Enabling Platforms to Serve Users in 90+ Countries\n\nPlatforms can now enable users worldwide to receive, hold, and send U.S. dollars through named U.S. accounts, managed through a single API for payments, compliance, ledgering, and stablecoin flows.\n\nExplore With AI\n\nOpen in OpenAI \u2197Open in Claude \u2197\n\nCopied\n\nTopics\n\nStablecoinsGlobal Payments",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Modern Treasury Launches Payments: An Integrated Payment Service Provider (PSP) for Fiat and Stablecoins",
+          "signal_type": "news",
+          "source_url": "https://www.moderntreasury.com/newsroom/press-releases/modern-treasury-launches-payments",
+          "published_date": null,
+          "snippet": "Global Payments\n\nSAN FRANCISCO \u2014 [Feb. 18, 2026] \u2014 Modern Treasury today introduced Payments, an integrated payment service provider (PSP) that helps companies build modern money movement experiences. The PSP accelerates startups and product teams that embed fiat and stablecoin payments into their products, leveraging Modern Treasury\u2019s banking, blockchain, and compliance infrastructure to get to market faster and with confidence. [...] Press Releases\n\n\u2022February 18, 2026\n\n# Modern Treasury Launches Payments: An Integrated Payment Service Provider (PSP) for Fiat and Stablecoins\n\nThe only payment service provider to combine multi-rail payments, a developer-first API, and real-time reporting powered by Modern Treasury\u2019s proprietary ledger.\n\nExplore With AI\n\nOpen in OpenAI \u2197Open in Claude \u2197\n\nCopied\n\nTopics\n\nGlobal Payments",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2881
+    }
+  ]
+}

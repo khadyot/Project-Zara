@@ -1,0 +1,357 @@
+{
+  "prospect": "Thin Prospect",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "http 404",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4195
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4994
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 5675
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 5048
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4789
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Phillies Limited By Thin Prospect Pool at MLB Trade Deadline - 97.5 The Fanatic",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQS0ZLU2lkNnJkSk1jaVhqakhTSDV3ZzdsQnlNN040czNESHV4Y1VGMmFpYlFzRUhjMm0xYnNXbnJENzZZVWI3ZEgxRWdaWlpUQXktdEV0ckJJbkNUWW5SdWd4Z0hjbGh1MlVzY0U4UHdSSW41V1N6TVRxRVhUZnhKV1ZkNTdzOFBRWVJhMmx5RmRVZlEz?oc=5",
+          "published_date": "Thu, 18 Jun 2026 07:00:00 GMT",
+          "snippet": "Phillies Limited By Thin Prospect Pool at MLB Trade Deadline 97.5 The Fanatic",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Stars Left Off Latest Top 100 Prospect Rankings, Reinforcing Concerns About a Thin Prospect Pipeline - Yahoo Sports",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE52MHFFRWxXWmlnbWszRS03c1AzYl9KWW5ocmhHVHBvWU1fa09oUmhTZnZLb1JjMHczN2FXY2hzOFlTR1JxdzJVY1VLQzRyLVBWZXBGWERfbjIxaE54QmFrSDdpcWNQOWZwOGxsV3ZiSlg1MVRIaWNuUHJtZ1hiV3M?oc=5",
+          "published_date": "Tue, 14 Jul 2026 07:00:00 GMT",
+          "snippet": "Stars Left Off Latest Top 100 Prospect Rankings, Reinforcing Concerns About a Thin Prospect Pipeline Yahoo Sports",
+          "tier": "person",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Maple Leafs prospect Luke Haymes may be the dark horse of camp. Does he have an NHL future? - The Athletic - The New York Times",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQd2JqVlRLTFB3YmRfQjhLNDBqbEoyR0gzMnA0NGtqUUFKbjc3T2lMNmgzVktZX2xIdnhNZG0xaDJhODlRSmlLNnBiRnRneHlBblZRZGNoTUk4ay1OOHQwMXM3MGtXTUl2aV91eUZucEpHdHQ1TDZSZ2VDOWhXSTRvMndUYXRvTGZmb1RnRkotSkRfSm9BNlV0SlFR?oc=5",
+          "published_date": "Sun, 21 Sep 2025 07:00:00 GMT",
+          "snippet": "Maple Leafs prospect Luke Haymes may be the dark horse of camp. Does he have an NHL future? - The Athletic The New York Times",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Rebuilding Exploration - Bain",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE11S3MxbmdlQmRidWhFWFJKRlRIbENMeUJrYjRyMnR2bHRnbE1Kb2NUWFk5ZTBkeGNWUDdJeXVCOUhibzdRUHl4aXI1cy0tWG1XbzJUSHl0czFUQ1ZidVBnZXN5QQ?oc=5",
+          "published_date": "Mon, 04 May 2026 07:00:00 GMT",
+          "snippet": "Rebuilding Exploration Bain",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Colorado Avalanche could have solid prospect in the works - Mile High Sticking",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNOUlBWk8yTHhVeVVYOGVVME1wVmpMcDNFd19Dc25FSXM4RXlBVThaSC1PaEh2UFhvUnRuZkphNW9UVEVoalZ6dW1ncUFFeWtkVDFUaHBUME0tZWVfb0Y3ODNKcWRua01QWjZ2M1JkdEVyRTBPTHNxQ3BhbjNsVmRRMTlQZ0gzakd6ZTdEQU1ic20tZjN3S2VSMzg0MGFuZnFJ?oc=5",
+          "published_date": "Wed, 14 Jan 2026 08:00:00 GMT",
+          "snippet": "Colorado Avalanche could have solid prospect in the works Mile High Sticking",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Nets Select Chris McCullough, a Slim Prospect of Their Own (Published 2015) - The New York Times",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxONUpmMjE4ZldLMDVYLTEyNEk2cE10NGRHWV9iT3Y4YkNCUVM4OGI4b0VMQi0zQ19ZdVBmaVV2N05iX3NNR3BiWW9sT1JucFJGR0JmM2NvSF9USy0tbXJ0SmRnYzUta0llSk9UMks3Y01RTzNKTDExSTJCa1g4VHVXS1QtaUtLeTB5WlRsTWlVMUtaLWhyc2dncWk5MmZvemFyNVpjcHpXd19VdTl6V3RPemd1a2JWQnVfMEhIU3FQd3RvdkhWbWdhd01n?oc=5",
+          "published_date": "Fri, 26 Jun 2015 07:00:00 GMT",
+          "snippet": "Nets Select Chris McCullough, a Slim Prospect of Their Own (Published 2015) The New York Times",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 839
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 13275
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "empty",
+      "reason": "no reachable company domain",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1710
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Confirming Meetings: Thin Commitment or Self-Generated?",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/matthewcorneliusgreen_confirming-tomorrows-meeting-is-how-some-activity-7472262330748416001-HXMu",
+          "published_date": "2026-06-24T14:02:57.809Z",
+          "snippet": "# Confirming tomorrow's meeting is how some of your meetings get canceled. | Matt Green \u00b7 LinkedIn \u00b7 2026-06-15\n\n**Matt Green**: Co-Founder and Chief Revenue Officer at Sales Assembly for 9 years 7 months with 19 years 7 months of total professional experience. Previous roles include Senior Vice President at Techweek, Partner - Regional Director at Kapow, and Director of Retail Equity Markets at Rainmaker Securities. Based in Chicago, Illinois, United States [US].\n\n---\n\nConfirming tomorrow's meeting is how some of your meetings get canceled.\n\nOne SDR in our monthly Peer Group mentioned he calls the day before every demo. Runs an 85% show rate, but watches a few prospects use that call as the exit:\n\n\"We looked into it more, we're no longer interested.\"\n\nAnother SDR NEVER confirms. His logic: the prospect already picked the time themselves off an agenda and a list of options.\n\nA confirmation call just hands them a convenient moment to back out.\n\nI'm personally in this camp, fwiw. I dont like confirming mtgs for this very reason.\n\nThat said, I get how both playbooks can work, as long as they're solving for different bookings.\n\nA meeting set on a single cold call carries a very thin commitment. The prospect said yes partly to end the conversation, and that yes decays over a week.\n\nTHOSE meetings need the confirmation call. And when a prospect cancels on it, you're in a live objection instead of an empty calendar slot tomorrow.\n\nSo work it: \"You took this meeting because intake wa",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: My 3 part framework for testing outreach... | Thomas Ryan Oakes",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/tom-ryan-referral-program-pros_my-3-part-framework-for-testing-outreach-activity-7419389519415640064-BONu",
+          "published_date": "2026-01-20T00:00:00.000Z",
+          "snippet": "# My 3 part framework for testing outreach... | Thomas Ryan Oakes \u00b7 LinkedIn \u00b7 2026-01-20\n\n**Thomas Ryan Oakes**: Founder at GTM Bud for 9 months with 19 years 11 months of total professional experience. Previous roles include Chief Operating Officer at BizX, Growth Marketer at Freelance, and Director of Marketing And Business Development at Euroadventures. Based in Seattle, Washington, United States [US].\n\n---\n\nMy 3 part framework for testing outreach...\n\nFind your winner in 1 week..\n\nMost people think outreach \u201cdoesn\u2019t work\u201d because they tried one idea, once, and it flopped.\n\nWhat I keep seeing across accounts and clients is that whenever their past outreach failed, it was simply because of a lack of testing.\n\nOne offer.\nOne message.\nOne audience.\n\nThen a conclusion was drawn.\n\nBut there\u2019s a much faster, saner way to do this.\n\nThink of outreach like small experiments, not big bets.\n\nHere\u2019s the framework:\n\n1 | Shrink your offer\n\nDon\u2019t lead with your full service.\nLead with a slice of it.\n\nI call this a \u201cValue Offer\u201d.\n\nSomething small you can deliver quickly that your prospect would genuinely find useful.\n\n-A short teardown.\n-A quick audit.\n-A one-page snapshot.\n-A tool to help them see a new angle or info.\n-A brief Loom walking through 2\u20133 opportunities.\n\nNot a pitch.\nJust help.\n\n2 | Test a few ideas at once\n\nPick 2\u20134 different value offers you think could work.\n\nThen test each one with a small batch - around 50 prospects per idea.\n\nThat\u2019s enough volume to get the signal you",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2421
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: YC grad ZenProspect rebrands as Apollo, lands $7M Series A | TechCrunch",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2018/06/26/yc-grad-zenprospect-rebrands-as-apollo-lands-7-m-series-a/",
+          "published_date": "2018-06-26T00:00:00.000Z",
+          "snippet": "YC grad ZenProspect rebrands as Apollo, lands $7M Series A | TechCrunch\n\n# YC grad ZenProspect rebrands as Apollo, lands $7M Series A\n\n Ron Miller \n\n7:57 AM PDT \u00b7 June 26, 2018\n\nZenProspect, a startup that emerged from the Y Combinator Winter 2016 class to help companies use data and intelligence to increase sales, announced today that it was rebranding as Apollo. It also announced a $7 million Series A investment.\n\nThe round was led by Nexus Venture Partners. Social Capital and Y Combinator also participated. Apparently Y Combinator liked what they saw enough to continue to invest in the company.\n\nApollo helps customers connect their sales people with the right person at the right time. That is typically a customer that is most likely to buy the product. It does this by combining a number of tools including a rules engine to automate prospect routing, a lead scoring tool and analytics to measure results at a granular level, among others.\n\nApollo analytics. Photo: Apollo\n\nThe company also uses data they have collected from 200 million contacts at 10 million companies to match sellers to buyers along with the information in the user\u2019s own CRM tools \u2014 typically Salesforce. Apollo is making this vast database of company and contact data available for customers to use themselves for free starting today.\n\nApollo CEO and founder Tim Zheng says the company was born out of a need at a previous venture. He was working at a startup that was floundering and sales had flatlined. When the",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Semafor debuts in tough media environment",
+          "signal_type": "news",
+          "source_url": "https://www.cnbc.com/2022/10/18/semafor-debuts-new-media-startup.html",
+          "published_date": "2022-10-18T00:00:00.000Z",
+          "snippet": "Semafor debuts in tough media environment\n\nKey Points\n\n- Semafor, a new global news company, debuted Tuesday.\n- The company is launching with $25 million in funding.\n- Semafor is putting a new spin on the old-fashioned news article, including a distinct section for reporters to share their view of the issue at hand.\n\nBen Smith, left, and Justin Smith\n\nSource: Semafor\n\nSemafor, a new digital media company with a focus on global news for college-educated readers, debuted Tuesday with intentions to bring transparency and clarity to a news business its co-founders believe has become too polarized.\n\nSemafor has been preparing for its launch since January, when former New York Times media columnist Ben Smith and former Bloomberg Media Chief Executive Officer Justin Smith quit their jobs to start the venture. Semafor.com and its mobile site will have a signature yellow background to go along with coverage in the U.S. and sub-Saharan Africa. The news company will introduce regional and national coverage in the Middle East, Asia, Europe and other countries.\n\nThe Smiths, who are not related, will take lessons learned from more than 20 years in digital media to steer Semafor into what they hope will be a global, profitable business.\n\nRecent sales of Axios (to Cox Enterprises), The Athletic (to The New York Times) and Politico (to Axel Springer) have given Semafor a path toward building and selling a business for hundreds of millions of dollars, though Justin Smith said he hasn't had any",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1896
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no domain",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: form8k.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1393935/000101376214000373/form8k.htm",
+          "published_date": null,
+          "snippet": "form8k.htm\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWASHINGTON, D.C. 20549\n\nFORM 8-K\n\nCURRENT REPORT\n\nPursuant to Section 13 or 15(d) of the Securities Exchange Act 1934\n\nDate of Report (date of earliest event reported): April 2, 2014\n\nTHINSPACE TECHNOLOGY, INC.\n\n(Exact name of Company as specified in charter)\n\n| Delaware | 000- 52524 | 43-2114545 |\n| --- | --- | --- |\n| (State or Other Jurisdiction of Incorporation) | (Commission File Number) | (I.R.S. Employer Identification Number) |\n\n5535 S. Williamson Blvd, Unit 751\n\nPort Orange, FL 32128\n\n(Address of principal executive offices) (zip code)\n\n786-763-3830\n\n(Registrant's telephone number)\n\n____________________\n\n(Former name and address, if changed since last report.)\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of Company under any of the following provisions:\n\n|_| Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n|_| Soliciting material pursuant to Rule 14a-12(b) under the Exchange Act (17 CFR 240.14a-12(b))\n\n|_| Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n\n|_| Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\n\n---\n\n-\n\nItem 8.01 Other Events.\n\nOn April 2, 2014, Thinspace Technology Ltd (\u201cThinspace UK\u201d), a wholly-owned subsidiary of Thinspace Technology, Inc. (the \u201cCompany\u201d) entered into a stock purchase agreem",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: C-AR - ThinOptics, Inc. - April 6, 2026",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1630162/000163016226000004/form_car.pdf",
+          "published_date": null,
+          "snippet": "ThinOptics, Inc.\n\nANNUAL REPORT \n1620 Carneros Meadows Lane \nSonoma, CA 94536 \n8444844667 \nhttps://www.thinoptics.com/ \n\nThis Annual Report is dated April 6, 2026.\n\nBUSINESS\n\nThinOptics, Inc. was incorporated on December 1, 2010 under the laws of the State of Delaware and began operations in 2015.\n\nWe are a manufacturer and retailer of ultra-light and compact reading glasses and sunglasses that fit on the back of any Smart Phone which customers can easily carry with them at all times. The company offers many options of the thinnest, lightest eyeglasses direct to customers on its website and through third-party retailers like Amazon. With our patented \u201cAlways With You\u201d technology we developed thin, comfortable reading glasses that fit on the back of any Smart Phone, which consumers can easily and safely carry with them anywhere.\n\nPrevious Offerings\n\nType of security sold: Warrant (10 year warrants as a $.75 exercise price) \nFinal amount sold: $2,021,578.50 \nUse of proceeds: Working capital, including payment of director, officer and employee salaries. \nDate: March 27, 2020 \nOffering exemption relied upon: 506(b) \n\nREGULATORY INFORMATION\n\nThe company has not previously failed to comply with the requirements of Regulation Crowdfunding;\n\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATION\n\n### Operating Results \u2013 2025 Compared to 2024\n\nCircumstances which led to the performance of financial statements: \nThe company generates revenues from the sale",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1774
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Be Heard Episode #05: Jonathan Risley | CEO @ ThinAir",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=zqhoirjVG9E",
+          "published_date": null,
+          "snippet": "bias or 2025 estimating that two-thirds of the world will face water shortages why can't we create a solution and really tap into what nature and evolution has been achieving 4 3.8 billion years a lot of great innovations often get stuck in academia because they can't bridge the gap to commercialization it's really important that it should be a viable option for people coming out of six for more coming out of university to actually think I'm not saying I don't necessarily have to join the company own company morning Jonathan wanted that it's lovely to have you here my pleasure when we met about six months ago your technology and what you've developed is one of the most captivating creative technologies that I've run across and run across many many many different companies and in the last six and half years that I've been here in Europe I'm really interested to hear the story of how you got your idea and where you are right now with the business and just to hear how it developed and what you want to sort of create with your business and so everyone this is Jonathan Risley he's the CEO of thin air take it away yeah so we're we're it starts up from Imperial College and we're creating a new source of water so by harnessing the water that's in the Earth's atmosphere to condense it down and provide clean drinking water for people the thing that I found really interesting but what you're doing is how you got your original idea so I want you to describe that a little bit so we we cam",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Tre White 1-on-1 Interview | Indiana Pacers Prospect Workouts - YouTube",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=MJD5AJE8M_4",
+          "published_date": "2026-06-05T00:00:00.000Z",
+          "snippet": "Tre White 1-on-1 Interview | Indiana Pacers Prospect Workouts - YouTube\n\nTre White 1-on-1 Interview | Indiana Pacers Prospect Workouts - YouTube\n[](https://www.youtube.com/)[](https://www.youtube.com/)\n[About](https://www.youtube.com/about/)[Press](https://www.youtube.com/about/press/)[Copyright](https://www.youtube.com/about/copyright/)[Contact us](https://www.youtube.com/t/contact_us/)[Creators](https://www.youtube.com/creators/)[Advertise](https://www.youtube.com/ads/)[Developers](https://developers.google.com/youtube)[Impressum](https://www.youtube.com/t/impressum?hl=de&gl=DE)[Cancel Memberships](https://support.google.com/youtube/contact/de_cancellation)[Terms](https://www.youtube.com/t/terms)[Privacy](https://www.youtube.com/t/privacy)[Policy & Safety](https://www.youtube.com/about/policies/)[How YouTube works](https://www.youtube.com/howyoutubeworks?utm_campaign=ytgen&utm_source=ythp&utm_medium=LeftNav&utm_content=txt&u=https://www.youtube.com/howyoutubeworks?utm_source=ythp&utm_medium=LeftNav&utm_campaign=ytgen)[Test new features](https://www.youtube.com/new)\n&copy; 2026 Google LLC",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2385
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Reservoir Potential of Thin-Bedded Turbidites: Prospect ...",
+          "signal_type": "person_mention",
+          "source_url": "https://onepetro.org/SPEATCE/proceedings-abstract/92SPE/92SPE/54139",
+          "published_date": null,
+          "snippet": "by CD White \u00b7 1992 \u00b7 Cited by 8 \u2014 This interdisciplinary study demonstrated that thin-bedded turbidites can be successfully tested, be very productive, and have large connected",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "3) The prospects of picking up any survivors are now ______.",
+          "signal_type": "person_mention",
+          "source_url": "https://www.facebook.com/voip.com.vn2/posts/3-the-prospects-of-picking-up-any-survivors-are-now-______a-thin-b-narrow-c-slim/608846975904940",
+          "published_date": null,
+          "snippet": "3) The prospects of picking up any survivors are now ______. A. thin B. narrow C. slim D. restricted #windsky.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ASTM D882 | Instron",
+          "signal_type": "person_mention",
+          "source_url": "https://www.instron.com/en/testing-solutions/astm-standards/astm-d882",
+          "published_date": null,
+          "snippet": "This test is meant for specimens uniform to within 10% of the thickness over the length of the specimen between the grips. Thicker specimens approaching the 1 mm thickness limit must be uniform to within 5%. Specimens need to be between 5.0 and 25.4 mm wide, and at least 50 mm longer than the grip separation used during testing. The standard specimen gauge length for testing is 250 mm. However, if this is not possible, then a minimum specimen length of 100 mm (50 mm gauge length) is acceptable [...] Free downloads from the extensive collection of documentation in our white paper library\n\nInformative brochures covering the specifications and features of Instron equipment\n\nFind the manual you need for your Instron system and accessories\n\nSubscribe to the Instron Update\n\n## ASTM Standards \u00bb ASTM D882\n\n# The Definitive Guide to ASTM D882 - Tensile Testing of Thin Plastic Film\n\n| Instron ASTM D882 - Tensile Testing of Thin Plastic Film [...] factor in testing to ASTM D882 is using an appropriate preload. Thin film specimens are usually relaxed and not taut when loaded into grips for testing. A preload, which can be easily configured in Bluehill\u00ae Universal testing software, helps to remo",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "D882 Standard Test Method for  Tensile Properties of Thin Plastic Sheeting",
+          "signal_type": "person_mention",
+          "source_url": "https://www.astm.org/d0882-18.html",
+          "published_date": null,
+          "snippet": "Domestic Shipping\n\nDomestic orders are delivered via United Parcel Service (UPS) or United States Postal Service (USPS). Transit\ntimes average 3 to 5 business days. Please be aware that UPS will not deliver packages to Post Office Boxes.\n\nDomestic Rush Orders\n\nPlease Contact Us.\n\nInternational Standard Shipping [...] International orders are delivered via courier post services which can be either a postal service, courier\nservice, or a combination of both. Standard Service is untraceable. Please allow 4-7 weeks for delivery.\n\nInternational Expedited Shipping\n\nPlease Contact Us. [...] Please Contact Us.\n\nPlease be aware that carriers will not deliver packages to Post Office Boxes. Because of the variability of\ncustoms processes and procedures in different countries, ASTM International cannot guarantee transit times to\ninternational destinations. Customs duty and taxes are the responsibility of the consignee.\n\nShipping & Handling charges follow the rate schedule, below:",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Federal Register :: Notice of Availability of Calendar Year 2026 Competitive Grant Funds for the Technology Initiative Grant Program",
+          "signal_type": "news",
+          "source_url": "https://www.federalregister.gov/documents/2026/02/24/2026-03618/notice-of-availability-of-calendar-year-2026-competitive-grant-funds-for-the-technology-initiative",
+          "published_date": null,
+          "snippet": "The Intake Technology Improvement Projects subcategory is a newly established TIP funding track, designed with a two-phase structure:\n\n Phase 1: Business Process Assessment, funded as a TIP grant for up to $35,000; and\n Phase 2: Implementation and Improvement, with total funding for both phases capped at $100,000. [...] In 2026, TIP grants are available for Technology Assessments, Business Process Analysis (BPA) projects, and other discrete technology improvement efforts, such as usability/UX research or assessments, system performance audits, digital accessibility evaluations, technology skills assessments, and other efforts that will improve the technology infrastructure of the organization.\n\n#### New in 2026: Intake Technology Improvement Projects [...] Phase 2 funding is contingent on LSC approval of an acceptable implementation plan and budget and may be awarded only for high-priority, technology-related components of the intake improvement project.\n\nThe 2026 TIP Application and related guidance will include targeted questions to identify the specific area of focus for each TIP as well as the requirements for the Intake BPA/Enhancement sub-category of TIP grants.",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "GOP on Thin ICE - The American Prospect",
+          "signal_type": "person_mention",
+          "source_url": "https://prospect.org/2026/02/04/gop-on-thin-ice",
+          "published_date": null,
+          "snippet": "White House border czar Tom Homan holds a news conference at the Bishop Whipple Federal Building, January 29, 2026, in Minneapolis. Credit: Julia Demaree Nikhinson/AP Photo\n\n \n\nA funny thing happened on the way to the Democrats\u2019 latest budget capitulation. They acquired some spine. [...] It began when key Senate progressives, led by Chris Murphy (CT) and Elizabeth Warren (MA) were joined by more moderate colleagues in demanding that Minority Leader Chuck Schumer hold out for serious constraints on ICE as a condition of approving other parts of the 2026 budget. In the end, Democrats voted unanimously\u2014even Pennsylvania\u2019s John Fetterman\u2014to strip DHS from the rest of last week\u2019s package that kept the government open, pending major ICE reforms. [...] There are now just ten days left before the two-week continuing resolution expires and DHS runs out of funding. It seems unlikely, given the splits in their own ranks, that Republicans will meet Democratic demands by then, but even less likely that Democrats will back down.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "NTIA Announces Two New Funding Opportunities to Expand Broadband ...",
+          "signal_type": "news",
+          "source_url": "https://www.ntia.gov/press-release/2026/ntia-announces-two-new-funding-opportunities-expand-broadband-connectivity-tribal-lands",
+          "published_date": null,
+          "snippet": "The application window opens today, June 17, 2026, and closes September 17, 2026. NTIA expects to make awards on a rolling basis beginning in Spring 2027. Additional information is available on NTIA's BroadbandUSA website, including the TBCP fact sheet and NEGP fact sheet. NTIA will also host a TBCP 3 and NEGP NOFO Launch Webinar on Wednesday, June 24, 2026. You can register here. [...] Jun 17, 2026\n\nNews Media Contact\n\nNTIA, Office of Public Affairs\n\n# NTIA Announces Two New Funding Opportunities to Expand Broadband Connectivity on Tribal Lands\n\n### Nearly $800M Available through Reformed Programs that Cut Red Tape, Maximize Tribal Connectivity",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Grant News",
+          "signal_type": "person_mention",
+          "source_url": "https://www.grantsoffice.com/Learn-from-Us/Grant-News?article=1842",
+          "published_date": null,
+          "snippet": "However, the 2026 funding landscape will be built upon a vastly different process from previous years. This year\u2019s budgetary cycle was paralyzed by the longest government shutdown in U.S. history and further complicated by aggressive executive realignments. Navigating these legislative delays requires grantseekers to cut through the headline noise and pinpoint the actual drivers that will impact their grant funding pipeline. Ultimately, the most successful organizations will be those ready to [...] As a result, the 2026 budget cycle utilized an iterative minibus strategy, releasing funding in three distinct stages:\n\nThe Resulting Roadblocks (Potholes?) for Grantseekers [...] Site Logo\n\n# Grant News\n\nThe 2026 Federal Budget: What You Need to Know to Navigate the Latest Funding Landscape\n\n##### The 2026 Federal Budget: What You Need to Know to Navigate the Latest Funding Landscape\n\nPublished: Jun 02, 2026\n\nBy Chris LaPage, Chief Services Officer & Ashley Schultz, Manager of Community Engagement",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 3289
+    }
+  ]
+}

@@ -50,12 +50,56 @@ def _compute_icp_fit(cards: list[SignalCard], value_prop: dict) -> tuple[Literal
 
     return "fit", notes
 
-def _compute_proximity(card: SignalCard) -> Literal["authored", "attributed", "company_action", "database"]:
+def _name_tokens(person_name: str) -> list[str]:
+    """Surname plus any given name long enough not to collide with common words."""
+    parts = [p.strip(".,") for p in (person_name or "").split() if len(p.strip(".,")) >= 3]
+    return parts[-1:] + parts[:-1] if parts else []
+
+
+def mentions_prospect(card: SignalCard, person_name: str) -> bool:
+    """Is this card actually ABOUT the named person? Surname must appear in the
+    claim, the title, or the body. Without this the ranker cannot tell the
+    prospect speaking from a colleague speaking -- which is how a transcript of
+    Versapay's CFO became 'person_authored' evidence about a different exec."""
+    toks = _name_tokens(person_name)
+    if not toks:
+        return False
+    hay = f"{card.claim} {card.snippet}".lower()
+    surname = toks[0].lower()
+    return re.search(r"\b" + re.escape(surname) + r"\b", hay) is not None
+
+
+_ROLE_RE = re.compile(
+    r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[,\-—|]\s*"
+    r"((?:Chief[\w\s]*Officer|C[EFTOM]O|President|Founder|Co-?founder|"
+    r"(?:VP|Vice President|Head|Director|Manager)(?:\s+of\s+[\w\s]+)?))",
+    re.I,
+)
+
+
+def _extract_speaker(card: SignalCard) -> str | None:
+    """Best-effort 'Name, Role' from the claim/title, so the drafter can say
+    whose words these are instead of implying they are the recipient's."""
+    m = _ROLE_RE.search(card.claim) or _ROLE_RE.search(card.snippet[:300])
+    if m:
+        return f"{m.group(1).strip()}, {m.group(2).strip()}"
+    return None
+
+
+def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Literal["authored", "colleague_authored", "attributed", "company_action", "database"]:
+    person_name = prospect.person_name if prospect else ""
     if card.tier == "person":
         if card.signal_type == "social":
+            # Authored means AUTHORED. If the prospect is not in the content, this
+            # is somebody else at the company talking -- still real evidence, but
+            # it is their voice, not the prospect's.
+            if person_name and not mentions_prospect(card, person_name):
+                return "colleague_authored"
             return "authored"
         if card.signal_type == "profile":
             return "database"
+        if person_name and not mentions_prospect(card, person_name):
+            return "company_action"
         return "attributed"
     if card.signal_type == "firmographic":
         return "database"
@@ -97,7 +141,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     to_score = []
     
     for i, card in enumerate(all_cards):
-        proximity = _compute_proximity(card)
+        proximity = _compute_proximity(card, prospect)
         recency = _compute_recency(card.published_date)
         
         excluded = None
@@ -131,13 +175,14 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             recency_days=recency,
             score=0.0,
             excluded=excluded,
-            guardrail_hit=guardrail_hit
+            guardrail_hit=guardrail_hit,
+            attributed_to=_extract_speaker(card) if proximity == "colleague_authored" else None,
         )
         
     if to_score:
-        prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "company_action": 2, "database": 1})
+        prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
         to_score.sort(key=lambda item: (
-            prox_val.get(_compute_proximity(item[1]), 0), 
+            prox_val.get(_compute_proximity(item[1], prospect), 0), 
             _compute_recency(item[1].published_date) is not None,
             -(_compute_recency(item[1].published_date) or 9999)
         ), reverse=True)
@@ -148,7 +193,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             ranked_cards_map[i] = RankedCard(
                 card=rc.card, pain_match=None, proximity=rc.proximity,
                 recency_days=rc.recency_days, score=0.0, excluded="hard cap limit exceeded",
-                guardrail_hit=rc.guardrail_hit
+                guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
             )
         to_score = to_score[:15]
 
@@ -190,7 +235,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                             ranked_cards_map[s.index] = RankedCard(
                                 card=rc.card, pain_match=pm, proximity=rc.proximity,
                                 recency_days=rc.recency_days, score=final_score, excluded=None,
-                                guardrail_hit=rc.guardrail_hit
+                                guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                             if final_score >= 0.8:
                                 found_strong_hook = True
@@ -198,7 +243,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                             ranked_cards_map[s.index] = RankedCard(
                                 card=rc.card, pain_match=None, proximity=rc.proximity,
                                 recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop",
-                                guardrail_hit=rc.guardrail_hit
+                                guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                 
                 if found_strong_hook:
@@ -209,7 +254,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         ranked_cards_map[i] = RankedCard(
                             card=rc.card, pain_match=None, proximity=rc.proximity,
                             recency_days=rc.recency_days, score=0.0, excluded="skipped due to early exit (strong hook found)",
-                            guardrail_hit=rc.guardrail_hit
+                            guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                         )
                     break
         except ProviderProbeFailedError as e:
@@ -219,7 +264,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 ranked_cards_map[i] = RankedCard(
                     card=rc.card, pain_match=None, proximity=rc.proximity,
                     recency_days=rc.recency_days, score=0.0, excluded=f"scoring unavailable ({str(e)})",
-                    guardrail_hit=rc.guardrail_hit
+                    guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                 )
     
     final_cards = list(ranked_cards_map.values())
@@ -229,7 +274,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     eligible = [c for c in final_cards if c.excluded is None]
     
     # Sort eligible by proximity priority then score.
-    prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "company_action": 2, "database": 1})
+    prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
     eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score), reverse=True)
     
     seen_tiers = set()
@@ -241,7 +286,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         card=c.card, pain_match=c.pain_match, proximity=c.proximity,
                         recency_days=c.recency_days, score=c.score,
                         excluded="same hook kind as winner (Compass VI swap test)",
-                        guardrail_hit=c.guardrail_hit
+                        guardrail_hit=c.guardrail_hit, attributed_to=c.attributed_to
                     )
         else:
             seen_tiers.add(c.card.tier)

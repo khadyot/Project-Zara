@@ -1,0 +1,368 @@
+{
+  "prospect": "Versapay",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on greenhouse",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "16 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2343
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Versapay Names Glen Braganza CFO as B2B Payments Platform Scales - citybiz",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQLW41ek00UVVER1lET2ZOLTNMX01FNmMzbnVHM1RYNDFEX2ptUnBsYUFGYk1zaHhyZUxTVTY2MWViVUJ2V1VTM1dFR093eFRma0U0OXU4VVM0NWE0R2hsYTNaTlBpa0lnMVB0NDc5bkVEMGNHSlBkSlI5Szk3Q1h2cmcyZ080N1BQVVRWWHlwUExjSUN6MWkyU0syREU3d3VnbHJ3dXZ3?oc=5",
+          "published_date": "Thu, 20 Aug 2026 13:05:40 GMT",
+          "snippet": "Versapay Names Glen Braganza CFO as B2B Payments Platform Scales citybiz",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Versapay plunges ahead with new C-suite team - Payments Dive",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNQVVXdTdzai04V0syV2xndFB5VURfT0lwc0tzaGZNTXlEZWlZQ3d5ajFidFhsN0NVUFNZWEtjRmNxUlBfZWptSGk2RGE5UXF5RGxsVEtBTElCMnN5cVNDZ2ZwWVBxTmdBaDBrWEdkWFhzcXBwTFZiZHc4VVZPMEJDUHJOT2puNFZFRHZmdGpJWk02ZGJKcmxsUnhxTDdrY2RqWjM5LQ?oc=5",
+          "published_date": "Thu, 11 Jul 2024 07:00:00 GMT",
+          "snippet": "Versapay plunges ahead with new C-suite team Payments Dive",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: KEYBANK LAUNCHES PREDICTIVE ACCOUNTS RECEIVABLE MATCHING WITH KEYTOTAL AR POWERED BY VERSAPAY - PR Newswire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQM2ljOVZCdGRIeXpNOHlkMGI4YWxVUGRvZkM5QTNsb3V6TDZ0bmFqRUNXdmJIdTF4cFBpTTg1anlQdkJRbjZ1VTdYQWgySVh1Unh3NENnMWZqSTlCSjlHSFRPTi1GbTJTTS1IVnlxNERrT190Y0p6cWJCaDgzY0V3ckFHcExodEVhdDhvbHRJN3liM29DbFVMYkpMX0lqNXp0SXpHUEdqd3hwRGJYMTdEbUo3WWtPVm85YkFqZFN3N3o5ekF0MlRsLXRLV3ZaSGJRc1F5Z293TU05UHdNQ0NMWGpmcw?oc=5",
+          "published_date": "Mon, 07 Jul 2025 07:00:00 GMT",
+          "snippet": "KEYBANK LAUNCHES PREDICTIVE ACCOUNTS RECEIVABLE MATCHING WITH KEYTOTAL AR POWERED BY VERSAPAY PR Newswire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Versapay Revenue 2024: $42M Est. ARR (Bootstrapped) - GetLatka",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5jeGloYXdFYnRraDl3NDdyV2xsWWFKSjRuYzdYUXktY3laekViVUpDbmdiSDVycEZSTjdpcGR0TVdobFpEUFVCMjJMam9xRUtI?oc=5",
+          "published_date": "Thu, 19 Dec 2024 08:00:00 GMT",
+          "snippet": "Versapay Revenue 2024: $42M Est. ARR (Bootstrapped) GetLatka",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: DadeSystems and Versapay Transaction - William Blair",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9iemdJMk02NExsMXBCMTAxNEVWUnNZY2E4dGRnU1NjOFVPSzVDV2d1em0wSGtSdTM3Ymh6RmRfQVJSU0hwUnU0M3d3QUJxaDlUaXFjZ0tFR2xxaEhtUzhydFdKMzZJb0VpZ0hLU0kwdVZEVmNqU25IbEVB?oc=5",
+          "published_date": "Fri, 22 Apr 2022 07:00:00 GMT",
+          "snippet": "DadeSystems and Versapay Transaction William Blair",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Most accounts receivable teams are behind schedule: survey - CFO Dive",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQUTFRNDYyTFBKQ2FJeEM5a2xQSkFOZWZzeXJVamxZaTZaVnV3LXA0d1ZVcTdOeG5QZ2xmZllPTGI1SmFXalFVVUUwdjVJSEFLU19LRHN1UXY3V2RPbURsamFFY1hLOUFJTy1IR1llRzhuU1dTS3lmSllFYkNXM3lyMlJyYlNVX0g5cUVsbVlTQXYwa1JjRUFjRHZn?oc=5",
+          "published_date": "Wed, 26 Jul 2023 07:00:00 GMT",
+          "snippet": "Most accounts receivable teams are behind schedule: survey CFO Dive",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1596
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 13077
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Versapay website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://versapay.com",
+          "published_date": null,
+          "snippet": "Title: Home | Versapay\n\nURL Source: https://versapay.com/\n\nMarkdown Content:\n[](https://www.versapay.com/)\n\n*   Products \n\n![Image 13: Product Solution Card Image](https://learned-skunk.transforms.svdcdn.com/production/Product_Solution_Card_Image.png?w=600&q=100&auto=format&fit=max&dm=1755791520&s=64a1b6829fe1071a889734f6ff7ffd32)Platform overview  Automate and simplify the entire invoice to cash process, from invoicing to reconciliation  [Learn more](https://www.versapay.com/ar-automation)  \n\n    *   [Digital invoicing and customer portal Automate billing with an electronic invoice presentment and payment solution, and give customers a self-serve portal to pay, manage accounts, or resolve disputes](https://www.versapay.com/solutions/digital-invoicing-customer-portal)\n    *   [Cash application Match payments to open invoices, speed up reconciliation, and unlock working capital using AI and machine learning](https://www.versapay.com/solutions/cash-application)\n    *   [Collections management Gain clarity and control by automating tasks, prioritizing high-risk accounts, reducing overdue invoices, and improving cash flow visibility](https://www.versapay.com/solutions/collections)\n    *   [Reporting and reconciliation See collections trends, act on payment risks, and get ahead of month-end with real-time DSO, ADP, and dashboards before reconciliation begins](https://www.versapay.com/solutions/reporting-reconciliation)\n    *   [B2B payment services Offer flexible, secure B2B payments, including ACH, credit cards, and embedded ERP options](https://www.versapay.com/solutions/b2b-payment-services)\n    *   [ERP integrations Integrate with NetSuite, Intacct, Dynamics 365 or any other ERP via open APIs or flat files](https://www.versapay.com/integrated-payments)\n\nInteractive Platform Tours\n\nTake a self-guided tour and see Versapay's unified solutions first-hand\n\n[Take a tour arrow_forward](https://www.versapay.com/demo-center-interactive-product-tours)\n\n*   Solutions \n\n![Image",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 8447
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: versapay",
+          "signal_type": "profile",
+          "source_url": "https://linkedin.com/company/versapay",
+          "published_date": "2026-06-22T00:00:00.000Z",
+          "snippet": "# Versapay\n\nVersapay (VPY) is a Financial Services company. Versapay is a company that offers unified accounts receivable automation platforms to simplify the invoice-to-cash process by automating invoicing, facilitating B2B payments, and streamlining cash application with AI. Versapay employs 295 people (+5.4% YoY, +19 people) and has an annual revenue of $80M, founded in 2006. Headquartered in Atlanta, Georgia, United States, with presence in Canada. Its workforce is distributed across 9 countries (including United States, Canada, Israel, Brazil, and Nigeria). IPO 2008.\n\n## About\n\nVersapay is the platform that rewires AR by removing barriers from collecting and reconciling B2B payments, providing end-to-end cash flow clarity, ensuring businesses can manage working capital on their terms. By closing the loop for finance teams and their business systems, customers, and payment activity into a single intelligent ecosystem, Versapay transforms money matters into a data-driven advantage. With 10,000 customers and 5M+ companies transacting, Versapay facilitates 110M+ transactions and processes $170B+ in payments volume annually.\n\n| Field | Value |\n| --- | --- |\n| Area served | North America |\n\n## Company Details\n- Industry: Financial Services\n- Type: Privately Held\n- Headquarters: Atlanta, United States\n- Founded Year: 2006\n- Homepage: versapay.com\n- Status: active\n- Ownership: Private\n- Parent Company: Solupay Consulting, Inc.\n- Aliases: versapay, versapay corporation\n- Stock Sy",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Sarika Patel",
+          "signal_type": "profile",
+          "source_url": "https://linkedin.com/in/sarika-patel-4598aa185",
+          "published_date": "2026-06-10T00:00:00.000Z",
+          "snippet": "# Sarika Patel\n\nDevOps Engineer | Azure | Azure DevOps | AZ-104 | CI/CD | Azure Pipelines | Docker | Kubernetes | Terraform | IaC | GitHub Actions | Jenkins | YAML\n\nGreater Toronto Area, Canada (CA)\n\n356 connections \u2022 367 followers\n\n## About\n\nDevOps Engineer with hands-on experience designing and implementing CI/CD pipelines\u2026\n\nTotal Experience: 9 years and 10 months\n\n## Experience\n\n### [Versapay](https://www.linkedin.com/company/versapay)\n\n#### Lead Quality Assurance Engineer (Current)\n\nMar 2022 - Present (4 years and 5 months) in Toronto, Ontario, Canada\n\n- Led a QA team of 5 engineers across multiple feature teams, delivering test strategies aligned with business and technical goals.\n- Defined and implemented test plans for new product features, regression cycles, and critical releases across web and mobile platforms.\n- Collaborated with product managers, developers, and DevOps to embed quality early via test design reviews and risk-based testing.\n- Established traceability between requirements, test cases, and defects; improved defect detection rate by 70%.\n- Managed sprint-level and release-level test execution, reporting QA KPIs (test coverage, defect density, cycle time) to leadership.\n- Championed exploratory and UAT testing processes; facilitated customer-focused quality improvements.\n- Designed and implemented a modular Selenium and Cypress test automation framework, reducing regression testing time by 70%.\n- Spearheaded shift-left practices by integrating automated ",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1836
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Versapay says closed bought-deal financing | Reuters",
+          "signal_type": "news",
+          "source_url": "https://www.reuters.com/article/legal/government/versapay-says-closed-bought-deal-financing-idUSASC08NZH/",
+          "published_date": "2016-05-09T00:00:00.000Z",
+          "snippet": "Versapay says closed bought-deal financing | Reuters\n\nExclusive news, data and analytics for financial market professionalsLearn more aboutRefinitiv\n\nMay 9 (Reuters) - Versapay Corp\n\n* Versapay Corporation announces closing of bought-deal financing and full exercise of over-allotment option Source text for Eikon: Further company coverage:\n\nBengaluru Newsroom: +1 646 223 8780\n\nOur Standards: The Thomson Reuters Trust Principles., opens new tab\n\n## Legal\n\n### EU Commission raids chocolate confectionery company on suspected antitrust breach\n\nWorldcategory\u00b7 April 13, 2026 \u00b7 4:43 PM UTC \u00b7 ago\n\nThe European Commission \u200bhas raided the \u200cpremises of an unnamed \u200bchocolate confectionery \u200bcompany on suspected violation \u2060of antitrust \u200brules that prohibit \u200bcartels and anti-competitive practices, it said \u200bon Monday \u200bin a statement.\n\nLitigationcategory Heartflow sues rival Cleerly over AI cardiology technology\n\nLegal Industrycategory Your website is a satisfying target: What you need to know about pix",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: VersaPay agrees to sell merchant services portfolio",
+          "signal_type": "news",
+          "source_url": "https://www.reuters.com/article/business/versapay-agrees-to-sell-merchant-services-portfolio-idUSFWN1DV001/",
+          "published_date": "2016-11-30T00:00:00.000Z",
+          "snippet": "VersaPay agrees to sell merchant services portfolio | Reuters\n[Skip to main content](#main-content)\n[Exclusive news, data and analytics for financial market professionalsLearn more aboutRefinitiv\n](https://www.reuters.com/differentiator/)\n[](https://www.reuters.com/)\n[My News](https://www.reuters.com/my-news/feed/)\n[Register](https://www.reuters.com/account/register/sign-up/&journeyStart=navigation)\n# VersaPay agrees to sell merchant services portfolio\nByReuters\nNovember 30, 201610:20 AM UTCUpdated ago\nText\n* Small Text\n* Medium Text\n* Large Text\nShare\n* X\n* Facebook\n* Linkedin\n* Email\n* Link\nNov 30 (Reuters) - Versapay Corp\n\\* Versapay enters definitive agreement for sale of merchant services portfolio\nSign up[here.](undefined?location=article-paragraph)\n\\* Versapay corp -entered into a definitive asset purchase agreement with bluepay canada for sale of all of assets of its merchant services portfolio\n\\* Versapay -under terms of agreement, versapay will sell all of assets that compris",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1531
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no domain",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 0
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: EDGAR Search Results",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/cgi-bin/browse-edgar?CIK=0001479253&action=getcompany&count=40&owner=include",
+          "published_date": null,
+          "snippet": "EDGAR Search Results\n\n# EDGAR Company Search Results\n\n- SEC Home\u00bb\n- Company Search\u00bb\n- Current Page\n\nMailing Address SUITE 1150, 1500 WEST GEORGIA STREET VANCOUVER A1 V6G 2Z6\n\nBusiness Address SUITE 1150, 1500 WEST GEORGIA STREET VANCOUVER A1 V6G 2Z6 604-909-9850\n\nVERSAPAY CORP CIK#: 0001479253 (see all company filings)\n\nState location: A1| State of Inc.: Z4 | Fiscal Year End: 1231formerly: JG CAPITAL CORP (filings through 2009-12-23)\n\n| Filter Results | | | | Search Within Files |\n| --- | --- | --- | --- | --- |\n| Filing Type: | Prior to: (YYYYMMDD) | Ownership?includeexcludeonly | Limit Results Per Page 10 Entries 20 Entries 40 Entries 80 Entries 100 Entries | Enter keywordsSearch |\n\n| Items 1 - 3 RSS Feed |\n| --- |\n\n| Filings | Format | Description | Filing Date | File/Film Number |\n| --- | --- | --- | --- | --- |\n| D | Documents | Notice of Exempt Offering of Securities, item 06 Acc-no: 0001183740-10-000039 (33 Act) Size: 12 KB | 2010-01-25 | 021-138150 10545454 |\n| F-X | Documents | Appointment of Agent for Service of Process and UndertakingAcc-no: 0001183740-09-000587 (33 Act) Size: 11 KB | 2009-12-23 | 005-85135 091256479 |\n| CB | Documents | Tender Offer/Rights Offering Notification FormAcc-no: 0001183740-09-000585 (34 Act) Size: 2 MB | 2009-12-23 | 005-85135 091256473 |\n\nhttps://www.sec.gov/cgi-bin/browse-edgar\n\nModified 07/18/2014",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: EDGAR Filing Documents for 0001183740-10-000039",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1479253/000118374010000039/0001183740-10-000039-index.htm",
+          "published_date": null,
+          "snippet": "EDGAR Filing Documents for 0001183740-10-000039\n\n# Filing Detail\n\n- SEC Home\u00bb\n- Company Search\u00bb\n- Current Page\n\nForm D - Notice of Exempt Offering of Securities:\n\nSEC Accession No. 0001183740-10-000039\n\nFiling Date\n\n2010-01-25\n\nAccepted\n\n2010-01-25 17:22:35\n\nDocuments\n\n1\n\nEffectiveness Date\n\n2010-01-25\n\nItems\n\nItem 06: Rule 506\n\nDocument Format Files\n\n| Seq | Description | Document | Type | Size |\n| --- | --- | --- | --- | --- |\n| 1 | | primary_doc.html | D | |\n| 1 | | primary_doc.xml | D | 10722 |\n| | Complete submission text file | 0001183740-10-000039.txt | | 12358 |\n\nMailing Address SUITE 1150, 1500 WEST GEORGIA STREET VANCOUVER A1 V6G 2Z6\n\nBusiness Address SUITE 1150, 1500 WEST GEORGIA STREET VANCOUVER A1 V6G 2Z6 604-909-9850\n\nVERSAPAY CORP (Filer) CIK: 0001479253 (see all company filings)\n\nEIN.: 000000000 | State of Incorp.: Z4 | Fiscal Year End: 1231Type: D | Act: 33 | File No.: 021-138150| Film No.: 10545454",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1935
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Turning the Dials Up On Key  Handoff Points -   Russell Lester, CFO, Versapay",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=hEg5n3c4SuM",
+          "published_date": null,
+          "snippet": "we're we're wondering how you might be bringing greater Clarity to your to your metrics as you look to educate the the team in organization yeah great question so I like to take a funnel oriented view to the client journey and think about what are the key milestones in the client Journey the traditional flow would be you move from being a lead to an opportunity to being one and then in our business model you would go from from us winning an opportunity to going through a Professional Services implementation process from implementations to presumably going live and from going live to doing what I call ramping and ramping would be that that time where you're revving up your use of the product you're increasing your active use of the product you're accelerating the opportunity of achieving value in our in our collaborative AR Network and so those different key milestones and then hopefully you stay around and become a happy active and sticky client that tells other people about Versa pay so it's really the instrumentation of those handoff points that I've I've turned the dials on to make sure we truly understand the underlying factors contributing to each of those because if there's a breakdown in one then what gets passed on in the next stage is smaller if we can increase each handoff point along the way then what comes through the revenue engine on the back end will be greater [Music]",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Inside Europe's Payments Playbook: Age Verification, PSD3, AI Risk, and the Next Wave of Regulation",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=SG5xTRa6hYw",
+          "published_date": null,
+          "snippet": "# Inside Europe's Payments Playbook: Age Verification, PSD3, AI Risk, and the Next Wave of Regulation\n\n- Channel: Segpay\n- Length: 18:41\n- Views: 9.4K\n- Likes: 5\n- Published: 2026-01-27T10:00:26-08:00\n- Category: Science & Technology\n- Keywords: payment gateway, high risk payment processors, stripe payment, online payment processing companies, how does payment processing work, best payment processor for small business, merchant account processing, high risk merchant processing, payment solution, high risk merchant services, merchant account for high risk business, high-risk payment gateway, payment processing explained, european payment processing, psd3, banking, online payments, international payments\n- Language: en\n\n## Description\n\nIn this Segpay News Network interview, we sit down with Mike Shea, CEO of Segpay\u2019s European operations, to explore how Europe\u2019s highly regulated payments environment is shaping the future of global commerce.\n\nMike breaks down the key differences between the U.S. and European payments landscapes, why Europe is often ahead of the curve on compliance, and what high-risk merchants need to understand about cross-border processing. From PSD3 and age verification to AI, crypto, and the rise of Ireland as a fintech hub, this conversation offers a clear, practical look at what\u2019s coming next\u2014and how merchants can stay ahead.\n\nIf you\u2019re a high-risk merchant, fintech professional, or exploring international expansion, this interview offers valuable insight i",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1748
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Versapay API Reference",
+          "signal_type": "person_mention",
+          "source_url": "https://developers.versapay.com",
+          "published_date": null,
+          "snippet": "+ \"id\": \"10485\",\n              + \"name\": \"avs_cvv2b Test\"}},\n          - {\n             \"contact\": {\n              + \"refname\": \"contact\",\n              + \"responsestatus\": \"success\",\n              + \"id\": \"11611\"}},\n          - {\n             \"salesdocument\": {\n              + \"refname\": \"invoice\",\n              + \"responsestatus\": \"success\",\n              + \"id\": \"34054\"}},\n          - {\n             \"transaction\": { [...] \"id\": \"10485\",\n                   \"name\": \"avs_cvv2b Test\"}},\n              + {\n                - \"contact\": {\n                   \"refname\": \"contact\",\n                   \"responsestatus\": \"success\",\n                   \"id\": \"11611\"}},\n              + {\n                - \"salesdocument\": {\n                   \"refname\": \"invoice\",\n                   \"responsestatus\": \"success\",\n                   \"id\": \"34054\"}},\n              + {\n                - \"transaction\": { [...] \"id\": \"10485\",\n                   \"name\": \"avs_cvv2b Test\"}},\n              + {\n                - \"contact\": {\n                   \"refname\": \"contact\",\n                   \"responsestatus\": \"success\",\n                   \"id\": \"11611\"}},\n              + {\n                - \"salesdocument\": {\n     ",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Versapay Ecommerce API Reference",
+          "signal_type": "person_mention",
+          "source_url": "https://developers.versapay.com/ecommerceV1",
+          "published_date": null,
+          "snippet": "The UAT environment is a useful sandbox for integration testing where transaction settlements are simulated using test account numbers and test dollar amounts.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payment Processing Systems: Ultimate Guide | Versapay",
+          "signal_type": "person_mention",
+          "source_url": "https://www.versapay.com/payment-processing-systems",
+          "published_date": null,
+          "snippet": "Get a copy of Forrester's study, The Total Economic Impact\u2122 of Versapay, to see how companies saw outstanding ROI and a host of other benefits from using our solutions.\n\nGet the study \u2192\n\n## Automate payment processing and accelerate getting paid\n\n1. Get a demo of Versapay \u2192\n\n## All payment processing resources\n\nMake every transaction a smooth one. Learn the ins and outs of payment processing and how to create better payment experiences for you and your customers. [...] Electronic invoicing and billing: Versapay lets an AR team draft and send electronic invoices to customers, eliminating the need for paper-based documentation and manual processing. By automating invoicing workflows, you\u2019ll accelerate payment collection and reduce errors associated with manual data entry. [...] Integration with accounting systems: Versapay seamlessly integrates with leading accounting and ERP systems, enabling real-time synching of payment data and financial records. By centralizing payment information and automating data exchange, you\u2019ll improve accuracy and efficiency in financial reporting and reconciliation.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Versapay Mobile Payments - App Store - Apple",
+          "signal_type": "person_mention",
+          "source_url": "https://apps.apple.com/us/app/versapay-mobile-payments/id6476234098",
+          "published_date": null,
+          "snippet": "Versapay allows your employees to capture check payments from their iPhones. Check payments then flow into our core Lockbox application for validation,",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Versapay Releases 2026 Cash Flow Clarity Report: CFOs Face Rising Cash Flow Uncertainty Amid Persistent Payment Delays",
+          "signal_type": "news",
+          "source_url": "https://www.prnewswire.com/news-releases/versapay-releases-2026-cash-flow-clarity-report-cfos-face-rising-cash-flow-uncertainty-amid-persistent-payment-delays-302675514.html",
+          "published_date": null,
+          "snippet": "Accessibility Statement Skip Navigation\n\n# Versapay Releases 2026 Cash Flow Clarity Report: CFOs Face Rising Cash Flow Uncertainty Amid Persistent Payment Delays\n\nVersapay provides accounts receivable automation and integrated payment solutions for B2B businesses. (PRNewsfoto/Versapay)\")\n\n## News provided by\n\n Versapay \n\nFeb 02, 2026, 07:08 ET\n\n## Share this article\n\nShare toX\n\nShare this article\n\nShare toX [...] SAN FRANCISCO, Feb. 2, 2026 /PRNewswire/ -- Versapay has released the 2026 Annual Cash Flow Clarity Report, developed in partnership with Wakefield Research, at a time when finance leaders are under growing pressure to do more with less amid economic uncertainty, rising costs, and tighter access to capital. Based on a survey of 400 finance leaders in the United States and Canada, the report examines how rising payment delays and increasing accounts receivable (AR) complexity are undermining [...] Versapay, a leading Accounts Receivable (AR) Platform, today announced the appointment of Glen Braganza as Chief Financial Officer. The appointment...\n\nVersapay Names Emily Roccheggiani Chief Sales Officer\n\n### Versapay Names Emily Roccheggiani Chief Sales Officer\n\nVersapay, a lea",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Versapay Product Updates Portal | Cash Discounting for Bank Payments",
+          "signal_type": "news",
+          "source_url": "https://updates.versapay.com/announcements/cash-discounting-for-bank-payments",
+          "published_date": null,
+          "snippet": "Back to Announcements\n\nDATE:\n\nAUTHOR:\n:   Versapay Team\n\nCollaborative AR\n\n# Cash Discounting for Bank Payments\n\nDATE:\n\nAUTHOR: Versapay Team\n\nProduct: Collaborative AR\n\nProduct Enhancement: Cash Discounting for Bank Payments\n\nDate of the release: March 19, 2026",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Versapay - 2026 Company Profile, Team, Funding & Competitors - Tracxn",
+          "signal_type": "news",
+          "source_url": "https://tracxn.com/d/companies/versapay/__zLZdEUodMXclzFixzM7gneXQMXlRh1sOpN1clXl5rlU",
+          "published_date": null,
+          "snippet": "Versapay has raised funding over 4 rounds. Its first funding round was on Feb 2014. Versapay has 2 institutional investors.\n\nlock [...] | 8th | Logo for Plooto  Plooto 2015, Toronto  (Canada), Series B | Provider of accounts payable and accounts receivable automation software solutions | $26.4M | Golden Ventures, Real Ventures  & 8 others | 44/100 |\n| 9th | Logo for Notch  Notch 2015, Toronto  (Canada), Acquired | Provider of accounts receivable automation software for invoice and payment management | $32.6M | Golden Ventures, Portage  & 10 others | 43/100 | [...] | 4th | Logo for Upflow  Upflow 2017, Paris  (France), Series A | Provider of accounts receivable management software for finance teams | $22.9M | 9Yards, Kima Ventures  & 11 others | 51/100 |\n| 5th | Logo for SunTec  SunTec 1990, Thiruvananthapuram  (India), Funding Raised | Provider of pricing, billing, revenue management, and customer experience orchestration solutions  - | 50/100 |",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "9 Versapay Alternatives in 2026",
+          "signal_type": "news",
+          "source_url": "https://www.paraglide.ai/blog/9-versapay-alternatives-in-2026",
+          "published_date": null,
+          "snippet": "Paraglide customers reduce DSO by an average of 34%. That reduction is driven by faster resolution of the billing queries, disputes, and process gaps that actually block payment. Implementation takes under ten days. Paraglide integrates with SAP, Oracle, Microsoft Dynamics 365 Finance & Operations, Business Central, NetSuite, and QuickBooks. Paraglide is backed by Bessemer Venture Partners and DN Capital. [...] Jun 14, 2026\n\nSelf-Billing Timesheet Reconciliations: How AI Agents Reconcile Timesheets and Invoices [...] Jun 14, 2026\n\n## Finally, a collections system that runs itself.\n\nBook a demo\n\n## Finally, a collections system that runs itself.\n\nBook a demo\n\nProduct\n\nProduct overview\n\nBilling support agent\n\nCollection agent\n\nDisputes\n\nSupplier portal agent\n\nCash application\n\nCompany\n\nAbout\n\nCareers\n\nContact us\n\nResources\n\nBlog\n\nAgents for accounts receivable\n\nAgents for credit management\n\nAgents for debt collection\n\nAgents for order-to-cash\n\nAgents for shared services\n\nAgents for dunning\n\nLegal",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2104
+    }
+  ]
+}

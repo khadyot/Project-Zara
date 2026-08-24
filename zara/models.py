@@ -59,11 +59,15 @@ class PainMatch:
 class RankedCard:
     card: SignalCard
     pain_match: PainMatch | None
-    proximity: Literal["authored", "attributed", "company_action", "database"]
+    # "colleague_authored": on-the-record words from a NAMED person at the company
+    # who is not the prospect. Real evidence about how that org works, but it must
+    # never be written as if the prospect said it. See attributed_to.
+    proximity: Literal["authored", "colleague_authored", "attributed", "company_action", "database"]
     recency_days: int | None
     score: float
     excluded: str | None
     guardrail_hit: str | None = None
+    attributed_to: str | None = None   # whose words, when not the prospect's
 
 @dataclass(frozen=True)
 class HookProposal:
@@ -96,5 +100,5 @@ class DraftResult:
     ranked_prospect: RankedProspect
     draft_text: str | None
     verification: VerificationResult | None
-    claim_strength: Literal["person_authored", "person_attributed", "company_action", "database_only", "no_signal"]
+    claim_strength: Literal["person_authored", "person_attributed", "colleague_authored", "company_action", "database_only", "no_signal"]
 

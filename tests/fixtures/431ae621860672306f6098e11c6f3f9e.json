@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 13,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "The snippet discusses a sports prospect interview and does not contain any information related to finance, operations, hiring, revenue, transactions, or company structure that would match any observable condition."
+      },
+      {
+        "index": 12,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "The snippet discusses water shortages and the commercialization of academic innovations, which does not align with any of the specified observable conditions for the given pains."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "The snippet refers to 'Top 100 Prospect Rankings' and 'Thin Prospect Pipeline' in a sports context (implied by 'Stars' and 'Yahoo Sports'), which does not match any of the observable conditions related to finance, operations, or company structure."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "The snippet is from an academic study about 'thin-bedded turbidites' and does not contain any information related to business operations, finance, or company structure that would match an observable condition."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "The snippet is a fill-in-the-blank question about 'prospects' and does not provide any information related to finance, operations, hiring, revenue, transactions, or company structure that would match an observable condition."
+      }
+    ]
+  },
+  "prompt_tokens": 1129,
+  "completion_tokens": 424
+}

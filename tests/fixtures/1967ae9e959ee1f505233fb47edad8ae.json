@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All factual claims, metrics, and names in the draft email are directly supported by the provided evidence snippets. No unsupported statements were found."
+  },
+  "prompt_tokens": 736,
+  "completion_tokens": 659
+}

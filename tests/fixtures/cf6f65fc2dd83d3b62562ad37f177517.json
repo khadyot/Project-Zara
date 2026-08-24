@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Snippet contains a casual conversation about engineering scale and repositories; it lacks any finance/ops language required for observable pains and is not a news item."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast announcement featuring a CEO/founder and partnership lead is company/person news but does not contain any observable finance or ops language."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product release announcement for ShipBob's Simulation Terminal is news content unrelated to any observable finance/ops pain."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Customer testimonial about ShipBob partnership is company news but lacks any observable finance or operations language."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Operational advice article on inventory placement is news-like content but does not match any observable pain criteria."
+      }
+    ]
+  },
+  "prompt_tokens": 1322,
+  "completion_tokens": 1340
+}

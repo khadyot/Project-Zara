@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw Test Co is hiring a Software Engineer.",
+        "rationale": "The hiring signal shows the team is expanding its technical capacity, which often coincides with a need to streamline internal workflows.",
+        "bridge": "Our platform automates manual, reconciliation\u2011heavy processes for operations teams, freeing up engineering bandwidth for new projects.",
+        "strength": 0.72
+      }
+    ]
+  },
+  "prompt_tokens": 562,
+  "completion_tokens": 347
+}

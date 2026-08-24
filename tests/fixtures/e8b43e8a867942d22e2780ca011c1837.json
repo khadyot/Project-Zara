@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "The snippet explicitly announces the appointment of a new CFO, satisfying the observable condition for recent finance leadership hires."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.95,
+        "reason": "The detailed announcement of Glen Braganza joining as CFO, along with mention of a recent acquisition, directly matches the leadership appointment observable."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "The content describes product and AI features for invoice\u2011to\u2011cash automation but does not provide any observable hiring or structural change signals."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "The snippet reports the appointment of a new CFO, meeting the observable condition for finance leadership changes."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.85,
+        "reason": "Even with minimal text, the headline confirms a CFO appointment, satisfying the observable leadership\u2011change criterion."
+      }
+    ]
+  },
+  "prompt_tokens": 1178,
+  "completion_tokens": 834
+}
