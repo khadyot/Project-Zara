@@ -218,6 +218,8 @@ async def _generate_gemini(prompt: str, schema, system_instruction: str, schema_
         )
 
     if resp.status_code != 200:
+        from zara.utils import quota
+        quota.record("gemini", GEMINI_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=resp.status_code, elapsed_ms=int((time.monotonic() - _t0) * 1000))
         raise ProviderProbeFailedError(f"Gemini fallback failed: {resp.status_code} {resp.text}")
 
     data = resp.json()
@@ -249,6 +251,13 @@ def _log_llm(provider: str, model: str, usage: dict, t0: float, prompt: str,
     """
     try:
         from zara.utils.telemetry import current
+        from zara.utils import quota
+        
+        elapsed_ms = int((time.monotonic() - t0) * 1000)
+        p_tok = (usage or {}).get("prompt_tokens") or 0
+        c_tok = (usage or {}).get("completion_tokens") or 0
+        quota.record(provider, model, stage=_stage.get(), prompt_tokens=p_tok, completion_tokens=c_tok, status=status, elapsed_ms=elapsed_ms)
+        
         t = current()
         if t is None:
             return
@@ -357,15 +366,18 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
 
                 if resp.status_code == 401:
                     _trip_breaker("groq", 300, "401 Unauthorized")
+                    from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=401, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                     raise ProviderAuthError(f"HTTP 401 Unauthorized: {resp.text}")
 
                 if resp.status_code == 413:
                     # Request too large for the model's context. Never transient.
+                    from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=413, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                     raise ProviderProbeFailedError(f"HTTP 413 Payload Too Large: {resp.text[:300]}")
 
                 if resp.status_code == 429:
                     wait = _parse_reset(resp.headers.get("x-ratelimit-reset-tokens")) or \
                            _parse_reset(resp.headers.get("retry-after")) or 20.0
+                    from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="429", http_status=429, elapsed_ms=int((time.monotonic() - _t0) * 1000), wait_ms=int(wait * 1000))
                     budget = remaining_time()
                     if budget is not None and wait >= budget:
                         _trip_breaker("groq", wait, f"429, reset in {wait:.0f}s exceeds run budget")
@@ -378,6 +390,7 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                     continue
 
                 if resp.status_code != 200:
+                    from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=resp.status_code, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                     raise Exception(f"HTTP {resp.status_code}: {resp.text[:300]}")
 
                 data = resp.json()
@@ -477,6 +490,8 @@ async def _generate_zai(prompt: str, schema, system_instruction: str, schema_dic
         )
 
     if resp.status_code != 200:
+        from zara.utils import quota
+        quota.record("zai", ZAI_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=resp.status_code, elapsed_ms=int((time.monotonic() - _t0) * 1000))
         raise ProviderProbeFailedError(f"Z.ai fallback failed: {resp.status_code} {resp.text}")
 
     data = resp.json()
@@ -514,14 +529,17 @@ async def run_probe():
     
     retries = [2, 4, 60]
     for attempt in range(4):
+        _t0 = time.monotonic()
         try:
             async with httpx.AsyncClient() as client:
                 resp = await client.post(GROQ_URL, json=payload, headers=headers, timeout=10.0)
                 
             if resp.status_code == 401:
+                from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage="probe", prompt_tokens=0, completion_tokens=0, status="error", http_status=401, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                 raise ProviderAuthError(f"Probe failed hard: HTTP 401 Unauthorized")
                 
             if resp.status_code == 429:
+                from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage="probe", prompt_tokens=0, completion_tokens=0, status="429", http_status=429, elapsed_ms=int((time.monotonic() - _t0) * 1000), wait_ms=int(retries[attempt]*1000) if attempt < len(retries) else 0)
                 if attempt < len(retries):
                     await asyncio.sleep(retries[attempt])
                     continue
@@ -529,8 +547,12 @@ async def run_probe():
                     raise ProviderProbeFailedError(f"Probe failed hard: HTTP 429")
                     
             if resp.status_code == 200:
+                data = resp.json()
+                usage = data.get("usage", {})
+                from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage="probe", prompt_tokens=usage.get("prompt_tokens",0), completion_tokens=usage.get("completion_tokens",0), status="ok", http_status=200, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                 return
                 
+            from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage="probe", prompt_tokens=0, completion_tokens=0, status="error", http_status=resp.status_code, elapsed_ms=int((time.monotonic() - _t0) * 1000))
             raise Exception(f"HTTP {resp.status_code}")
         except ProviderAuthError:
             raise

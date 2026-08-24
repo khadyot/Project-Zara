@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All factual claims, metrics, and names in the draft (500 repositories, PR velocity 3x, commit-to-push time down 50%, ShipBob, Zamp) are present in the provided evidence snippets; no unsupported inventions were found."
+  },
+  "prompt_tokens": 1120,
+  "completion_tokens": 610
+}

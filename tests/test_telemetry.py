@@ -130,11 +130,21 @@ def test_crash_inside_a_trace_is_still_recorded(store):
 
 def test_no_trace_means_no_writes_and_no_errors(store, use_fixtures):
     """The property that keeps the existing suite honest: telemetry is inert
-    unless a run explicitly opens a trace."""
+    for runs unless a trace is explicitly opened, but usage is still logged."""
     from zara.utils.provider import _log_llm
     import time
+    from zara.utils import telemetry
 
     assert telemetry.current() is None
     _log_llm("groq", "m", {"prompt_tokens": 5}, time.monotonic(), "p")  # must not raise
 
-    assert not os.path.exists(store), "nothing may be written without an active trace"
+    assert os.path.exists(store), "database must be created for usage logging"
+    
+    conn = sqlite3.connect(store)
+    conn.row_factory = sqlite3.Row
+    runs = conn.execute("SELECT * FROM runs").fetchall()
+    assert not runs, "no run trace should be written"
+    
+    usage = conn.execute("SELECT * FROM usage").fetchall()
+    assert len(usage) == 1, "usage MUST be written even without a trace"
+    assert usage[0]["prompt_tokens"] == 5

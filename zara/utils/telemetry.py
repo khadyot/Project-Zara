@@ -82,9 +82,25 @@ CREATE TABLE IF NOT EXISTS events (
   run_id TEXT, seq INTEGER, offset_ms INTEGER, type TEXT,
   name TEXT, status TEXT, detail TEXT
 );
+CREATE TABLE IF NOT EXISTS usage (
+  ts TEXT,
+  provider TEXT,
+  model TEXT,
+  stage TEXT,
+  context TEXT,
+  run_id TEXT,
+  prompt_tokens INTEGER,
+  completion_tokens INTEGER,
+  status TEXT,
+  http_status INTEGER,
+  elapsed_ms INTEGER,
+  wait_ms INTEGER
+);
 CREATE INDEX IF NOT EXISTS idx_runs_ts ON runs(ts);
 CREATE INDEX IF NOT EXISTS idx_llm_run ON llm_calls(run_id);
 CREATE INDEX IF NOT EXISTS idx_cards_run ON cards(run_id);
+CREATE INDEX IF NOT EXISTS idx_usage_ts ON usage(ts);
+CREATE INDEX IF NOT EXISTS idx_usage_provider ON usage(provider);
 """
 
 
