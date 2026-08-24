@@ -219,11 +219,141 @@ def render_hero():
     """
     st.markdown(hero_html, unsafe_allow_html=True)
 
+
+def _run_store():
+    from zara.utils.telemetry import connect
+    return connect()
+
+
+def render_budget_meter():
+    """Groq's 8K TPM / 200K TPD ceiling works out to roughly 35 prospects a day.
+    The person driving the runs should be able to see what is left."""
+    try:
+        import time
+        conn = _run_store()
+        today = time.strftime("%Y-%m-%d")
+        row = conn.execute(
+            "SELECT COUNT(*) n, COALESCE(SUM(prompt_tokens+completion_tokens),0) tok "
+            "FROM runs WHERE ts LIKE ?", (today + "%",)).fetchone()
+        n, tok = row["n"], row["tok"]
+        st.markdown("<div class='eyebrow' style='font-size: 14px;'>Today</div>", unsafe_allow_html=True)
+        st.progress(min(tok / 200_000, 1.0), text=f"{n} runs · {tok:,} / 200,000 tokens")
+        if tok > 160_000:
+            st.warning("Near the 200K/day Groq ceiling.")
+    except Exception:
+        pass
+
+
+def render_run_history():
+    st.markdown("<div class='eyebrow'>Run History</div>", unsafe_allow_html=True)
+    st.markdown("## Every run, and why it chose what it chose")
+    try:
+        conn = _run_store()
+        runs = [dict(r) for r in conn.execute(
+            "SELECT * FROM runs ORDER BY ts DESC, rowid DESC LIMIT 100")]
+    except Exception as e:
+        st.error(f"Could not open the run store: {e}")
+        return
+
+    if not runs:
+        st.info("No runs recorded yet. Run a prospect and it will appear here.")
+        return
+
+    labels = {}
+    for r in runs:
+        v = r["verification_status"] or ("CRASH" if r["outcome"] == "crash" else "-")
+        labels[f"{(r['ts'] or '')[5:16]}  {r['person_name']} @ {r['company']}  ·  {v}  ·  {r['run_id']}"] = r
+
+    choice = st.selectbox("Pick a run", list(labels.keys()))
+    r = labels[choice]
+    rid = r["run_id"]
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Wall time", f"{(r['duration_ms'] or 0)/1000:.1f}s")
+    c2.metric("Tokens", f"{(r['prompt_tokens'] or 0) + (r['completion_tokens'] or 0):,}")
+    c3.metric("Claim strength", r["claim_strength"] or "—")
+    c4.metric("Verifier", r["verification_status"] or "—")
+
+    st.caption(f"code `{r['git_sha']}` · value_prop `{r['value_prop_sha']}` · model `{r['groq_model']}`")
+
+    if r["outcome"] == "crash":
+        st.error(f"CRASHED: {r['error']}")
+        with st.expander("Traceback"):
+            st.code(r["traceback"] or "")
+
+    st.markdown("### Draft")
+    if r["draft_text"]:
+        st.markdown(f"<div class='draft-frame'>{r['draft_text']}</div>", unsafe_allow_html=True)
+    else:
+        st.info("No draft produced.")
+
+    st.markdown("### Verifier")
+    st.write(f"**{r['verification_status']}** · passed={bool(r['verification_passed'])} "
+             f"· self-corrected={bool(r['self_corrected'])} "
+             f"· failed at: `{r['verification_failed_pass'] or '—'}`")
+    if r["verification_reason"]:
+        st.write(r["verification_reason"])
+    import json as _json
+    for x in _json.loads(r["first_pass_hallucinations"] or "[]"):
+        st.write(f"- ungrounded: `{x}`")
+
+    st.markdown("### What it considered")
+    cards = [dict(c) for c in conn.execute(
+        "SELECT * FROM cards WHERE run_id=? ORDER BY is_winner DESC, score DESC", (rid,))]
+    st.caption(f"{r['cards_total'] or 0} candidates · {r['cards_eligible'] or 0} eligible")
+    for c in cards:
+        mark = "**WINNER**" if c["is_winner"] else ("~~excluded~~" if c["excluded"] else "eligible")
+        with st.expander(f"[{c['score'] or 0:.2f}] {mark} · {c['source']} · {c['proximity']} — {(c['claim'] or '')[:80]}"):
+            st.write(f"**Claim:** {c['claim']}")
+            if c["pain_id"]:
+                st.write(f"**Pain match:** `{c['pain_id']}` ({c['pain_score']:.2f})")
+                st.write(f"**Why:** {c['pain_reason']}")
+            if c["attributed_to"]:
+                st.warning(f"Attributed to: {c['attributed_to']} — not the prospect")
+            if c["excluded"]:
+                st.write(f"**Excluded:** {c['excluded']}")
+            if c["guardrail_hit"]:
+                st.write(f"**Guardrail:** {c['guardrail_hit']}")
+            st.caption(c["source_url"] or "")
+            st.text((c["snippet"] or "")[:1200])
+
+    hooks = [dict(h) for h in conn.execute(
+        "SELECT * FROM hooks WHERE run_id=? ORDER BY strength DESC", (rid,))]
+    st.markdown(f"### Hook options ({len(hooks)})")
+    for h in hooks:
+        st.write(f"**[{h['strength']:.2f}]** {h['hook_text']}")
+        st.caption(f"why: {h['rationale']}  ·  bridge: {h['bridge']}")
+
+    st.markdown("### Sources")
+    for s in conn.execute("SELECT * FROM source_calls WHERE run_id=? ORDER BY seq", (rid,)):
+        icon = {"ok": "OK", "empty": "--", "failed": "XX", "skipped": ">>"}.get(s["status"], "·")
+        detail = f"{s['cards']} cards" if s["status"] == "ok" else (s["reason"] or "")[:90]
+        st.markdown(f"`{icon}` **{s['source']}** — {s['status']} — {s['elapsed_ms']/1000:.1f}s — {detail}")
+
+    st.markdown("### Model calls")
+    for c in conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)):
+        with st.expander(f"{c['stage']} · {c['provider']} · "
+                         f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
+                         f"{c['elapsed_ms']/1000:.1f}s"):
+            if c["system_text"]:
+                st.caption("SYSTEM")
+                st.text(c["system_text"])
+            if c["prompt_text"]:
+                st.caption("PROMPT — how this stage was instructed")
+                st.text(c["prompt_text"])
+            if c["response_text"]:
+                st.caption("RESPONSE")
+                st.text(c["response_text"][:4000])
+
+
 def main():
     st.set_page_config(page_title="Zara Outreach", layout="wide", initial_sidebar_state="expanded")
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     
     with st.sidebar:
+        page = st.radio("View", ["Draft", "Run History"], horizontal=True, label_visibility="collapsed")
+        render_budget_meter()
+        st.markdown("---")
         st.header("Zara Settings")
         st.markdown("Tune the pipeline parameters.")
         st.markdown("---")
@@ -273,6 +403,10 @@ def main():
         "use_apify": use_apify
     }
     
+    if page == "Run History":
+        render_run_history()
+        return
+
     render_hero()
     
     # Wrap all content below hero in a centered column

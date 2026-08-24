@@ -40,7 +40,7 @@ def list_runs(conn, limit):
               f"{(r['claim_strength'] or '-'):<18}{v:<22}{r['git_sha'] or '?'}")
 
 
-def show_run(conn, run_id):
+def show_run(conn, run_id, show_prompts=False):
     r = _rows(conn, "SELECT * FROM runs WHERE run_id LIKE ?", run_id + "%")
     if not r:
         print(f"no run matching {run_id}")
@@ -131,9 +131,26 @@ def show_run(conn, run_id):
 
     print(f"\n── VERIFIER ──")
     print(f"  {r['verification_status']} · passed={bool(r['verification_passed'])}"
-          f" · self_corrected={bool(r['self_corrected'])}")
+          f" · self_corrected={bool(r['self_corrected'])} · failed_pass={r['verification_failed_pass'] or '-'}")
+    fp = json.loads(r["first_pass_hallucinations"] or "[]")
+    for x in fp:
+        print(f"    ungrounded: {x}")
     if r["verification_reason"]:
         print(textwrap.indent(textwrap.fill(r["verification_reason"], 96), "  "))
+
+    if show_prompts:
+        print(f"\n── PROMPTS ──   (how each stage was instructed)")
+        for c in _rows(conn, "SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", rid):
+            if not c["prompt_text"]:
+                continue
+            print("\n" + "-" * w)
+            print(f"  {c['stage']}  ({c['provider']}, {c['prompt_tokens']} prompt tokens)")
+            print("-" * w)
+            if c["system_text"]:
+                print(textwrap.indent("SYSTEM: " + c["system_text"], "  "))
+            print(textwrap.indent(c["prompt_text"], "  "))
+            if c["response_text"]:
+                print(textwrap.indent("--> " + c["response_text"][:2000], "  "))
     print()
 
 
@@ -203,13 +220,14 @@ if __name__ == "__main__":
     ap.add_argument("--run"); ap.add_argument("--last", action="store_true")
     ap.add_argument("--diff", nargs=2); ap.add_argument("--failures", action="store_true")
     ap.add_argument("--summary", action="store_true"); ap.add_argument("-n", type=int, default=20)
+    ap.add_argument("--prompts", action="store_true", help="print the full prompt for each stage")
     a = ap.parse_args()
     conn = connect()
     if a.diff: diff(conn, *a.diff)
     elif a.failures: failures(conn)
     elif a.summary: summary(conn)
-    elif a.run: show_run(conn, a.run)
+    elif a.run: show_run(conn, a.run, a.prompts)
     elif a.last:
         r = _rows(conn, "SELECT run_id FROM runs ORDER BY ts DESC, rowid DESC LIMIT 1")
-        show_run(conn, r[0]["run_id"]) if r else print("no runs yet")
+        show_run(conn, r[0]["run_id"], a.prompts) if r else print("no runs yet")
     else: list_runs(conn, a.n)

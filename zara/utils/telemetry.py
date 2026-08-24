@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS runs (
   cards_total INTEGER, cards_eligible INTEGER, hooks_count INTEGER,
   winning_card TEXT, verification_status TEXT, verification_passed INTEGER,
   verification_reason TEXT, self_corrected INTEGER,
+  verification_failed_pass TEXT, first_pass_hallucinations TEXT,
   draft_text TEXT, draft_words INTEGER,
   prompt_tokens INTEGER, completion_tokens INTEGER, llm_calls INTEGER,
   source_cost_usd REAL,
@@ -56,7 +57,8 @@ CREATE TABLE IF NOT EXISTS llm_calls (
   run_id TEXT, seq INTEGER, stage TEXT, provider TEXT, model TEXT,
   attempt INTEGER, status TEXT, elapsed_ms INTEGER,
   prompt_tokens INTEGER, completion_tokens INTEGER,
-  prompt_chars INTEGER, error TEXT
+  prompt_chars INTEGER, error TEXT,
+  system_text TEXT, prompt_text TEXT, response_text TEXT
 );
 CREATE TABLE IF NOT EXISTS source_calls (
   run_id TEXT, seq INTEGER, source TEXT, rung INTEGER, status TEXT,
@@ -240,11 +242,29 @@ class RunTrace:
             self.result["draft_words"] = len((draft.draft_text or "").split())
             v = draft.verification
             if v:
+                # Which gate failed decides the fix: an ungrounded token means the
+                # drafter invented something, an attribution hit means we implied the
+                # wrong person said it, and a judge block with neither means the LLM
+                # disagreed about evidence it *was* shown. Opposite remedies, so the
+                # truncated reason string is not enough to tell them apart.
+                fp = list(v.first_pass_hallucinations or [])
+                failed_pass = None
+                if not v.passed:
+                    if any(str(x).startswith("misattribution:") for x in fp):
+                        failed_pass = "attribution"
+                    elif fp:
+                        failed_pass = "grounding"
+                    elif v.status == "could_not_run":
+                        failed_pass = "could_not_run"
+                    else:
+                        failed_pass = "llm_judge"
                 self.result.update({
                     "verification_status": v.status,
                     "verification_passed": 1 if v.passed else 0,
                     "verification_reason": (v.reason or "")[:1000],
                     "self_corrected": 1 if v.self_corrected else 0,
+                    "verification_failed_pass": failed_pass,
+                    "first_pass_hallucinations": json.dumps(fp) if fp else None,
                 })
             if getattr(draft, "ranked_prospect", None) is not None:
                 self.capture_ranked(draft.ranked_prospect)

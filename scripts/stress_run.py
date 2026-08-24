@@ -103,7 +103,12 @@ async def main():
         print(f"[{i+1}/{len(rows)}] {p.person_name} @ {p.company}  ({r.get('category','')})")
         t0 = time.time()
         try:
-            results, draft = await run_end_to_end_pipeline(p, profile=args.profile)
+            # Same store as the UI, tagged by trigger, so manual and batch runs
+            # are comparable in one place.
+            from zara.utils.telemetry import trace_run
+            with trace_run(p, trigger="batch", profile=args.profile,
+                           category=r.get("category")):
+                results, draft = await run_end_to_end_pipeline(p, profile=args.profile)
             row = _summarise(p, results, draft, time.time() - t0)
         except Exception as e:
             row = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "name": p.person_name,

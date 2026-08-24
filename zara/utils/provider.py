@@ -226,15 +226,22 @@ async def _generate_gemini(prompt: str, schema, system_instruction: str, schema_
         raise ProviderProbeFailedError("Gemini fallback returned empty content")
 
     usage = data.get("usage", {})
-    _log_llm("gemini", GEMINI_MODEL, usage, _t0, prompt)
+    _log_llm("gemini", GEMINI_MODEL, usage, _t0, prompt, system=system_instruction, response=content)
     _record_fixture(prompt, system_instruction, content, usage)
     return _parse_content(content, schema)
 
 _stage: contextvars.ContextVar[str] = contextvars.ContextVar("zara_llm_stage", default="unknown")
 
 
+# Storing the prompt is what makes "how did it write that?" answerable. Without it
+# we can see the draft and the card it came from but not the instructions in
+# between, which is where most drafting defects actually live.
+_PROMPT_CAP = 20000
+
+
 def _log_llm(provider: str, model: str, usage: dict, t0: float, prompt: str,
-             attempt: int = 1, status: str = "ok", error: str = None):
+             attempt: int = 1, status: str = "ok", error: str = None,
+             system: str = None, response: str = None):
     """Record one model call against the active run trace, if there is one.
 
     `usage` was already parsed at every one of these sites and handed to
@@ -245,12 +252,16 @@ def _log_llm(provider: str, model: str, usage: dict, t0: float, prompt: str,
         t = current()
         if t is None:
             return
+        keep = os.environ.get("ZARA_LOG_PROMPTS", "1") != "0"
         t.llm_call(
             stage=_stage.get(), provider=provider, model=model, attempt=attempt,
             status=status, elapsed_ms=int((time.monotonic() - t0) * 1000),
             prompt_tokens=(usage or {}).get("prompt_tokens"),
             completion_tokens=(usage or {}).get("completion_tokens"),
             prompt_chars=len(prompt or ""), error=error,
+            system_text=(system or "")[:_PROMPT_CAP] if keep else None,
+            prompt_text=(prompt or "")[:_PROMPT_CAP] if keep else None,
+            response_text=(response or "")[:_PROMPT_CAP] if keep else None,
         )
     except Exception:
         pass
@@ -284,7 +295,8 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
             }
             # Replays log too, using the recorded counts, so a fixture run and a
             # live run produce the same shape of trace.
-            _log_llm("fixture", "replay", sys._fixture_usage[h], _fx_t0, prompt)
+            _log_llm("fixture", "replay", sys._fixture_usage[h], _fx_t0, prompt,
+                     system=system_instruction, response=json.dumps(content_data)[:20000])
             if isinstance(content_data, str):
                 return schema.model_validate_json(content_data)
             return schema(**content_data)
@@ -375,7 +387,7 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                     raise Exception("Empty content from Groq")
 
                 usage = data.get("usage", {})
-                _log_llm("groq", GROQ_MODEL, usage, _t0, prompt, attempt=attempt + 1)
+                _log_llm("groq", GROQ_MODEL, usage, _t0, prompt, attempt=attempt + 1, system=system_instruction, response=content)
                 _record_fixture(prompt, system_instruction, content, usage)
                 return _parse_content(content, schema)
 
@@ -476,7 +488,7 @@ async def _generate_zai(prompt: str, schema, system_instruction: str, schema_dic
         raise ProviderProbeFailedError("Z.ai fallback returned empty content")
 
     usage = data.get("usage", {})
-    _log_llm("zai", ZAI_MODEL, usage, _t0, prompt)
+    _log_llm("zai", ZAI_MODEL, usage, _t0, prompt, system=system_instruction, response=content)
     _record_fixture(prompt, system_instruction, content, usage)
     return _parse_content(content, schema)
 
