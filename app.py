@@ -368,6 +368,11 @@ def main():
                 if st.button("Deploy Engine Updates", type="primary", use_container_width=True):
                     with open("value_prop.yaml", "w") as f:
                         yaml.dump(new_vp, f, sort_keys=False)
+                    # load_value_prop is lru_cached, so the engine keeps serving the
+                    # pre-save config until the process restarts. Without this the next
+                    # run silently uses the old settings (D19).
+                    from zara.utils.config import load_value_prop
+                    load_value_prop.cache_clear()
                     st.success("Configuration successfully deployed!")
             except Exception as e:
                 st.error(f"Failed to load config: {e}")
@@ -420,20 +425,37 @@ def main():
                 except Exception:
                     pass
 
-            async def run_backend():
-                return await run_end_to_end_pipeline(prospect, profile="standard", settings=settings, on_event=on_event)
+            from zara.utils.telemetry import trace_run
+
+            async def run_backend(tr):
+                # The trace lives in a ContextVar, and asyncio.run creates a fresh
+                # context, so it has to be opened inside the coroutine to be visible
+                # to the provider and orchestrator.
+                with trace_run(prospect, trigger="ui", profile="standard") as t:
+                    tr["id"] = t.run_id
+                    t.on_event_sink = True
+                    return await run_end_to_end_pipeline(
+                        prospect, profile="standard", settings=settings,
+                        on_event=lambda e: (t.event(e), on_event(e))[1],
+                    )
 
             with st.status("Zara is researching...", expanded=True) as status:
+                tr = {}
                 try:
-                    results, draft_res = asyncio.run(run_backend())
+                    results, draft_res = asyncio.run(run_backend(tr))
                     st.session_state["zara_cache"] = {
                         "prospect": prospect, "results": results,
                         "draft_res": draft_res, "settings": settings,
+                        "run_id": tr.get("id"),
                     }
                     status.update(label="Done — draft ready for review", state="complete", expanded=False)
+                    if tr.get("id"):
+                        st.caption(f"run `{tr['id']}` recorded")
                 except Exception as e:
                     status.update(label=f"Error: {str(e)}", state="error", expanded=True)
                     st.exception(e)
+                    if tr.get("id"):
+                        st.caption(f"crashed run `{tr['id']}` recorded")
                     return
 
         cache = st.session_state.get("zara_cache")

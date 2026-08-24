@@ -105,6 +105,16 @@ def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Li
         return "database"
     return "company_action"
 
+def _tiebreak(card: SignalCard) -> tuple[str, str]:
+    """Stable, content-derived last resort for every sort in this module.
+
+    Card order arrives from the orchestrator and every sort here is a stable
+    `list.sort`, so ties would otherwise be resolved by arrival order. Keying on
+    the card's own identity makes ties resolve the same way on every run.
+    """
+    return (card.source or "", card.source_url or "")
+
+
 def _compute_recency(published_date: str | None) -> int | None:
     if not published_date:
         return None
@@ -181,10 +191,15 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         
     if to_score:
         prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
+        # The trailing (source, source_url) is a deterministic tiebreak. list.sort is
+        # stable, so without it cards tied on proximity+recency kept their arrival
+        # order -- which is fetcher completion order -- and the [:15] cap below then
+        # dropped a *different set* of cards on every run.
         to_score.sort(key=lambda item: (
-            prox_val.get(_compute_proximity(item[1], prospect), 0), 
+            prox_val.get(_compute_proximity(item[1], prospect), 0),
             _compute_recency(item[1].published_date) is not None,
-            -(_compute_recency(item[1].published_date) or 9999)
+            -(_compute_recency(item[1].published_date) or 9999),
+            _tiebreak(item[1]),
         ), reverse=True)
         
         # Hard cap to top 15 cards
@@ -219,7 +234,8 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 resp = await generate_content_with_retry(
                     prompt=prompt,
                     schema=BatchScoreOutput,
-                    system_instruction=sys_prompt
+                    system_instruction=sys_prompt,
+                    stage="ranker_pain_scoring",
                 )
                 
                 scores = resp.scores
@@ -275,7 +291,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     
     # Sort eligible by proximity priority then score.
     prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
-    eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score), reverse=True)
+    eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score, _tiebreak(x.card)), reverse=True)
     
     seen_tiers = set()
     for c in eligible:
@@ -295,7 +311,9 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     winning_card = None
     remaining_eligible = [c for c in final_cards if c.excluded is None]
     if remaining_eligible:
-        remaining_eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score), reverse=True)
+        # Deterministic tiebreak matters most here: this sort picks the winning card,
+        # and ties on (proximity, score) are common.
+        remaining_eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score, _tiebreak(x.card)), reverse=True)
         winning_card = remaining_eligible[0]
 
     hooks = await _articulate_hooks(prospect, remaining_eligible[:3], vp)
@@ -344,7 +362,8 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         resp = await generate_content_with_retry(
             prompt=prompt,
             schema=HooksOutput,
-            system_instruction="You are an expert B2B outreach strategist. Never invent facts."
+            system_instruction="You are an expert B2B outreach strategist. Never invent facts.",
+            stage="ranker_hooks",
         )
         hooks = []
         resp_hooks = getattr(resp, "hooks", None) or []

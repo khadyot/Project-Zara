@@ -26,7 +26,6 @@ async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung
                 cost_usd=0.0,
                 elapsed_ms=0
             )
-        results.append(res)
         if isinstance(res, SourceResult) and res.cost_usd > 0:
             add_spend(res.cost_usd)
         if on_event:
@@ -34,11 +33,20 @@ async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung
                 "type": "source", "name": f.__class__.__name__, "status": res.status,
                 "detail": f"{len(res.cards)} cards" if res.status == "ok" else (res.reason or "")[:80],
             })
+        return res
 
     if on_event:
         for f, _ in fetcher_tasks:
             on_event({"type": "source", "name": f.__class__.__name__, "status": "running"})
-    await asyncio.gather(*(_run_one(f, t) for f, t in fetcher_tasks))
+
+    # Take gather's return value rather than appending inside _run_one. Appending
+    # ordered `results` by *completion*, i.e. network latency, so the same prospect
+    # produced a different card order on every run. The ranker's sorts are stable
+    # `list.sort`, so that order survived into the 15-card cap and the winning-card
+    # pick -- different hook, different draft, different verifier verdict, with no
+    # code change. gather returns in argument order, so this is deterministic.
+    # on_event still fires on completion, so the live progress stream is unchanged.
+    results.extend(await asyncio.gather(*(_run_one(f, t) for f, t in fetcher_tasks)))
 
 async def run_pipeline(
     prospect: Prospect,
@@ -293,7 +301,13 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     from zara.utils.resolve import resolve_company_entity
     import dataclasses
 
-    resolution = await resolve_company_entity(prospect.company)
+    from zara.utils.telemetry import current as _trace0
+    _tr0 = _trace0()
+    if _tr0 is not None:
+        with _tr0.stage("resolve_company"):
+            resolution = await resolve_company_entity(prospect.company)
+    else:
+        resolution = await resolve_company_entity(prospect.company)
     if resolution.resolved_company and resolution.resolved_company != prospect.company:
         prospect = dataclasses.replace(prospect, company=resolution.resolved_company)
     if resolution.domain and not prospect.company_domain:
@@ -347,19 +361,32 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
             
     strictness = settings.get("strictness", "strict") if settings else "strict"
     
-    results = await run_pipeline(
-        prospect,
-        rung0_fetchers=rung0,
-        rung1_fetchers=rung1,
-        rung2_fetchers=rung2,
-        rung3_fetchers=rung3,
-        rung4_fetchers=rung4,
-        deep_mode=(profile == "deep"),
-        gap_filler_gate=True,
-        on_event=on_event
-    )
-    
+    from zara.utils.telemetry import current as _trace
+    tr = _trace()
+
+    if tr is not None:
+        with tr.stage("retrieval"):
+            results = await run_pipeline(
+                prospect,
+                rung0_fetchers=rung0, rung1_fetchers=rung1, rung2_fetchers=rung2,
+                rung3_fetchers=rung3, rung4_fetchers=rung4,
+                deep_mode=(profile == "deep"), gap_filler_gate=True, on_event=on_event,
+            )
+        tr.capture_sources(results)
+    else:
+        results = await run_pipeline(
+            prospect,
+            rung0_fetchers=rung0, rung1_fetchers=rung1, rung2_fetchers=rung2,
+            rung3_fetchers=rung3, rung4_fetchers=rung4,
+            deep_mode=(profile == "deep"), gap_filler_gate=True, on_event=on_event,
+        )
+
     vp_override = settings.get("identity") if settings else None
-    draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution, on_event=on_event)
+    if tr is not None:
+        with tr.stage("rank_draft_verify"):
+            draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution, on_event=on_event)
+        tr.capture_draft(draft_res)
+    else:
+        draft_res = await process_prospect(prospect, results, strictness=strictness, vp_override=vp_override, resolution=resolution, on_event=on_event)
 
     return results, draft_res

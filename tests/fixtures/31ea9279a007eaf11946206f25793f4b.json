@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "The snippet discusses engineering scaling and repository count, with no mention of finance or operations hiring, systems, or leadership that satisfies any observable condition."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "The content provides logistics best\u2011practice advice; it does not contain job postings, hiring signals, leadership changes, or product announcements related to the defined pains."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Announces ShipBob's new Simulation Terminal product. It is interesting company news but does not explicitly match any observable pain criteria."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "A podcast introduction featuring a CEO and a partner; relevant as company/person news but lacks any observable evidence for the listed pains."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Reuters report on ShipBob's $200\u202fM funding round. Not an observable trigger for any pain, but qualifies as general company news."
+      }
+    ]
+  },
+  "prompt_tokens": 1326,
+  "completion_tokens": 816
+}

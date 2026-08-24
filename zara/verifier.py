@@ -90,7 +90,10 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict)
         if ' ' in pn:
             proper_nouns.append(pn)
         
-    candidates = set(numbers + urls + quotes + proper_nouns)
+    # sorted, not set: set iteration order varies with PYTHONHASHSEED across
+    # processes, which reordered `ungrounded` and so changed the drafter's
+    # self-correction prompt between otherwise identical runs.
+    candidates = sorted(set(numbers + urls + quotes + proper_nouns))
     
     # Gather all evidence text
     evidence = build_evidence_list(prospect, value_prop)
@@ -135,7 +138,8 @@ async def pass2_llm_judge(draft_text: str, prospect: RankedProspect, value_prop:
         resp = await generate_content_with_retry(
             prompt=prompt,
             schema=Pass2Output,
-            system_instruction="You are a strict B2B verifier."
+            system_instruction="You are a strict B2B verifier.",
+            stage="verifier_judge",
         )
         if resp.passed:
             return VerificationResult(passed=True, status="clean", reason=None)

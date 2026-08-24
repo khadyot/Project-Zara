@@ -90,7 +90,8 @@ async def classify_social_signals(results: list[SourceResult]) -> ClassifierResu
             classifications_obj = await generate_content_with_retry(
                 prompt=prompt,
                 schema=ClassificationsResponse,
-                system_instruction="You are an expert B2B sales classifier."
+                system_instruction="You are an expert B2B sales classifier.",
+                stage="classifier",
             )
             classifications.extend(classifications_obj.results)
         

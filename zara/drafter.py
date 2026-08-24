@@ -54,7 +54,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             resp = await generate_content_with_retry(
                 prompt=fallback_prompt,
                 schema=DraftOutput,
-                system_instruction=fallback_system
+                system_instruction=fallback_system,
+                stage="drafter_no_signal",
             )
             return resp.draft_text
         except ProviderProbeFailedError as e:
@@ -138,7 +139,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         resp = await generate_content_with_retry(
             prompt=prompt,
             schema=DraftOutput,
-            system_instruction=system_instruction
+            system_instruction=system_instruction,
+            stage="drafter_revision" if feedback_tokens else "drafter",
         )
         return resp.draft_text
     except ProviderProbeFailedError as e:

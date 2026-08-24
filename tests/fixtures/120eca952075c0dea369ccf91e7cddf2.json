@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob just rolled out its Simulation Terminal to every sandbox account, letting merchants run full\u2011cycle fulfillment, receiving, and inventory adjustments without touching a real warehouse.",
+        "rationale": "We don\u2019t know Test\u2019s exact role, but this company\u2011wide feature cuts manual testing effort for anyone involved in operations or integration, reducing the need for hands\u2011on warehouse coordination.",
+        "bridge": "Our platform automates the reconciliation\u2011heavy steps that follow such simulations, turning the test data into instantly reconciled, error\u2011free records.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob\u2019s Spring\u202f2026 release introduced the \u2018ShipBob Promise\u2019 delivery\u2011date engine that surfaces precise delivery dates to shoppers, aiming to boost conversion.",
+        "rationale": "Without a known role, we highlight a company\u2011level improvement that impacts any team handling order fulfillment or customer experience, as accurate dates reduce manual adjustments and support higher conversion.",
+        "bridge": "Our solution can automate the data reconciliation behind those delivery\u2011date calculations, ensuring the engine stays fed with clean, up\u2011to\u2011date information without manual effort.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 763,
+  "completion_tokens": 668
+}

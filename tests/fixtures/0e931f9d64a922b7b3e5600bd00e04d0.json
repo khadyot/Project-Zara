@@ -1,0 +1,16 @@
+{
+  "content": {
+    "results": [
+      {
+        "index": 0,
+        "classification": "professional"
+      },
+      {
+        "index": 1,
+        "classification": "professional"
+      }
+    ]
+  },
+  "prompt_tokens": 614,
+  "completion_tokens": 201
+}

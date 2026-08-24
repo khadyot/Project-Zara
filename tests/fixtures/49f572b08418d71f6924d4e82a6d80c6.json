@@ -1,0 +1,38 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 6,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Snippet explicitly announces the appointment of Ryan Courson as CFO of IFS, satisfying the observable condition of a recent finance leadership appointment."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Press\u2011release style snippet confirms the CFO appointment at IFS, directly matching the finance leadership observable."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Social media post highlights IFS appointing Ryan Courson as CFO, meeting the finance leadership appointment observable."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "News snippet reports IFS hiring a new CFO, explicitly satisfying the finance leadership appointment observable."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Official PR release announces the CFO appointment at IFS, directly fulfilling the observable condition for structural complexity."
+      }
+    ]
+  },
+  "prompt_tokens": 1365,
+  "completion_tokens": 869
+}

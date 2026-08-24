@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The draft asserts that ShipBob\u2019s team \"still spends hours manually reconciling those webhook events and inventory changes,\" which is a specific claim about the prospect\u2019s operations not supported by any evidence snippet."
+  },
+  "prompt_tokens": 970,
+  "completion_tokens": 398
+}

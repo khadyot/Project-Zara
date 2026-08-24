@@ -186,6 +186,7 @@ def _parse_content(content: str, schema):
         raise
 
 async def _generate_gemini(prompt: str, schema, system_instruction: str, schema_dict: dict):
+    _t0 = time.monotonic()
     api_key = _get_gemini_api_key()
 
     schema_prompt = (
@@ -225,11 +226,41 @@ async def _generate_gemini(prompt: str, schema, system_instruction: str, schema_
         raise ProviderProbeFailedError("Gemini fallback returned empty content")
 
     usage = data.get("usage", {})
+    _log_llm("gemini", GEMINI_MODEL, usage, _t0, prompt)
     _record_fixture(prompt, system_instruction, content, usage)
     return _parse_content(content, schema)
 
-async def generate_content_with_retry(prompt: str, schema, system_instruction: str) -> any:
+_stage: contextvars.ContextVar[str] = contextvars.ContextVar("zara_llm_stage", default="unknown")
+
+
+def _log_llm(provider: str, model: str, usage: dict, t0: float, prompt: str,
+             attempt: int = 1, status: str = "ok", error: str = None):
+    """Record one model call against the active run trace, if there is one.
+
+    `usage` was already parsed at every one of these sites and handed to
+    _record_fixture; live runs simply dropped it on the floor.
+    """
+    try:
+        from zara.utils.telemetry import current
+        t = current()
+        if t is None:
+            return
+        t.llm_call(
+            stage=_stage.get(), provider=provider, model=model, attempt=attempt,
+            status=status, elapsed_ms=int((time.monotonic() - t0) * 1000),
+            prompt_tokens=(usage or {}).get("prompt_tokens"),
+            completion_tokens=(usage or {}).get("completion_tokens"),
+            prompt_chars=len(prompt or ""), error=error,
+        )
+    except Exception:
+        pass
+
+
+async def generate_content_with_retry(prompt: str, schema, system_instruction: str,
+                                      stage: str = "unknown") -> any:
+    _stage.set(stage)
     if os.environ.get("USE_FIXTURES"):
+        _fx_t0 = time.monotonic()
         # Store or load from tests/fixtures/ based on hash of prompt + instruction
         h = hashlib.md5((prompt + system_instruction).encode()).hexdigest()
         fixture_path = f"tests/fixtures/{h}.json"
@@ -251,6 +282,9 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                 "prompt_tokens": data.get("prompt_tokens"),
                 "completion_tokens": data.get("completion_tokens")
             }
+            # Replays log too, using the recorded counts, so a fixture run and a
+            # live run produce the same shape of trace.
+            _log_llm("fixture", "replay", sys._fixture_usage[h], _fx_t0, prompt)
             if isinstance(content_data, str):
                 return schema.model_validate_json(content_data)
             return schema(**content_data)
@@ -278,7 +312,12 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
             {"role": "user", "content": schema_prompt}
         ],
         "response_format": {"type": "json_object"},
-        "temperature": 0.0
+        "temperature": 0.0,
+        # Best effort only. gpt-oss-120b is an MoE served with batching, so identical
+        # inputs can still differ; the seed narrows that, it does not close it. The
+        # run fingerprint in telemetry is what we actually rely on to tell a code
+        # change apart from model variance.
+        "seed": 42,
     }
 
     _check_deadline("groq call")
@@ -297,6 +336,7 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
         # 8K TPM is the binding limit. A 429/413 means wait for the token bucket,
         # so honour the reset header rather than a fixed ladder.
         for attempt in range(4):
+            _t0 = time.monotonic()
             try:
                 budget = remaining_time()
                 timeout = 60.0 if budget is None else max(5.0, min(60.0, budget))
@@ -335,6 +375,7 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                     raise Exception("Empty content from Groq")
 
                 usage = data.get("usage", {})
+                _log_llm("groq", GROQ_MODEL, usage, _t0, prompt, attempt=attempt + 1)
                 _record_fixture(prompt, system_instruction, content, usage)
                 return _parse_content(content, schema)
 
@@ -390,6 +431,7 @@ def _parse_reset(val: str | None) -> float | None:
 
 
 async def _generate_zai(prompt: str, schema, system_instruction: str, schema_dict: dict):
+    _t0 = time.monotonic()
     api_key = os.environ.get("ZAI_API_KEY")
     if not api_key:
         raise ProviderAuthError("ZAI_API_KEY is missing from environment variables.")
@@ -434,6 +476,7 @@ async def _generate_zai(prompt: str, schema, system_instruction: str, schema_dic
         raise ProviderProbeFailedError("Z.ai fallback returned empty content")
 
     usage = data.get("usage", {})
+    _log_llm("zai", ZAI_MODEL, usage, _t0, prompt)
     _record_fixture(prompt, system_instruction, content, usage)
     return _parse_content(content, schema)
 
