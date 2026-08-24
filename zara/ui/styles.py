@@ -221,6 +221,64 @@ h1 {
     background-size: 12px 3px;
 }
 
+/* Small eyebrow variant — sidebar labels overridden to 14px.
+   Shorter squiggle (50%, 2px) so it doesn't crowd a short label. */
+.eyebrow-sm {
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 14px;
+    color: var(--color-midnight-ink);
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+.eyebrow-sm::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 50%;
+    height: 2px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 2"><path d="M 0 1 Q 3 0 6 1 T 12 1" stroke="%23f54320" stroke-width="1.5" fill="none"/></svg>');
+    background-repeat: repeat-x;
+    background-size: 10px 2px;
+}
+
+/* Sidebar View toggle — horizontal radio restyled as Top Nav Pill Tabs
+   (active = lime fill, ink text, 9999px radius). CSS-only, no markup change. */
+section[data-testid="stSidebar"] div[role="radiogroup"] {
+    gap: 8px;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"] {
+    border-radius: var(--radius-pills) !important;
+    padding: 4px 12px !important;
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"]:hover {
+    background-color: rgba(229, 231, 235, 0.4) !important;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"] > div:first-child {
+    /* hide the radio circle — the pill fill is the selected state */
+    display: none !important;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"] > div:last-child p {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    letter-spacing: 0.02em !important;
+    font-weight: 400 !important;
+    color: var(--color-true-black) !important;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {
+    background-color: var(--color-lime-sprout) !important;
+}
+section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) > div:last-child p {
+    color: var(--color-midnight-ink) !important;
+}
+
 /* Alerts / Notifications */
 div[data-testid="stAlert"] {
     background-color: var(--color-pure-white) !important;
@@ -357,3 +415,64 @@ def render_hero():
     st.markdown(hero_html, unsafe_allow_html=True)
 
 
+
+/* Phase 3: Run History Density Treatment */
+div[data-testid="stExpanderDetails"] { font-size: 14px; }
+
+.score-badge {
+    border: 1.5px solid var(--color-ember-coral);
+    border-radius: var(--radius-pills);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--color-midnight-ink);
+    padding: 2px 8px;
+    display: inline-block;
+}
+
+.candidate-status {
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.candidate-claim-summary {
+    color: var(--color-midnight-ink);
+    font-size: 14px;
+}
+.candidate-claim-summary.excluded {
+    color: var(--color-stone);
+}
+
+.candidate-source-url {
+    color: var(--color-slate);
+    font-size: 14px;
+}
+
+.candidate-snippet {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--color-fog);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-pure-white);
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.hook-row {
+    background-color: var(--color-pure-white);
+    border: 1px solid var(--color-fog);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.hook-caption {
+    font-size: 12px;
+    color: var(--color-slate);
+    margin-top: 4px;
+}
+
+.model-call-header {
+    font-size: 14px;
+}
