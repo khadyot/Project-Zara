@@ -218,7 +218,17 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         else:
             sys_prompt += " You must be extremely strict. Only match if the snippet explicitly proves the 'observable_via' condition. Do not make inferential leaps. If the snippet has interesting company/person news but DOES NOT map to a specific pain point, you may map it to 'general_news' with a score of 0.3."
             
-        chunk_size = 5
+        # One call, not three. Chunking re-sent the whole pains block per chunk:
+        # measured 3 calls x ~1.3k prompt tokens on the Shane Stafford run, where the
+        # cards themselves were only ~600 tokens per chunk. That duplication pushed a
+        # single prospect to 13.3k tokens against an 8K TPM ceiling, and the resulting
+        # 429 cost 52s of a 91s run -- 57% of the wall time was a rate-limit stall.
+        #
+        # This also retires the early exit, deliberately. It stopped scoring after the
+        # first chunk containing a >=0.8 match, which discarded candidates we need for
+        # the Compass VI swap test and for the audit trail. Every card in the cap is
+        # now scored, and the run is still cheaper.
+        chunk_size = max(len(to_score), 1)
         try:
             for chunk_idx in range(0, len(to_score), chunk_size):
                 chunk = to_score[chunk_idx:chunk_idx + chunk_size]

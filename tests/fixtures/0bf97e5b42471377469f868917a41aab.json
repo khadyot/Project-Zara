@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "You\u2019re streamlining processes to meet customer requirements while fueling expansion, as you noted in your recent insight on rethinking transport.",
+        "rationale": "As VP of Transportation, your priority is efficient operations; manual reconciliation can slow that, so reducing it directly supports your streamlining goals.",
+        "bridge": "Our solution automates reconciliation\u2011heavy tasks, giving your ops team more time to focus on the process improvements you\u2019re championing.",
+        "strength": 0.92
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Source Logistics just secured a majority\u2011stake investment and is acquiring LaG, marking a rapid growth phase.",
+        "rationale": "Even without a specific role, this company\u2011wide expansion will pressure existing operational workflows, making automation critical to maintain accuracy during integration.",
+        "bridge": "Our platform can instantly automate the heavy\u2011lifting of data reconciliation across newly combined systems, smoothing the post\u2011M&A transition.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 824,
+  "completion_tokens": 771
+}

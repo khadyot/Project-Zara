@@ -3,20 +3,20 @@
     "hooks": [
       {
         "card_index": 0,
-        "hook_text": "ShipBob\u2019s Simulation Terminal is now available in every sandbox account, letting merchants simulate the full fulfillment, receiving, and inventory adjustment lifecycle without real warehouse activity.",
-        "rationale": "Since the recipient\u2019s role isn\u2019t specified, the key takeaway is that ShipBob is expanding tools that let teams test end\u2011to\u2011end operations quickly, which is valuable for any stakeholder focused on reducing manual, error\u2011prone processes.",
-        "bridge": "Our platform can layer on top of that simulation to automatically reconcile the data generated during each simulated step, eliminating the manual spreadsheets teams currently use to validate integrations.",
+        "hook_text": "ShipBob just rolled out its Simulation Terminal to every sandbox account, letting merchants test the full fulfillment lifecycle without touching a real warehouse.",
+        "rationale": "The role is unknown, so we highlight a company\u2011wide product upgrade that any operations stakeholder would notice as a way to reduce risk before go\u2011live.",
+        "bridge": "Our platform automates the manual, reconciliation\u2011heavy steps that your team would otherwise validate in the simulation, turning confidence\u2011building tests into real\u2011time savings.",
         "strength": 0.85
       },
       {
         "card_index": 1,
-        "hook_text": "ShipBob just secured a $200\u202fmillion late\u2011stage funding round led by Bain Capital Ventures, pushing its valuation into unicorn territory.",
-        "rationale": "Without a known role, the fact that ShipBob has fresh capital signals they may be investing in scaling operations and automation, a priority for anyone overseeing logistics efficiency.",
-        "bridge": "With that new budget, our solution can help ShipBob automate the reconciliation\u2011heavy processes that typically slow down scaling, delivering faster, error\u2011free financial close.",
-        "strength": 0.65
+        "hook_text": "ShipBob\u2019s latest $200\u202fmillion funding round pushed its valuation past the $1\u202fbillion unicorn mark.",
+        "rationale": "The role is unknown, so we focus on the headline funding news that signals rapid growth and a likely appetite for efficiency\u2011boosting tools across the organization.",
+        "bridge": "With that growth, our automation solution can keep reconciliation processes scalable, preventing manual bottlenecks as order volume expands.",
+        "strength": 0.78
       }
     ]
   },
   "prompt_tokens": 789,
-  "completion_tokens": 871
+  "completion_tokens": 591
 }

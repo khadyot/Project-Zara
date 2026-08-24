@@ -688,8 +688,16 @@ def main():
         # --- Editable draft ---
         st.markdown("### The draft (editable)")
         if draft_res.draft_text:
-            edited = st.text_area("Draft", value=draft_res.draft_text, height=260, key="draft_editor",
-                                  label_visibility="collapsed")
+            # The key must change when the draft does. Streamlit gives session_state
+            # precedence over `value=` for a keyed widget, so a fixed key made this box
+            # stick on whatever it was first rendered with and silently ignore every
+            # later draft -- including regenerations. Keying on the draft's own digest
+            # means new text gets a fresh widget, while an unchanged draft keeps any
+            # edits the user has made.
+            import hashlib as _hl
+            _dk = _hl.md5((draft_res.draft_text or "").encode()).hexdigest()[:10]
+            edited = st.text_area("Draft", value=draft_res.draft_text, height=260,
+                                  key=f"draft_editor_{_dk}", label_visibility="collapsed")
             st.download_button("Download draft", data=edited, file_name="zara_draft.txt",
                                mime="text/plain", use_container_width=True)
         else:
