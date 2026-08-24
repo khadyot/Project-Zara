@@ -129,7 +129,12 @@ class CardScoreOutput(BaseModel):
     index: int
     matched_pain_id: str | None
     score: float
-    reason: str
+    # One clause, not a sentence. Measured on the ShipBob snapshot, this field was
+    # the single largest line item in a run: 2,539 completion tokens across 15 cards,
+    # of a ~9.2k run against an 8K TPM ceiling. The reason still has to say which
+    # observable it matched -- that is what makes the pick auditable -- it just does
+    # not need to restate the snippet back to us.
+    reason: str = Field(description="At most 15 words. Name the observable that matched, or why none did. No restating the snippet.")
 
 class BatchScoreOutput(BaseModel):
     scores: list[CardScoreOutput]
@@ -233,7 +238,9 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             for chunk_idx in range(0, len(to_score), chunk_size):
                 chunk = to_score[chunk_idx:chunk_idx + chunk_size]
                 
-                prompt = "Score each card against the following pains (0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. Output 'general_news' for matched_pain_id if it matches no pain but is interesting company/person news.\n\nPains:\n"
+                prompt = ("Score each card against the following pains (0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. "
+                          "Output 'general_news' for matched_pain_id if it matches no pain but is interesting company/person news. "
+                          "Keep each reason to at most 15 words: name the observable that matched, or why none did.\n\nPains:\n")
                 for p in pains:
                     prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
                     

@@ -1,0 +1,98 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product release announcement."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast interview with CEO."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding round unicorn news."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding announcement article."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Customer testimonial, no observable."
+      },
+      {
+        "index": 21,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 product release press."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI feature marketing announcement."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Site footer, no relevant content."
+      },
+      {
+        "index": 22,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 release press statement."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Roadmap expansion announcement."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New chief supply chain officer hire."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Seeking banks for IPO, not finance leadership."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Salary data, not hiring posting."
+      }
+    ]
+  },
+  "prompt_tokens": 2175,
+  "completion_tokens": 1854
+}
