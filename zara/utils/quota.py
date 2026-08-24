@@ -171,14 +171,16 @@ def headroom() -> list[dict]:
 def forecast() -> dict:
     with telemetry.connect() as conn:
         q = """
-            SELECT run_id, 
-                   SUM(prompt_tokens + completion_tokens) as tokens,
+            SELECT u.run_id, 
+                   SUM(u.prompt_tokens + u.completion_tokens) as tokens,
                    COUNT(*) as reqs
-            FROM usage
-            WHERE provider = 'groq' 
-              AND run_id IS NOT NULL 
-              AND status NOT IN ('error', '429')
-            GROUP BY run_id
+            FROM usage u
+            JOIN runs r ON u.run_id = r.run_id
+            WHERE u.provider = 'groq' 
+              AND u.run_id IS NOT NULL 
+              AND u.status NOT IN ('error', '429')
+              AND r.trigger IN ('ui', 'batch')
+            GROUP BY u.run_id
         """
         rows = conn.execute(q).fetchall()
         runs_count = len(rows)
@@ -205,11 +207,11 @@ def forecast() -> dict:
         mean_reqs = sum(reqs) / len(reqs)
         p90_reqs = reqs[int(len(reqs) * 0.9)] if len(reqs) > 0 else 0
         
-        q_wall = "SELECT duration_ms FROM runs WHERE run_id IN (SELECT DISTINCT run_id FROM usage WHERE provider = 'groq')"
+        q_wall = "SELECT duration_ms FROM runs WHERE run_id IN (SELECT DISTINCT run_id FROM usage WHERE provider = 'groq') AND trigger IN ('ui', 'batch')"
         wall_rows = conn.execute(q_wall).fetchall()
         avg_wall_s = (sum(r["duration_ms"] for r in wall_rows) / len(wall_rows)) / 1000 if wall_rows else 0
         
-        q_stall = "SELECT SUM(wait_ms) as total_wait FROM usage WHERE provider = 'groq' AND run_id IS NOT NULL"
+        q_stall = "SELECT SUM(u.wait_ms) as total_wait FROM usage u JOIN runs r ON u.run_id = r.run_id WHERE u.provider = 'groq' AND u.run_id IS NOT NULL AND r.trigger IN ('ui', 'batch')"
         stall_row = conn.execute(q_stall).fetchone()
         avg_stall_s = (stall_row["total_wait"] or 0) / runs_count / 1000 if runs_count > 0 else 0
         

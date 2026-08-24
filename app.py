@@ -27,7 +27,7 @@ def render_budget_meter():
         hrs = quota.headroom()
         h = next((x for x in hrs if x["resource"] == "groq tokens/day"), None)
         if h:
-            st.markdown("<div class='eyebrow' style='font-size: 14px;'>Today</div>", unsafe_allow_html=True)
+            st.markdown("<div class='eyebrow-sm'>Today</div>", unsafe_allow_html=True)
             pct = min(h["pct_used"], 1.0)
             st.progress(pct, text=f"{int(h['used']):,} / {int(h['limit']):,} tokens")
             if h["status"] in ("critical", "exhausted"):
@@ -118,9 +118,9 @@ def render_run_history():
 
     st.markdown("### Sources")
     for s in conn.execute("SELECT * FROM source_calls WHERE run_id=? ORDER BY seq", (rid,)):
-        icon = {"ok": "OK", "empty": "--", "failed": "XX", "skipped": ">>"}.get(s["status"], "·")
+        icon = f"<span class='status-dot status-{s['status']}'></span>"
         detail = f"{s['cards']} cards" if s["status"] == "ok" else (s["reason"] or "")[:90]
-        st.markdown(f"`{icon}` **{s['source']}** — {s['status']} — {s['elapsed_ms']/1000:.1f}s — {detail}")
+        st.markdown(f"{icon} **{s['source']}** — {s['status']} — {s['elapsed_ms']/1000:.1f}s — {detail}", unsafe_allow_html=True)
 
     st.markdown("### Model calls")
     for c in conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)):
@@ -197,24 +197,24 @@ def main():
         st.markdown("Tune the pipeline parameters.")
         st.markdown("---")
         
-        st.markdown("<div class='eyebrow' style='font-size: 14px; margin-bottom: 2px;'>1. Identity</div>", unsafe_allow_html=True)
+        st.markdown("<div class='eyebrow-sm'>1. Identity</div>", unsafe_allow_html=True)
         sender_name = st.text_input("Sender Name (Company)", value="Zamp")
         product = st.text_area("Product/Offer", value="We help operations teams automate manual, reconciliation-heavy processes", height=80)
         proof_point = st.text_area("Proof Point (Optional)", value="", height=80)
         
-        st.markdown("<br><div class='eyebrow' style='font-size: 14px; margin-bottom: 2px;'>2. Strictness</div>", unsafe_allow_html=True)
+        st.markdown("<br><div class='eyebrow-sm'>2. Strictness</div>", unsafe_allow_html=True)
         strictness = st.radio(
             "Ranker Mode",
             ["Brand Safety (Strict)", "Pipeline Max (Permissive)"],
             help="Strict mode requires verbatim evidence of pain. Permissive mode allows structural inferences."
         )
         
-        st.markdown("<br><div class='eyebrow' style='font-size: 14px; margin-bottom: 2px;'>3. Data Sources</div>", unsafe_allow_html=True)
+        st.markdown("<br><div class='eyebrow-sm'>3. Data Sources</div>", unsafe_allow_html=True)
         use_ats = st.checkbox("ATS Fetchers (Free)", value=True)
         use_exa = st.checkbox("Exa (Web/News)", value=True)
         use_apify = st.checkbox("Apify (LinkedIn/Social)", value=True)
         
-        st.markdown("<br><div class='eyebrow' style='font-size: 14px; margin-bottom: 2px;'>4. Developer Mode</div>", unsafe_allow_html=True)
+        st.markdown("<br><div class='eyebrow-sm'>4. Developer Mode</div>", unsafe_allow_html=True)
         admin_pass = st.text_input("Admin Password", type="password")
 
         st.markdown("---")
@@ -410,7 +410,6 @@ def main():
                 # to the provider and orchestrator.
                 with trace_run(prospect, trigger="ui", profile="standard") as t:
                     tr["id"] = t.run_id
-                    t.on_event_sink = True
                     return await run_end_to_end_pipeline(
                         prospect, profile="standard", settings=settings,
                         on_event=lambda e: (t.event(e), on_event(e))[1],
@@ -470,30 +469,48 @@ def main():
             deep = st.button("Deep Search", use_container_width=True,
                              help="Force Tavily paid search for more person-level signal.")
 
-        async def redraft(hook=None, style_name="auto"):
-            return await process_prospect(
-                prospect, results,
-                strictness=settings.get("strictness", "strict"),
-                vp_override=settings.get("identity"),
-                resolution=res_info, hook=hook, style=style_name,
-            )
+        async def redraft(hook=None, style_name="auto", trigger="ui_redraft", fetch_tavily=False):
+            from zara.utils.telemetry import trace_run
+            with trace_run(prospect, trigger=trigger, profile="standard") as t:
+                new_results = list(results)
+                
+                if fetch_tavily:
+                    from zara.fetchers.tavily import TavilyFetcher
+                    tav_res = await TavilyFetcher(force=True).fetch(prospect)
+                    st.write(f"Tavily: {tav_res.status} ({len(tav_res.cards)} cards)")
+                    
+                    for i, r in enumerate(new_results):
+                        if r.source == "Tavily":
+                            new_results[i] = tav_res
+                            break
+                    else:
+                        new_results.append(tav_res)
+                        
+                t.capture_sources(new_results)
+                
+                res = await process_prospect(
+                    prospect, new_results,
+                    strictness=settings.get("strictness", "strict"),
+                    vp_override=settings.get("identity"),
+                    resolution=res_info, hook=hook, style=style_name,
+                )
+                t.capture_draft(res)
+                return new_results, res, t.run_id
 
         draft_res = cache["draft_res"]
 
         if regen:
             with st.status("Redrafting...", expanded=True):
-                draft_res = asyncio.run(redraft(hook=None, style_name=style))
+                _, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style))
                 st.session_state["zara_cache"]["draft_res"] = draft_res
+                st.session_state["zara_cache"]["run_id"] = new_run_id
 
         if deep:
-            from zara.fetchers.tavily import TavilyFetcher
             with st.status("Running Tavily deep search...", expanded=True) as dstat:
-                tav_res = asyncio.run(TavilyFetcher(force=True).fetch(prospect))
-                st.write(f"Tavily: {tav_res.status} ({len(tav_res.cards)} cards)")
-                results = [r for r in results if r.source != "Tavily"] + [tav_res]
+                results, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style, trigger="ui_boost", fetch_tavily=True))
                 st.session_state["zara_cache"]["results"] = results
-                draft_res = asyncio.run(redraft(hook=None, style_name=style))
                 st.session_state["zara_cache"]["draft_res"] = draft_res
+                st.session_state["zara_cache"]["run_id"] = new_run_id
                 dstat.update(label="Deep search complete", state="complete", expanded=False)
 
         ranked = draft_res.ranked_prospect
@@ -522,8 +539,9 @@ def main():
                     st.markdown(f"**Bridge to offer:** {h.bridge}")
                     if st.button(f"Draft with this hook", key=f"hook_{i}", use_container_width=True):
                         with st.status("Redrafting with selected hook...", expanded=True):
-                            draft_res = asyncio.run(redraft(hook=h, style_name=style))
+                            _, draft_res, new_run_id = asyncio.run(redraft(hook=h, style_name=style))
                             st.session_state["zara_cache"]["draft_res"] = draft_res
+                            st.session_state["zara_cache"]["run_id"] = new_run_id
                         st.rerun()
         else:
             st.caption("No alternative hooks articulated for this prospect.")

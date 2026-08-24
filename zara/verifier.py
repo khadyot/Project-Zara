@@ -157,6 +157,26 @@ _SECOND_PERSON_CLAIM = re.compile(
     re.I,
 )
 
+_RECENCY_CLAIM = re.compile(
+    r"\b(recent(ly)?|newly|this (week|month)|days ago|latest"
+    r"|just\s+(announced|launched|raised|closed|hired|appointed|published|posted|shipped|opened|acquired|named|rolled out))\b",
+    re.I,
+)
+
+def check_recency(draft_text: str, prospect: RankedProspect) -> list[str]:
+    """A time claim the evidence cannot carry."""
+    win = prospect.winning_card
+    if win is None or win.card.published_date is not None:
+        return []
+        
+    m = _RECENCY_CLAIM.search(draft_text)
+    if not m:
+        return []
+        
+    return [
+        f'unverifiable recency: draft says "{m.group(0)}" but the winning card carries no publication date'
+    ]
+
 
 def check_attribution(draft_text: str, prospect: RankedProspect) -> list[str]:
     """Blocks the failure that passed clean on the Versapay run: the winning card
@@ -188,7 +208,7 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
         # Verify it doesn't invent anything by skipping pass 1, but we can just say it passed
         return VerificationResult(passed=True, status="clean", reason=None)
         
-    ungrounded = check_attribution(draft_text, prospect)
+    ungrounded = check_attribution(draft_text, prospect) + check_recency(draft_text, prospect)
     ungrounded += pass1_grounding(draft_text, prospect, value_prop)
     if ungrounded:
         return VerificationResult(
