@@ -66,7 +66,9 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     
     md.append("## Retrieval")
     for r in sorted(results, key=lambda x: x.rung):
-        marker = "✅" if r.status == "ok" else "❌" if r.status == "failed" else "⚪" if r.status == "empty" else "⏭️"
+        # Typographic, not an HTML dot: the decision card is meant to be copied out
+        # and read as plain text, so markup would leak as raw tags (Compass IX).
+        marker = {"ok": "[+]", "failed": "[!]", "empty": "[ ]", "skipped": "[>]"}.get(r.status, "[?]")
         # simple display of count or reason
         detail = f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")
         md.append(f"{marker} {r.status:<8} {r.source:<25} {detail}")

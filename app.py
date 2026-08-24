@@ -23,17 +23,15 @@ def render_budget_meter():
     """Groq's 8K TPM / 200K TPD ceiling works out to roughly 35 prospects a day.
     The person driving the runs should be able to see what is left."""
     try:
-        import time
-        conn = _run_store()
-        today = time.strftime("%Y-%m-%d")
-        row = conn.execute(
-            "SELECT COUNT(*) n, COALESCE(SUM(prompt_tokens+completion_tokens),0) tok "
-            "FROM runs WHERE ts LIKE ?", (today + "%",)).fetchone()
-        n, tok = row["n"], row["tok"]
-        st.markdown("<div class='eyebrow' style='font-size: 14px;'>Today</div>", unsafe_allow_html=True)
-        st.progress(min(tok / 200_000, 1.0), text=f"{n} runs · {tok:,} / 200,000 tokens")
-        if tok > 160_000:
-            st.warning("Near the 200K/day Groq ceiling.")
+        from zara.utils import quota
+        hrs = quota.headroom()
+        h = next((x for x in hrs if x["resource"] == "groq tokens/day"), None)
+        if h:
+            st.markdown("<div class='eyebrow' style='font-size: 14px;'>Today</div>", unsafe_allow_html=True)
+            pct = min(h["pct_used"], 1.0)
+            st.progress(pct, text=f"{int(h['used']):,} / {int(h['limit']):,} tokens")
+            if h["status"] in ("critical", "exhausted"):
+                st.warning("Near or at Groq TPD ceiling.")
     except Exception:
         pass
 
@@ -140,12 +138,59 @@ def render_run_history():
                 st.text(c["response_text"][:4000])
 
 
+def render_budget_and_quota():
+    st.markdown("<div class='eyebrow'>System</div>", unsafe_allow_html=True)
+    st.markdown("## Budget & Quota")
+    
+    try:
+        from zara.utils import quota, telemetry
+        import pandas as pd
+        
+        hrs = quota.headroom()
+        fc = quota.forecast()
+        
+        st.markdown("### Quota Headroom")
+        for h in hrs:
+            color = "green" if h["status"] == "ok" else ("orange" if h["status"] == "warn" else "red")
+            st.markdown(f"**{h['resource']}**: {h['used']:.0f} / {h['limit']:.0f} (resets in {int(h['resets_in_s']//60)}m) - <span style='color:{color}'>{h['status'].upper()}</span>", unsafe_allow_html=True)
+            st.progress(min(h["pct_used"], 1.0))
+            
+        st.markdown("### Runs & Forecast")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Recorded Runs", fc["recorded_runs"])
+        c2.metric("Avg tokens/run", f"{int(fc['mean_tokens']):,}")
+        c3.metric("Avg stall time", f"{fc['avg_stall_s']:.1f}s")
+        
+        f = fc.get("forecast")
+        if f:
+            st.info(f"**Forecast ({f['binding_limit']}):** Expected {f['expected_runs']} more runs, Conservative {f['conservative_runs']} more runs.")
+            
+        st.markdown("### Token Share by Stage")
+        with telemetry.connect() as conn:
+            rows = conn.execute("SELECT stage, SUM(prompt_tokens+completion_tokens) as t FROM usage WHERE provider != 'fixture' AND status NOT IN ('error', '429') GROUP BY stage ORDER BY t DESC").fetchall()
+            if rows:
+                df = pd.DataFrame([dict(r) for r in rows])
+                if not df.empty and 'stage' in df.columns:
+                    st.bar_chart(df.set_index("stage"))
+                
+        st.markdown("### Recent 429 Stalls")
+        with telemetry.connect() as conn:
+            stalls = conn.execute("SELECT ts, stage, wait_ms FROM usage WHERE status = '429' ORDER BY ts DESC LIMIT 20").fetchall()
+            if stalls:
+                for s in stalls:
+                    st.caption(f"`{s['ts']}` | **{s['stage']}** — waited {s['wait_ms']/1000:.1f}s")
+            else:
+                st.info("No recent stalls recorded.")
+    except Exception as e:
+        st.error(f"Error rendering budget: {e}")
+
+
 def main():
     st.set_page_config(page_title="Zara Outreach", layout="wide", initial_sidebar_state="expanded")
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     
     with st.sidebar:
-        page = st.radio("View", ["Draft", "Run History"], horizontal=True, label_visibility="collapsed")
+        page = st.radio("View", ["Draft", "Run History", "Budget & Quota"], horizontal=True, label_visibility="collapsed")
         render_budget_meter()
         st.markdown("---")
         st.header("Zara Settings")
@@ -199,6 +244,10 @@ def main():
     
     if page == "Run History":
         render_run_history()
+        return
+
+    if page == "Budget & Quota":
+        render_budget_and_quota()
         return
 
     render_hero()
@@ -341,15 +390,15 @@ def main():
                 if e.get("type") == "stage":
                     line = f"**{e['name']}** — {e.get('status', '')}" + (f": {e['detail']}" if e.get("detail") else "")
                 elif e.get("type") == "source":
-                    icon = {"ok": "✅", "empty": "⚪", "failed": "❌", "skipped": "⏭️", "running": "⏳"}.get(e["status"], "·")
-                    line = f"{icon} {e['name']} — {e['status']}" + (f" ({e['detail']})" if e.get("detail") else "")
+                    dot = f"<span class='status-dot status-{e['status']}'></span>"
+                    line = f"{dot} {e['name']} — {e['status']}" + (f" ({e['detail']})" if e.get("detail") else "")
                 elif e.get("type") == "hook":
-                    line = f"★ Hook [{e['strength']:.2f}]: {e['text']}"
+                    line = f"**Hook** [{e['strength']:.2f}] — {e['text']}"
                 else:
                     return
                 progress_lines.append(line)
                 try:
-                    st.write(line)
+                    st.markdown(line, unsafe_allow_html=True)
                 except Exception:
                     pass
 
@@ -514,9 +563,10 @@ def main():
         # --- Sources ---
         with st.expander(f"Sources ({len(results)})"):
             for r in sorted(results, key=lambda x: (x.rung, x.source)):
-                icon = {"ok": "✅", "empty": "⚪", "failed": "❌", "skipped": "⏭️"}.get(r.status, "·")
+                dot = f"<span class='status-dot status-{r.status}'></span>"
                 detail = f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")
-                st.markdown(f"{icon} `{r.source}` — **{r.status}** — {detail}")
+                st.markdown(f"{dot} `{r.source}` — **{r.status}** — {detail}",
+                            unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
