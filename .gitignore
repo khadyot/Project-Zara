@@ -35,3 +35,10 @@ test_ui.py
 
 # Local service runtime (pids, logs, run store)
 var/
+
+# Stress corpus names real people; repo is public. Full copies in var/private/.
+reference/stress_set.csv
+reference/stress_set_pastepack.md
+reference/stress_log.jsonl
+reference/stress_log.md
+perplexity_responses/04_stress_test_prospect_set.md
