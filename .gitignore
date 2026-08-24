@@ -30,3 +30,14 @@ project-zen/
 
 # Local-only test harness
 test_ui.py
+
+# Unnecessary agent, context, and reference files
+.agents/
+agent/
+agent_transfer/
+brief/
+reference/
+perplexity_prompts/
+perplexity_responses/
+project_zara_context.md
+CARRIED-FORWARD.md
