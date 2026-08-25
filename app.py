@@ -1,5 +1,6 @@
 import streamlit as st
 import asyncio
+import html
 import yaml
 from dotenv import load_dotenv
 
@@ -94,8 +95,20 @@ def render_run_history():
         "SELECT * FROM cards WHERE run_id=? ORDER BY is_winner DESC, score DESC", (rid,))]
     st.caption(f"{r['cards_total'] or 0} candidates · {r['cards_eligible'] or 0} eligible")
     for c in cards:
-        mark = "**WINNER**" if c["is_winner"] else ("~~excluded~~" if c["excluded"] else "eligible")
-        with st.expander(f"[{c['score'] or 0:.2f}] {mark} · {c['source']} · {c['proximity']} — {(c['claim'] or '')[:80]}"):
+        mark_plain = "WINNER" if c["is_winner"] else ("excluded" if c["excluded"] else "eligible")
+        mark_style = "WINNER" if c["is_winner"] else ("EXCLUDED" if c["excluded"] else "ELIGIBLE")
+        score = f"{c['score'] or 0:.2f}"
+        claim_raw = c['claim'] or ''
+        
+        label = f"[{score}] {mark_plain} · {c['source']} · {c['proximity']} — {claim_raw[:80]}"
+        with st.expander(label):
+            claim_html = html.escape(claim_raw)
+            styled_header = (f"<span class='score-badge'>{score}</span> "
+                             f"<span class='candidate-status'>{mark_style}</span> "
+                             f"<span class='candidate-claim-summary " + ("excluded" if c["excluded"] else "") + f"'>"
+                             f"{html.escape(c['source'])} · {html.escape(c['proximity'])} — {claim_html}</span>")
+            st.markdown(styled_header, unsafe_allow_html=True)
+            
             st.write(f"**Claim:** {c['claim']}")
             if c["pain_id"]:
                 st.write(f"**Pain match:** `{c['pain_id']}` ({c['pain_score']:.2f})")
@@ -106,15 +119,25 @@ def render_run_history():
                 st.write(f"**Excluded:** {c['excluded']}")
             if c["guardrail_hit"]:
                 st.write(f"**Guardrail:** {c['guardrail_hit']}")
-            st.caption(c["source_url"] or "")
-            st.text((c["snippet"] or "")[:1200])
+            
+            src_url = html.escape(c["source_url"] or "")
+            st.markdown(f"<div class='candidate-source-url'>{src_url}</div>", unsafe_allow_html=True)
+            # Excluded cards keep their snippet: "why was this thrown away?" is
+            # unanswerable without it. Dimmed, not hidden.
+            snippet_cls = "candidate-snippet excluded" if c["excluded"] else "candidate-snippet"
+            snippet_html = html.escape((c["snippet"] or "")[:1200])
+            st.markdown(f"<div class='{snippet_cls}'>{snippet_html}</div>", unsafe_allow_html=True)
 
     hooks = [dict(h) for h in conn.execute(
         "SELECT * FROM hooks WHERE run_id=? ORDER BY strength DESC", (rid,))]
     st.markdown(f"### Hook options ({len(hooks)})")
     for h in hooks:
-        st.write(f"**[{h['strength']:.2f}]** {h['hook_text']}")
-        st.caption(f"why: {h['rationale']}  ·  bridge: {h['bridge']}")
+        st.markdown(f"""
+        <div class='hook-row'>
+            <div><span class='score-badge'>{h['strength']:.2f}</span> {html.escape(h['hook_text'])}</div>
+            <div class='hook-caption'>why: {html.escape(h['rationale'])} &middot; bridge: {html.escape(h['bridge'])}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("### Sources")
     for s in conn.execute("SELECT * FROM source_calls WHERE run_id=? ORDER BY seq", (rid,)):
@@ -124,17 +147,22 @@ def render_run_history():
 
     st.markdown("### Model calls")
     for c in conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)):
-        with st.expander(f"{c['stage']} · {c['provider']} · "
-                         f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
-                         f"{c['elapsed_ms']/1000:.1f}s"):
+        label = (f"{c['stage']} · {c['provider']} · "
+                 f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
+                 f"{c['elapsed_ms']/1000:.1f}s")
+        with st.expander(label):
+            styled_header = (f"<span class='model-call-header'>{html.escape(c['stage'])} · {html.escape(c['provider'])} · "
+                             f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
+                             f"{c['elapsed_ms']/1000:.1f}s</span>")
+            st.markdown(styled_header, unsafe_allow_html=True)
             if c["system_text"]:
-                st.caption("SYSTEM")
+                st.markdown("<div class='eyebrow-sm'>SYSTEM</div>", unsafe_allow_html=True)
                 st.text(c["system_text"])
             if c["prompt_text"]:
-                st.caption("PROMPT — how this stage was instructed")
+                st.markdown("<div class='eyebrow-sm'>PROMPT — how this stage was instructed</div>", unsafe_allow_html=True)
                 st.text(c["prompt_text"])
             if c["response_text"]:
-                st.caption("RESPONSE")
+                st.markdown("<div class='eyebrow-sm'>RESPONSE</div>", unsafe_allow_html=True)
                 st.text(c["response_text"][:4000])
 
 
