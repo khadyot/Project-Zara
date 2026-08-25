@@ -31,11 +31,11 @@ def test_short_key_is_flagged_suspicious(monkeypatch):
 
 
 def test_status_never_contains_a_key_value(monkeypatch):
-    secret = "gsk_thisIsTheActualSecretValue123456"
+    secret = "NOTAREALKEY-canary-for-leak-detection-0001"
     monkeypatch.setenv("GROQ_API_KEY", secret)
     blob = repr(health.key_status())
     assert secret not in blob
-    assert "thisIsTheActualSecret" not in blob
+    assert "canary-for-leak-detection" not in blob
 
 
 @pytest.mark.asyncio
@@ -116,7 +116,7 @@ def test_bridge_healthy_only_when_required_keys_present(monkeypatch):
 
 
 def test_bridge_status_never_leaks_a_value(monkeypatch):
-    secret = "gsk_theActualSecretValue0987654321"
+    secret = "NOTAREALKEY-canary-for-leak-detection-0002"
     monkeypatch.setenv("ZARA_SECRETS_BRIDGE", "copied|7 of 7 entries copied")
     monkeypatch.setenv("GROQ_API_KEY", secret)
     assert secret not in repr(health.bridge_status())
