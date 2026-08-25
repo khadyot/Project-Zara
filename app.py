@@ -10,13 +10,39 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv(".env.local")
 
+# Bridge Streamlit Cloud's st.secrets into os.environ, which is where
+# zara/utils/provider.py and the fetchers read their keys from.
+#
+# This used to end in `except Exception: pass`. Non-fatal is right -- there is no
+# secrets file locally and the app must still start off .env.local -- but silent
+# is not: three very different causes all presented identically as "key absent",
+# and only one of them is a code bug.
+#
+#   unavailable -> st.secrets raised; no secrets configured for this deployment
+#   empty       -> configured but nothing in it, or the wrong app
+#   copied N    -> the bridge worked
+#
+# Recorded rather than logged so the Provider status panel can name the cause and
+# point at the fix. Counts and key NAMES only -- never a value.
+SECRETS_BRIDGE_STATUS = ("unavailable", "not attempted")
 try:
+    _copied = []
+    _seen = 0
     for k, v in st.secrets.items():
+        _seen += 1
         if isinstance(v, (str, int, float, bool)):
             if not os.environ.get(k):
                 os.environ[k] = str(v)
-except Exception:
-    pass
+                _copied.append(k)
+    if _seen == 0:
+        SECRETS_BRIDGE_STATUS = ("empty", "st.secrets contains no entries")
+    else:
+        SECRETS_BRIDGE_STATUS = ("copied", f"{len(_copied)} of {_seen} entries copied")
+except Exception as _e:
+    # Locally this is the normal path: no secrets.toml exists.
+    SECRETS_BRIDGE_STATUS = ("unavailable", type(_e).__name__)
+
+os.environ["ZARA_SECRETS_BRIDGE"] = f"{SECRETS_BRIDGE_STATUS[0]}|{SECRETS_BRIDGE_STATUS[1]}"
 
 from zara.models import Prospect
 from zara.orchestrator import run_end_to_end_pipeline
@@ -219,14 +245,19 @@ def render_provider_status():
     rows = health.key_status()
     ok = health.secrets_bridge_ok()
 
+    bridge = health.bridge_status()
+
     if ok:
         st.success("All required credentials are present in this process.")
     else:
         missing = [r["name"] for r in rows if r["tier"] == "required" and not r["present"]]
         st.error(
-            "Missing required credentials: " + ", ".join(missing) +
-            ". On a hosted deploy this means the secrets bridge did not deliver them."
+            "Missing required credentials: " + ", ".join(missing) + ".\n\n"
+            f"**Cause — secrets bridge: {bridge['state']}** ({bridge['detail']}). "
+            f"{bridge['advice']}"
         )
+
+    st.caption(f"Secrets bridge: {bridge['state']} — {bridge['detail']}")
 
     for r in rows:
         if r["present"]:

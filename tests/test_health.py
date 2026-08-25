@@ -71,3 +71,52 @@ async def test_probe_outcomes_map_to_verdicts(monkeypatch, exc, expected):
     monkeypatch.setattr(provider, "run_probe", fake_probe)
     res = await health.groq_probe()
     assert res["status"] == expected
+
+
+# --- the secrets bridge must say WHY, not just THAT ----------------------------
+# app.py's bridge used to end in `except Exception: pass`. Non-fatal was right --
+# there is no secrets file locally -- but silent was not: "no secrets configured"
+# (a two-minute fix in a web form) and "the copy loop is broken" (a code bug)
+# both rendered as a bare "key absent". This caught a real dead deploy.
+
+@pytest.mark.parametrize("raw,state", [
+    ("unavailable|StreamlitSecretNotFoundError", "unavailable"),
+    ("empty|st.secrets contains no entries", "empty"),
+    ("copied|7 of 7 entries copied", "copied"),
+    ("", "unknown"),
+    ("garbage-with-no-pipe", "unknown"),
+])
+def test_bridge_states_are_distinguishable(monkeypatch, raw, state):
+    monkeypatch.setenv("ZARA_SECRETS_BRIDGE", raw)
+    assert health.bridge_status()["state"] == state
+
+
+def test_every_bridge_state_carries_actionable_advice(monkeypatch):
+    for raw in ("unavailable|X", "empty|Y", "copied|Z", ""):
+        monkeypatch.setenv("ZARA_SECRETS_BRIDGE", raw)
+        assert health.bridge_status()["advice"].strip()
+
+
+def test_copied_is_not_healthy_when_required_keys_are_still_missing(monkeypatch):
+    """A [section] header makes the loop run and copy nothing usable.
+
+    'The bridge ran' and 'the app has what it needs' are different claims.
+    """
+    monkeypatch.setenv("ZARA_SECRETS_BRIDGE", "copied|1 of 1 entries copied")
+    for name, _, _ in health.PROVIDER_KEYS:
+        monkeypatch.delenv(name, raising=False)
+    assert health.bridge_status()["healthy"] is False
+
+
+def test_bridge_healthy_only_when_required_keys_present(monkeypatch):
+    monkeypatch.setenv("ZARA_SECRETS_BRIDGE", "copied|7 of 7 entries copied")
+    for name, _, _ in health.PROVIDER_KEYS:
+        monkeypatch.setenv(name, "x" * 40)
+    assert health.bridge_status()["healthy"] is True
+
+
+def test_bridge_status_never_leaks_a_value(monkeypatch):
+    secret = "gsk_theActualSecretValue0987654321"
+    monkeypatch.setenv("ZARA_SECRETS_BRIDGE", "copied|7 of 7 entries copied")
+    monkeypatch.setenv("GROQ_API_KEY", secret)
+    assert secret not in repr(health.bridge_status())

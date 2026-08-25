@@ -54,6 +54,43 @@ def secrets_bridge_ok() -> bool:
     return all(k["present"] for k in key_status() if k["tier"] == "required")
 
 
+# What to tell the operator for each way the bridge can end up. A panel that
+# reports a symptom without naming the cause or the fix is half a tool -- and
+# "key absent" alone cannot distinguish "you never saved them" (a two-minute
+# fix in a web form) from "the copy loop is broken" (a code bug).
+_BRIDGE_ADVICE = {
+    "unavailable": "No secrets are configured for this deployment. "
+                   "Fix: Manage app -> Settings -> Secrets, then save (the app reboots).",
+    "empty": "Secrets are configured but contain no entries. "
+             "Fix: Manage app -> Settings -> Secrets, paste the keys as flat TOML.",
+    "copied": "The secrets bridge ran and copied values into the environment.",
+    "unknown": "The app did not record a bridge result. Expected when running "
+               "outside app.py (CLI, tests, the FastAPI entrypoint).",
+}
+
+
+def bridge_status() -> dict:
+    """How the st.secrets -> os.environ copy went, and what to do about it.
+
+    app.py records this at import as ZARA_SECRETS_BRIDGE ("state|detail"). Read
+    from the environment rather than importing app.py, so the CLI and the tests
+    can call this without pulling in Streamlit.
+    """
+    raw = os.environ.get("ZARA_SECRETS_BRIDGE") or ""
+    state, _, detail = raw.partition("|")
+    if state not in _BRIDGE_ADVICE:
+        state, detail = "unknown", detail or "no bridge result recorded"
+    return {
+        "state": state,
+        "detail": detail,
+        "advice": _BRIDGE_ADVICE[state],
+        # `copied` is not the same as "all good" -- the loop can run and still
+        # copy nothing useful if the TOML nests keys under a [section], since
+        # only scalar top-level values are copied.
+        "healthy": state == "copied" and secrets_bridge_ok(),
+    }
+
+
 async def groq_probe() -> dict:
     """One ~10-token call. Presence is not validity; this is validity.
 
