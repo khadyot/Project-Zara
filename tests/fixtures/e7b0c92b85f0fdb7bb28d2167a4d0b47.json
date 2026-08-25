@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob secured a $200\u202fmillion funding round in 2021, pushing its valuation past the $1\u202fbillion unicorn mark.",
+        "rationale": "Your role isn\u2019t specified, but this massive 2021 investment signals rapid scaling of logistics operations, which typically creates manual, reconciliation\u2011heavy workflows that need automation.",
+        "bridge": "Our platform can help ShipBob\u2019s expanding operations team automate those reconciliation processes, keeping pace with growth.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In 2021, ShipBob announced a $200\u202fmillion raise to enable e\u2011commerce brands to run logistics at Amazon\u2011scale.",
+        "rationale": "Without a known role, the key takeaway is that ShipBob is targeting high\u2011volume fulfillment for e\u2011commerce, a context that often generates intensive manual reconciliation tasks.",
+        "bridge": "Our solution can automate those reconciliation\u2011heavy steps, letting the operations team focus on strategic growth.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob\u2019s AI layer now turns live fulfillment data into actionable insights directly within tools like Claude and its dashboard.",
+        "rationale": "Your specific role isn\u2019t identified, but the rollout of an AI\u2011driven action layer suggests a push toward smarter, faster data handling\u2014areas where manual reconciliation can become a bottleneck.",
+        "bridge": "Our automation platform complements ShipBob\u2019s AI by handling the heavy reconciliation workload behind the scenes.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob\u2019s Simulation Terminal lets merchants test end\u2011to\u2011end fulfillment, receiving, and inventory adjustments in a sandbox.",
+        "rationale": "While the role is unknown, offering a sandbox for full\u2011lifecycle simulation indicates a need to validate data accuracy, which often involves manual reconciliation steps.",
+        "bridge": "Our tool can automate the reconciliation of simulated versus live data, accelerating confidence and reducing manual effort.",
+        "strength": 0.7
+      }
+    ]
+  },
+  "prompt_tokens": 1043,
+  "completion_tokens": 1095
+}

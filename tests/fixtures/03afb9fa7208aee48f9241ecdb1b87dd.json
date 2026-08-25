@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "ShipBob funding and reconciliation",
+    "draft_text": "Hi Test,\nShipBob raised $200\u202fmillion in a Bain\u2011led round. Such funding often triggers intercompany reconciliation sprawl across new business units, increasing manual matching effort.\nWe build configurable scripts that pull transaction data from your TMS, ERP, and carrier portals into a single ledger, reconciling entries without manual entry and generating audit\u2011ready logs for each run.\nWorth a 15\u2011minute call next week?\nZamp"
+  },
+  "prompt_tokens": 761,
+  "completion_tokens": 1593
+}
