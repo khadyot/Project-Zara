@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only supported statements: the Simulation Terminal availability is in the evidence, the manual reconciliation inference aligns with the provided value proposition, and no unsupported metrics, customer names, or specific prospect facts are introduced."
+  },
+  "prompt_tokens": 1113,
+  "completion_tokens": 548
+}

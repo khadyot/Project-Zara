@@ -110,3 +110,11 @@ proximity_weights:
                             # voice. Never draft this in the second person.
   company_action: 2
   database: 1
+
+# How many cards reach the pain scorer, after sorting by proximity and recency.
+# The ranker is roughly half a run's token spend and both prompt and completion
+# scale with this number, so it is the main cost dial. Raising it costs tokens
+# against Groq's 8K/min bucket; lowering it risks dropping a hook. Measured safe
+# at 10: positions 5+ are uniformly company_action across all four snapshots.
+ranker:
+  card_cap: 10

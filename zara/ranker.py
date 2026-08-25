@@ -207,15 +207,28 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             _tiebreak(item[1]),
         ), reverse=True)
         
-        # Hard cap to top 15 cards
-        for i, card in to_score[15:]:
+        # Hard cap on cards sent to the scorer.
+        #
+        # Was 15. The ranker is ~4.3k of a ~8k-token run (prompt 2,245 +
+        # completion 2,040 on the ShipBob snapshot) against Groq's 8K/min
+        # bucket, and both halves scale with the number of cards scored -- so
+        # this cap, not deduplication, is the lever. Deduplication was measured
+        # first and rejected: 1 duplicate across 91 cards in four snapshots.
+        #
+        # 10 is safe rather than arbitrary. This list is already sorted by
+        # proximity, so across all four snapshots positions 0-4 hold every
+        # authored/attributed/colleague card and positions 5+ are uniformly
+        # company_action -- of which the Compass VI swap test keeps exactly one
+        # anyway. ShipBob's actual winning card sits at position 2.
+        card_cap = int(vp.get("ranker", {}).get("card_cap", 10))
+        for i, card in to_score[card_cap:]:
             rc = ranked_cards_map[i]
             ranked_cards_map[i] = RankedCard(
                 card=rc.card, pain_match=None, proximity=rc.proximity,
-                recency_days=rc.recency_days, score=0.0, excluded="hard cap limit exceeded",
+                recency_days=rc.recency_days, score=0.0, excluded=f"outside the top {card_cap} by proximity (hard cap)",
                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
             )
-        to_score = to_score[:15]
+        to_score = to_score[:card_cap]
 
         sys_prompt = "You are an expert sales ranker."
         if strictness == "permissive":

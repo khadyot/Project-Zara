@@ -3,20 +3,20 @@
     "hooks": [
       {
         "card_index": 0,
-        "hook_text": "ShipBob just rolled out its Simulation Terminal to every sandbox account, letting merchants test the full fulfillment lifecycle without touching a real warehouse.",
-        "rationale": "The role is unknown, so we highlight a company\u2011wide product upgrade that any operations stakeholder would notice as a way to reduce risk before go\u2011live.",
-        "bridge": "Our platform automates the manual, reconciliation\u2011heavy steps that your team would otherwise validate in the simulation, turning confidence\u2011building tests into real\u2011time savings.",
+        "hook_text": "ShipBob\u2019s Simulation Terminal is now available in all sandbox accounts, letting you simulate the full fulfillment lifecycle without real warehouse activity.",
+        "rationale": "We don\u2019t know Test\u2019s exact role, but this company\u2011wide capability speeds integration testing and builds confidence before go\u2011live, which is valuable for any team responsible for operations or tech integration.",
+        "bridge": "Our platform automates the manual, reconciliation\u2011heavy steps that follow such simulations, turning a tested workflow into a continuously error\u2011free, low\u2011effort process.",
         "strength": 0.85
       },
       {
         "card_index": 1,
-        "hook_text": "ShipBob\u2019s latest $200\u202fmillion funding round pushed its valuation past the $1\u202fbillion unicorn mark.",
-        "rationale": "The role is unknown, so we focus on the headline funding news that signals rapid growth and a likely appetite for efficiency\u2011boosting tools across the organization.",
-        "bridge": "With that growth, our automation solution can keep reconciliation processes scalable, preventing manual bottlenecks as order volume expands.",
-        "strength": 0.78
+        "hook_text": "ShipBob just secured a $200\u202fmillion funding round led by Bain Capital Ventures, pushing its valuation into unicorn territory.",
+        "rationale": "Test\u2019s role is unknown, but the massive new capital signals rapid scaling and heightened operational demand, a situation where automated reconciliation can prevent bottlenecks.",
+        "bridge": "With our automation solution, ShipBob\u2019s expanding operations can handle the increased transaction volume without adding manual reconciliation overhead.",
+        "strength": 0.8
       }
     ]
   },
   "prompt_tokens": 789,
-  "completion_tokens": 591
+  "completion_tokens": 616
 }
