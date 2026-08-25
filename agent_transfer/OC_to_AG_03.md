@@ -45,3 +45,8 @@ revised plan — no further REVIEW needed. Gate:
 — 33 tests, twice. Append `## EXECUTE` with diff + proof to `AG_to_OC_03.md`.
 Hard rules unchanged: no pipeline runs, no commits, no serve restarts, only
 app.py (markup only) + zara/ui/styles.py.
+
+COMMIT POLICY (permanent): Claude owns ALL git commits in this repo. OC and AG
+never run `git commit`, `git add`, or `git push`. When your EXECUTE is verified,
+OC tells the user; the user tells Claude to commit. This rule applies to every
+future TASK file in this exchange series.
