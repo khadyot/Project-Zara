@@ -2,10 +2,21 @@ import streamlit as st
 import asyncio
 import html
 import yaml
+import os
+import glob
+import hmac
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv(".env.local")
+
+try:
+    for k, v in st.secrets.items():
+        if isinstance(v, (str, int, float, bool)):
+            if not os.environ.get(k):
+                os.environ[k] = str(v)
+except Exception:
+    pass
 
 from zara.models import Prospect
 from zara.orchestrator import run_end_to_end_pipeline
@@ -75,6 +86,8 @@ def render_run_history():
             st.code(r["traceback"] or "")
 
     st.markdown("### Draft")
+    if r.get("offer_is_generic"):
+        st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
     if r["draft_text"]:
         st.markdown(f"<div class='draft-frame'>{r['draft_text']}</div>", unsafe_allow_html=True)
     else:
@@ -217,6 +230,26 @@ def main():
     st.set_page_config(page_title="Zara Outreach", layout="wide", initial_sidebar_state="expanded")
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
     
+    try:
+        app_pw = st.secrets.get("APP_PASSWORD")
+    except Exception:
+        app_pw = None
+
+    if app_pw and not st.session_state.get("authenticated", False):
+        st.title("Zara Outreach")
+        with st.form("password_gate"):
+            pwd = st.text_input("Enter Password", type="password")
+            submit_pw = st.form_submit_button("Submit")
+            if submit_pw:
+                # compare_digest raises TypeError on a non-ASCII str, and app_pw is
+                # whatever type the TOML gave us (an unquoted 1234 is an int). Bytes.
+                if hmac.compare_digest(pwd.encode(), str(app_pw).encode()):
+                    st.session_state["authenticated"] = True
+                    st.rerun()
+                else:
+                    st.error("Incorrect password")
+        st.stop()
+
     with st.sidebar:
         page = st.radio("View", ["Draft", "Run History", "Budget & Quota"], horizontal=True, label_visibility="collapsed")
         render_budget_meter()
@@ -238,12 +271,24 @@ def main():
         )
         
         st.markdown("<br><div class='eyebrow-sm'>3. Data Sources</div>", unsafe_allow_html=True)
-        use_ats = st.checkbox("ATS Fetchers (Free)", value=True)
         use_exa = st.checkbox("Exa (Web/News)", value=True)
         use_apify = st.checkbox("Apify (LinkedIn/Social)", value=True)
         
         st.markdown("<br><div class='eyebrow-sm'>4. Developer Mode</div>", unsafe_allow_html=True)
         admin_pass = st.text_input("Admin Password", type="password")
+
+        st.markdown("<br><div class='eyebrow-sm'>5. Demo mode (offline)</div>", unsafe_allow_html=True)
+        demo_mode = st.checkbox("Demo mode (offline)")
+        replay_snapshot = None
+        if demo_mode:
+            snapshots = sorted(glob.glob("tests/fixtures/*_snapshot.json"))
+            if snapshots:
+                replay_snapshot = st.selectbox("Select Snapshot", snapshots, format_func=lambda x: os.path.basename(x))
+            else:
+                st.warning("No snapshots found — demo mode will still hit the network.")
+            os.environ["USE_FIXTURES"] = "1"
+        else:
+            os.environ.pop("USE_FIXTURES", None)
 
         st.markdown("---")
         from zara.utils import budget
@@ -265,10 +310,12 @@ def main():
             "proof_point": proof_point if proof_point else None
         },
         "strictness": "permissive" if "Permissive" in strictness else "strict",
-        "use_ats": use_ats,
         "use_exa": use_exa,
         "use_apify": use_apify
     }
+    
+    if demo_mode and replay_snapshot:
+        settings["replay_snapshot"] = replay_snapshot
     
     if page == "Run History":
         render_run_history()
@@ -300,11 +347,11 @@ def main():
                     st.subheader("Headcount Criteria")
                     colA, colB = st.columns(2)
                     with colA:
-                        hc_min = st.number_input("Min Headcount", value=vp.get('icp', {}).get('headcount', {}).get('min', 50))
+                        hc_min = st.number_input("Min Headcount", value=vp.get('icp', {}).get('headcount', {}).get('preferred_min', 50))
                     with colB:
-                        hc_max = st.number_input("Max Headcount", value=vp.get('icp', {}).get('headcount', {}).get('max', 500))
+                        hc_max = st.number_input("Max Headcount", value=vp.get('icp', {}).get('headcount', {}).get('preferred_max', 500))
                     new_vp['icp'] = new_vp.get('icp', {})
-                    new_vp['icp']['headcount'] = {"min": hc_min, "max": hc_max}
+                    new_vp['icp']['headcount'] = {"preferred_min": hc_min, "preferred_max": hc_max}
                     
                     st.subheader("Target Sectors")
                     sectors_str = "\n".join(vp.get('icp', {}).get('sectors', []))
@@ -383,7 +430,7 @@ def main():
                 st.error(f"Failed to load config: {e}")
             st.markdown("---")
         
-        st.markdown("<div class='eyebrow'>Scheduling Experience</div>", unsafe_allow_html=True)
+        st.markdown("<div class='eyebrow'>Single Prospect</div>", unsafe_allow_html=True)
         st.markdown("## Generate Draft")
         
         with st.form("prospect_form"):
@@ -393,6 +440,7 @@ def main():
             with col2:
                 company = st.text_input("Company", placeholder="e.g. Modern Treasury")
                 
+            title = st.text_input("Title / Role (Optional)", placeholder="e.g. VP Finance")
             domain = st.text_input("Domain (Optional)", placeholder="e.g. moderntreasury.com")
             linkedin = st.text_input("LinkedIn URL (Optional)", placeholder="https://linkedin.com/in/...")
             
@@ -406,6 +454,7 @@ def main():
             prospect = Prospect(
                 person_name=name,
                 company=company,
+                title=title if title else None,
                 company_domain=domain if domain else None,
                 linkedin_url=linkedin if linkedin else None
             )
@@ -575,6 +624,8 @@ def main():
             st.caption("No alternative hooks articulated for this prospect.")
 
         # --- Editable draft ---
+        if getattr(draft_res, "offer_is_generic", False):
+            st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
         st.markdown("### The draft (editable)")
         if draft_res.draft_text:
             # The key must change when the draft does. Streamlit gives session_state
