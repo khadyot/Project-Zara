@@ -204,9 +204,63 @@ def render_run_history():
                 st.text(c["response_text"][:4000])
 
 
+def render_provider_status():
+    """Is this deployment wired up? The one failure local testing cannot catch.
+
+    On a hosted deploy the keys arrive as st.secrets and are copied into
+    os.environ at startup. If that copy fails, every model call dies mid-pipeline
+    with something that reads like a pipeline bug. Presence is free to check;
+    the probe costs ~10 tokens and is the only thing that separates "a key is
+    set" from "the provider accepts it", so it is on demand, never on render.
+    """
+    from zara.utils import health
+
+    st.markdown("### Provider status")
+    rows = health.key_status()
+    ok = health.secrets_bridge_ok()
+
+    if ok:
+        st.success("All required credentials are present in this process.")
+    else:
+        missing = [r["name"] for r in rows if r["tier"] == "required" and not r["present"]]
+        st.error(
+            "Missing required credentials: " + ", ".join(missing) +
+            ". On a hosted deploy this means the secrets bridge did not deliver them."
+        )
+
+    for r in rows:
+        if r["present"]:
+            mark = "present"
+            note = f"{r['length']} chars"
+            if r["suspicious"]:
+                mark, note = "suspicious", f"only {r['length']} chars — looks like a placeholder"
+        else:
+            mark = "absent"
+            note = "not set"
+        st.markdown(
+            f"<div style='font-family:Geist Mono,monospace;font-size:13px;'>"
+            f"<b>{r['name']}</b> &middot; {mark} &middot; {note} "
+            f"<span style='color:var(--color-stone);'>({r['tier']} — {r['purpose']})</span></div>",
+            unsafe_allow_html=True,
+        )
+
+    st.caption("Key names and lengths only — values are never read or displayed.")
+
+    if st.button("Test Groq connection (~10 tokens)"):
+        with st.spinner("Probing Groq…"):
+            res = asyncio.run(health.groq_probe())
+        if res["status"] in ("ok", "throttled"):
+            st.success(f"{res['status']}: {res['detail']}")
+        else:
+            st.error(f"{res['status']}: {res['detail']}")
+
+
 def render_budget_and_quota():
     st.markdown("<div class='eyebrow'>System</div>", unsafe_allow_html=True)
     st.markdown("## Budget & Quota")
+
+    render_provider_status()
+    st.markdown("---")
     
     try:
         from zara.utils import quota, telemetry
