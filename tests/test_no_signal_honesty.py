@@ -26,7 +26,7 @@ def _draft_result(winning, generic):
         cards=[], icp_fit="unknown", winning_card=winning,
     )
     return DraftResult(
-        ranked_prospect=ranked, draft_text="Hi Dana, ...", verification=None,
+        ranked_prospect=ranked, subject="Subject", draft_text="Hi Dana, ...", verification=None,
         claim_strength="no_signal" if winning is None else "company_action",
         offer_is_generic=generic,
     )
@@ -36,7 +36,7 @@ def test_offer_is_generic_defaults_false():
     """The flag must be opt-in. A default of True would label every grounded draft."""
     assert DraftResult(
         ranked_prospect=RankedProspect(prospect=Prospect("A", "B"), cards=[], icp_fit="unknown", winning_card=None),
-        draft_text=None, verification=None, claim_strength="no_signal",
+        subject=None, draft_text=None, verification=None, claim_strength="no_signal",
     ).offer_is_generic is False
 
 

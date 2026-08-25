@@ -28,31 +28,40 @@ def load_snapshot(path="tests/fixtures/shipbob_snapshot.json"):
         ))
     return results
 
-async def record_all(path="tests/fixtures/shipbob_snapshot.json", company="ShipBob"):
-    os.environ["USE_FIXTURES"] = ""
+async def record_all(path="tests/fixtures/shipbob_snapshot.json", person_name="Test", company="ShipBob"):
+    # `fill`, not "" (live). Recording with fixtures OFF re-answers every prompt,
+    # including the ones whose fixtures are fine -- overwriting good recordings, and
+    # shifting downstream prompt hashes so the fixture you were trying to record
+    # never matches what the test asks for. See provider.generate_content_with_retry.
+    os.environ["USE_FIXTURES"] = "fill"
     
     from zara.ranker import rank_prospect
     from zara.classifier import classify_social_signals
     from zara.drafter import draft_email
     from zara.verifier import verify_draft
+    from zara.s2 import process_prospect
     from zara.utils.config import load_value_prop
     
-    prospect = Prospect("Test", company)
+    prospect = Prospect(person_name, company)
     snapshot_results = load_snapshot(path)
     
-    print(f"Recording ranker for {company} snapshot...", flush=True)
+    print(f"Recording ranker for {person_name} at {company} snapshot...", flush=True)
     rp = await rank_prospect(prospect, snapshot_results)
     
-    print(f"Recording drafter for {company} snapshot...", flush=True)
+    print(f"Recording drafter for {person_name} at {company} snapshot...", flush=True)
     vp = load_value_prop()
     draft = await draft_email(rp, vp)
     
     if draft:
-        print(f"Recording verifier for {company} snapshot...", flush=True)
-        await verify_draft(draft, rp, vp)
+        print(f"Recording verifier for {person_name} at {company} snapshot...", flush=True)
+        verify_text = f"{draft.subject}\n\n{draft.draft_text}" if getattr(draft, "subject", None) else getattr(draft, "draft_text", draft)
+        await verify_draft(verify_text, rp, vp)
         
-    print(f"Recording classifier for {company} snapshot...", flush=True)
+    print(f"Recording classifier for {person_name} at {company} snapshot...", flush=True)
     await classify_social_signals(snapshot_results)
+
+    print(f"Recording s2 process_prospect for {person_name} at {company} snapshot...", flush=True)
+    await process_prospect(prospect, snapshot_results)
     
 if __name__ == "__main__":
     from dotenv import load_dotenv
@@ -61,8 +70,10 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", type=str, default="tests/fixtures/shipbob_snapshot.json")
+    parser.add_argument("--person", type=str, default="Test")
     parser.add_argument("--company", type=str, default="ShipBob")
     args = parser.parse_args()
     
-    asyncio.run(record_all(args.path, args.company))
+    asyncio.run(record_all(args.path, args.person, args.company))
     print(f"Mocks recorded successfully for {args.company}.")
+

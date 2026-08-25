@@ -99,6 +99,8 @@ proof_point: "We help companies in your sector cut month-end close times by up t
 # DECIDED 2026-08-23 by the human: sign as the company.
 # The drafter must sign exactly as configured and must not invent a human signer.
 sender_name: "Zamp"
+sender_person: ""
+cta: "Worth a 15-minute call next week?"
 
 # Ranker Tie-Breaking Weights
 # These control how the ranker breaks ties when multiple signals have the same pain score.

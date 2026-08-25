@@ -15,7 +15,11 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     res_info = draft_res.ranked_prospect.resolution
     if res_info and res_info.input_company.strip() != res_info.resolved_company:
         md.append(f"Resolved company: '{res_info.input_company}' → '{res_info.resolved_company}' ({res_info.method}{', ' + res_info.domain if res_info.domain else ''})")
-    md.append(f"Claim strength: {draft_res.claim_strength}  ·  ICP: {draft_res.ranked_prospect.icp_fit}  ·  Cost: ${sum(r.cost_usd for r in results):.4f}")
+    
+    sq = getattr(draft_res.ranked_prospect, "signal_quality", "ok")
+    sq_str = f" · Signal: {sq}" if sq == "thin" else ""
+    md.append(f"Claim strength: {draft_res.claim_strength}{sq_str}  ·  ICP: {draft_res.ranked_prospect.icp_fit}  ·  Cost: ${sum(r.cost_usd for r in results):.4f}")
+    
     icp_notes = getattr(draft_res.ranked_prospect, "icp_notes", None)
     if icp_notes:
         md.append("")
@@ -30,6 +34,9 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         md.append("")
     md.append("## Draft")
     if draft_res.draft_text:
+        if draft_res.subject:
+            md.append(f"**Subject:** {draft_res.subject}")
+            md.append("")
         md.append(draft_res.draft_text)
     else:
         md.append("*No draft generated.*")
@@ -42,7 +49,7 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         pain_id = win.pain_match.pain_id if win.pain_match else "none"
         score = win.score
         reason = win.pain_match.reason if win.pain_match else "no reason"
-        md.append(f"Pain: {pain_id} ({score:.2f}) — {reason}")
+        md.append(f"Pain: {pain_id} (relevance {score:.2f}) — {reason}")
         md.append(f"Proximity: {win.proximity} · {win.recency_days or 'undated'} days old")
     else:
         md.append("*None*")
@@ -71,10 +78,7 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     
     md.append("## Retrieval")
     for r in sorted(results, key=lambda x: x.rung):
-        # Typographic, not an HTML dot: the decision card is meant to be copied out
-        # and read as plain text, so markup would leak as raw tags (Compass IX).
         marker = {"ok": "[+]", "failed": "[!]", "empty": "[ ]", "skipped": "[>]"}.get(r.status, "[?]")
-        # simple display of count or reason
         detail = f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")
         md.append(f"{marker} {r.status:<8} {r.source:<25} {detail}")
     md.append("")
@@ -93,7 +97,6 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
     return "\n".join(md)
 
 async def process_prospect(prospect: Prospect, results: list[SourceResult], strictness: str = "strict", vp_override: dict = None, resolution=None, hook=None, style: str = "auto", on_event=None) -> DraftResult:
-    # 1. Rank
     if on_event:
         on_event({"type": "stage", "name": "ranking signals", "status": "running"})
     ranked_prospect = await rank_prospect(prospect, results, strictness=strictness)
@@ -101,10 +104,6 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if resolution is not None:
         ranked_prospect = _replace(ranked_prospect, resolution=resolution)
     claim_strength = compute_claim_strength(ranked_prospect.winning_card)
-    # No winning card means the drafter falls back to a company-level opener with
-    # an offer tied to nothing we actually retrieved. The email still gets written
-    # (Compass I: degrade, never refuse) -- but "never silently" is the other half,
-    # so this rides on every DraftResult below and is rendered on the output's face.
     offer_is_generic = ranked_prospect.winning_card is None
     if on_event:
         on_event({"type": "stage", "name": "ranking signals", "status": "done",
@@ -117,34 +116,45 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if vp_override:
         vp = {**vp, **vp_override}
 
-    # 2. Draft
+    # Task 5: Default hook to the hook whose card is winning_card
+    if hook is None and ranked_prospect.winning_card and ranked_prospect.hooks:
+        win_idx = next((i for i, c in enumerate(ranked_prospect.cards) if c is ranked_prospect.winning_card), None)
+        if win_idx is not None:
+            hook = next((h for h in ranked_prospect.hooks if h.card_index == win_idx), None)
+
     if on_event:
         on_event({"type": "stage", "name": "writing draft", "status": "running"})
-    draft_text = await draft_email(ranked_prospect, vp, strictness=strictness, hook=hook, style=style)
+    draft_output = await draft_email(ranked_prospect, vp, strictness=strictness, hook=hook, style=style)
     
-    if not draft_text:
+    if not draft_output:
         return DraftResult(
             ranked_prospect=ranked_prospect,
             draft_text=None,
+            subject=None,
             verification=None,
             claim_strength=claim_strength,
             offer_is_generic=offer_is_generic
         )
         
-    # 2b. Format is fixed by rewriting, never by blocking (ruling #6).
+    draft_text = draft_output.draft_text
+    subject = draft_output.subject
+        
     fmt = check_format(draft_text)
     if fmt:
         retry = await draft_email(
             ranked_prospect, vp, strictness=strictness, hook=hook, style=style,
             feedback_tokens=[f"FORMAT (not a factual error): {n}" for n in fmt],
         )
-        if retry and not check_format(retry):
-            draft_text = retry
+        if retry and not check_format(retry.draft_text):
+            draft_text = retry.draft_text
+            subject = retry.subject
 
-    # 3. Verify
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "running"})
-    verification = await verify_draft(draft_text, ranked_prospect, vp, strictness=strictness)
+    
+    verify_text = f"{subject}\n\n{draft_text}" if subject else draft_text
+    verification = await verify_draft(verify_text, ranked_prospect, vp, strictness=strictness)
+    
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "done",
                   "detail": verification.status})
@@ -153,36 +163,35 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
         return DraftResult(
             ranked_prospect=ranked_prospect,
             draft_text=draft_text,
+            subject=subject,
             verification=verification,
             claim_strength=claim_strength,
             offer_is_generic=offer_is_generic
         )
         
-    # Retry on failure (blocked_hallucination)
     if verification.status == "blocked_hallucination" and verification.first_pass_hallucinations:
-        draft_text_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations, hook=hook, style=style)
-        if draft_text_retry:
-            verification_retry = await verify_draft(draft_text_retry, ranked_prospect, vp, strictness=strictness)
+        draft_output_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations, hook=hook, style=style)
+        if draft_output_retry:
+            draft_text_retry = draft_output_retry.draft_text
+            subject_retry = draft_output_retry.subject
+            verify_text_retry = f"{subject_retry}\n\n{draft_text_retry}" if subject_retry else draft_text_retry
+            verification_retry = await verify_draft(verify_text_retry, ranked_prospect, vp, strictness=strictness)
             if verification_retry.passed:
-                # self corrected
                 from dataclasses import replace
                 verification_retry = replace(verification_retry, self_corrected=True)
                 return DraftResult(
                     ranked_prospect=ranked_prospect,
                     draft_text=draft_text_retry,
+                    subject=subject_retry,
                     verification=verification_retry,
                     claim_strength=claim_strength,
                     offer_is_generic=offer_is_generic
                 )
             else:
-                # Was: draft_text = "ATTEMPT 1:\n...\n\nATTEMPT 2:\n...". That shipped
-                # a literal concatenation of both drafts to the reviewer AS the email.
-                # The reviewer needs one candidate plus the reason it is held, not a
-                # transcript. Attempt 2 is the one that saw the feedback, so it is the
-                # candidate; the verifier's status and flagged claims carry the why.
                 return DraftResult(
                     ranked_prospect=ranked_prospect,
                     draft_text=draft_text_retry,
+                    subject=subject_retry,
                     verification=verification_retry,
                     claim_strength=claim_strength,
                     offer_is_generic=offer_is_generic
@@ -191,13 +200,13 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     return DraftResult(
         ranked_prospect=ranked_prospect,
         draft_text=draft_text,
+        subject=subject,
         verification=verification,
         claim_strength=claim_strength,
         offer_is_generic=offer_is_generic
     )
 
 async def main():
-    # Helper to test one real prospect using fixtures or real.
     pass
 
 if __name__ == "__main__":

@@ -156,7 +156,11 @@ def render_run_history():
     if r.get("offer_is_generic"):
         st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
     if r["draft_text"]:
-        st.markdown(f"<div class='draft-frame'>{r['draft_text']}</div>", unsafe_allow_html=True)
+        content = ""
+        if r.get("subject"):
+            content += f"<strong>Subject:</strong> {html.escape(r['subject'])}<br><br>"
+        content += html.escape(r['draft_text']).replace('\n', '<br>')
+        st.markdown(f"<div class='draft-frame'>{content}</div>", unsafe_allow_html=True)
     else:
         st.info("No draft produced.")
 
@@ -191,7 +195,7 @@ def render_run_history():
             
             st.write(f"**Claim:** {c['claim']}")
             if c["pain_id"]:
-                st.write(f"**Pain match:** `{c['pain_id']}` ({c['pain_score']:.2f})")
+                st.write(f"**Pain match:** `{c['pain_id']}` (relevance {c['score']:.2f}, raw match {c['pain_score']:.2f})")
                 st.write(f"**Why:** {c['pain_reason']}")
             if c["attributed_to"]:
                 st.warning(f"Attributed to: {c['attributed_to']} — not the prospect")
@@ -742,9 +746,11 @@ def main():
             "no_signal": ("● no signal", "#f54320"),
         }
         badge_text, badge_color = badge_map.get(draft_res.claim_strength, ("● unknown", "#44403b"))
+        sq = getattr(draft_res.ranked_prospect, "signal_quality", "ok")
+        sq_str = " (thin signal)" if sq == "thin" else ""
         st.markdown(
             f"<div style='font-family:Inter,sans-serif;font-size:14px;color:{badge_color};"
-            f"font-weight:600;'>{badge_text}</div>",
+            f"font-weight:600;'>{badge_text}{sq_str}</div>",
             unsafe_allow_html=True,
         )
 
@@ -784,9 +790,13 @@ def main():
             # edits the user has made.
             import hashlib as _hl
             _dk = _hl.md5((draft_res.draft_text or "").encode()).hexdigest()[:10]
+            if getattr(draft_res, "subject", None):
+                st.text_input("Subject", value=draft_res.subject, key=f"draft_subject_{_dk}")
             edited = st.text_area("Draft", value=draft_res.draft_text, height=260,
                                   key=f"draft_editor_{_dk}", label_visibility="collapsed")
-            st.download_button("Download draft", data=edited, file_name="zara_draft.txt",
+            
+            download_text = f"Subject: {draft_res.subject}\n\n{draft_res.draft_text}" if getattr(draft_res, "subject", None) else draft_res.draft_text
+            st.download_button("Download draft", data=download_text, file_name="zara_draft.txt",
                                mime="text/plain", use_container_width=True)
         else:
             st.warning("No draft generated. Try Deep Search for more signal, or loosen strictness.")

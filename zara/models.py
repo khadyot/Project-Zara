@@ -89,6 +89,8 @@ class RankedProspect:
     cards: list[RankedCard]
     icp_fit: Literal["fit", "unknown"]
     winning_card: RankedCard | None
+    winning_score: float | None = None
+    signal_quality: Literal["ok", "thin"] = "ok"
     hooks: list[HookProposal] = field(default_factory=list)
     resolution: ResolutionInfo | None = None
     icp_notes: list[str] = field(default_factory=list)
@@ -104,6 +106,7 @@ class VerificationResult:
 @dataclass(frozen=True)
 class DraftResult:
     ranked_prospect: RankedProspect
+    subject: str | None
     draft_text: str | None
     verification: VerificationResult | None
     claim_strength: Literal["person_authored", "person_attributed", "colleague_authored", "company_action", "database_only", "no_signal"]

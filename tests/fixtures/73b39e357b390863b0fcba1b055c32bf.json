@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not invent any factual claims, metrics, or customer names not present in the evidence. The claim about ShipBob's funding is supported by the evidence, and the general statement about expansion creating reconciliation challenges is a permissible value proposition rather than a specific claim about the prospect."
+  },
+  "prompt_tokens": 1657,
+  "completion_tokens": 747
+}

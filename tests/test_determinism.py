@@ -12,9 +12,9 @@ the whole point of the stress log.
 import asyncio
 import pytest
 
-from zara.models import Prospect, SignalCard, SourceResult
+from zara.models import Prospect, SignalCard, SourceResult, RankedCard
 from zara.orchestrator import _gather_results
-from zara.ranker import _tiebreak
+from zara.ranker import _tiebreak, _select_winner
 
 
 def _card(source: str, url: str) -> SignalCard:
@@ -68,18 +68,62 @@ async def test_gather_order_is_identical_across_repeated_runs():
 
 
 def test_tiebreak_makes_a_tied_sort_independent_of_input_order():
-    """The winning-card sort keys on (proximity, score) and ties are common."""
+    """The winning-card sort keys on (final, _tiebreak) and ties are common."""
     cards = [_card("apify", "https://a.example/1"),
              _card("exa", "https://b.example/2"),
              _card("news", "https://c.example/3")]
 
     def winner(seq):
-        # Same shape as the winning-card sort in rank_prospect: every card tied.
-        ordered = sorted(seq, key=lambda c: (2, 0.5, _tiebreak(c)), reverse=True)
-        return ordered[0].source
+        rcs = []
+        for c in seq:
+            rcs.append(RankedCard(card=c, pain_match=None, proximity="company_action", recency_days=None, score=0.5, excluded=None))
+        win, _, _ = _select_winner(rcs, rcs, [])
+        return win.card.source
 
     assert winner(cards) == winner(list(reversed(cards))) == winner([cards[1], cards[2], cards[0]])
 
+
+def test_empty_hooks_does_not_break_winner_selection():
+    """_articulate_hooks returns [] on failure BY DESIGN, so selection must survive it.
+
+    Making the winner depend on hook strength would convert a deliberate soft
+    degradation into a hard failure: no winner, and a run with perfectly good
+    cards reporting `no_signal`.
+    """
+    c = _card("apify", "https://a.example/1")
+    rc = RankedCard(card=c, pain_match=None, proximity="company_action", recency_days=None, score=0.5, excluded=None)
+    win, final, final_hooks = _select_winner([rc], [rc], [])
+    assert win is not None
+    assert win.card.source == "apify"
+    assert final == 0.5, "with no hooks, final must fall back to raw relevance"
+    assert len(final_hooks) == 0
+
+
+def test_hook_index_maps_through_the_shortlist_not_the_card_list():
+    """HookProposal.card_index indexes the SHORTLIST, never final_cards.
+
+    Regression: the first implementation rebuilt `eligible` from `final_cards`
+    (original card order) and then looked hooks up by `enumerate` position, while
+    card_index referred to the relevance-sorted shortlist. The two index spaces
+    only coincide by luck, so hooks were attached to the wrong cards.
+    """
+    from zara.models import HookProposal
+
+    low = RankedCard(card=_card("news", "https://n.example/1"), pain_match=None,
+                     proximity="company_action", recency_days=None, score=0.20, excluded=None)
+    high = RankedCard(card=_card("exa", "https://e.example/1"), pain_match=None,
+                      proximity="company_action", recency_days=None, score=0.90, excluded=None)
+
+    # final_cards in ARRIVAL order (low first); shortlist in RELEVANCE order (high first).
+    final_cards = [low, high]
+    shortlist = [high, low]
+
+    # card_index 0 refers to `high` -- the first shortlist entry.
+    hooks = [HookProposal(card_index=0, hook_text="h", rationale="r", bridge="b", strength=1.0)]
+
+    win, final, _ = _select_winner(final_cards, shortlist, hooks)
+    assert win is high, "hook 0 must map to shortlist[0], not final_cards[0]"
+    assert final == pytest.approx(0.90), "full-strength hook must not discount its own card"
 
 def test_tiebreak_is_total_for_distinct_cards():
     """A tiebreak that collides still leaves arrival order deciding."""
@@ -104,3 +148,4 @@ def test_verifier_candidate_order_is_stable():
              'said "the engine is ready" at https://example.com/news today.')
     runs = [pass1_grounding(draft, rp, {}) for _ in range(5)]
     assert all(r == runs[0] for r in runs), "ungrounded token order must be stable"
+

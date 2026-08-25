@@ -43,12 +43,12 @@ CREATE TABLE IF NOT EXISTS runs (
   person_name TEXT, company TEXT, title TEXT, domain TEXT, linkedin TEXT,
   category TEXT, profile TEXT,
   outcome TEXT, error TEXT, traceback TEXT,
-  claim_strength TEXT, icp_fit TEXT, icp_notes TEXT,
+  claim_strength TEXT, icp_fit TEXT, icp_notes TEXT, signal_quality TEXT,
   cards_total INTEGER, cards_eligible INTEGER, hooks_count INTEGER,
   winning_card TEXT, verification_status TEXT, verification_passed INTEGER,
   verification_reason TEXT, self_corrected INTEGER,
   verification_failed_pass TEXT, first_pass_hallucinations TEXT,
-  draft_text TEXT, draft_words INTEGER,
+  subject TEXT, draft_text TEXT, draft_words INTEGER,
   prompt_tokens INTEGER, completion_tokens INTEGER, llm_calls INTEGER,
   source_cost_usd REAL,
   git_sha TEXT, code_dirty INTEGER, value_prop_sha TEXT, groq_model TEXT
@@ -190,6 +190,7 @@ class RunTrace:
         self.stage_times: list[dict] = []
         self.events: list[dict] = []
         self.outcome, self.error, self.traceback = "ok", None, None
+        self.subject = None
         self.draft_text = None
         self.result = {}
 
@@ -265,6 +266,7 @@ class RunTrace:
             self.result.update({
                 "icp_fit": rp.icp_fit,
                 "icp_notes": json.dumps(list(rp.icp_notes or [])),
+                "signal_quality": getattr(rp, "signal_quality", "ok"),
                 "cards_total": len(rp.cards),
                 "cards_eligible": sum(1 for c in rp.cards if c.excluded is None),
                 "hooks_count": len(rp.hooks or []),
@@ -284,6 +286,7 @@ class RunTrace:
             if draft is None:
                 return
             self.draft_text = draft.draft_text
+            self.subject = getattr(draft, "subject", None)
             self.result["claim_strength"] = draft.claim_strength
             self.result["draft_words"] = len((draft.draft_text or "").split())
             v = draft.verification
@@ -335,6 +338,7 @@ class RunTrace:
                 "linkedin": getattr(p, "linkedin_url", None),
                 "category": self.category, "profile": self.profile,
                 "outcome": self.outcome, "error": self.error, "traceback": self.traceback,
+                "subject": self.subject,
                 "draft_text": self.draft_text,
                 "prompt_tokens": sum(c.get("prompt_tokens") or 0 for c in self.llm),
                 "completion_tokens": sum(c.get("completion_tokens") or 0 for c in self.llm),

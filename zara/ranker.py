@@ -125,15 +125,111 @@ def _compute_recency(published_date: str | None) -> int | None:
     except Exception:
         return None
 
+
+THIN_SIGNAL_FLOOR = 0.35
+
+
+def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict) -> float:
+    """Relevance is a PRODUCT, not a sort tuple.
+
+    The old winner sort keyed on `(proximity_weight, pain_score, tiebreak)`. Tuple
+    comparison is lexicographic, so proximity was the primary key and pain_score
+    could only ever break its ties -- which is how a card scored 0.00 beat one
+    scored 0.80 on the Modern Treasury seed run, and 0.30 beat 0.80 on ShipBob.
+    Multiplying instead means a card with no pain match is unwinnable however
+    proximate it is, which is the whole point.
+
+    `proximity_weights` in value_prop.yaml stays the single source of truth; it is
+    normalised here at runtime rather than duplicated, because the Settings UI can
+    rewrite those weights and a hardcoded divisor would silently go stale.
+    """
+    max_prox = max(prox_val.values()) if prox_val else 1.0
+    if max_prox == 0:
+        max_prox = 1.0
+    prox_mult = prox_val.get(proximity, 0) / max_prox
+
+    # Gentle on purpose: an old card should lose ties, not be disqualified. The
+    # honesty guard already forces the draft to name the period rather than call
+    # a five-year-old podcast "recent".
+    if recency_days is None:
+        rec_mult = 0.9
+    elif recency_days <= 180:
+        rec_mult = 1.0
+    elif recency_days <= 365:
+        rec_mult = 0.95
+    elif recency_days <= 730:
+        rec_mult = 0.85
+    else:
+        rec_mult = 0.75
+
+    return pain_score * prox_mult * rec_mult
+
+
+def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
+                   hooks: list) -> tuple[RankedCard | None, float | None, list]:
+    """Pick the winner from the shortlist, after the hooks have been articulated.
+
+    Returns `(winning_card, winning_score, surviving_hooks)`.
+
+    TWO INDEX SPACES, and conflating them is a live bug this signature exists to
+    prevent. `HookProposal.card_index` indexes into `shortlist` -- the relevance-
+    sorted top-N handed to `_articulate_hooks`. It does NOT index into
+    `final_cards`, which is in original card order. Map hook -> card through
+    `shortlist` by identity, never by a shared integer.
+
+    Hook strength modulates between 0.5x and 1.0x: it is a real signal but the
+    least grounded of the three inputs, so it may reorder near-ties and must not
+    dominate. When articulation failed entirely (`hooks == []`, which
+    `_articulate_hooks` returns deliberately) selection falls back to raw
+    relevance -- the run loses its options, not its winner.
+    """
+    if not shortlist:
+        return None, None, []
+
+    hook_for = {}
+    for h in hooks:
+        if 0 <= h.card_index < len(shortlist):
+            hook_for[id(shortlist[h.card_index])] = h
+
+    scored = []
+    for c in shortlist:
+        h = hook_for.get(id(c))
+        final = c.score if not hooks else c.score * (0.5 + 0.5 * (h.strength if h else 0.0))
+        scored.append((final, c, h))
+    scored.sort(key=lambda x: (x[0], _tiebreak(x[1].card)), reverse=True)
+
+    # Compass VI swap test: one hook per kind. Applied to the ARTICULATED set, so
+    # the human still gets genuinely distinct options rather than two phrasings of
+    # the same card.
+    seen_tiers = set()
+    survivors = []
+    for final, c, h in scored:
+        if c.card.tier in seen_tiers:
+            for idx, fc in enumerate(final_cards):
+                if fc is c:
+                    final_cards[idx] = RankedCard(
+                        card=c.card, pain_match=c.pain_match, proximity=c.proximity,
+                        recency_days=c.recency_days, score=c.score,
+                        excluded="same hook kind as winner (Compass VI swap test)",
+                        guardrail_hit=c.guardrail_hit, attributed_to=c.attributed_to,
+                    )
+                    break
+        else:
+            seen_tiers.add(c.card.tier)
+            survivors.append((final, c, h))
+
+    if not survivors:
+        return None, None, []
+
+    win_final, win_card, _ = survivors[0]
+    surviving_hooks = [h for _, _, h in survivors if h is not None]
+    return win_card, win_final, surviving_hooks
+
+
 class CardScoreOutput(BaseModel):
     index: int
     matched_pain_id: str | None
     score: float
-    # One clause, not a sentence. Measured on the ShipBob snapshot, this field was
-    # the single largest line item in a run: 2,539 completion tokens across 15 cards,
-    # of a ~9.2k run against an 8K TPM ceiling. The reason still has to say which
-    # observable it matched -- that is what makes the pick auditable -- it just does
-    # not need to restate the snippet back to us.
     reason: str = Field(description="At most 15 words. Name the observable that matched, or why none did. No restating the snippet.")
 
 class BatchScoreOutput(BaseModel):
@@ -154,6 +250,8 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     
     ranked_cards_map = {}
     to_score = []
+    
+    prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
     
     for i, card in enumerate(all_cards):
         proximity = _compute_proximity(card, prospect)
@@ -195,11 +293,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         )
         
     if to_score:
-        prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
-        # The trailing (source, source_url) is a deterministic tiebreak. list.sort is
-        # stable, so without it cards tied on proximity+recency kept their arrival
-        # order -- which is fetcher completion order -- and the [:15] cap below then
-        # dropped a *different set* of cards on every run.
         to_score.sort(key=lambda item: (
             prox_val.get(_compute_proximity(item[1], prospect), 0),
             _compute_recency(item[1].published_date) is not None,
@@ -207,19 +300,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             _tiebreak(item[1]),
         ), reverse=True)
         
-        # Hard cap on cards sent to the scorer.
-        #
-        # Was 15. The ranker is ~4.3k of a ~8k-token run (prompt 2,245 +
-        # completion 2,040 on the ShipBob snapshot) against Groq's 8K/min
-        # bucket, and both halves scale with the number of cards scored -- so
-        # this cap, not deduplication, is the lever. Deduplication was measured
-        # first and rejected: 1 duplicate across 91 cards in four snapshots.
-        #
-        # 10 is safe rather than arbitrary. This list is already sorted by
-        # proximity, so across all four snapshots positions 0-4 hold every
-        # authored/attributed/colleague card and positions 5+ are uniformly
-        # company_action -- of which the Compass VI swap test keeps exactly one
-        # anyway. ShipBob's actual winning card sits at position 2.
         card_cap = int(vp.get("ranker", {}).get("card_cap", 10))
         for i, card in to_score[card_cap:]:
             rc = ranked_cards_map[i]
@@ -236,16 +316,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         else:
             sys_prompt += " You must be extremely strict. Only match if the snippet explicitly proves the 'observable_via' condition. Do not make inferential leaps. If the snippet has interesting company/person news but DOES NOT map to a specific pain point, you may map it to 'general_news' with a score of 0.3."
             
-        # One call, not three. Chunking re-sent the whole pains block per chunk:
-        # measured 3 calls x ~1.3k prompt tokens on the Shane Stafford run, where the
-        # cards themselves were only ~600 tokens per chunk. That duplication pushed a
-        # single prospect to 13.3k tokens against an 8K TPM ceiling, and the resulting
-        # 429 cost 52s of a 91s run -- 57% of the wall time was a rate-limit stall.
-        #
-        # This also retires the early exit, deliberately. It stopped scoring after the
-        # first chunk containing a >=0.8 match, which discarded candidates we need for
-        # the Compass VI swap test and for the audit trail. Every card in the cap is
-        # now scored, and the run is still cheaper.
         chunk_size = max(len(to_score), 1)
         try:
             for chunk_idx in range(0, len(to_score), chunk_size):
@@ -278,22 +348,25 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                             final_score = s.score
                             if rc.guardrail_hit:
                                 final_score = round(s.score * 0.5, 4)
+                                
+                            relevance = _compute_relevance(final_score, rc.proximity, rc.recency_days, prox_val)
                             ranked_cards_map[s.index] = RankedCard(
                                 card=rc.card, pain_match=pm, proximity=rc.proximity,
-                                recency_days=rc.recency_days, score=final_score, excluded=None,
+                                recency_days=rc.recency_days, score=relevance, excluded=None,
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                             if final_score >= 0.8:
                                 found_strong_hook = True
                         else:
+                            # B2: pain_match is None must contribute pain_score 0.0, as it already does.
+                            relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
                             ranked_cards_map[s.index] = RankedCard(
                                 card=rc.card, pain_match=None, proximity=rc.proximity,
-                                recency_days=rc.recency_days, score=0.0, excluded="matches no pain in value_prop",
+                                recency_days=rc.recency_days, score=relevance, excluded="matches no pain in value_prop",
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                 
                 if found_strong_hook:
-                    # Early exit: Mark the rest of the cards as skipped
                     for remain_idx in range(chunk_idx + chunk_size, len(to_score)):
                         i, _ = to_score[remain_idx]
                         rc = ranked_cards_map[i]
@@ -304,7 +377,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         )
                     break
         except ProviderProbeFailedError as e:
-            # Mark as unscored with reason
             for i, card in to_score:
                 rc = ranked_cards_map[i]
                 ranked_cards_map[i] = RankedCard(
@@ -315,42 +387,31 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     
     final_cards = list(ranked_cards_map.values())
     
-    # Compass VI swap test - remove duplicate hooks of same tier
-    # Group eligible ones by tier, sort by proximity/score and exclude lowers
+    # Hooks are articulated BEFORE the winner is chosen, so the model's own read on
+    # hook quality gets a vote. Previously this call ran after selection and its
+    # output never reached the draft at all -- a paid call, discarded every run.
+    #
+    # No tier dedup yet: the swap test used to run first and, because `tier` only
+    # has two values, collapsed the candidate set to two before the hook call ever
+    # saw it. Every run produced exactly two hooks. Dedup now happens inside
+    # _select_winner, on the articulated set.
     eligible = [c for c in final_cards if c.excluded is None]
-    
-    # Sort eligible by proximity priority then score.
-    prox_val = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "colleague_authored": 2.5, "company_action": 2, "database": 1})
-    eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score, _tiebreak(x.card)), reverse=True)
-    
-    seen_tiers = set()
-    for c in eligible:
-        if c.card.tier in seen_tiers:
-            for i, fc in enumerate(final_cards):
-                if fc is c:
-                    final_cards[i] = RankedCard(
-                        card=c.card, pain_match=c.pain_match, proximity=c.proximity,
-                        recency_days=c.recency_days, score=c.score,
-                        excluded="same hook kind as winner (Compass VI swap test)",
-                        guardrail_hit=c.guardrail_hit, attributed_to=c.attributed_to
-                    )
-        else:
-            seen_tiers.add(c.card.tier)
-            
-    # Winning card
-    winning_card = None
-    remaining_eligible = [c for c in final_cards if c.excluded is None]
-    if remaining_eligible:
-        # Deterministic tiebreak matters most here: this sort picks the winning card,
-        # and ties on (proximity, score) are common.
-        remaining_eligible.sort(key=lambda x: (prox_val.get(x.proximity, 0), x.score, _tiebreak(x.card)), reverse=True)
-        winning_card = remaining_eligible[0]
+    eligible.sort(key=lambda x: (x.score, _tiebreak(x.card)), reverse=True)
+    shortlist = eligible[:int(vp.get("ranker", {}).get("hook_shortlist", 4))]
 
-    hooks = await _articulate_hooks(prospect, remaining_eligible[:3], vp)
+    hooks = await _articulate_hooks(prospect, shortlist, vp)
+
+    winning_card, winning_score, final_hooks = _select_winner(final_cards, shortlist, hooks)
+
+    # Compass I: degrade, but never silently. Both repaired seed runs land at ~0.30
+    # -- the pick is right and the evidence is still thin, and the reviewer is told
+    # so on the output's face rather than having to open the audit trail.
+    signal_quality = "thin" if winning_score is not None and winning_score < THIN_SIGNAL_FLOOR else "ok"
 
     return RankedProspect(
         prospect=prospect, cards=final_cards, icp_fit=icp_fit,
-        winning_card=winning_card, hooks=hooks, icp_notes=icp_notes
+        winning_card=winning_card, winning_score=winning_score, signal_quality=signal_quality,
+        hooks=final_hooks, icp_notes=icp_notes
     )
 
 
@@ -377,13 +438,10 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         f"WHAT WE SELL: {offer}\n\n"
         f"CARDS (index, verbatim snippet):\n"
     )
-    # Age is given to the model because it had no way to know it and reached for
-    # "recently" as ordinary framing -- on a card 1,826 days old. The model was
-    # not wrong so much as uninformed.
     for idx, c in enumerate(top_cards):
         age = (f"published {c.recency_days} days ago" if c.recency_days is not None
                else "publication date unknown")
-        prompt += f"\n[{idx}] ({age}) {c.card.snippet[:600]}\n"
+        prompt += f"\n[{idx}] ({age}) {c.card.snippet[:450]}\n"
     prompt += (
         "\nFor each card output: hook_text (one sentence stating the specific fact to lead with), "
         "rationale (why this matters to THIS person — tie it to their actual role when the role is known "
@@ -408,7 +466,7 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         resp_hooks = getattr(resp, "hooks", None) or []
         for h in resp_hooks:
             if 0 <= h.card_index < len(top_cards):
-                _src = top_cards[h.card_index] if 0 <= h.card_index < len(top_cards) else None
+                _src = top_cards[h.card_index]
                 hooks.append(HookProposal(
                     card_index=h.card_index,
                     hook_text=h.hook_text,
@@ -419,11 +477,6 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
                 ))
         return hooks
     except Exception as e:
-        # Non-fatal on purpose: hooks are the "options, not verdicts" layer
-        # (Compass IX) and a draft is still useful without them. But this was a
-        # BARE `return []`, and it hid a fixture miss from the whole test suite
-        # when this prompt changed -- the suite went green while hook generation
-        # was failing on every call. Silence is the bug; degrading is fine.
         import sys
         print(f"WARNING: hook articulation failed, no options offered: "
               f"{type(e).__name__}: {e}", file=sys.stderr)

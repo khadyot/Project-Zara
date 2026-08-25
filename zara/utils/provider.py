@@ -279,14 +279,34 @@ def _log_llm(provider: str, model: str, usage: dict, t0: float, prompt: str,
 async def generate_content_with_retry(prompt: str, schema, system_instruction: str,
                                       stage: str = "unknown") -> any:
     _stage.set(stage)
-    if os.environ.get("USE_FIXTURES"):
-        _fx_t0 = time.monotonic()
-        # Store or load from tests/fixtures/ based on hash of prompt + instruction
+    # USE_FIXTURES=1     replay only; a missing hash is a hard error (the test gate).
+    # USE_FIXTURES=fill   replay every fixture that EXISTS, go live only for the ones
+    #                     that are missing, and record those.
+    #
+    # `fill` exists because re-recording after a prompt change used to mean running the
+    # whole pipeline live. That re-answers the prompts whose fixtures were already fine,
+    # overwriting good recordings with fresh non-deterministic output -- and worse, a
+    # downstream prompt's hash DEPENDS on upstream output. Score the cards live and the
+    # shortlist shifts, so the hook prompt text changes, so its hash never matches the
+    # one the test is asking for. That failure presents as an inexplicable "hash
+    # mismatch" and cost ~50 wasted live calls and most of a day's Groq budget before
+    # it was understood. Record with `fill`, never with fixtures off.
+    _fx_mode = os.environ.get("USE_FIXTURES")
+    _fx_path = None
+    if _fx_mode:
         h = hashlib.md5((prompt + system_instruction).encode()).hexdigest()
-        fixture_path = f"tests/fixtures/{h}.json"
-        if not os.path.exists(fixture_path):
-            raise FileNotFoundError(f"Fixture not found for prompt hash {h}. Please record this fixture first.")
-        with open(fixture_path, "r") as f:
+        _fx_path = f"tests/fixtures/{h}.json"
+        if not os.path.exists(_fx_path):
+            if _fx_mode == "fill":
+                print(f"FIXTURE FILL: missing hash {h} (stage={stage}) -- recording live",
+                      file=sys.stderr)
+                _fx_path = None
+            else:
+                raise FileNotFoundError(f"Fixture not found for prompt hash {h}. Please record this fixture first.")
+
+    if _fx_path:
+        _fx_t0 = time.monotonic()
+        with open(_fx_path, "r") as f:
             data = json.load(f)
             
         # Support new fixture format with usage metrics

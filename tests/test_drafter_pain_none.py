@@ -41,11 +41,10 @@ async def test_winning_card_without_pain_match_drafts():
     """pain_match=None on the winner must degrade, not crash."""
     prospect = _winning_prospect(pain_match=None)
     with patch("zara.drafter.generate_content_with_retry", new=AsyncMock()) as gen:
-        # verifier-side objects aren't needed; drafter returns DraftOutput
         from zara.drafter import DraftOutput
-        gen.return_value = DraftOutput(draft_text="Hi Dimitri, ...")
-        text = await draft_email(prospect, VALUE_PROP, strictness="strict")
-    assert text == "Hi Dimitri, ..."
+        gen.return_value = DraftOutput(subject="subject", draft_text="Hi Dimitri, ...")
+        res = await draft_email(prospect, VALUE_PROP, strictness="strict")
+    assert res.draft_text == "Hi Dimitri, ..."
     prompt = gen.call_args.kwargs["prompt"]
     assert "We don't know their specific pain yet" in prompt
 
@@ -53,13 +52,25 @@ async def test_winning_card_without_pain_match_drafts():
 @pytest.mark.asyncio
 async def test_winning_card_with_pain_match_uses_pain_statement():
     """The normal path still resolves the pain statement from value_prop."""
-    from zara.ranker import PainMatch
+    from zara.models import PainMatch
     prospect = _winning_prospect(
         pain_match=PainMatch(pain_id="structural_complexity", score=0.9, reason="r")
     )
     with patch("zara.drafter.generate_content_with_retry", new=AsyncMock()) as gen:
         from zara.drafter import DraftOutput
-        gen.return_value = DraftOutput(draft_text="Hi Dimitri, ...")
+        gen.return_value = DraftOutput(subject="subject", draft_text="Hi Dimitri, ...")
         await draft_email(prospect, VALUE_PROP, strictness="strict")
     prompt = gen.call_args.kwargs["prompt"]
     assert "Reconciliation sprawl hurts." in prompt
+
+@pytest.mark.asyncio
+async def test_winning_card_with_hook_none_drafts():
+    """hook=None must degrade, not crash."""
+    prospect = _winning_prospect(pain_match=None)
+    with patch("zara.drafter.generate_content_with_retry", new=AsyncMock()) as gen:
+        from zara.drafter import DraftOutput
+        gen.return_value = DraftOutput(subject="subject", draft_text="Hi Dimitri, ...")
+        res = await draft_email(prospect, VALUE_PROP, strictness="strict", hook=None)
+    assert res.draft_text == "Hi Dimitri, ..."
+    prompt = gen.call_args.kwargs["prompt"]
+    assert "EVIDENCE (the only facts you may use): a snippet" in prompt
