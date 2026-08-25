@@ -23,6 +23,11 @@ def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) ->
         for n in icp_notes:
             md.append(f"- {n}")
     md.append("")
+    if draft_res.offer_is_generic:
+        md.append("> NO PROSPECT-SPECIFIC SIGNAL FOUND. The opener is company-level and the")
+        md.append("> offer is generic -- it is not tied to anything we retrieved about this")
+        md.append("> person. Human judgment required before sending.")
+        md.append("")
     md.append("## Draft")
     if draft_res.draft_text:
         md.append(draft_res.draft_text)
@@ -96,6 +101,11 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if resolution is not None:
         ranked_prospect = _replace(ranked_prospect, resolution=resolution)
     claim_strength = compute_claim_strength(ranked_prospect.winning_card)
+    # No winning card means the drafter falls back to a company-level opener with
+    # an offer tied to nothing we actually retrieved. The email still gets written
+    # (Compass I: degrade, never refuse) -- but "never silently" is the other half,
+    # so this rides on every DraftResult below and is rendered on the output's face.
+    offer_is_generic = ranked_prospect.winning_card is None
     if on_event:
         on_event({"type": "stage", "name": "ranking signals", "status": "done",
                   "detail": f"claim strength: {claim_strength}, hooks: {len(ranked_prospect.hooks)}"})
@@ -117,7 +127,8 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
             ranked_prospect=ranked_prospect,
             draft_text=None,
             verification=None,
-            claim_strength=claim_strength
+            claim_strength=claim_strength,
+            offer_is_generic=offer_is_generic
         )
         
     # 2b. Format is fixed by rewriting, never by blocking (ruling #6).
@@ -143,7 +154,8 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
             ranked_prospect=ranked_prospect,
             draft_text=draft_text,
             verification=verification,
-            claim_strength=claim_strength
+            claim_strength=claim_strength,
+            offer_is_generic=offer_is_generic
         )
         
     # Retry on failure (blocked_hallucination)
@@ -159,21 +171,29 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
                     ranked_prospect=ranked_prospect,
                     draft_text=draft_text_retry,
                     verification=verification_retry,
-                    claim_strength=claim_strength
+                    claim_strength=claim_strength,
+                    offer_is_generic=offer_is_generic
                 )
             else:
+                # Was: draft_text = "ATTEMPT 1:\n...\n\nATTEMPT 2:\n...". That shipped
+                # a literal concatenation of both drafts to the reviewer AS the email.
+                # The reviewer needs one candidate plus the reason it is held, not a
+                # transcript. Attempt 2 is the one that saw the feedback, so it is the
+                # candidate; the verifier's status and flagged claims carry the why.
                 return DraftResult(
                     ranked_prospect=ranked_prospect,
-                    draft_text=f"ATTEMPT 1:\n{draft_text}\n\nATTEMPT 2:\n{draft_text_retry}",
+                    draft_text=draft_text_retry,
                     verification=verification_retry,
-                    claim_strength=claim_strength
+                    claim_strength=claim_strength,
+                    offer_is_generic=offer_is_generic
                 )
                 
     return DraftResult(
         ranked_prospect=ranked_prospect,
         draft_text=draft_text,
         verification=verification,
-        claim_strength=claim_strength
+        claim_strength=claim_strength,
+        offer_is_generic=offer_is_generic
     )
 
 async def main():
