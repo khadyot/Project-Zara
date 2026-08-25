@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I noticed Test Co is currently hiring a Software Engineer.",
+        "rationale": "Since the role is not specified, the hiring signal suggests the company is expanding its tech capacity, which often brings new operational challenges that need efficient processes.",
+        "bridge": "Our automation platform can help your operations team handle the increased reconciliation workload as you scale.",
+        "strength": 0.65
+      }
+    ]
+  },
+  "prompt_tokens": 629,
+  "completion_tokens": 355
+}

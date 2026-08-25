@@ -377,15 +377,24 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         f"WHAT WE SELL: {offer}\n\n"
         f"CARDS (index, verbatim snippet):\n"
     )
+    # Age is given to the model because it had no way to know it and reached for
+    # "recently" as ordinary framing -- on a card 1,826 days old. The model was
+    # not wrong so much as uninformed.
     for idx, c in enumerate(top_cards):
-        prompt += f"\n[{idx}] {c.card.snippet[:600]}\n"
+        age = (f"published {c.recency_days} days ago" if c.recency_days is not None
+               else "publication date unknown")
+        prompt += f"\n[{idx}] ({age}) {c.card.snippet[:600]}\n"
     prompt += (
         "\nFor each card output: hook_text (one sentence stating the specific fact to lead with), "
         "rationale (why this matters to THIS person — tie it to their actual role when the role is known "
         "and related to the pain; if the role is unknown or unrelated, hook on the company-level fact and "
         "say so plainly in the rationale — never invent a role connection), "
         "bridge (how it connects to what we sell), "
-        "strength (0.0-1.0 overall hook quality). Only use facts present in the snippets."
+        "strength (0.0-1.0 overall hook quality). Only use facts present in the snippets. "
+        "TIMEFRAME: each card states its age. Be honest about it. Never call something recent, "
+        "new, or 'just' anything unless it is under six months old. For older material name the "
+        "period instead ('in your 2021 conversation'), and if the date is unknown make no time "
+        "claim at all."
     )
 
     try:
@@ -399,13 +408,23 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         resp_hooks = getattr(resp, "hooks", None) or []
         for h in resp_hooks:
             if 0 <= h.card_index < len(top_cards):
+                _src = top_cards[h.card_index] if 0 <= h.card_index < len(top_cards) else None
                 hooks.append(HookProposal(
                     card_index=h.card_index,
                     hook_text=h.hook_text,
                     rationale=h.rationale,
                     bridge=h.bridge,
                     strength=max(0.0, min(1.0, h.strength)),
+                    recency_days=_src.recency_days if _src else None,
                 ))
         return hooks
-    except Exception:
+    except Exception as e:
+        # Non-fatal on purpose: hooks are the "options, not verdicts" layer
+        # (Compass IX) and a draft is still useful without them. But this was a
+        # BARE `return []`, and it hid a fixture miss from the whole test suite
+        # when this prompt changed -- the suite went green while hook generation
+        # was failing on every call. Silence is the bug; degrading is fine.
+        import sys
+        print(f"WARNING: hook articulation failed, no options offered: "
+              f"{type(e).__name__}: {e}", file=sys.stderr)
         return []

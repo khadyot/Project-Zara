@@ -188,3 +188,33 @@ async def test_7_fetcher_raises_failed_row():
     assert len(res) == 1
     assert res[0].status == "failed"
     assert res[0].reason == "TimeoutError: connection timed out"
+
+
+@pytest.mark.asyncio
+async def test_hooks_are_actually_produced(use_fixtures, monkeypatch):
+    """The suite must fail when hook generation breaks, not shrug.
+
+    _articulate_hooks ends in `return []` on any exception -- deliberately, since
+    a draft is still useful without options. But nothing asserted hooks existed,
+    so when the hook prompt changed and its fixture went missing, every hook call
+    raised, every hook list came back empty, and all 83 tests stayed green. A
+    gate that cannot see the thing it guards is not a gate.
+    """
+    from scripts.record_mock import load_snapshot
+
+    res = await rank_prospect(Prospect("Test", "ShipBob"), load_snapshot())
+    assert res.hooks, "hook articulation produced nothing — check for a fixture miss on stderr"
+    for h in res.hooks:
+        assert h.hook_text.strip()
+        assert 0.0 <= h.strength <= 1.0
+
+
+@pytest.mark.asyncio
+async def test_hooks_carry_the_age_of_their_evidence(use_fixtures, monkeypatch):
+    """card_index points into the shortlist, not RankedProspect.cards, so without
+    this the UI cannot tell a reviewer that the lead signal is five years old."""
+    from scripts.record_mock import load_snapshot
+
+    res = await rank_prospect(Prospect("Test", "ShipBob"), load_snapshot())
+    assert any(h.recency_days is not None for h in res.hooks), \
+        "no hook carried an age; recency_days is not being populated"

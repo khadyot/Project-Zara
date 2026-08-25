@@ -118,3 +118,12 @@ proximity_weights:
 # at 10: positions 5+ are uniformly company_action across all four snapshots.
 ranker:
   card_cap: 10
+
+# Guardrails applied after drafting.
+#
+# stale_days: past this age, calling a signal "recent" is a false claim rather
+# than a vague one. Set from a real defect: a 1,826-day-old podcast was drafted
+# as "You recently discussed..." and passed clean, because the verifier only
+# checked for a MISSING date, never an old one.
+guardrails:
+  stale_days: 180

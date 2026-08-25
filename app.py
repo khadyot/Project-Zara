@@ -57,6 +57,22 @@ def _run_store():
     return connect()
 
 
+def _age_label(days):
+    """How old the evidence is, in the words a reviewer thinks in.
+
+    The decision card buried "1826 days old" in the audit trail while the hook a
+    reviewer reads first said "You recently discussed...". Nobody should have to
+    scroll to notice the lead signal is five years old (Compass IX).
+    """
+    if days is None:
+        return "undated", True
+    if days >= 365:
+        return f"{days / 365.25:.1f} years old", days > 180
+    if days <= 1:
+        return "today" if days == 0 else "1 day old", False
+    return f"{days} days old", days > 180
+
+
 def render_budget_meter():
     """What is left, in the only unit that matters to the operator: runs.
 
@@ -736,7 +752,14 @@ def main():
         st.markdown("### Hook options")
         if ranked.hooks:
             for i, h in enumerate(ranked.hooks):
-                with st.expander(f"[{h.strength:.2f}] {h.hook_text}"):
+                age_text, is_stale = _age_label(getattr(h, "recency_days", None))
+                flag = "  ⚠ stale" if is_stale else ""
+                with st.expander(f"[{h.strength:.2f}] · {age_text}{flag} — {h.hook_text}"):
+                    if is_stale:
+                        st.caption(
+                            f"This evidence is {age_text}. Lead with it only if it still stands, "
+                            "and never describe it as recent."
+                        )
                     st.markdown(f"**Why it matters:** {h.rationale}")
                     st.markdown(f"**Bridge to offer:** {h.bridge}")
                     if st.button(f"Draft with this hook", key=f"hook_{i}", use_container_width=True):

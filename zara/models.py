@@ -76,6 +76,12 @@ class HookProposal:
     rationale: str
     bridge: str
     strength: float
+    # card_index indexes the shortlist passed to _articulate_hooks, NOT
+    # RankedProspect.cards, so the UI cannot recover the card -- and therefore
+    # its age -- on its own. A reviewer reading "[0.85] You recently
+    # discussed..." needs to see that the evidence is five years old without
+    # opening the audit trail (Compass IX).
+    recency_days: int | None = None
 
 @dataclass(frozen=True)
 class RankedProspect:

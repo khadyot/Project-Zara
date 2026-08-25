@@ -5,10 +5,10 @@
         "index": 0,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Hiring software engineer; no observable matches any pain"
+        "reason": "No observable matches any pain; generic hiring announcement."
       }
     ]
   },
   "prompt_tokens": 919,
-  "completion_tokens": 320
+  "completion_tokens": 280
 }

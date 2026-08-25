@@ -173,19 +173,60 @@ _RECENCY_CLAIM = re.compile(
     re.I,
 )
 
-def check_recency(draft_text: str, prospect: RankedProspect) -> list[str]:
-    """A time claim the evidence cannot carry."""
+# Beyond this, "recently" is a false claim rather than a vague one. Data, not a
+# buried constant, so it can be argued with -- same treatment as never_reference
+# and proximity_weights.
+STALE_DAYS = 180
+
+
+def _stale_days(value_prop: dict | None = None) -> int:
+    if not value_prop:
+        from zara.utils.config import load_value_prop
+        try:
+            value_prop = load_value_prop()
+        except Exception:
+            return STALE_DAYS
+    try:
+        return int(value_prop.get("guardrails", {}).get("stale_days", STALE_DAYS))
+    except (TypeError, ValueError, AttributeError):
+        return STALE_DAYS
+
+
+def check_recency(draft_text: str, prospect: RankedProspect, value_prop: dict | None = None) -> list[str]:
+    """A time claim the evidence cannot carry.
+
+    Two ways it cannot carry it, and the original only guarded the first:
+
+      no date  -- nothing to check the claim against (F5, fixed earlier).
+      old date -- there IS a date and it is years past, which the early return
+                  `published_date is not None` treated as fully satisfying the
+                  claim. That shipped "You recently discussed..." about a card
+                  1,826 days old, on the deployed app, on the flagship demo.
+    """
     win = prospect.winning_card
-    if win is None or win.card.published_date is not None:
+    if win is None:
         return []
-        
+
     m = _RECENCY_CLAIM.search(draft_text)
     if not m:
         return []
-        
-    return [
-        f'unverifiable recency: draft says "{m.group(0)}" but the winning card carries no publication date'
-    ]
+
+    if win.card.published_date is None:
+        return [
+            f'unverifiable recency: draft says "{m.group(0)}" but the winning card carries no publication date'
+        ]
+
+    limit = _stale_days(value_prop)
+    age = win.recency_days
+    if age is not None and age > limit:
+        years = age / 365.25
+        readable = f"{years:.1f} years" if age >= 365 else f"{age} days"
+        return [
+            f'false recency: draft says "{m.group(0)}" but the winning card is {age} days old '
+            f'({readable}). State the period instead, or drop the time claim.'
+        ]
+
+    return []
 
 
 def check_attribution(draft_text: str, prospect: RankedProspect) -> list[str]:
@@ -229,7 +270,7 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
         # not. Falls through to the same path as every other draft.
         pass
 
-    ungrounded = check_attribution(draft_text, prospect) + check_recency(draft_text, prospect)
+    ungrounded = check_attribution(draft_text, prospect) + check_recency(draft_text, prospect, value_prop)
     ungrounded += pass1_grounding(draft_text, prospect, value_prop, strictness=strictness)
     if ungrounded:
         return VerificationResult(
