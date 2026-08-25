@@ -242,3 +242,101 @@ Interim config, **not** D18. Do not build a UI for this.
 `agent_transfer/AG_to_C_27.md`: the before/after draft diff, the replay result for Alex Rivera
 and Jordan Ellis with their new scores, the token delta on a replayed run, and which fixture
 hashes you re-recorded. Do not commit it — Claude will.
+
+---
+
+# ADDENDUM — review of AG's plan (2026-08-26)
+
+The plan is approved in structure. The ordering, the dedup move, the verifier split, and
+subjects on every fallback branch are all correct. **Five corrections before you execute.**
+
+## A1 — BLOCKER: do not hardcode `4.0`
+
+Your plan says *"divide the `value_prop.yaml` weight by the maximum weight (4.0)"*.
+
+`4.0` is today's max. `proximity_weights` is user-editable — the Settings UI writes to
+`value_prop.yaml`. The moment someone sets `authored: 5`, a hardcoded divisor makes every
+multiplier wrong and `authored` exceeds 1.0, silently.
+
+Compute `max(weights.values())` at runtime. Guard the empty/zero case.
+
+## A2 — BLOCKER: winner selection must not depend on hook articulation succeeding
+
+`_articulate_hooks` returns `[]` on any exception, **by design** (`ranker.py:421-430` — it is
+the "options, not verdicts" layer, and a draft is still useful without it).
+
+Your step 4 makes `final` depend on `hook_strength`. So when articulation fails there is no
+`final` for any card, no `winning_card`, and a run with perfectly good cards collapses to
+`no_signal`. You would be converting a soft, deliberate degradation into a hard failure — the
+opposite of Compass I.
+
+**Required:** if `hooks` is empty, `final = relevance` and selection proceeds on that. The run
+loses its hook options, not its winner. Add a test for it.
+
+## A3 — BLOCKER: `hook=None` crashes the new prompt
+
+§4d hardcodes `EVIDENCE (the only facts you may use): {hook.hook_text}`. If `hooks` is empty
+(A2) or a card has no articulated hook, `hook` is `None` and this raises `AttributeError`.
+
+**This is the exact bug that already crashed a live run** — `drafter.py:70` dereferenced
+`winning_card.pain_match.pain_id` unconditionally and took down the Modern Treasury run
+(`AttributeError: 'NoneType' object has no attribute 'pain_id'`, run `8a9feca5f1b8`,
+regression-tested in `tests/test_drafter_pain_none.py`). Same shape, same file, three weeks
+apart.
+
+**Required:** when `hook is None`, fall back to the card snippet as EVIDENCE and drop the
+`WHY IT MATTERS` line. Keep the rest of the shape. Extend
+`tests/test_drafter_pain_none.py` to cover `hook=None` alongside `pain_match=None`.
+
+## A4 — `tests/test_determinism.py` is about to become a blind gate
+
+**My omission — it was missing from your exclusive file list. It is now added.**
+
+`tests/test_determinism.py:76-77` contains a hand-copied mirror of the winner sort:
+
+```python
+# Same shape as the winning-card sort in rank_prospect: every card tied.
+ordered = sorted(seq, key=lambda c: (2, 0.5, _tiebreak(c)), reverse=True)
+```
+
+After your change the real sort keys on `(final, _tiebreak)` — different arity, different
+semantics. The test will still **pass**, because it only checks that its own local lambda is
+order-independent. It will be testing a shape that no longer exists anywhere in the codebase.
+
+That is the failure mode `tests/test_ui_imports.py` was written to document: a green suite
+that has nothing to say about the thing it names.
+
+**Required:** have the test import and call the real selection helper rather than mimicking it.
+Extract the sort into a named function in `ranker.py` if that is what it takes.
+
+## A5 — keep `pain_score` intact in the audit trail
+
+Your plan sets `card.score = relevance`. That is fine and arguably clearer — but `score` and
+`pain_score` currently hold the same value, and the Run History renders `score`. After this
+change they diverge.
+
+**Required:** `pain_score` keeps the raw model output, untouched. The Run History candidate row
+must show **both** — the raw pain match and the blended relevance — or a reviewer cannot see
+*why* a card won. Compass IX: auditable in seconds.
+
+## A6 — measure the token delta
+
+The ticket asks for it in the report and your verification plan omits it. Record prompt +
+completion tokens on one replayed run before and after. Expected ≈ +300 on ~8,000 (+4%) from
+4 hook cards instead of 2, net of the 600→450 snippet trim. **If it is materially worse than
+that, stop and report rather than absorbing it** — we are already ~1.3× the per-minute bucket.
+
+## Updated exclusive file list
+
+Adds `tests/test_determinism.py`. Full list:
+
+`zara/ranker.py` · `zara/drafter.py` · `zara/s2.py` · `zara/verifier.py` · `zara/models.py` ·
+`zara/utils/telemetry.py` · `value_prop.yaml` · `app.py` · `tests/test_drafter_pain_none.py` ·
+`tests/test_determinism.py`
+
+## One thing to state before you start
+
+Your plan does not say what `RankedProspect.hooks` contains after the dedup moves. Confirm:
+it is the **surviving deduped set, ordered by `final` descending** — the human still sees
+options, just no two of the same kind. Do not return all four un-deduped, and do not return
+only the winner.
