@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft only includes generic value proposition and inferred pain points that are supported by the evidence (automation of reconciliation\u2011heavy processes, ShipBob\u2019s Simulation Terminal). It does not introduce any specific metrics, customer names, or factual claims about the prospect that lack support."
+  },
+  "prompt_tokens": 1080,
+  "completion_tokens": 637
+}

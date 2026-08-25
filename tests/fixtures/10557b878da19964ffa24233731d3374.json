@@ -3,20 +3,20 @@
     "hooks": [
       {
         "card_index": 0,
-        "hook_text": "ShipBob\u2019s Simulation Terminal is now available in all sandbox accounts, letting you simulate the full fulfillment lifecycle without real warehouse activity.",
-        "rationale": "We don\u2019t know Test\u2019s exact role, but this company\u2011wide capability speeds integration testing and builds confidence before go\u2011live, which is valuable for any team responsible for operations or tech integration.",
-        "bridge": "Our platform automates the manual, reconciliation\u2011heavy steps that follow such simulations, turning a tested workflow into a continuously error\u2011free, low\u2011effort process.",
-        "strength": 0.85
+        "hook_text": "ShipBob\u2019s Simulation Terminal is now live in every sandbox account, letting you run full\u2011cycle fulfillment, receiving, and inventory adjustments without touching a real warehouse.",
+        "rationale": "We don\u2019t know Test\u2019s exact role, so we focus on the company\u2011wide benefit: the new terminal speeds up end\u2011to\u2011end integration testing and cuts manual effort, which matters to any operations stakeholder at ShipBob.",
+        "bridge": "Our platform can integrate with the Simulation Terminal to automatically reconcile the data generated during those tests, removing the manual reconciliation steps you\u2019d otherwise perform.",
+        "strength": 0.86
       },
       {
         "card_index": 1,
-        "hook_text": "ShipBob just secured a $200\u202fmillion funding round led by Bain Capital Ventures, pushing its valuation into unicorn territory.",
-        "rationale": "Test\u2019s role is unknown, but the massive new capital signals rapid scaling and heightened operational demand, a situation where automated reconciliation can prevent bottlenecks.",
-        "bridge": "With our automation solution, ShipBob\u2019s expanding operations can handle the increased transaction volume without adding manual reconciliation overhead.",
-        "strength": 0.8
+        "hook_text": "ShipBob just secured a $200\u202fmillion funding round led by Bain Capital Ventures, pushing the company into unicorn status.",
+        "rationale": "Role is unknown, so we highlight the company\u2011level milestone: the massive new capital signals rapid growth and likely increasing operational complexity, a concern for anyone overseeing ShipBob\u2019s processes.",
+        "bridge": "As ShipBob scales, our solution can automate the growing volume of reconciliation\u2011heavy tasks, keeping operations efficient during hyper\u2011growth.",
+        "strength": 0.78
       }
     ]
   },
   "prompt_tokens": 789,
-  "completion_tokens": 616
+  "completion_tokens": 825
 }

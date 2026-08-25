@@ -104,9 +104,39 @@ CREATE INDEX IF NOT EXISTS idx_usage_provider ON usage(provider);
 """
 
 
+SEED_DB = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__)))), "seed", "zara_runs_demo.db")
+
+
+def _restore_seed(path: str) -> None:
+    """First run on a fresh filesystem gets the demo history, not an empty page.
+
+    The run store lives under var/, which is gitignored, and a hosted deploy has
+    an ephemeral filesystem -- so without this the Run History dashboard is blank
+    on the deployed URL until someone happens to run a prospect.
+
+    Seeding is a deployment bootstrap, not a property of the store, so it is
+    opt-out: set ZARA_SEED_DEMO=0 for a store that must start genuinely empty.
+    The tests do exactly that -- an implicitly pre-populated "fresh" store made
+    three of them assert against rows they had not written.
+
+    A store that already exists is never overwritten.
+    """
+    if os.environ.get("ZARA_SEED_DEMO", "1") != "1":
+        return
+    if os.path.exists(path) or not os.path.exists(SEED_DB):
+        return
+    try:
+        import shutil
+        shutil.copyfile(SEED_DB, path)
+    except OSError:
+        pass   # a missing seed is cosmetic; never let it stop a run
+
+
 def connect(path: str = None) -> sqlite3.Connection:
     path = path or DB_PATH
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    _restore_seed(path)
     conn = sqlite3.connect(path, timeout=10)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")

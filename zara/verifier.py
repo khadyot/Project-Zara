@@ -21,7 +21,8 @@ def _normalize(text: str) -> str:
 # both bloats the payload (measured 18-22k chars, ~73% of a prospect's whole
 # token spend against an 8K TPM ceiling) and lets a vetoed layoff snippet act as
 # valid grounding, which is a Compass X hole in the final gate.
-def build_evidence_list(prospect: RankedProspect, value_prop: dict, supporting_only: bool = True) -> list[str]:
+def build_evidence_list(prospect: RankedProspect, value_prop: dict, supporting_only: bool = True,
+                       strictness: str = "strict") -> list[str]:
     evidence = []
     if prospect.prospect.person_name:
         evidence.append(prospect.prospect.person_name)
@@ -31,6 +32,14 @@ def build_evidence_list(prospect: RankedProspect, value_prop: dict, supporting_o
         evidence.append(prospect.prospect.title)
 
     for k, v in value_prop.items():
+        # `proof_point` carries a hard number ("30-40%"). In strict mode the
+        # drafter is explicitly forbidden to use it, so admitting it as evidence
+        # licenses the exact claim we told the model not to make: grounding is a
+        # substring test, so an invented "30% cut in processing time" matched the
+        # "30-40%" in a proof point that was never allowed into the draft.
+        # You cannot ground against something you are forbidden to say.
+        if k == "proof_point" and strictness != "permissive":
+            continue
         if isinstance(v, str):
             evidence.append(v)
 
@@ -69,7 +78,8 @@ def check_format(draft_text: str) -> list[str]:
     return notes
 
 
-def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict) -> list[str]:
+def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict,
+                    strictness: str = "strict") -> list[str]:
     # Extract numbers, dates, quoted strings, URLs, and multi-word proper nouns
     # For a simple deterministic pass, we'll extract tokens that look like these.
     
@@ -96,7 +106,7 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict)
     candidates = sorted(set(numbers + urls + quotes + proper_nouns))
     
     # Gather all evidence text
-    evidence = build_evidence_list(prospect, value_prop)
+    evidence = build_evidence_list(prospect, value_prop, strictness=strictness)
     evidence_text = " ".join(evidence)
     norm_evidence = _normalize(evidence_text)
     
@@ -197,7 +207,8 @@ def check_attribution(draft_text: str, prospect: RankedProspect) -> list[str]:
     ]
 
 
-async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: dict) -> VerificationResult:
+async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: dict,
+                       strictness: str = "strict") -> VerificationResult:
     # Compass I: The no_signal note skips grounding extraction.
     # We identify it by checking if it's the no_signal note (winning_card is None implies no_signal note was used)
     # However, since verify_draft only takes draft_text, prospect, value_prop, we check winning_card
@@ -205,11 +216,21 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
         sender_name = value_prop.get("sender_name", "Zamp")
         if sender_name not in draft_text:
             return VerificationResult(passed=False, status="blocked_hallucination", reason=f"Missing sender_name: {sender_name}")
-        # Verify it doesn't invent anything by skipping pass 1, but we can just say it passed
-        return VerificationResult(passed=True, status="clean", reason=None)
-        
+        # This used to `return passed=True` here, skipping verification entirely.
+        # That inverted the whole gate: the draft with the STRONGEST evidence got
+        # the strictest checking, and the draft with NO evidence got none at all --
+        # on exactly the path where the model has nothing to work from and is
+        # therefore most likely to invent. It shipped a fabricated "30% cut in
+        # processing time" in strict mode.
+        #
+        # Grounding still applies, and applies cleanly: with no cards the evidence
+        # list is the prospect, the offer, and the pain statements, so ordinary
+        # framing passes while an invented number, URL, quote, or proper noun does
+        # not. Falls through to the same path as every other draft.
+        pass
+
     ungrounded = check_attribution(draft_text, prospect) + check_recency(draft_text, prospect)
-    ungrounded += pass1_grounding(draft_text, prospect, value_prop)
+    ungrounded += pass1_grounding(draft_text, prospect, value_prop, strictness=strictness)
     if ungrounded:
         return VerificationResult(
             passed=False, 

@@ -1,0 +1,7 @@
+{
+  "content": {
+    "draft_text": "Hi Sam,\n\nI saw the recent news that Paraglide customers are cutting DSO by about 34% by speeding up billing query and dispute resolution, with implementations under ten days and native integrations to SAP, Oracle, Dynamics 365, NetSuite and QuickBooks. It highlights a common bottleneck: many finance ops still handle exceptions in spreadsheets, which leaves no audit trail and creates reconciliation headaches. Our platform lets operations teams automate those manual, reconciliation\u2011heavy processes, giving you a clear, auditable workflow.\n\nWould you be open to a quick call?\n\nZamp"
+  },
+  "prompt_tokens": 635,
+  "completion_tokens": 439
+}

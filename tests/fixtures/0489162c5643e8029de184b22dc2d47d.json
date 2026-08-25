@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw a recent YouTube interview titled \u201cTre White 1\u2011on\u20111 Interview | Indiana Pacers Prospect Workouts.\u201d",
+        "rationale": "While the video isn\u2019t directly related to Northwind Freight, as CFO Riley Chen you\u2019re likely focused on operational efficiency across the company, so a quick, relevant hook can capture attention.",
+        "bridge": "Our solution automates manual, reconciliation\u2011heavy processes, freeing up finance and operations teams to focus on strategic initiatives rather than routine data work.",
+        "strength": 0.4
+      },
+      {
+        "card_index": 1,
+        "hook_text": "NTIA announced nearly $800\u202fM in new broadband funding for tribal lands, with the application window open June\u202f17\u202f\u2013\u202fSeptember\u202f17\u202f2026.",
+        "rationale": "As CFO, Riley Chen must evaluate large\u2011scale capital projects; this funding could support connectivity upgrades that improve freight tracking and reduce manual reconciliation costs.",
+        "bridge": "Our automation platform leverages reliable broadband to streamline data flows, so any funded connectivity improvements can be directly paired with our solution for maximum ROI.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 869,
+  "completion_tokens": 952
+}

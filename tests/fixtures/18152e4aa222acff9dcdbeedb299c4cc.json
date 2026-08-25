@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable matches finance, payments, volume, or leadership."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Snippet lacks finance or payment observables."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Announced $200M funding round for expansion."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Reported $200M equity raise indicating significant expansion funding."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Customer testimonial without relevant finance or volume data."
+      },
+      {
+        "index": 21,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product release announcement without explicit growth or finance details."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.9,
+        "reason": "States 300M+ orders fulfilled, showing order volume growth."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Generic site footer, no observable content."
+      },
+      {
+        "index": 22,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Press release about new features, no finance or volume metrics."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.7,
+        "reason": "Mentions expansion into Europe, indicating new market growth."
+      }
+    ]
+  },
+  "prompt_tokens": 1984,
+  "completion_tokens": 1696
+}

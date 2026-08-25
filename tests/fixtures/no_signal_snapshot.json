@@ -1,0 +1,89 @@
+{
+  "prospect": {
+    "person_name": "Riley Chen",
+    "company": "Northwind Freight"
+  },
+  "results": [
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "empty",
+      "reason": "no articles matched the company name",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTP 404 fetching the company site",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no LinkedIn profile or company page found",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no news results",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "skipped",
+      "reason": "no company domain resolved",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no SEC filings (private company)",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no video results",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "empty",
+      "reason": "no results above the relevance floor",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    },
+    {
+      "source": "ApifyLinkedInCompany",
+      "rung": 2,
+      "status": "empty",
+      "reason": "actor returned 0 companies",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 900
+    }
+  ]
+}

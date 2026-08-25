@@ -69,3 +69,62 @@ def test_retired_rows_survive_the_sourceresult_invariants():
     for r in _retired_source_results():
         SourceResult(source=r.source, rung=r.rung, status=r.status, reason=r.reason,
                      cards=[], cost_usd=0.0, elapsed_ms=0)
+
+
+# --- the no-signal path must be verified, not waved through --------------------
+# verify_draft used to `return passed=True` whenever winning_card was None, so the
+# draft with NO evidence got NO grounding check -- the inversion of the gate. It
+# shipped "companies typically see a 30% cut in processing time" in strict mode,
+# on the one path where the model has nothing to work from and is most likely to
+# invent. Found by driving a genuinely thin prospect through the pipeline.
+
+import yaml
+import pytest
+
+from zara.verifier import pass1_grounding, build_evidence_list
+
+
+@pytest.fixture
+def vp():
+    with open("value_prop.yaml") as f:
+        return yaml.safe_load(f)
+
+
+def _no_signal_prospect():
+    return RankedProspect(
+        prospect=Prospect("Riley Chen", "Northwind Freight", title="CFO"),
+        cards=[], icp_fit="unknown", winning_card=None,
+    )
+
+
+FABRICATED = ("Hi Riley,\n\nMany freight operators face reconciliation drag. Companies that "
+              "adopt our solution typically see a 30% cut in processing time.\n\nBest,\nZamp")
+HONEST = ("Hi Riley,\n\nMany freight operators carry reconciliation work that eats the "
+          "month-end close. We automate those manual matching steps. Worth a short "
+          "conversation?\n\nBest,\nZamp")
+
+
+def test_invented_metric_is_caught_on_the_no_signal_path(vp):
+    assert "30" in pass1_grounding(FABRICATED, _no_signal_prospect(), vp)
+
+
+def test_honest_generic_copy_is_not_flagged(vp):
+    """Generic framing is the point of this path. It must not read as fabrication."""
+    assert pass1_grounding(HONEST, _no_signal_prospect(), vp) == []
+
+
+def test_proof_point_is_not_evidence_in_strict_mode(vp):
+    """Grounding is a substring test, so a sanctioned '30-40%' licenses any '30'.
+
+    In strict mode the drafter is forbidden to use proof_point, so admitting it
+    as evidence would license exactly the claim we told the model not to make.
+    """
+    assert vp.get("proof_point"), "this test is meaningless without a proof point"
+    strict = build_evidence_list(_no_signal_prospect(), vp, strictness="strict")
+    permissive = build_evidence_list(_no_signal_prospect(), vp, strictness="permissive")
+    assert vp["proof_point"] not in strict
+    assert vp["proof_point"] in permissive
+
+
+def test_permissive_mode_still_allows_the_sanctioned_proof_point(vp):
+    assert pass1_grounding(FABRICATED, _no_signal_prospect(), vp, strictness="permissive") == []

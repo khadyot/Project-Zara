@@ -144,7 +144,7 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     # 3. Verify
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "running"})
-    verification = await verify_draft(draft_text, ranked_prospect, vp)
+    verification = await verify_draft(draft_text, ranked_prospect, vp, strictness=strictness)
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "done",
                   "detail": verification.status})
@@ -162,7 +162,7 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if verification.status == "blocked_hallucination" and verification.first_pass_hallucinations:
         draft_text_retry = await draft_email(ranked_prospect, vp, strictness=strictness, feedback_tokens=verification.first_pass_hallucinations, hook=hook, style=style)
         if draft_text_retry:
-            verification_retry = await verify_draft(draft_text_retry, ranked_prospect, vp)
+            verification_retry = await verify_draft(draft_text_retry, ranked_prospect, vp, strictness=strictness)
             if verification_retry.passed:
                 # self corrected
                 from dataclasses import replace

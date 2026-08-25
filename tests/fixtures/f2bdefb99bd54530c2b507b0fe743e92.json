@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founders podcast, no specific observable matching pains"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "spreadsheet_exceptions",
+        "score": 0.9,
+        "reason": "Founder describes manual reconciliation processes"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding announcement, lacks observable related to pains"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Valuation news, no observable matching any pain"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Security testing announcement, unrelated to defined observables"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.9,
+        "reason": "Launch of new PSP adds payment methods"
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.8,
+        "reason": "Introduced Global USD Accounts with multiple payment rails"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Partnership announcement, no explicit new payment method"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Customer testimonial, lacks observable of new payment methods"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Financing news, no observable matching pains"
+      }
+    ]
+  },
+  "prompt_tokens": 2088,
+  "completion_tokens": 2082
+}

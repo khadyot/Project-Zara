@@ -1,0 +1,7 @@
+{
+  "content": {
+    "draft_text": "Hi Alex,\n\nA colleague at ShipBob shared that when they loaded 500 repositories across 27 teams, the engineering velocity jumped three\u2011fold while commit\u2011to\u2011push times fell 50%. It seems the sheer scale and coordination of codebases is generating hidden overhead and manual reconciliation work.\n\nWe\u2019ve helped operations teams automate those reconciliation\u2011heavy processes, freeing engineers to focus on delivery. Could we explore if a similar approach could streamline your workflows?\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 832,
+  "completion_tokens": 822
+}

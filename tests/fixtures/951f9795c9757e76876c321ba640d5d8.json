@@ -5,64 +5,64 @@
         "index": 14,
         "matched_pain_id": null,
         "score": 0.0,
-        "reason": "No finance, payment, or volume observable present"
+        "reason": "No observable finance or operational signal."
       },
       {
         "index": 17,
         "matched_pain_id": null,
         "score": 0.0,
-        "reason": "No explicit volume growth or finance observable"
+        "reason": "Advice only, no observable growth or finance change."
       },
       {
         "index": 15,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Product feature release, no pain observable"
+        "reason": "Product simulation tool announced."
       },
       {
         "index": 13,
-        "matched_pain_id": null,
-        "score": 0.0,
-        "reason": "Podcast intro lacks relevant finance or volume observable"
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast featuring CEO and founder released."
       },
       {
         "index": 9,
         "matched_pain_id": "structural_complexity",
         "score": 0.9,
-        "reason": "Funding round $200M signals expansion financing"
+        "reason": "Announced $200M funding round for expansion."
       },
       {
         "index": 10,
         "matched_pain_id": "structural_complexity",
         "score": 0.9,
-        "reason": "Series funding $200M indicates expansion financing"
+        "reason": "Reported $200M raise indicating significant financing."
       },
       {
         "index": 16,
         "matched_pain_id": null,
         "score": 0.0,
-        "reason": "Customer testimonial, no finance or volume observable"
+        "reason": "Customer testimonial, no observable finance or scaling signal."
       },
       {
         "index": 21,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Release announcement, not tied to specific pain"
+        "reason": "Spring 2026 product release announced."
       },
       {
         "index": 18,
-        "matched_pain_id": "linear_headcount",
-        "score": 0.85,
-        "reason": "300M+ orders fulfilled shows order volume growth"
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI feature launch described."
       },
       {
         "index": 19,
         "matched_pain_id": null,
         "score": 0.0,
-        "reason": "Footer content, no relevant observable"
+        "reason": "Website footer, no relevant observable."
       }
     ]
   },
   "prompt_tokens": 1991,
-  "completion_tokens": 1930
+  "completion_tokens": 1713
 }

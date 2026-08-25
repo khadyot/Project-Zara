@@ -46,6 +46,19 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             f"- Do NOT invent a human signer or job title.\n"
             f"- Do NOT invent specific company news (like funding or leadership changes) since none was verified.\n"
         )
+
+        # This branch had every constraint EXCEPT the one about invented metrics,
+        # so the path with the LEAST evidence had the weakest guard -- and it
+        # produced "companies typically see a 30% cut in processing time" in
+        # strict mode. Same rule as the grounded path; no reason it was ever
+        # weaker here, and every reason for it to be stronger.
+        if strictness == "permissive" and value_prop.get("proof_point"):
+            fallback_prompt += f"- You may use this proof point verbatim, and no other: {value_prop['proof_point']}\n"
+        else:
+            fallback_prompt += (
+                "- Do NOT invent proof points, customer metrics, percentages, or numbers "
+                "of any kind. No statistic that is not given to you above.\n"
+            )
         if style and style != "auto":
             fallback_prompt += f"- Email opening style: {style}.\n"
             

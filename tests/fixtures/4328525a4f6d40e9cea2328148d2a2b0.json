@@ -1,7 +1,7 @@
 {
   "content": {
-    "draft_text": "Hi Test,\n\nI saw that ShipBob\u2019s Simulation Terminal is now in every sandbox, letting you run full fulfillment, receiving, and inventory adjustments straight from the dashboard without touching real warehouse activity. That\u2019s the quickest way to validate an integration end\u2011to\u2011end before launch.\n\nIt seems you may be investing a lot of time manually reconciling those test runs and webhook data. Our solution automates those reconciliation\u2011heavy steps for operations teams, freeing engineers to focus on growth.\n\nWould you be open to a brief chat to explore?\n\nBest,\nZamp"
+    "draft_text": "Hi Test,\n\nI noticed ShipBob\u2019s new Simulation Terminal lets you run full\u2011cycle fulfillment, receiving and inventory adjustments right from the sandbox dashboard \u2013 the fastest way to validate an integration before going live. I imagine your team still spends a lot of time manually reconciling those webhook events and inventory updates, which can slow down rollouts. We specialize in automating those reconciliation\u2011heavy steps for operations teams, turning noisy data flows into reliable, hands\u2011off processes.\n\nWould you be open to a quick chat?\n\nZamp"
   },
   "prompt_tokens": 626,
-  "completion_tokens": 938
+  "completion_tokens": 305
 }

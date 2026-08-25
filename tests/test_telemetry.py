@@ -21,6 +21,9 @@ def store(tmp_path, monkeypatch):
     db = tmp_path / "runs.db"
     monkeypatch.setenv("ZARA_RUN_DB", str(db))
     monkeypatch.setattr(telemetry, "DB_PATH", str(db))
+    # These tests assert on rows they wrote themselves, so the store has to start
+    # genuinely empty -- the demo seed that ships for deploys must not appear here.
+    monkeypatch.setenv("ZARA_SEED_DEMO", "0")
     yield db
 
 

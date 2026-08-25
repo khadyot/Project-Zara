@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 13,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "VersaPay sale announcement."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "VersaPay ROI study release."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Cash flow report press release."
+      },
+      {
+        "index": 22,
+        "matched_pain_id": "spreadsheet_exceptions",
+        "score": 0.9,
+        "reason": "Integration with ERP systems noted."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.8,
+        "reason": "New cash discounting payment feature announced."
+      },
+      {
+        "index": 21,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding rounds disclosed."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      }
+    ]
+  },
+  "prompt_tokens": 1952,
+  "completion_tokens": 1600
+}

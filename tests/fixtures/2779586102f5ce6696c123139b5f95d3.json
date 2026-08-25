@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Your founders\u2019 recent discussion on fiat, stablecoins, and building a PSP underscores the reconciliation complexity across multiple payment rails.",
+        "rationale": "As Director of Ops at Modern Treasury, Jordan is responsible for smoothing operational workflows, and the multi\u2011rail focus highlighted in the video directly translates to manual reconciliation challenges he likely faces.",
+        "bridge": "Our platform automates those reconciliation\u2011heavy processes, letting the ops team handle fiat and stablecoin flows without manual matching.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Modern Treasury\u2019s acquisition of Beam to bring stablecoins and fiat under a single API signals a move toward unified payment processing.",
+        "rationale": "Jordan, as Director of Ops, will need to integrate this new unified API and ensure the operational team can process both asset types efficiently, a classic source of manual reconciliation pain.",
+        "bridge": "Our solution plugs into that single API and automatically reconciles transactions across fiat and stablecoins, eliminating the manual work Jordan\u2019s team currently endures.",
+        "strength": 0.82
+      }
+    ]
+  },
+  "prompt_tokens": 747,
+  "completion_tokens": 627
+}
