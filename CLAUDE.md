@@ -59,6 +59,8 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 
 `env -i PATH=/usr/bin:/bin HOME=$HOME PYTHONPATH=. ./venv/bin/pytest tests/ -q` — 15 tests, all must pass twice consecutively (fixtures replay; zero live calls under fixtures). Fixtures are prompt-hash-keyed; if you change a prompt in ranker/drafter/verifier/classifier, re-record the missing fixture hash (see `scripts/record_mock.py`). Verify hashes are stable across two runs before recording.
 
+**Always re-record with `USE_FIXTURES=fill`, never with fixtures off.** `fill` replays every fixture that exists and goes live only for the missing ones. Recording with fixtures *off* re-answers prompts whose fixtures were fine, overwriting good recordings with fresh non-deterministic output — and, worse, **a downstream prompt's hash depends on upstream output**: score the cards live and the shortlist shifts, so the hook prompt text changes, so its hash never matches the one the test is asking for. That failure presents as an inexplicable "hash mismatch" and cost two sessions ~50 wasted live calls plus a full day's Groq budget before it was understood.
+
 ## Key docs
 
 - `HANDOFF.md` — session handoff, verified facts, locked decisions (read before assuming)
@@ -67,6 +69,30 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 - `reference/data-source-strategy.md` — per-source pricing/limits traced to primary sources; **do not re-research**
 - `reference/competitor-research/sample-leads/test_leads.csv` — hostile 14-row CSV ingestion test set
 - `reference/ml_pipeline_part2.md` — two-tier pipeline design basis
+- `reference/working-with-antigravity.md` — **read before writing any AG ticket.** AG's real strengths, its seven documented failure modes with incidents, and the ticket checklist
+- `.agents/rules/antigravity-execution.md` — the rules AG itself must follow
+
+## Delegating to Antigravity
+
+**AG is a transcriber, not a debugger.** It plans well against a written spec and executes
+mechanical changes reliably. It has no dependable "I'm stuck, stop" reflex, and its
+self-diagnosis is unreliable in exactly the moment it matters — a `TypeError` cascade from its
+own out-of-scope edit was reported back as an unexplained "hash mismatch" after a 47-minute loop.
+
+Non-negotiables on every ticket (full rationale in `reference/working-with-antigravity.md`):
+
+- **Exclusive file list, and check `git status` against it afterwards.** Out-of-scope edits are
+  the root of nearly all damage.
+- **A stop rule with a number** — "two attempts, then report". Sentiment doesn't work; a counter does.
+- **AG never makes live API calls.** Recording is the reviewer's job. AG once spent a whole day's
+  Groq budget (199,473/200,000) on 56 unusable fixtures.
+- **AG never runs git.** Twice violated on record.
+- **For a known hazard, specify the mechanism, not the caution.** A warning repeated twice did not
+  stop AG shipping the exact bug it warned about; handing it the function signature would have.
+- **Verify AG's claims against the tree before acting on them.** Run the suite yourself.
+
+Reviewer's own duty: give a complete file list (a boundary not given cannot be respected), and
+check your acceptance numbers before making them someone else's pass/fail gate.
 
 ## Baseline performance (prior build)
 
