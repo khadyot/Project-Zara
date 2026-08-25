@@ -398,23 +398,6 @@ div[data-testid="stMetricValue"] {
     margin-top: var(--spacing-24);
     margin-bottom: var(--spacing-32);
 }
-</style>
-"""
-
-
-def render_hero():
-    # Streamlit hack: inject a full-width HTML hero at the top
-    hero_html = """
-    <div id="zara-hero">
-        <h1>Project Zara</h1>
-        <p>
-            Automated, grounded, personalized outreach without the hallucination.
-        </p>
-    </div>
-    """
-    st.markdown(hero_html, unsafe_allow_html=True)
-
-
 
 /* Phase 3: Run History Density Treatment */
 div[data-testid="stExpanderDetails"] { font-size: 14px; }
@@ -458,6 +441,9 @@ div[data-testid="stExpanderDetails"] { font-size: 14px; }
     padding: 12px;
     margin-top: 8px;
 }
+.candidate-snippet.excluded {
+    color: var(--color-stone);
+}
 
 .hook-row {
     background-color: var(--color-pure-white);
@@ -476,3 +462,18 @@ div[data-testid="stExpanderDetails"] { font-size: 14px; }
 .model-call-header {
     font-size: 14px;
 }
+</style>
+"""
+
+
+def render_hero():
+    # Streamlit hack: inject a full-width HTML hero at the top
+    hero_html = """
+    <div id="zara-hero">
+        <h1>Project Zara</h1>
+        <p>
+            Automated, grounded, personalized outreach without the hallucination.
+        </p>
+    </div>
+    """
+    st.markdown(hero_html, unsafe_allow_html=True)
