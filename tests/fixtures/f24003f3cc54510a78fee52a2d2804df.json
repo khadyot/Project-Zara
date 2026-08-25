@@ -3,16 +3,16 @@
     "hooks": [
       {
         "card_index": 0,
-        "hook_text": "Your engineering team is racing to onboard 500 repositories in a week to support scaling.",
-        "rationale": "As VP Finance, rapid scaling and massive repo onboarding mean a surge in transaction data that can overwhelm manual reconciliation processes, increasing risk and workload for the finance organization.",
-        "bridge": "Our automation platform can instantly ingest and reconcile the flood of data from those repositories, eliminating manual effort and reducing errors.",
+        "hook_text": "You mentioned a push to onboard 500 repositories in a week to support scaling.",
+        "rationale": "As VP Finance, a rapid influx of repositories signals a surge in transaction data that can overwhelm manual reconciliation, risking errors and slower financial close cycles.",
+        "bridge": "Our platform automates reconciliation-heavy processes, letting finance keep pace with fast\u2011moving operational data without extra manual effort.",
         "strength": 0.68
       },
       {
         "card_index": 1,
-        "hook_text": "ShipBob just secured a $200\u202fmillion funding round, pushing the company to unicorn status.",
-        "rationale": "With a new $200M capital infusion, the finance team will need to manage larger cash flows, budgeting, and reporting while the business scales, making efficient reconciliation critical.",
-        "bridge": "Our solution automates reconciliation\u2011heavy processes, giving your finance team the bandwidth to focus on strategic allocation of the new funds.",
+        "hook_text": "ShipBob just secured a $200\u202fmillion funding round, achieving unicorn status.",
+        "rationale": "For a VP Finance, this new capital heightens pressure to demonstrate efficient financial operations and ROI to investors.",
+        "bridge": "Our automation solution streamlines reconciliation, freeing your team to focus on strategic allocation of the fresh funds and maintaining investor confidence.",
         "strength": 0.82
       }
     ]

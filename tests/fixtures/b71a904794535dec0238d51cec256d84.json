@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references the eighth birthday celebration and the focus on payments infrastructure, which are supported by the transcript evidence, and mentions automating manual reconciliation processes, which aligns with the provided value proposition. No unsupported metrics, customer names, or fabricated quotes are present."
+  },
+  "prompt_tokens": 1191,
+  "completion_tokens": 326
+}

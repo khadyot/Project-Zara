@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains generic value propositions and connective language that are supported by the evidence. It does not include any invented metrics, customer names, quotes, or specific claims about Northwind Freight beyond what is provided."
+  },
+  "prompt_tokens": 625,
+  "completion_tokens": 388
+}

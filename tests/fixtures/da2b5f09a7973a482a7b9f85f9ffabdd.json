@@ -17,37 +17,37 @@
         "index": 10,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "VersaPay sale announcement."
+        "reason": "Company sale announcement, no specific pain."
       },
       {
         "index": 17,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "VersaPay ROI study release."
+        "reason": "Forrester ROI study, not tied to pain."
       },
       {
         "index": 19,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Cash flow report press release."
+        "reason": "Cash flow report, no observable pain."
       },
       {
         "index": 22,
-        "matched_pain_id": "spreadsheet_exceptions",
-        "score": 0.9,
-        "reason": "Integration with ERP systems noted."
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
       },
       {
         "index": 20,
-        "matched_pain_id": "silent_breaks",
-        "score": 0.8,
-        "reason": "New cash discounting payment feature announced."
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
       },
       {
         "index": 21,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Funding rounds disclosed."
+        "reason": "Funding rounds news, no specific pain."
       },
       {
         "index": 16,
@@ -64,5 +64,5 @@
     ]
   },
   "prompt_tokens": 1952,
-  "completion_tokens": 1600
+  "completion_tokens": 1411
 }

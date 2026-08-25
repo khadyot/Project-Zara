@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The draft attributes the 500 codebases, 50% commit\u2011to\u2011push reduction, and 3\u00d7 PR velocity to ShipBob, but the evidence only contains a generic anecdote about scaling (500 repositories, 50% reduction, 3\u00d7 velocity) with no link to ShipBob. Claiming a ShipBob colleague said this is unsupported, making it a fabricated factual claim."
+  },
+  "prompt_tokens": 1201,
+  "completion_tokens": 607
+}

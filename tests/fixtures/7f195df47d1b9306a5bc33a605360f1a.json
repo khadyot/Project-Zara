@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Versapay\u2019s Forrester Total Economic Impact study shows companies achieving outstanding ROI from automating payment processing.",
+        "rationale": "As Controller, Sam Okafor is tasked with safeguarding the company\u2019s finances and improving cost efficiency; proven ROI from automation directly speaks to his mandate to reduce manual reconciliation costs.",
+        "bridge": "Our platform automates the reconciliation\u2011heavy processes you oversee, delivering the same ROI highlighted in the study.",
+        "strength": 0.92
+      },
+      {
+        "card_index": 1,
+        "hook_text": "The 2026 Cash Flow Clarity Report highlights that CFOs are seeing rising cash\u2011flow uncertainty because of persistent payment delays.",
+        "rationale": "Sam, as Controller, must monitor cash flow health and address payment delays that can destabilize the balance sheet; this report quantifies the exact challenge he faces.",
+        "bridge": "Our accounts\u2011receivable automation speeds payment capture and reduces manual lag, helping stabilize cash flow amid the delays noted in the report.",
+        "strength": 0.88
+      }
+    ]
+  },
+  "prompt_tokens": 824,
+  "completion_tokens": 571
+}

@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "The founders recently hosted a deep\u2011dive on fiat, stablecoins and building a PSP, a session that drew 33 viewers.",
+        "rationale": "Jordan Ellis, as Director of Ops, needs to stay ahead of product strategy; the founders\u2019 discussion signals upcoming features that will directly impact operational workflows and reconciliation demands.",
+        "bridge": "Our automation platform can streamline the heavy reconciliation work that will grow as Modern Treasury expands its PSP capabilities.",
+        "strength": 0.68
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Modern Treasury\u2019s valuation surpassed $2\u202fbillion following its latest financing round, as reported by Bloomberg.",
+        "rationale": "A $2\u202fbillion valuation indicates rapid scaling, which for a Director of Ops means a looming increase in transaction volume and manual reconciliation tasks.",
+        "bridge": "Our solution lets the ops team automate those reconciliation\u2011heavy processes, supporting growth without adding headcount.",
+        "strength": 0.73
+      }
+    ]
+  },
+  "prompt_tokens": 861,
+  "completion_tokens": 666
+}

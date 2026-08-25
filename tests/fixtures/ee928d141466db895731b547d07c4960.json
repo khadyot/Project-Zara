@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only supported statements: reference to the Forrester Total Economic Impact study, general pain points about manual reconciliation, and platform capabilities. No invented metrics, customer names, or specific prospect claims are present."
+  },
+  "prompt_tokens": 1114,
+  "completion_tokens": 583
+}

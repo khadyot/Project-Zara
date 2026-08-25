@@ -5,64 +5,64 @@
         "index": 0,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Founders podcast, no specific observable matching pains"
+        "reason": "General company news about PSP launch."
       },
       {
         "index": 1,
         "matched_pain_id": "spreadsheet_exceptions",
-        "score": 0.9,
-        "reason": "Founder describes manual reconciliation processes"
+        "score": 0.6,
+        "reason": "Executive describes manual reconciliation processes."
       },
       {
         "index": 2,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Funding announcement, lacks observable related to pains"
+        "reason": "Funding announcement, no specific observable."
       },
       {
         "index": 3,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Valuation news, no observable matching any pain"
+        "reason": "Valuation financing news, no observable."
       },
       {
         "index": 4,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Security testing announcement, unrelated to defined observables"
+        "reason": "Penetration testing announcement, unrelated."
       },
       {
         "index": 5,
-        "matched_pain_id": "silent_breaks",
-        "score": 0.9,
-        "reason": "Launch of new PSP adds payment methods"
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Press release of new Payments PSP, no observable."
       },
       {
         "index": 6,
-        "matched_pain_id": "silent_breaks",
-        "score": 0.8,
-        "reason": "Introduced Global USD Accounts with multiple payment rails"
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Launch of Global USD Accounts, no observable."
       },
       {
         "index": 7,
-        "matched_pain_id": "general_news",
-        "score": 0.3,
-        "reason": "Partnership announcement, no explicit new payment method"
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "New PSP integration adds settlement paths."
       },
       {
         "index": 8,
         "matched_pain_id": "general_news",
         "score": 0.3,
-        "reason": "Customer testimonial, lacks observable of new payment methods"
+        "reason": "Testimonial about payment visibility, not new method."
       },
       {
         "index": 9,
-        "matched_pain_id": "general_news",
-        "score": 0.3,
-        "reason": "Financing news, no observable matching pains"
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Secured $100m debt facility for expansion."
       }
     ]
   },
   "prompt_tokens": 2088,
-  "completion_tokens": 2082
+  "completion_tokens": 1610
 }
