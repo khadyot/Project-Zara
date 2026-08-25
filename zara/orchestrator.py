@@ -332,13 +332,30 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     from zara.utils.resolve import resolve_company_entity
     import dataclasses
 
+    # Demo mode has to be genuinely offline or it is not insurance. Entity
+    # resolution runs BEFORE retrieval and makes its own live search call, so
+    # replaying a snapshot without short-circuiting this still hits the network.
+    _replay = (settings or {}).get("replay_snapshot")
+
+    async def _resolve():
+        if _replay:
+            from zara.utils.resolve import normalize_company, ResolutionInfo
+            return ResolutionInfo(
+                input_company=prospect.company,
+                resolved_company=normalize_company(prospect.company),
+                domain=prospect.company_domain,
+                method="normalized_only",
+                candidates_considered=0,
+            )
+        return await resolve_company_entity(prospect.company)
+
     from zara.utils.telemetry import current as _trace0
     _tr0 = _trace0()
     if _tr0 is not None:
         with _tr0.stage("resolve_company"):
-            resolution = await resolve_company_entity(prospect.company)
+            resolution = await _resolve()
     else:
-        resolution = await resolve_company_entity(prospect.company)
+        resolution = await _resolve()
     if resolution.resolved_company and resolution.resolved_company != prospect.company:
         prospect = dataclasses.replace(prospect, company=resolution.resolved_company)
     if resolution.domain and not prospect.company_domain:
