@@ -340,3 +340,41 @@ Your plan does not say what `RankedProspect.hooks` contains after the dedup move
 it is the **surviving deduped set, ordered by `final` descending** — the human still sees
 options, just no two of the same kind. Do not return all four un-deduped, and do not return
 only the winner.
+
+---
+
+# ADDENDUM 2 — plan APPROVED, two notes (2026-08-26)
+
+A1-A6 are all correctly addressed. Execute. Two things to hold in mind while you do.
+
+## B1 — assert the flip on `relevance`, not on `final`
+
+Your verification says *"flip to `structural_complexity` at relevance `0.300`"* — that is the
+right criterion, and I am making it explicit because the distinction matters.
+
+`relevance` is deterministic: it falls out of `pain_score`, the normalised weights, and
+`recency_days`. It is assertable offline with zero model calls. **That is the acceptance test.**
+
+`final` additionally multiplies by `(0.5 + 0.5 × hook_strength)`, which comes from a model. The
+band spans 0.5×-1.0×, i.e. a **2.0× maximum swing**, against a funding-vs-podcast relevance gap
+of only **1.60×** (0.300 vs 0.188). So `final` *can* legitimately re-order the pair — it needs
+the funding hook rated ≲0.25 while the podcast hook is rated ≈1.0. Unlikely, not impossible.
+
+**If that happens, it is a result to report, not a bug to fix.** Do not tune the band to force
+the expected winner. Report the two hook strengths and stop; narrowing the band to 0.7-1.0
+(max swing 1.43×, below the 1.60× gap) is the fix we would then discuss, and it is my call to
+make, not yours.
+
+## B2 — `pain_match is None` must contribute `pain_score = 0.0`
+
+`relevance = pain_score × …` needs a number when `pain_match` is `None`. The existing code
+already stores `0.0` in that case — the Jordan Ellis winner is recorded as
+`score=0.00 pain=None ps=0.00`. Preserve that. If it ever became `None` or a default like 0.5,
+the Jordan Ellis acceptance number breaks and a card with no pain match becomes winnable again,
+which is the entire defect this ticket exists to remove.
+
+## Go
+
+Execute the revised plan. Standing rules unchanged: no git, no new prospect runs, only the
+3-4 live calls for the fixture re-record. Report to `agent_transfer/AG_to_C_27.md`; leave it
+uncommitted.
