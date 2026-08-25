@@ -1,0 +1,14 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Hiring software engineer; no observable matches any pain"
+      }
+    ]
+  },
+  "prompt_tokens": 919,
+  "completion_tokens": 320
+}

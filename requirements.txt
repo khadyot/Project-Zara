@@ -1,3 +1,9 @@
+# Runtime dependencies. Pinned exactly -- a clean deploy must install what this
+# laptop actually runs, not "something compatible".
+#
+# Dev/test-only packages live in requirements-dev.txt so the deployed image does
+# not ship a test runner.
+
 streamlit==1.62.0
 httpx==0.28.1
 feedparser==6.0.14
@@ -6,8 +12,18 @@ pydantic==2.13.4
 python-dotenv==1.2.3
 filelock==3.32.3
 PyYAML==6.0.3
-apify-client>=1.10.0
-exa-py>=1.0.0
-pytest==9.1.1
-pytest-asyncio==1.4.0
-playwright==1.62.0
+
+# Fetchers. apify-client and exa-py were previously unpinned `>=`, so a clean
+# install could resolve a different major than the one measured here.
+apify-client==3.1.3
+exa-py==2.18.1
+
+# zara/fetchers/exa.py imports this at MODULE level, and the orchestrator imports
+# the Exa fetchers -- so without it the app dies on `import app`, not at the point
+# of use. It was missing from this file entirely.
+youtube-transcript-api==1.2.4
+
+# zara/server.py -- the FastAPI `POST /pipeline/run` entrypoint. Not used by the
+# Streamlit app, but it is a documented entrypoint and was also missing here.
+fastapi==0.141.1
+uvicorn==0.52.4

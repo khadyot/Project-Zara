@@ -102,3 +102,10 @@ class DraftResult:
     verification: VerificationResult | None
     claim_strength: Literal["person_authored", "person_attributed", "colleague_authored", "company_action", "database_only", "no_signal"]
 
+    # True when the drafter had no winning card: the opener is company-level and
+    # the offer is not tied to any signal we actually found. The email is still
+    # written -- Compass I is "degrade, never refuse" -- but "never silently" is
+    # the other half, so this flag exists to be rendered on the output's face.
+    # Without it a no-signal draft is visually indistinguishable from a grounded
+    # one, which is the single failure this project's thesis cannot survive.
+    offer_is_generic: bool = False

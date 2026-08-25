@@ -1,0 +1,6 @@
+# Dev/test only. Install on top of requirements.txt:
+#   pip install -r requirements.txt -r requirements-dev.txt
+
+pytest==9.1.1
+pytest-asyncio==1.4.0
+playwright==1.62.0

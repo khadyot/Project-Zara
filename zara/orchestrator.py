@@ -81,14 +81,18 @@ async def run_pipeline(
         if on_event:
             on_event({"type": "stage", "name": "gap-filler gate", "status": "done",
                       "detail": f"{person_signal_count} person signals — paid rungs {'skipped' if gate_skip_paid else 'will run'}"})
-        if not gate_skip_paid:
-            fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
-    else:
-        # Rung 1 (Always fires, free tier)
-        fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
+    # Rung 1 is Exa x5 + Tavily -- every one of them free. The gap-filler gate
+    # exists to protect SPEND, so gating rung 1 alongside the paid rungs was pure
+    # loss: it deleted the LinkedIn/news/web tier on exactly the prospects that
+    # already looked promising. Rung 1 now always fires; only rungs 2-4 are gated.
+    fetcher_tasks.extend((f, f.fetch(prospect)) for f in rung1_fetchers)
 
     if gate_skip_paid:
-        for rung_num, fetchers in ((1, rung1_fetchers), (2, rung2_fetchers), (3, rung3_fetchers), (4, rung4_fetchers)):
+        if on_event:
+            on_event({"type": "stage", "name": "free sources (rung 1)", "status": "running"})
+        await _gather_results(fetcher_tasks, results, rung=1, on_event=on_event)
+        fetcher_tasks = []
+        for rung_num, fetchers in ((2, rung2_fetchers), (3, rung3_fetchers), (4, rung4_fetchers)):
             for f in fetchers:
                 results.append(SourceResult(
                     source=f.__class__.__name__,
@@ -265,6 +269,34 @@ async def run_pipeline(
                 
     return results
 
+# Job postings were cut from the product on 2026-08-24. Compass VII says absence
+# has two meanings -- "found nothing" is not "did not look" -- so a retired source
+# must say so on the audit trail instead of vanishing or reporting a bland `empty`.
+RETIRED_SOURCES = ("Greenhouse", "Lever", "Ashby", "SmartRecruiters", "Recruitee")
+RETIRED_REASON = "source retired 2026-08-24: job postings cut from the product"
+
+
+def _retired_source_results() -> list[SourceResult]:
+    return [
+        SourceResult(source=name, rung=0, status="skipped", reason=RETIRED_REASON,
+                     cards=[], cost_usd=0.0, elapsed_ms=0)
+        for name in RETIRED_SOURCES
+    ]
+
+
+def _load_replay_snapshot(path: str) -> list[SourceResult]:
+    """Demo mode. Replays a recorded retrieval instead of hitting the network.
+
+    USE_FIXTURES=1 alone only stubs the Apify fetchers and the LLM provider --
+    GoogleNews, Jina, Exa and Tavily still make live calls -- so a genuinely
+    offline run needs this too. Snapshots predate the ATS retirement and still
+    carry those five rows, so they are rewritten rather than duplicated.
+    """
+    from scripts.record_mock import load_snapshot
+    results = [r for r in load_snapshot(path) if r.source not in RETIRED_SOURCES]
+    return results + _retired_source_results()
+
+
 # One run gets one budget. Baseline for the prior build was p50 5.7s / max 24.5s;
 # without a ceiling, ~7 LLM calls each paying their own retry ladder turned that
 # into multi-minute hangs.
@@ -285,7 +317,6 @@ async def run_end_to_end_pipeline(prospect: Prospect, profile: str = "standard",
 
 
 async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_event):
-    from zara.fetchers.ats import GreenhouseFetcher, LeverFetcher, AshbyFetcher, SmartRecruitersFetcher, RecruiteeFetcher
     from zara.fetchers.news import GoogleNewsFetcher
     from zara.fetchers.jina import JinaCompanySiteFetcher
     from zara.fetchers.tavily import TavilyFetcher
@@ -317,9 +348,15 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     # server-side tool expansion 413s on every call -- 0/5 successes across every
     # recorded run, at ~9-12s of latency each. It also shares the Groq token
     # bucket the ranker needs.
+    # ATS unwired 2026-08-25 (product ruling, job postings cut). A job ad is
+    # recruiter boilerplate, not the prospect's voice -- company_action at best --
+    # and "I saw you're hiring" is the most worn-out hook in outbound. The brief
+    # names "a job posting for a role that is already filled" as its own example
+    # of the wrong-inference failure mode. The five fetchers stay on disk; they
+    # are reported as `skipped` with a reason so the audit trail shows a DECISION
+    # rather than five sources quietly returning `empty` (Compass VII).
     rung0 = [
-        GreenhouseFetcher(), LeverFetcher(), AshbyFetcher(),
-        SmartRecruitersFetcher(), RecruiteeFetcher(), GoogleNewsFetcher(),
+        GoogleNewsFetcher(),
         JinaCompanySiteFetcher()
     ]
 
@@ -349,9 +386,6 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     
     
     if settings:
-        if not settings.get("use_ats", True):
-            ats_names = {"GreenhouseFetcher", "LeverFetcher", "AshbyFetcher", "SmartRecruitersFetcher", "RecruiteeFetcher"}
-            rung0 = [f for f in rung0 if type(f).__name__ not in ats_names]
         if not settings.get("use_exa", True):
             rung1 = []
         if not settings.get("use_apify", True):
@@ -364,22 +398,36 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     from zara.utils.telemetry import current as _trace
     tr = _trace()
 
-    if tr is not None:
-        with tr.stage("retrieval"):
-            results = await run_pipeline(
-                prospect,
-                rung0_fetchers=rung0, rung1_fetchers=rung1, rung2_fetchers=rung2,
-                rung3_fetchers=rung3, rung4_fetchers=rung4,
-                deep_mode=(profile == "deep"), gap_filler_gate=True, on_event=on_event,
-            )
-        tr.capture_sources(results)
-    else:
-        results = await run_pipeline(
+    replay_path = (settings or {}).get("replay_snapshot")
+
+    async def _retrieve() -> list[SourceResult]:
+        if replay_path:
+            if on_event:
+                on_event({"type": "stage", "name": "demo mode: replaying snapshot",
+                          "status": "running", "detail": replay_path})
+            replayed = _load_replay_snapshot(replay_path)
+            if on_event:
+                for r in replayed:
+                    on_event({"type": "source", "name": r.source, "status": r.status,
+                              "detail": f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")[:80]})
+                on_event({"type": "stage", "name": "demo mode: replaying snapshot", "status": "done",
+                          "detail": f"{len(replayed)} sources, zero network calls"})
+            return replayed
+        live = await run_pipeline(
             prospect,
             rung0_fetchers=rung0, rung1_fetchers=rung1, rung2_fetchers=rung2,
             rung3_fetchers=rung3, rung4_fetchers=rung4,
             deep_mode=(profile == "deep"), gap_filler_gate=True, on_event=on_event,
         )
+        # The five retired job-board sources are reported, not omitted.
+        return live + _retired_source_results()
+
+    if tr is not None:
+        with tr.stage("retrieval"):
+            results = await _retrieve()
+        tr.capture_sources(results)
+    else:
+        results = await _retrieve()
 
     vp_override = settings.get("identity") if settings else None
     if tr is not None:

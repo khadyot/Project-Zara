@@ -19,30 +19,41 @@ buyer_functions: "anyone owning or influencing operations/finance processes (CEO
 #
 # Narrow on purpose. Vague pains match every signal, which looks like coverage and is
 # actually the loss of discrimination.
+#
+# CHANGED 2026-08-25: job postings were cut from the product, and four of these
+# five pains named job ads as an observable -- three of them as their ONLY one.
+# Left alone they would have been unmatchable, and every prospect would collapse
+# to `general_news`. Rewritten against what the surviving sources actually return:
+# news (GoogleNews, ExaNews), authored/social (ExaLinkedIn, ExaYouTube, Apify),
+# company site (Jina), and open web (Tavily).
 pains:
   - id: close_drag
     statement: "Month-end close drags because matching is manual across systems"
     observable_via:
-      - job postings for accountants/analysts mentioning close, matching, or month-end
-      - hiring in finance ops without corresponding revenue growth
+      - new finance leadership (CFO, VP Finance, Controller) appointed in the last 6 months
+      - public mention of an ERP, close, or financial-reporting system migration or upgrade
+      - an executive describing manual reporting, month-end, or data consolidation work
 
   - id: silent_breaks
     statement: "Payment, ledger, and bank reconciliation breaks silently and surfaces late"
     observable_via:
-      - job postings mentioning PSP, ledger, settlement, or payment ops
-      - new payment methods, providers, or geographies in news or product announcements
+      - new payment methods, PSPs, acquirers, or geographies in news or product announcements
+      - marketplace, partner, or multi-entity expansion that adds settlement paths
+      - public incident, status-page, or outage history touching payments, billing, or settlement
 
   - id: linear_headcount
     statement: "Ops headcount scales linearly with transaction volume"
     observable_via:
-      - repeated or bulk hiring of ops/fulfilment/analyst roles
-      - volume, GMV, or growth milestones in news
+      - volume, GMV, order, or transaction growth milestones in news
+      - rapid expansion into new markets, warehouses, or legal entities
+      - an executive describing scaling operations, throughput, or process standardisation
 
   - id: spreadsheet_exceptions
     statement: "Exceptions are handled in spreadsheets with no audit trail"
     observable_via:
-      - job descriptions naming Excel/Google Sheets as a core tool for a finance/ops role
-      - ERP or finance-system migration signals
+      - ERP or finance-system migration or implementation signals
+      - an executive describing manual reconciliation, exception handling, or spreadsheet reporting
+      - publicly announced audit, compliance, or internal-controls initiatives
       
   - id: structural_complexity
     statement: "Rapid expansion, new leadership, or structural changes inherently create intercompany reconciliation sprawl"
