@@ -177,10 +177,51 @@ unchanged draft keeps the user's edits.
 Worth noting as a class: **the run store cannot see the UI layer.** Anything between the
 `DraftResult` and the screen needs a human looking at it.
 
+### F7 — The budget meter reports one container's memory as if it were the account quota
+
+Spotted by the human on the deployed app, 2026-08-26. The sidebar read
+**"16,435 / 200,000 tokens · ~22 runs left today"** while Groq's own TPD had been exhausted
+minutes earlier at 199,473/200,000, and while this laptop's counter claimed 182,638 used.
+Three numbers, three different answers, all displayed with the confidence of a quota reading.
+
+**Root cause.** `zara/utils/quota.py` counts *local telemetry* — what this instance recorded on
+its own disk. Three ways that diverges from the truth:
+
+1. On Streamlit Cloud the run store is **ephemeral**. The deployed meter shows only what that
+   container has seen since its last restart; a redeploy resets it to near zero.
+2. Groq's quota is **per API key, account-wide**. Any local tally under-reports by construction
+   whenever calls originate anywhere else — laptop, another session, a second container.
+3. The **day boundaries do not agree**. `_window_start_and_reset` uses midnight in
+   `ZARA_QUOTA_TZ` (default UTC) and reported "resets in 3.0h" at a moment when Groq had
+   already reset — verified by a live call returning `200 OK` with
+   `x-ratelimit-remaining-requests: 965`.
+
+**Why it matters beyond the number.** This is the project's own thesis failing on its own
+dashboard: a confident claim the evidence does not support. Compass VII says absence has two
+meanings — "no calls recorded yet" is not "quota is full", and the meter cannot currently tell
+them apart. It is the same class as F6: the run store cannot see what happens outside it.
+
+**Fix (not done).** Groq returns `x-ratelimit-remaining-requests` / `-tokens` and
+`x-ratelimit-reset-*` on **every** response, including 429s. Capture those in `provider.py`
+where the 429 backoff already parses `x-ratelimit-reset-tokens`, persist the last observed
+value, and have the meter show it with its age — "*965/1000 requests, as of 4 min ago*" —
+falling back to the local estimate only when no header has ever been seen, and labelling that
+state as an estimate rather than a measurement. Headers are free; they ride on calls already
+being made.
+
+**Note:** the TPD ceiling itself is *not* in these headers (`x-ratelimit-limit-tokens: 8000` is
+the per-minute bucket). TPD is only observable from the 429 body, which states
+`Limit 200000, Used N`. That body is the one authoritative TPD reading available, so parse and
+persist it when a TPD 429 occurs.
+
 ### Still open after this batch
 
-- **Regenerate / Tavily-boost paths are untraced.** `app.py`'s redraft and force-fetch make
-  model calls that never open a trace, so they spend budget invisibly.
-- **F5 unfixed** — no recency guard.
+- ~~**Regenerate / Tavily-boost paths are untraced.**~~ **FIXED, verified 2026-08-26.**
+  `app.py:690-707` wraps `redraft` in `trace_run` with `capture_sources` + `capture_draft`;
+  both the Regenerate and Deep Search buttons are traced.
+- ~~**F5 unfixed** — no recency guard.~~ **FIXED** in `f38cf46`; ten cases in
+  `tests/test_recency_guard.py` cover both the missing-date and stale-date branches.
 - A live run is still ~1.3x the per-minute token bucket.
 - Category 3 of the stress set needs re-sourcing; "no web presence" was asserted, not verified.
+- **F7 unfixed** — the budget meter counts local telemetry, not the account. Trust Groq's
+  response headers, not the sidebar.
