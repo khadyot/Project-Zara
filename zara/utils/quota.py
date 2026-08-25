@@ -183,11 +183,41 @@ def forecast() -> dict:
             GROUP BY u.run_id
         """
         rows = conn.execute(q).fetchall()
+
+        # Fall back to every recorded run when there are no UI/batch runs yet.
+        #
+        # A freshly deployed app has only the seeded demo runs (trigger
+        # 'seed_demo'), so the strict filter returned zero rows and the whole
+        # forecast came back None -- the "how many runs do I have left" number
+        # was blank at exactly the moment it is most wanted. A seeded run is a
+        # real measurement of this pipeline's cost; it is just not one the
+        # operator triggered. Use it, and say so via `basis`.
+        basis = "ui_runs"
+        if not rows:
+            # Widen to replayed runs. Two distinct ideas were collapsed here:
+            #   CONSUMPTION -- what has been spent against the quota. Only real
+            #     'groq' rows count; a replay spends nothing. headroom() is
+            #     correct as-is and is deliberately NOT touched.
+            #   COST BASIS  -- what a run costs. A 'fixture' row carries the
+            #     genuine prompt/completion counts measured when that call was
+            #     first recorded live, so it is a real measurement of this
+            #     pipeline, just not a fresh charge.
+            # Using the second to forecast the first is sound, and it is the
+            # only basis a freshly deployed app has.
+            rows = conn.execute(
+                q.replace("AND r.trigger IN ('ui', 'batch')", "")
+                 .replace("u.provider = 'groq'", "u.provider IN ('groq','fixture')")
+            ).fetchall()
+            basis = "replayed" if rows else "none"
+
         runs_count = len(rows)
         
         if runs_count == 0:
             return {
                 "recorded_runs": 0,
+                "basis": "none",
+                "tpm_limit": get_limit("groq_tokens/min"),
+                "run_vs_tpm": None,
                 "mean_tokens": 0,
                 "p90_tokens": 0,
                 "mean_reqs": 0,
@@ -207,11 +237,15 @@ def forecast() -> dict:
         mean_reqs = sum(reqs) / len(reqs)
         p90_reqs = reqs[int(len(reqs) * 0.9)] if len(reqs) > 0 else 0
         
-        q_wall = "SELECT duration_ms FROM runs WHERE run_id IN (SELECT DISTINCT run_id FROM usage WHERE provider = 'groq') AND trigger IN ('ui', 'batch')"
+        q_wall = "SELECT duration_ms FROM runs WHERE run_id IN (SELECT DISTINCT run_id FROM usage WHERE provider = 'groq')"
+        if basis == "ui_runs":
+            q_wall += " AND trigger IN ('ui', 'batch')"
         wall_rows = conn.execute(q_wall).fetchall()
         avg_wall_s = (sum(r["duration_ms"] for r in wall_rows) / len(wall_rows)) / 1000 if wall_rows else 0
         
-        q_stall = "SELECT SUM(u.wait_ms) as total_wait FROM usage u JOIN runs r ON u.run_id = r.run_id WHERE u.provider = 'groq' AND u.run_id IS NOT NULL AND r.trigger IN ('ui', 'batch')"
+        q_stall = "SELECT SUM(u.wait_ms) as total_wait FROM usage u JOIN runs r ON u.run_id = r.run_id WHERE u.provider = 'groq' AND u.run_id IS NOT NULL"
+        if basis == "ui_runs":
+            q_stall += " AND r.trigger IN ('ui', 'batch')"
         stall_row = conn.execute(q_stall).fetchone()
         avg_stall_s = (stall_row["total_wait"] or 0) / runs_count / 1000 if runs_count > 0 else 0
         
@@ -248,7 +282,15 @@ def forecast() -> dict:
         var = sum((x - mean) ** 2 for x in vals) / (len(vals) - 1)
         return var ** 0.5
 
+    tpm_limit = get_limit("groq_tokens/min")
     return {
+        "basis": basis,
+        # A run is ~8K tokens against an 8K/min bucket, so one prospect is very
+        # nearly one full minute's allowance. This is why a SINGLE run stalls
+        # mid-way: its calls land within seconds and the last one crosses the
+        # ceiling. TPD caps how many runs a day; TPM caps how fast.
+        "tpm_limit": tpm_limit,
+        "run_vs_tpm": (mean_tokens / tpm_limit) if tpm_limit else None,
         "recorded_runs": runs_count,
         "mean_tokens": mean_tokens,
         "p90_tokens": p90_tokens,

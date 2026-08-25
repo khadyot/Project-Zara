@@ -32,18 +32,43 @@ def _run_store():
 
 
 def render_budget_meter():
-    """Groq's 8K TPM / 200K TPD ceiling works out to roughly 35 prospects a day.
-    The person driving the runs should be able to see what is left."""
+    """What is left, in the only unit that matters to the operator: runs.
+
+    Tokens are the meter the provider enforces, but nobody plans in tokens.
+    The number worth surfacing on every page is "how many more prospects can I
+    put through this today", plus the reason it is that number and not more.
+    """
     try:
         from zara.utils import quota
         hrs = quota.headroom()
         h = next((x for x in hrs if x["resource"] == "groq tokens/day"), None)
-        if h:
-            st.markdown("<div class='eyebrow-sm'>Today</div>", unsafe_allow_html=True)
-            pct = min(h["pct_used"], 1.0)
-            st.progress(pct, text=f"{int(h['used']):,} / {int(h['limit']):,} tokens")
-            if h["status"] in ("critical", "exhausted"):
-                st.warning("Near or at Groq TPD ceiling.")
+        if not h:
+            return
+
+        st.markdown("<div class='eyebrow-sm'>Today</div>", unsafe_allow_html=True)
+        pct = min(h["pct_used"], 1.0)
+        st.progress(pct, text=f"{int(h['used']):,} / {int(h['limit']):,} tokens")
+
+        fc = quota.forecast()
+        f = fc.get("forecast")
+        if f:
+            runs = f["expected_runs"]
+            tone = "var(--color-ember-coral)" if runs <= 2 else "var(--color-stone)"
+            st.markdown(
+                f"<div style='font-size:13px;color:{tone};margin-top:-6px;'>"
+                f"<b>~{runs} runs left today</b> &middot; {f['conservative_runs']} at p90 "
+                f"&middot; capped by {f['binding_limit']}</div>",
+                unsafe_allow_html=True,
+            )
+            if fc.get("run_vs_tpm"):
+                st.markdown(
+                    f"<div style='font-size:12px;color:var(--color-stone);'>"
+                    f"one run &asymp; {fc['run_vs_tpm']:.0%} of the per-minute bucket "
+                    f"&mdash; expect a stall</div>",
+                    unsafe_allow_html=True,
+                )
+        if h["status"] in ("critical", "exhausted"):
+            st.warning("Near or at Groq TPD ceiling.")
     except Exception:
         pass
 
@@ -205,6 +230,21 @@ def render_budget_and_quota():
         f = fc.get("forecast")
         if f:
             st.info(f"**Forecast ({f['binding_limit']}):** Expected {f['expected_runs']} more runs, Conservative {f['conservative_runs']} more runs.")
+            basis = fc.get("basis")
+            if basis == "replayed":
+                st.caption(
+                    "Estimated from replayed runs. Their token counts were measured live when "
+                    "recorded, so the cost basis is real \u2014 replaying them spent no quota."
+                )
+            elif basis == "ui_runs":
+                st.caption("Estimated from real runs you triggered.")
+            if fc.get("run_vs_tpm"):
+                st.caption(
+                    f"One run is about {fc['run_vs_tpm']:.0%} of the 8,000 tokens/minute bucket. "
+                    "Tokens-per-day caps how many runs you get; tokens-per-minute caps how fast. "
+                    "A single run routinely stalls because its last call crosses the ceiling \u2014 "
+                    "structural on the free tier, not a fault."
+                )
             
         st.markdown("### Token Share by Stage")
         with telemetry.connect() as conn:
