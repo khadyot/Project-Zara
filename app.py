@@ -119,6 +119,7 @@ def render_budget_meter():
         hrs = quota.headroom()
         h = next((x for x in hrs if x["resource"] == "groq tokens/day"), None)
         if not h:
+            st.caption("Budget meter unavailable: no Groq quota row.")
             return
 
         st.markdown("<div class='eyebrow-sm'>Today</div>", unsafe_allow_html=True)
@@ -130,10 +131,14 @@ def render_budget_meter():
         low = runs is not None and runs <= 2
 
         # The headline number is runs, not tokens -- nobody plans in tokens.
+        # A freshly restarted container has recorded nothing, so there is no cost
+        # basis to forecast from. That is not "zero runs left" -- it is "this
+        # instance has not seen a run yet", and on an ephemeral host that is the
+        # normal state after every redeploy.
         zrow(
-            f"~{runs} runs left" if runs is not None else "budget",
+            f"~{runs} runs left" if runs is not None else "no runs recorded here yet",
             state="today",
-            detail=f"{f['conservative_runs']} at p90" if f else None,
+            detail=f"{f['conservative_runs']} at p90" if f else "forecast needs one run on this instance",
             value=f"{int(h['used']):,} / {int(h['limit']):,}",
             fill=pct,
             alert=low,
@@ -152,14 +157,24 @@ def render_budget_meter():
                 unsafe_allow_html=True,
             )
             if fc.get("run_vs_tpm"):
-                st.caption(
-                    f"one run \u2248 {fc['run_vs_tpm']:.0%} of the per-minute "
-                    f"bucket \u2014 expect a stall"
-                )
+                # Per-minute pressure is per key, and a run's calls are spread
+                # round-robin across the pool, so the stall warning has to be
+                # divided by the pool or it cries wolf on every run.
+                _pool = h.get("pool_size") or 1
+                share = fc["run_vs_tpm"] / _pool
+                if share >= 0.9:
+                    st.caption(f"one run \u2248 {share:.0%} of the per-minute bucket, expect a stall")
+                elif _pool > 1:
+                    st.caption(f"one run \u2248 {share:.0%} of the per-minute bucket across {_pool} keys")
         if h["status"] in ("critical", "exhausted"):
             st.warning("Near or at Groq TPD ceiling.")
-    except Exception:
-        pass
+    except Exception as e:
+        # Non-fatal, but never silent. This swallowed everything, so a meter that
+        # could not open the run store looked identical to a meter reporting zero
+        # usage -- and on the deployed app, where the store is ephemeral and the
+        # working directory may not be writable, that is the likely case.
+        st.caption(f"Budget meter unavailable: {type(e).__name__}. Run history and quota "
+                   f"are stored per instance and reset on redeploy.")
 
 
 def _render_response(text, limit=4000):

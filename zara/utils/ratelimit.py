@@ -47,7 +47,25 @@ _LIMIT_USED = re.compile(
 
 
 def _state_path() -> str:
-    return os.environ.get(STATE_FILE_ENV, DEFAULT_STATE_FILE)
+    """Where the last observation lives.
+
+    The default sits in the working directory, which is fine locally and is NOT
+    guaranteed on a hosted container: if it is read-only the cache silently never
+    persists, every render falls back to the local estimate, and the meter looks
+    broken for a reason nothing reports. Fall back to the temp directory, which is
+    writable everywhere, and which is honest about being per-instance and
+    short-lived -- exactly what this cache is.
+    """
+    override = os.environ.get(STATE_FILE_ENV)
+    if override:
+        return override
+
+    directory = os.path.dirname(os.path.abspath(DEFAULT_STATE_FILE)) or "."
+    if os.access(directory, os.W_OK):
+        return DEFAULT_STATE_FILE
+
+    import tempfile
+    return os.path.join(tempfile.gettempdir(), "zara-ratelimit.json")
 
 
 def _read() -> dict:
