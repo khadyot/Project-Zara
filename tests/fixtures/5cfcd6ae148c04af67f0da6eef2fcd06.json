@@ -3,34 +3,34 @@
     "hooks": [
       {
         "card_index": 0,
-        "hook_text": "Stephanie Fielding was hired as Stord\u2019s new finance chief, bringing CFO experience from Butterfly Network and eight years at Amazon.",
-        "rationale": "As CFO she oversees finance and operations, and her background in AWS, operations, and marketing suggests she is focused on improving efficiency and reducing manual work in finance processes.",
-        "bridge": "Our platform automates manual, reconciliation\u2011heavy tasks, giving her finance team more time for strategic initiatives and supporting the efficiency goals she likely prioritizes.",
+        "hook_text": "Congrats on your appointment as CFO of Stord after leading finance at Butterfly Network and Amazon.",
+        "rationale": "As CFO, you\u2019ll oversee scaling finance operations across a cloud supply\u2011chain platform, where manual reconciliation can slow growth.",
+        "bridge": "Our solution automates those reconciliation\u2011heavy processes, giving you real\u2011time financial visibility to support rapid scaling.",
         "strength": 0.85
       },
       {
         "card_index": 1,
-        "hook_text": "Stord announced Stephanie Fielding\u2019s appointment as CFO alongside Sara Feulner as CPO in a February\u202f2,\u202f2023 press release.",
-        "rationale": "The formal announcement confirms her leadership role, meaning she will drive financial strategy and operational improvements across the company.",
-        "bridge": "By automating reconciliation\u2011intensive processes, our solution helps her finance organization handle larger volumes of data with fewer errors, aligning with her mandate to streamline financial operations.",
-        "strength": 0.8
+        "hook_text": "Stord announced your addition as CFO alongside a new CPO in February 2023.",
+        "rationale": "The announcement highlights the strategic focus on finance and people, indicating a push to streamline operations as Stord expands.",
+        "bridge": "Automating manual reconciliation frees finance teams to focus on strategic initiatives, aligning with your growth agenda.",
+        "strength": 0.78
       },
       {
         "card_index": 2,
-        "hook_text": "Stephanie Fielding, CFA, joined Stord as CFO after leading finance at Butterfly Network, a company that went public during her tenure.",
-        "rationale": "Her CFA credential and IPO experience indicate a strong emphasis on rigorous financial controls and reporting, areas where manual reconciliation can be a bottleneck.",
-        "bridge": "Our automation tool eliminates those bottlenecks by handling reconciliation\u2011heavy workflows, helping her maintain compliance and accelerate close cycles.",
-        "strength": 0.85
+        "hook_text": "Your move from Butterfly Network, where you helped take the company public, to CFO of Stord was highlighted in the executive team announcement.",
+        "rationale": "Having guided a public company through finance transformation, you\u2019ll likely be targeting efficiency gains in Stord\u2019s logistics finance.",
+        "bridge": "Our automation platform eliminates manual ledger matching, accelerating month\u2011end close and supporting your efficiency goals.",
+        "strength": 0.82
       },
       {
         "card_index": 3,
-        "hook_text": "Stord raised $250\u202fmillion to expand its cloud supply chain platform, as reported 92 days ago.",
-        "rationale": "The recent capital infusion signals rapid growth and likely an increase in transaction volume, which will pressure finance teams to reconcile more data manually.",
-        "bridge": "Our solution scales with that growth, automating high\u2011volume reconciliation tasks so the finance organization can keep pace without adding headcount.",
-        "strength": 0.78
+        "hook_text": "Stord recently raised $250\u202fmillion to help brands compete with Amazon.",
+        "rationale": "The fresh capital signals aggressive expansion, which will increase transaction volume and the need for efficient reconciliation.",
+        "bridge": "Our tool can scale with that growth, automating reconciliation to keep finance costs low as you onboard more brands.",
+        "strength": 0.75
       }
     ]
   },
   "prompt_tokens": 1050,
-  "completion_tokens": 1249
+  "completion_tokens": 1036
 }

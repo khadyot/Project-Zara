@@ -117,8 +117,16 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     # begins, and it announces the automation before the first comma.
     _first_name = (ranked_prospect.prospect.person_name or "").strip().split(" ")[0]
     prompt += f"1. \"Hi {_first_name or ranked_prospect.prospect.person_name},\" on its own line.\n"
-    prompt += "2. The evidence in <=12 words, then the observation it leads to. Two sentences max.\n"
-    prompt += "3. What we do about that specific thing. One sentence, mechanism not benefit.\n"
+    # "One sentence, mechanism not benefit" was satisfiable by a run-on: a live run
+    # produced six clauses and forty words -- TMS, WMS, ERP, match, reconcile,
+    # generate, flag, log -- which is a capability list wearing a sentence's
+    # punctuation. A word budget is enforceable in a way "one sentence" is not.
+    # The evidence clause got the same treatment after "Stord raised $250M funding
+    # round." came back as a headline fragment rather than something a person wrote.
+    prompt += ("2. The evidence as a complete, grammatical clause in <=12 words -- not a headline "
+               "fragment -- then the observation it leads to. Two sentences max.\n")
+    prompt += ("3. What we do about that specific thing. ONE mechanism, at most 20 words. Name the "
+               "single most relevant one; never list capabilities.\n")
     prompt += "4. The ask, as given. One sentence.\n"
     prompt += f"Sign: {sender_name}\n\n"
 

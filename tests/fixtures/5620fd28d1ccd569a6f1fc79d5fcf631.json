@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Funding round and reconciliation sprawl",
+    "draft_text": "Hi Stephanie,\nStord secured $250M funding round, per Bloomberg. That level of capital typically expands intercompany reconciliation sprawl across finance and ops daily.\nWe build scripts that pull transaction data from source systems into a shared ledger, reconcile entries, and flag mismatches automatically.\nWorth a 15\u2011minute call next week?\nZamp"
+  },
+  "prompt_tokens": 791,
+  "completion_tokens": 1301
+}

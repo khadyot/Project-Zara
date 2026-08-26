@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All factual statements in the draft (Stephanie Fielding's prior roles, the impact of rapid expansion on reconciliation sprawl, and the call-to-action) are supported by the provided evidence. No invented metrics, customer names, or unsupported specific claims are present."
+  },
+  "prompt_tokens": 2885,
+  "completion_tokens": 636
+}

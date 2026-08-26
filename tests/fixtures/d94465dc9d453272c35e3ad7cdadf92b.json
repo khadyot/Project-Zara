@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains no invented metrics, customer names, or specific claims about the prospect that are unsupported. The $200M raise and $1B+ valuation are present in the evidence, and the rest are allowed value\u2011proposition statements or generic language."
+  },
+  "prompt_tokens": 1695,
+  "completion_tokens": 407
+}

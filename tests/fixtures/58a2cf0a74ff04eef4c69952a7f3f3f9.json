@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Stephanie Fielding just joined Stord as CFO after leading finance at Butterfly Network and Amazon.",
+        "rationale": "As the new finance chief, she will be focused on scaling financial operations and improving efficiency across Stord\u2019s cloud\u2011based supply\u2011chain platform.",
+        "bridge": "Our automation solution can help her team eliminate manual reconciliation steps, freeing finance resources for strategic growth.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Stord announced Stephanie Fielding, CFA, as its new Chief Financial Officer.",
+        "rationale": "In her CFO role, she\u2019ll oversee budgeting and cost control for a logistics tech firm that\u2019s rapidly expanding.",
+        "bridge": "Automating reconciliation\u2011heavy processes can reduce month\u2011end close time, aligning with her goal to streamline finance.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Stord raised $250\u202fmillion in a funding round announced 92 days ago.",
+        "rationale": "The fresh capital signals aggressive growth, which will increase transaction volume and manual finance work.",
+        "bridge": "Our platform can scale with that growth, automating the reconciliation workload that comes with larger volumes.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 3,
+        "hook_text": "TechCrunch reported that Stord\u2019s valuation doubled to $3\u202fbillion after a $250\u202fmillion raise.",
+        "rationale": "A higher valuation and funding mean more complex financial reporting and operational scaling pressures.",
+        "bridge": "By automating reconciliation, we can help Stord keep financial accuracy while scaling quickly.",
+        "strength": 0.73
+      }
+    ]
+  },
+  "prompt_tokens": 1057,
+  "completion_tokens": 927
+}

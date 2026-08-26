@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "no finance or payment observable present"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 20,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "profile lacks appointment announcement"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "unrelated podcast, no finance observable"
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "$250M funding round disclosed"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "profile only, no new leadership news"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "$250M funding round disclosed"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "CPA announcement unrelated to pains"
+      }
+    ]
+  },
+  "prompt_tokens": 2112,
+  "completion_tokens": 1843
+}

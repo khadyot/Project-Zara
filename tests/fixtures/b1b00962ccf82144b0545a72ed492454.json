@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "ShipBob funding and reconciliation",
+    "draft_text": "Hi Test,\nShipBob raised $200M, reaching a $1B+ valuation. Such rapid capital influx often expands reconciliation workloads, creating hidden manual effort across teams and cost pressure.\nWe deploy an automated ledger-matching engine that continuously aligns intercompany entries using real\u2011time data feeds to reduce latency.\nWorth a 15-minute call next week?"
+  },
+  "prompt_tokens": 809,
+  "completion_tokens": 2207
+}
