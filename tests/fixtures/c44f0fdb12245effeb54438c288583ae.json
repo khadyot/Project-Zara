@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Modern Treasury is unifying stablecoin payments.",
+        "rationale": "Jordan Ellis's role isn\u2019t specified, so we focus on a company\u2011level initiative: Modern Treasury\u2019s effort to unify stablecoin payments signals a strategic push toward streamlined, cross\u2011currency processing that impacts the whole organization.",
+        "bridge": "Our automation platform can eliminate manual reconciliation for those unified stablecoin flows, giving operations teams a single source of truth.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Modern Treasury launched an integrated PSP for both fiat and stablecoins.",
+        "rationale": "Without a known role, we highlight the company\u2019s launch of an integrated payment service provider that handles fiat and stablecoins together, a move that reshapes how the firm processes payments end\u2011to\u2011end.",
+        "bridge": "Our solution can automate the reconciliation of transactions across both fiat and stablecoin channels, reducing manual effort for operations.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Modern Treasury acquired Beam to bring stablecoins and fiat under a single API.",
+        "rationale": "Jordan\u2019s specific responsibilities are unknown, so we emphasize the acquisition as a company\u2011wide effort to simplify access to both stablecoins and fiat via one API, a key operational simplification.",
+        "bridge": "With a single\u2011API approach, our automation tools can seamlessly reconcile all incoming and outgoing payments, cutting manual workload for ops teams.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Modern Treasury is building a payments platform for a hybrid money world.",
+        "rationale": "Since the role is not identified, we focus on the broader company vision of a hybrid\u2011money platform, which signals a shift toward handling multiple asset types in a unified way.",
+        "bridge": "Our automation suite can handle the complex reconciliation needs that arise in a hybrid\u2011money environment, freeing operations from manual matching.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 710,
+  "completion_tokens": 783
+}

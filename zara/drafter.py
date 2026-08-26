@@ -53,7 +53,10 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         if style and style != "auto":
             fallback_prompt += f"- Email opening style: {style}.\n"
             
-        fallback_system = "You are an expert B2B SDR drafting concise, generic outreach emails. 4-7 words for subject, no colon-clause, names the specific thing not the benefit."
+        fallback_system = ("You are an expert B2B SDR drafting concise, generic outreach emails. "
+                           "4-7 words for subject, no colon-clause, names the specific thing not "
+                           "the benefit. Never use an em dash or an en dash; use a comma, a full "
+                           "stop, or a colon.")
         try:
             resp = await generate_content_with_retry(
                 prompt=fallback_prompt,
@@ -98,7 +101,7 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt = f"RECIPIENT: {ranked_prospect.prospect.person_name}, {ranked_prospect.prospect.title or 'role unknown'} at {ranked_prospect.prospect.company}\n"
     if hook is not None:
         prompt += f"EVIDENCE (the only facts you may use): {hook.hook_text}\n"
-        prompt += f"  source snippet, for accuracy — do not quote at length: {winning_card.card.snippet[:400]}\n"
+        prompt += f"  source snippet, for accuracy, do not quote at length: {winning_card.card.snippet[:400]}\n"
         prompt += f"  age: {age_phrase}\n"
         prompt += f"  whose words these are: {attribution_line}\n"
         prompt += f"WHY IT MATTERS: {hook.rationale}\n"
@@ -112,7 +115,7 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += f"WHAT WE DO: {offer}\n"
     prompt += f"THE ASK: {cta}\n\n"
 
-    prompt += "SHAPE — 50-90 words total:\n"
+    prompt += "SHAPE (50-90 words total):\n"
     # First name only. "Hi Stephanie Fielding," is how nothing a human ever wrote
     # begins, and it announces the automation before the first comma.
     _first_name = (ranked_prospect.prospect.person_name or "").strip().split(" ")[0]
@@ -169,6 +172,9 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         "Banned: \"I noticed\", \"I saw your recent\", \"It sounds like\", \"I'd love to explore\",\n"
         "\"I'm reaching out because\", \"in your space\", \"leverage\", \"solutions\",\n"
         "\"streamline your operations\", \"back-office toil\", \"reach out\".\n\n"
+        "Never use an em dash or an en dash. Use a comma, a full stop, or a colon. "
+        "This is absolute: a dash of that kind is the single clearest tell that a "
+        "machine wrote the message, and it undoes the point of the whole exercise.\n\n"
         "Plain, specific, unhurried. No exclamation marks."
     )
         

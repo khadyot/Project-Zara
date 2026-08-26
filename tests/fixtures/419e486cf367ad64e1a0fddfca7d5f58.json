@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob secured a $200M funding round in 2021, pushing its valuation past $1B.",
+        "rationale": "Alex Rivera's specific role isn\u2019t known, but this milestone signals rapid growth and scaling pressures on ShipBob\u2019s operations teams, which likely need tighter process controls.",
+        "bridge": "Our automation platform helps operations teams eliminate manual, reconciliation\u2011heavy steps, letting them keep pace with the volume surge that comes with such growth.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob\u2019s AI platform now powers over 300M orders, offering an action layer that automates fulfillment decisions across tools like Claude and the ShipBob dashboard.",
+        "rationale": "While Alex Rivera\u2019s role is unknown, the emphasis on AI\u2011driven fulfillment shows a focus on reducing manual effort, a priority for any operations stakeholder.",
+        "bridge": "Our solution can layer on top of that AI stack to automate the reconciliation of data across systems, further cutting manual workload.",
+        "strength": 0.76
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your partners have praised ShipBob\u2019s ability to process high daily order volumes since 2020, especially for physical products like hardcover books.",
+        "rationale": "Without a known role, the fact that ShipBob handles large order spikes highlights a core operations challenge\u2014maintaining accuracy under volume pressure.",
+        "bridge": "Our automation tool streamlines the reconciliation of those high\u2011volume order flows, reducing errors and freeing your team to focus on customer experience.",
+        "strength": 0.71
+      },
+      {
+        "card_index": 3,
+        "hook_text": "You recently appeared on the \u2018Operators\u2019 podcast (season\u202f2, episode\u202f4\u20115) discussing scaling and partnership strategies.",
+        "rationale": "Alex Rivera\u2019s role isn\u2019t identified, but participation in an industry\u2011focused podcast indicates involvement in operational leadership conversations.",
+        "bridge": "Highlighting how our automation reduces manual reconciliation can give you a concrete example to share in future talks about scaling operations.",
+        "strength": 0.63
+      }
+    ]
+  },
+  "prompt_tokens": 1049,
+  "completion_tokens": 1065
+}

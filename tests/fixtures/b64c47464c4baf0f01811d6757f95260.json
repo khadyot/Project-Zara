@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about your scouting data",
+    "draft_text": "Hi Dana,\nAcme Logistics posted a YouTube interview about Indiana Pacers prospect workouts. That suggests the team is actively scouting external talent pipelines, which often creates manual data aggregation challenges and reduces duplicate entry effort.\nWe build bots that extract, match, and reconcile data from scouting reports, feeding a unified ledger for downstream analysis.\nWorth a 15-minute call next week?\n\nZamp"
+  },
+  "prompt_tokens": 885,
+  "completion_tokens": 1395
+}

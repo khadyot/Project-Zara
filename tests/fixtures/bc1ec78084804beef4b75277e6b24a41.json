@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only statements supported by the provided evidence: the claim about Modern Treasury unifying stablecoin payments is backed by the FinTech Magazine snippet, the problem description matches the evidence about payment, ledger, and bank reconciliation breaking silently, and the recipient name Jordan and sender name Zamp are present in the evidence. No invented metrics, customer names, or specific prospect facts are introduced."
+  },
+  "prompt_tokens": 3927,
+  "completion_tokens": 434
+}

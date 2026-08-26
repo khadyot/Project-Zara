@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on VersaPay's portfolio sale",
+    "draft_text": "Hi Sam,\nVersaPay recently agreed to sell its merchant services portfolio, indicating M&A restructuring. That typically creates intercompany reconciliation sprawl, adding manual matching effort across entities, increasing audit risk, delaying financial close, and stretching finance team capacity during integration. We automate manual reconciliation workflows by linking transaction feeds to a unified ledger, generate audit\u2011ready reports, and reconcile discrepancies automatically. Worth a 15\u2011minute call next week?"
+  },
+  "prompt_tokens": 880,
+  "completion_tokens": 2450
+}

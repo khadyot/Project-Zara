@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only supported facts (ShipBob's $200M raise and $1B+ valuation) and general value\u2011proposition language. It does not include invented metrics, customer names, or specific claims about ShipBob that lack evidence."
+  },
+  "prompt_tokens": 1675,
+  "completion_tokens": 374
+}

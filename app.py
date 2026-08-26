@@ -4,6 +4,7 @@ import html
 import json
 import yaml
 import os
+import glob
 import hmac
 from dotenv import load_dotenv
 
@@ -580,13 +581,31 @@ def main():
         st.markdown("<br><div class='eyebrow-sm'>4. Developer Mode</div>", unsafe_allow_html=True)
         admin_pass = st.text_input("Admin Password", type="password")
 
-        # The offline replay toggle was removed: this product is demonstrated live,
-        # and a control that silently swaps real retrieval for a recording is the
-        # wrong thing to have within one click of a live run. Snapshot replay
-        # survives where it is actually used -- the test suite, via USE_FIXTURES
-        # and the pinned FIXTURE_CLOCK.
-        os.environ.pop("USE_FIXTURES", None)
-        os.environ.pop("ZARA_NOW", None)
+        st.markdown("<br><div class='eyebrow-sm'>5. Demo mode (offline)</div>", unsafe_allow_html=True)
+        demo_mode = st.checkbox(
+            "Demo mode (offline)",
+            help="Replay a recorded prospect with zero network calls. The pipeline runs "
+                 "for real; only the retrieval and model responses are played back.",
+        )
+        replay_snapshot = None
+        if demo_mode:
+            snapshots = sorted(glob.glob("tests/fixtures/*_snapshot.json"))
+            if snapshots:
+                replay_snapshot = st.selectbox(
+                    "Select Snapshot", snapshots,
+                    format_func=lambda x: os.path.basename(x).replace("_snapshot.json", "").replace("_", " ").title(),
+                )
+            else:
+                st.warning("No snapshots found, demo mode will still hit the network.")
+            os.environ["USE_FIXTURES"] = "1"
+            # Replaying recorded prompts means replaying the clock they were
+            # recorded against: card age is written into the prompt, and the
+            # fixture is keyed on that prompt.
+            from zara.ranker import FIXTURE_CLOCK
+            os.environ["ZARA_NOW"] = FIXTURE_CLOCK
+        else:
+            os.environ.pop("USE_FIXTURES", None)
+            os.environ.pop("ZARA_NOW", None)
 
         st.markdown("---")
         from zara.utils import budget
@@ -613,6 +632,9 @@ def main():
         "use_exa": use_exa,
         "use_apify": use_apify
     }
+
+    if demo_mode and replay_snapshot:
+        settings["replay_snapshot"] = replay_snapshot
     
     if page == "History":
         render_run_history()

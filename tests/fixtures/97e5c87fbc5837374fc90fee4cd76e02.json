@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matching any pain"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast intro mentions CEO, founder \u2013 general news"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.5,
+        "reason": "Mentions processing large number of orders \u2013 volume indicator"
+      },
+      {
+        "index": 21,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product release announcement \u2013 general company news"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.7,
+        "reason": "States 300M+ orders fulfilled \u2013 volume milestone"
+      },
+      {
+        "index": 19,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No relevant observable present"
+      },
+      {
+        "index": 22,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Seasonal product release \u2013 general news"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Personal profile, no finance or operational observable"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Company description lacks specific observable"
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Announces $200M funding \u2013 expansion financing"
+      }
+    ]
+  },
+  "prompt_tokens": 1991,
+  "completion_tokens": 1784
+}
