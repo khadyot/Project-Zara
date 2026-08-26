@@ -115,13 +115,38 @@ def _tiebreak(card: SignalCard) -> tuple[str, str]:
     return (card.source or "", card.source_url or "")
 
 
+# The instant the fixture set was recorded, in UTC. Anything replaying those
+# fixtures -- the test suite, the offline demo toggle -- must pin the clock here,
+# or card ages drift off the recorded prompts and every fixture hash misses.
+FIXTURE_CLOCK = "2026-08-25T21:00:00+00:00"
+
+
+def _now() -> datetime:
+    """Wall clock, overridable with ZARA_NOW (ISO 8601).
+
+    Card age is not just a score input -- it is written verbatim into the drafter and
+    hook prompts ("published N days ago"), and fixtures are keyed on the md5 of the
+    prompt. So with a real clock every recorded fixture silently expires at the next
+    midnight the age crosses, and the suite fails as an unexplained hash mismatch far
+    from here. Pinning the clock in the test environment makes replay reproducible;
+    production leaves ZARA_NOW unset and gets the real time.
+    """
+    pin = os.environ.get("ZARA_NOW")
+    if pin:
+        try:
+            dt = datetime.fromisoformat(pin.replace("Z", "+00:00"))
+            return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+        except ValueError:
+            pass
+    return datetime.now(timezone.utc)
+
+
 def _compute_recency(published_date: str | None) -> int | None:
     if not published_date:
         return None
     try:
         dt = datetime.fromisoformat(published_date.replace("Z", "+00:00"))
-        now = datetime.now(timezone.utc)
-        return max(0, (now - dt).days)
+        return max(0, (_now() - dt).days)
     except Exception:
         return None
 

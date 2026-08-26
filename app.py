@@ -517,8 +517,14 @@ def main():
             else:
                 st.warning("No snapshots found — demo mode will still hit the network.")
             os.environ["USE_FIXTURES"] = "1"
+            # Replaying recorded prompts means replaying the clock they were
+            # recorded against -- card age is written into the prompt, and the
+            # fixture is keyed on that prompt.
+            from zara.ranker import FIXTURE_CLOCK
+            os.environ["ZARA_NOW"] = FIXTURE_CLOCK
         else:
             os.environ.pop("USE_FIXTURES", None)
+            os.environ.pop("ZARA_NOW", None)
 
         st.markdown("---")
         from zara.utils import budget
