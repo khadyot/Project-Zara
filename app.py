@@ -135,10 +135,33 @@ def render_budget_meter():
         # basis to forecast from. That is not "zero runs left" -- it is "this
         # instance has not seen a run yet", and on an ephemeral host that is the
         # normal state after every redeploy.
+        # "Runs left" is a BALANCE, and we can only claim one when both inputs are
+        # real: a measured usage figure, and a cost basis from runs this instance
+        # actually did. A fresh container has neither -- its local tally is ~0, so
+        # it assumes the full daily quota is untouched, and its cost basis is the
+        # seeded demo runs that ship with the app. That is a capacity projection,
+        # not headroom, and saying "30 runs left" about an account that may be
+        # spent elsewhere is the same overclaim F7 was about.
+        basis = fc.get("basis")
+        grounded = (h.get("source") == "measured") or basis == "ui_runs"
+        if runs is None:
+            label = "no runs recorded here yet"
+        elif grounded:
+            label = f"~{runs} runs left"
+        else:
+            label = f"\u2248{runs} runs per full day of quota"
+
+        if f and not grounded:
+            sub = "projected from the seeded demo runs, not measured usage"
+        elif f:
+            sub = f"{f['conservative_runs']} at p90"
+        else:
+            sub = "forecast needs one run on this instance"
+
         zrow(
-            f"~{runs} runs left" if runs is not None else "no runs recorded here yet",
+            label,
             state="today",
-            detail=f"{f['conservative_runs']} at p90" if f else "forecast needs one run on this instance",
+            detail=sub,
             value=f"{int(h['used']):,} / {int(h['limit']):,}",
             fill=pct,
             alert=low,
