@@ -230,3 +230,22 @@ def test_zero_headcount_reads_as_unknown_not_as_a_measurement():
     assert not any("outside preferred" in n for n in notes), (
         "a missing headcount was reported as an ICP deviation"
     )
+
+
+def test_the_same_hook_text_is_never_offered_twice():
+    """One press release retrieved by two sources, tiered differently, cleared the
+    tier check twice and the reviewer saw options 1 and 3 identical."""
+    from zara.ranker import _select_winner
+
+    class _Hook:
+        def __init__(self, idx, text, strength=0.9):
+            self.card_index, self.hook_text, self.strength = idx, text, strength
+            self.rationale = self.bridge = "x"
+
+    same = "Finix launched an unattended payment terminal for self-service businesses"
+    a = _ranked(0.50, 104, "company", "Finix launches terminal")
+    b = _ranked(0.48, 104, "person", "Finix launches terminal (syndicated)")
+    hooks = [_Hook(0, same), _Hook(1, same + ".")]
+    _, _, surviving = _select_winner([a, b], [a, b], hooks)
+    texts = {h.hook_text.lower().rstrip(".") for h in surviving}
+    assert len(texts) == len(surviving), f"duplicate hook offered: {[h.hook_text for h in surviving]}"

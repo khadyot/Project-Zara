@@ -265,8 +265,27 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     # the human still gets genuinely distinct options rather than two phrasings of
     # the same card.
     seen_tiers = set()
+    seen_hooks = set()
     survivors = []
     for final, c, h in scored:
+        # Two copies of the same story, retrieved by two sources and tiered
+        # differently, both cleared the tier check and the reviewer was offered
+        # the same sentence twice (options 1 and 3, character for character, on
+        # the Finix run). Compass VI is "no two hooks of a kind", and identical
+        # text is definitionally the same kind -- the tier is a proxy for that,
+        # not the thing itself.
+        _hook_key = re.sub(r"[^a-z0-9]+", " ", (h.hook_text or "").lower()).strip() if h else None
+        if _hook_key and _hook_key in seen_hooks:
+            for idx, fc in enumerate(final_cards):
+                if fc is c:
+                    final_cards[idx] = RankedCard(
+                        card=c.card, pain_match=c.pain_match, proximity=c.proximity,
+                        recency_days=c.recency_days, score=c.score,
+                        excluded="duplicate hook text (Compass VI swap test)",
+                        guardrail_hit=c.guardrail_hit, attributed_to=c.attributed_to,
+                    )
+                    break
+            continue
         if c.card.tier in seen_tiers:
             for idx, fc in enumerate(final_cards):
                 if fc is c:
@@ -279,6 +298,8 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
                     break
         else:
             seen_tiers.add(c.card.tier)
+            if _hook_key:
+                seen_hooks.add(_hook_key)
             survivors.append((final, c, h))
 
     if not survivors:
