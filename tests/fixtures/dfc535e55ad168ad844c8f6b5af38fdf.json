@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All factual statements in the draft (ShipBob's $200M raise, $1B+ valuation, rapid expansion causing reconciliation sprawl, the 15\u2011minute call request, and the greeting to \"Test\") are directly supported by the provided evidence. No invented metrics, customer names, or unsupported claims are present."
+  },
+  "prompt_tokens": 1685,
+  "completion_tokens": 363
+}

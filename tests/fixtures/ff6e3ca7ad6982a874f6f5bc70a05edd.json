@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product launch simulation terminal announced."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast interview with CEO announced."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Case study partnership story released."
+      },
+      {
+        "index": 21,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 release announced."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "ShipBob AI announcement released."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Raised $200M funding round."
+      }
+    ]
+  },
+  "prompt_tokens": 2001,
+  "completion_tokens": 1871
+}

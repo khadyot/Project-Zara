@@ -113,11 +113,24 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += f"THE ASK: {cta}\n\n"
 
     prompt += "SHAPE — 50-90 words total:\n"
-    prompt += f"1. \"Hi {ranked_prospect.prospect.person_name},\" on its own line.\n"
+    # First name only. "Hi Stephanie Fielding," is how nothing a human ever wrote
+    # begins, and it announces the automation before the first comma.
+    _first_name = (ranked_prospect.prospect.person_name or "").strip().split(" ")[0]
+    prompt += f"1. \"Hi {_first_name or ranked_prospect.prospect.person_name},\" on its own line.\n"
     prompt += "2. The evidence in <=12 words, then the observation it leads to. Two sentences max.\n"
     prompt += "3. What we do about that specific thing. One sentence, mechanism not benefit.\n"
     prompt += "4. The ask, as given. One sentence.\n"
     prompt += f"Sign: {sender_name}\n\n"
+
+    # An undated card cannot support ANY claim about when the thing happened.
+    # This is where "New finance chief" came from: an undated listicle whose pain
+    # reason asserted "New CFO appointment within six months" about someone three
+    # and a half years into the job. The verifier now catches the phrasing; this
+    # stops it being written in the first place.
+    if winning_card is not None and winning_card.recency_days is None:
+        prompt += ("TIMING - the evidence carries NO publication date. Do not call it new, recent, "
+                   "just-announced, or imply when it happened. Do not describe anyone as a new or "
+                   "incoming hire. Write it as a standing fact, not as news.\n\n")
 
     if strictness == "strict":
         prompt += "Constraints:\n- Do NOT invent proof points or customer metrics.\n"

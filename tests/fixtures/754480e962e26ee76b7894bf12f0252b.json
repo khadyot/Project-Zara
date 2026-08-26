@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only supported statements: Stephanie Fielding\u2019s new CFO role and eight years at Amazon are in the evidence, the claim about rapid expansion and leadership change causing reconciliation sprawl matches the provided snippet, the value\u2011prop language and call\u2011to\u2011action are allowed, and no invented metrics, customer names, or unsupported facts appear."
+  },
+  "prompt_tokens": 2534,
+  "completion_tokens": 570
+}

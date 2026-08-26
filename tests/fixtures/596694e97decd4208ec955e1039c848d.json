@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob secured a $200M funding round in 2021, pushing its valuation past $1B.",
+        "rationale": "We don\u2019t know Test\u2019s specific role, but this company\u2011level milestone shows ShipBob\u2019s rapid growth and the scale of its operations, which likely creates complex, manual reconciliation challenges for its teams.",
+        "bridge": "Our platform automates the reconciliation\u2011heavy processes that become critical as a logistics operation scales, helping teams keep pace with growth without drowning in manual work.",
+        "strength": 0.72
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob now offers a Simulation Terminal in sandbox accounts to test the full fulfillment lifecycle without real warehouse activity.",
+        "rationale": "The role is unknown, but the new simulation tool highlights ShipBob\u2019s focus on integration testing, which often generates large volumes of data that need manual matching and reconciliation.",
+        "bridge": "Our solution can automatically reconcile simulation data with live systems, eliminating the manual effort and speeding up confidence\u2011building before go\u2011live.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "You recently featured the CEO of Romperjack and Route\u2019s partnership lead in a ShipBob podcast episode.",
+        "rationale": "Without a known role, we note this shows ShipBob\u2019s active partnership outreach and thought\u2011leadership, which likely involves coordinating data across multiple parties\u2014a source of manual reconciliation work.",
+        "bridge": "Our automation platform streamlines cross\u2011partner data reconciliation, letting partnership teams focus on strategy rather than spreadsheets.",
+        "strength": 0.61
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Since 2020, ShipBob has been processing high\u2011volume orders for partners, praised for its user\u2011friendly interface and strong support.",
+        "rationale": "The specific role is unknown, but the snippet reveals ShipBob\u2019s operational scale and past disputes over packaging quality, indicating heavy order processing and potential manual reconciliation pain points.",
+        "bridge": "Our tool automates the reconciliation of order and inventory data, reducing manual effort and freeing teams to address quality issues like packaging disputes.",
+        "strength": 0.84
+      }
+    ]
+  },
+  "prompt_tokens": 1023,
+  "completion_tokens": 1030
+}

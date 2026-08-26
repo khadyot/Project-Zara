@@ -154,6 +154,32 @@ def _compute_recency(published_date: str | None) -> int | None:
 THIN_SIGNAL_FLOOR = 0.35
 
 
+_COMPANY_NOISE = {"inc", "llc", "corp", "corporation", "ltd", "limited", "co",
+                  "company", "group", "holdings", "technologies", "labs", "the"}
+
+
+def _company_is_mentioned(card, prospect) -> bool:
+    """Does this card actually talk about the company we were asked about?
+
+    On the Stord run, cards about Stephanie Neill (Stripe) and Stephanie Stollar
+    (PhD) entered the candidate pool as eligible and were merely outscored -- two
+    different people who happen to share a first name with the prospect. Nothing
+    checked that the employer appeared anywhere. With slightly different scores
+    the draft would have been written from a stranger's biography.
+
+    Deliberately permissive: any one significant token of the company name, found
+    anywhere in the evidence we would actually use, is enough. A genuine post by
+    the prospect that never names their employer is the case this must not kill,
+    so a miss DOWNWEIGHTS rather than excludes (see the guardrail_hit path).
+    """
+    tokens = [t for t in re.split(r"[^a-z0-9]+", (prospect.company or "").lower())
+              if len(t) >= 4 and t not in _COMPANY_NOISE]
+    if not tokens:
+        return True
+    hay = f"{card.claim} {card.snippet[:500]} {card.source_url or ''}".lower()
+    return any(t in hay for t in tokens)
+
+
 def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict) -> float:
     """Relevance is a PRODUCT, not a sort tuple.
 
@@ -177,7 +203,13 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
     # honesty guard already forces the draft to name the period rather than call
     # a five-year-old podcast "recent".
     if recency_days is None:
-        rec_mult = 0.9
+        # Below every "known and younger than two years" tier on purpose. This sat
+        # at 0.9 -- ABOVE the 0.85 and 0.75 given to cards whose age we actually
+        # knew -- so not knowing a date scored better than knowing an inconvenient
+        # one. That is how an undated "CFO Pros on the Move" listicle beat a dated
+        # $250M funding round and produced "New finance chief" about someone three
+        # and a half years into the job. Compass VII: absence is not evidence.
+        rec_mult = 0.8
     elif recency_days <= 180:
         rec_mult = 1.0
     elif recency_days <= 365:
@@ -288,7 +320,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             excluded = f"eligibility: {card.eligibility}"
 
         if not excluded:
-            lower_text = f"{card.claim} {card.snippet}".lower()
+            # Only the first 500 chars of the snippet are ever shown to the pain
+            # scorer, the hook prompt or the drafter, so the guardrail scopes to
+            # exactly what can reach a draft. Matching the full page body made a
+            # $250M funding story fire `never_reference: litigation` on boilerplate
+            # buried far below the evidence -- the guardrail eating the signal it
+            # was never aimed at.
+            lower_text = f"{card.claim} {card.snippet[:500]}".lower()
             for nr in never_reference:
                 nr_id = nr["id"]
                 terms = nr["terms"]
@@ -302,6 +340,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         break
                 if excluded or guardrail_hit:
                     break
+
+        # Person-tier proximity asserts "this is about our prospect". If the
+        # employer is never mentioned, that assertion is unbacked -- downweight it
+        # so a namesake cannot quietly win, and say so on the card.
+        if not excluded and not guardrail_hit and proximity in ("authored", "attributed"):
+            if not _company_is_mentioned(card, prospect):
+                guardrail_hit = "possible namesake: company never mentioned in the evidence"
 
         if not excluded:
             to_score.append((i, card))
@@ -318,19 +363,62 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         )
         
     if to_score:
-        to_score.sort(key=lambda item: (
-            prox_val.get(_compute_proximity(item[1], prospect), 0),
-            _compute_recency(item[1].published_date) is not None,
-            -(_compute_recency(item[1].published_date) or 9999),
-            _tiebreak(item[1]),
-        ), reverse=True)
-        
+        # Which cards are even ALLOWED to be scored used to be decided by a
+        # lexicographic tuple keyed on proximity, so proximity was the primary key
+        # and nothing else could overcome it -- the exact bug that was fixed for
+        # winner selection and left standing here. On the Stord run that cut six
+        # separate copies of a $250M funding round before pain matching ever saw
+        # them, every one logged as "outside the top 10 by proximity".
+        #
+        # Same shape as _compute_relevance: a product, not a sort tuple. Pain score
+        # is not known yet (scoring is what computes it), so the pre-score is the
+        # part we can know -- proximity x recency.
+        max_prox = max(prox_val.values()) if prox_val else 1.0
+        if max_prox == 0:
+            max_prox = 1.0
+
+        def _pre_score(item):
+            card = item[1]
+            prox = _compute_proximity(card, prospect)
+            rec = _compute_recency(card.published_date)
+            prox_mult = prox_val.get(prox, 0) / max_prox
+            if rec is None:
+                rec_mult = 0.8
+            elif rec <= 180:
+                rec_mult = 1.0
+            elif rec <= 365:
+                rec_mult = 0.95
+            elif rec <= 730:
+                rec_mult = 0.85
+            else:
+                rec_mult = 0.75
+            return prox_mult * rec_mult
+
+        to_score.sort(key=lambda item: (_pre_score(item), _tiebreak(item[1])), reverse=True)
+
         card_cap = int(vp.get("ranker", {}).get("card_cap", 10))
+
+        # Reserve slots for the freshest DATED cards regardless of proximity.
+        # A blended pre-score still lets a whole proximity tier crowd out the
+        # newest thing that happened to this company, and "we never looked at the
+        # biggest news of the quarter" is not a defensible way to lose a hook.
+        # The cap is unchanged, so this costs no extra tokens.
+        reserve = int(vp.get("ranker", {}).get("recency_reserve", 3))
+        if reserve > 0 and len(to_score) > card_cap:
+            head = to_score[:max(0, card_cap - reserve)]
+            chosen = {id(item) for item in head}
+            dated = [it for it in to_score
+                     if id(it) not in chosen and _compute_recency(it[1].published_date) is not None]
+            dated.sort(key=lambda it: (_compute_recency(it[1].published_date), _tiebreak(it[1])))
+            promoted = dated[:reserve]
+            picked = {id(it) for it in head} | {id(it) for it in promoted}
+            remainder = [it for it in to_score if id(it) not in picked]
+            to_score = head + promoted + remainder
         for i, card in to_score[card_cap:]:
             rc = ranked_cards_map[i]
             ranked_cards_map[i] = RankedCard(
                 card=rc.card, pain_match=None, proximity=rc.proximity,
-                recency_days=rc.recency_days, score=0.0, excluded=f"outside the top {card_cap} by proximity (hard cap)",
+                recency_days=rc.recency_days, score=0.0, excluded=f"outside the top {card_cap} by relevance (hard cap)",
                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
             )
         to_score = to_score[:card_cap]

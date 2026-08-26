@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Stephanie Fielding was hired as Stord\u2019s new finance chief, bringing CFO experience from Butterfly Network and eight years at Amazon.",
+        "rationale": "As CFO she oversees finance and operations, and her background in AWS, operations, and marketing suggests she is focused on improving efficiency and reducing manual work in finance processes.",
+        "bridge": "Our platform automates manual, reconciliation\u2011heavy tasks, giving her finance team more time for strategic initiatives and supporting the efficiency goals she likely prioritizes.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Stord announced Stephanie Fielding\u2019s appointment as CFO alongside Sara Feulner as CPO in a February\u202f2,\u202f2023 press release.",
+        "rationale": "The formal announcement confirms her leadership role, meaning she will drive financial strategy and operational improvements across the company.",
+        "bridge": "By automating reconciliation\u2011intensive processes, our solution helps her finance organization handle larger volumes of data with fewer errors, aligning with her mandate to streamline financial operations.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Stephanie Fielding, CFA, joined Stord as CFO after leading finance at Butterfly Network, a company that went public during her tenure.",
+        "rationale": "Her CFA credential and IPO experience indicate a strong emphasis on rigorous financial controls and reporting, areas where manual reconciliation can be a bottleneck.",
+        "bridge": "Our automation tool eliminates those bottlenecks by handling reconciliation\u2011heavy workflows, helping her maintain compliance and accelerate close cycles.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Stord raised $250\u202fmillion to expand its cloud supply chain platform, as reported 92 days ago.",
+        "rationale": "The recent capital infusion signals rapid growth and likely an increase in transaction volume, which will pressure finance teams to reconcile more data manually.",
+        "bridge": "Our solution scales with that growth, automating high\u2011volume reconciliation tasks so the finance organization can keep pace without adding headcount.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 1050,
+  "completion_tokens": 1249
+}

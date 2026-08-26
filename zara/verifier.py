@@ -169,7 +169,15 @@ _SECOND_PERSON_CLAIM = re.compile(
 
 _RECENCY_CLAIM = re.compile(
     r"\b(recent(ly)?|newly|this (week|month)|days ago|latest"
-    r"|just\s+(announced|launched|raised|closed|hired|appointed|published|posted|shipped|opened|acquired|named|rolled out))\b",
+    r"|just\s+(announced|launched|raised|closed|hired|appointed|published|posted|shipped|opened|acquired|named|rolled out)"
+    # "New finance chief" is a time claim wearing an adjective. The pattern had
+    # "newly" but not bare "new", so a draft calling someone appointed in
+    # February 2023 the "new finance chief" passed clean -- from an UNDATED
+    # listicle, which is the case this guard exists for. Scoped to role nouns so
+    # "a new ledger" or "new payment methods" stay unaffected.
+    r"|new\s+(finance\s+|interim\s+)?(chief|cfo|ceo|coo|cto|cio|vp|head|president|leader|hire|appointment|role|seat)"
+    r"|incoming\s+(chief|cfo|ceo|coo|cto|cio|vp|head|president)"
+    r"|(has\s+)?just\s+joined|steps?\s+into\s+the\s+role|takes?\s+over\s+as)\b",
     re.I,
 )
 

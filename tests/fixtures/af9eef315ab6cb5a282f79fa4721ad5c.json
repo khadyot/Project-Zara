@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Reconciliation sprawl with new CFO",
+    "draft_text": "Hi Stephanie Fielding,\nNew finance chief after eight years at Amazon. Rapid expansion and leadership change often expand intercompany reconciliation sprawl.\nWe build scripts that pull transaction data from source systems, normalize fields, and write them into a unified ledger for automated daily reconciliation.\nWorth a 15\u2011minute call next week?"
+  },
+  "prompt_tokens": 730,
+  "completion_tokens": 1287
+}

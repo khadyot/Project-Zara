@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Modern Treasury PSP launch",
+    "draft_text": "Hi Dimitri Dadiomov,\nModern Treasury launches integrated PSP for fiat and stablecoins. That often means payment, ledger, and reconciliation failures surface late, especially when new methods like FedNow and RTP are added, and delay reporting.\nWe build scripts that pull transaction data into a shared ledger and auto\u2011reconcile entries, flagging mismatches for review promptly.\nWorth a 15\u2011minute call next week?"
+  },
+  "prompt_tokens": 706,
+  "completion_tokens": 2383
+}
