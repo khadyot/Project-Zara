@@ -74,6 +74,22 @@ def _age_label(days):
     return f"{days} days old", days > 180
 
 
+def _provenance(row: dict) -> str:
+    """How much the number above deserves to be trusted."""
+    if row.get("source") != "measured":
+        return "estimated from this instance's own log \u2014 not the account total"
+    age = row.get("observed_age_s")
+    if age is None:
+        return "measured from Groq's response headers"
+    if age < 90:
+        when = "just now"
+    elif age < 3600:
+        when = f"{int(age // 60)} min ago"
+    else:
+        when = f"{age / 3600:.1f}h ago"
+    return f"measured from Groq's own headers, {when}"
+
+
 def render_budget_meter():
     """What is left, in the only unit that matters to the operator: runs.
 
@@ -104,6 +120,14 @@ def render_budget_meter():
             value=f"{int(h['used']):,} / {int(h['limit']):,}",
             fill=pct,
             alert=low,
+        )
+        # Say which kind of number this is. The meter used to present a local
+        # tally with the confidence of a quota reading, and was wrong by 183k
+        # tokens against Groq's own count (F7). A measurement carries its age;
+        # an estimate says so.
+        st.markdown(
+            f"<span class='zquiet'>{_provenance(h)}</span>",
+            unsafe_allow_html=True,
         )
         if f:
             st.markdown(

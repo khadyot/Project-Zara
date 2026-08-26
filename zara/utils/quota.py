@@ -96,6 +96,50 @@ def record(provider: str, model: str, *, stage: str, prompt_tokens: int, complet
     except Exception as e:
         print(f"[quota] record failed: {e}", file=sys.stderr)
 
+def _measured(key: str, obs: dict):
+    """Overlay the provider's own statement on our local tally, where it applies.
+
+    Returns (used, limit, age_s) or None. None means "we have nothing measured
+    for this window" -- the caller then falls back to the local estimate and
+    must label it as one. See zara/utils/ratelimit.py for why the freshness
+    rules differ per window.
+    """
+    from zara.utils import ratelimit
+
+    if key == "groq_tokens/day":
+        # The daily token ceiling is stated only in a 429 body, so this is
+        # populated the first time we hit TPD and not before.
+        age = obs.get("tpd_age_s")
+        if obs.get("tpd_limit") and obs.get("tpd_used") is not None and age is not None \
+                and age <= ratelimit.DAY_WINDOW_MAX_AGE_S:
+            return float(obs["tpd_used"]), float(obs["tpd_limit"]), age
+        return None
+
+    age = obs.get("age_s")
+    if age is None:
+        return None
+
+    if key == "groq_requests/day":
+        # x-ratelimit-limit-requests is the DAILY request bucket on Groq.
+        if obs.get("limit_requests") and obs.get("remaining_requests") is not None \
+                and age <= ratelimit.DAY_WINDOW_MAX_AGE_S:
+            limit = float(obs["limit_requests"])
+            return limit - float(obs["remaining_requests"]), limit, age
+        return None
+
+    if key == "groq_tokens/min":
+        # x-ratelimit-limit-tokens is the PER-MINUTE bucket, which refills in 60s.
+        # An older reading is not evidence about the bucket now, so it is dropped
+        # rather than shown stale.
+        if obs.get("limit_tokens") and obs.get("remaining_tokens") is not None \
+                and age <= ratelimit.MINUTE_WINDOW_MAX_AGE_S:
+            limit = float(obs["limit_tokens"])
+            return limit - float(obs["remaining_tokens"]), limit, age
+        return None
+
+    return None
+
+
 def headroom() -> list[dict]:
     tz = _get_tz()
     now = datetime.datetime.now(tz)
@@ -143,6 +187,19 @@ def headroom() -> list[dict]:
                 else:
                     used = _budget.get_mtd_spend()
                 
+            # Prefer what the provider said over what we counted. Local telemetry
+            # under-reports by construction: the quota is account-wide, and a
+            # deployed container only sees its own ephemeral store (F7).
+            source, observed_age_s = "estimate", None
+            if meta["provider"] == "groq":
+                from zara.utils import ratelimit
+                obs = ratelimit.last_observed("groq")
+                if obs:
+                    m = _measured(key, obs)
+                    if m:
+                        used, limit, observed_age_s = m
+                        source = "measured"
+
             remaining = limit - used
             pct = (used / limit) if limit > 0 else 1.0
             
@@ -163,7 +220,11 @@ def headroom() -> list[dict]:
                 "remaining": remaining,
                 "pct_used": pct,
                 "resets_in_s": reset_in,
-                "status": status
+                "status": status,
+                # "measured" = the provider told us, at observed_age_s ago.
+                # "estimate" = our own tally, which cannot see other machines.
+                "source": source,
+                "observed_age_s": observed_age_s,
             })
             
     return results

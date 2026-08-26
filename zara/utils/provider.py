@@ -395,6 +395,9 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                     raise ProviderProbeFailedError(f"HTTP 413 Payload Too Large: {resp.text[:300]}")
 
                 if resp.status_code == 429:
+                    # The TPD ceiling appears in no header -- only in this body.
+                    from zara.utils import ratelimit
+                    ratelimit.observe("groq", resp.headers, status_code=429, body=resp.text)
                     wait = _parse_reset(resp.headers.get("x-ratelimit-reset-tokens")) or \
                            _parse_reset(resp.headers.get("retry-after")) or 20.0
                     from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="429", http_status=429, elapsed_ms=int((time.monotonic() - _t0) * 1000), wait_ms=int(wait * 1000))
@@ -412,6 +415,9 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                 if resp.status_code != 200:
                     from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="error", http_status=resp.status_code, elapsed_ms=int((time.monotonic() - _t0) * 1000))
                     raise Exception(f"HTTP {resp.status_code}: {resp.text[:300]}")
+
+                from zara.utils import ratelimit
+                ratelimit.observe("groq", resp.headers, status_code=resp.status_code)
 
                 data = resp.json()
                 content = data["choices"][0]["message"]["content"]

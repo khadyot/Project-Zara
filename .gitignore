@@ -56,3 +56,6 @@ current_prod_snippets/
 # Locally installed agent tooling, not part of the product
 .claude/
 .agents/skills/
+
+# Last observed provider rate-limit statement (local cache, machine-specific)
+.ratelimit.json
