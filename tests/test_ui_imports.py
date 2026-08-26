@@ -59,7 +59,31 @@ def test_styles_module_imports():
         "CUSTOM_CSS does not end with a closing </style> -- anything appended "
         "after it is Python, not CSS"
     )
-    assert callable(styles.render_hero)
+
+
+def test_app_imports_only_helpers_that_exist():
+    """Every helper app.py imports from styles.py must actually be there.
+
+    This replaces a hardcoded `render_hero` assertion. That name was removed in the
+    UI revamp and the test failed for the wrong reason -- it was guarding a
+    particular helper rather than the thing that breaks the app, which is app.py
+    importing a name styles.py no longer exports. Reading the import list out of
+    app.py keeps the gate honest as the helpers change.
+    """
+    import ast
+
+    from zara.ui import styles
+
+    tree = ast.parse((REPO_ROOT / "app.py").read_text())
+    imported = [
+        alias.name
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module == "zara.ui.styles"
+        for alias in node.names
+    ]
+    assert imported, "app.py no longer imports from zara.ui.styles -- has the UI layer moved?"
+    missing = [n for n in imported if not hasattr(styles, n)]
+    assert not missing, f"app.py imports names styles.py does not export: {missing}"
 
 
 def test_app_compiles():

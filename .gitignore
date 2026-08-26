@@ -46,3 +46,13 @@ perplexity_responses/04_stress_test_prospect_set.md
 # The demo seed run store IS tracked -- it ships with the app so a fresh
 # deploy has history. Unlike var/, it contains no real people.
 !seed/
+
+# Editor backups from the UI revamp -- the real file is the tracked one
+*.bak
+
+# Local screenshot captures of the running app (18 MB, not product)
+current_prod_snippets/
+
+# Locally installed agent tooling, not part of the product
+.claude/
+.agents/skills/

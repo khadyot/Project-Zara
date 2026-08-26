@@ -1,6 +1,7 @@
 import streamlit as st
 import asyncio
 import html
+import json
 import yaml
 import os
 import glob
@@ -47,7 +48,7 @@ os.environ["ZARA_SECRETS_BRIDGE"] = f"{SECRETS_BRIDGE_STATUS[0]}|{SECRETS_BRIDGE
 from zara.models import Prospect
 from zara.orchestrator import run_end_to_end_pipeline
 from zara.s2 import render_decision_card
-from zara.ui.styles import CUSTOM_CSS, render_hero
+from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 
 # --- DESIGN SYSTEM ---
 # We inject the SavvyCal style tokens via custom CSS overriding Streamlit defaults.
@@ -89,25 +90,30 @@ def render_budget_meter():
 
         st.markdown("<div class='eyebrow-sm'>Today</div>", unsafe_allow_html=True)
         pct = min(h["pct_used"], 1.0)
-        st.progress(pct, text=f"{int(h['used']):,} / {int(h['limit']):,} tokens")
 
         fc = quota.forecast()
         f = fc.get("forecast")
+        runs = f["expected_runs"] if f else None
+        low = runs is not None and runs <= 2
+
+        # The headline number is runs, not tokens -- nobody plans in tokens.
+        zrow(
+            f"~{runs} runs left" if runs is not None else "budget",
+            state="today",
+            detail=f"{f['conservative_runs']} at p90" if f else None,
+            value=f"{int(h['used']):,} / {int(h['limit']):,}",
+            fill=pct,
+            alert=low,
+        )
         if f:
-            runs = f["expected_runs"]
-            tone = "var(--color-ember-coral)" if runs <= 2 else "var(--color-stone)"
             st.markdown(
-                f"<div style='font-size:13px;color:{tone};margin-top:-6px;'>"
-                f"<b>~{runs} runs left today</b> &middot; {f['conservative_runs']} at p90 "
-                f"&middot; capped by {f['binding_limit']}</div>",
+                f"<span class='zquiet'>capped by {f['binding_limit']}</span>",
                 unsafe_allow_html=True,
             )
             if fc.get("run_vs_tpm"):
-                st.markdown(
-                    f"<div style='font-size:12px;color:var(--color-stone);'>"
-                    f"one run &asymp; {fc['run_vs_tpm']:.0%} of the per-minute bucket "
-                    f"&mdash; expect a stall</div>",
-                    unsafe_allow_html=True,
+                st.caption(
+                    f"one run \u2248 {fc['run_vs_tpm']:.0%} of the per-minute "
+                    f"bucket \u2014 expect a stall"
                 )
         if h["status"] in ("critical", "exhausted"):
             st.warning("Near or at Groq TPD ceiling.")
@@ -115,9 +121,29 @@ def render_budget_meter():
         pass
 
 
+def _render_response(text, limit=4000):
+    """Model output, shown as what it actually is.
+
+    Most stages answer in JSON. Rendered as a raw string it arrives as
+    one unbroken line of braces and quotes -- unreadable, and the reason
+    the response panels looked like spreadsheet exhaust. Parsed, it
+    becomes a foldable tree; unparsed, it is still a transcript and
+    still monospace.
+    """
+    body = (text or "")[:limit]
+    try:
+        st.json(json.loads(body), expanded=False)
+    except Exception:
+        st.code(body, language=None, wrap_lines=True)
+
+
 def render_run_history():
-    st.markdown("<div class='eyebrow'>Run History</div>", unsafe_allow_html=True)
-    st.markdown("## Every run, and why it chose what it chose")
+    render_page_header(
+        "History",
+        "Every run, and why it chose what it chose",
+        "The full audit trail: what was retrieved, what was excluded, and "
+        "which claim the draft actually rests on.",
+    )
     try:
         conn = _run_store()
         runs = [dict(r) for r in conn.execute(
@@ -150,9 +176,9 @@ def render_run_history():
     if r["outcome"] == "crash":
         st.error(f"CRASHED: {r['error']}")
         with st.expander("Traceback"):
-            st.code(r["traceback"] or "")
+            st.code(r["traceback"] or "", language="python", wrap_lines=True)
 
-    st.markdown("### Draft")
+    st.markdown("## Draft")
     if r.get("offer_is_generic"):
         st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
     if r["draft_text"]:
@@ -164,7 +190,7 @@ def render_run_history():
     else:
         st.info("No draft produced.")
 
-    st.markdown("### Verifier")
+    st.markdown("## Verifier")
     st.write(f"**{r['verification_status']}** · passed={bool(r['verification_passed'])} "
              f"· self-corrected={bool(r['self_corrected'])} "
              f"· failed at: `{r['verification_failed_pass'] or '—'}`")
@@ -174,7 +200,7 @@ def render_run_history():
     for x in _json.loads(r["first_pass_hallucinations"] or "[]"):
         st.write(f"- ungrounded: `{x}`")
 
-    st.markdown("### What it considered")
+    st.markdown("## What it considered")
     cards = [dict(c) for c in conn.execute(
         "SELECT * FROM cards WHERE run_id=? ORDER BY is_winner DESC, score DESC", (rid,))]
     st.caption(f"{r['cards_total'] or 0} candidates · {r['cards_eligible'] or 0} eligible")
@@ -214,7 +240,7 @@ def render_run_history():
 
     hooks = [dict(h) for h in conn.execute(
         "SELECT * FROM hooks WHERE run_id=? ORDER BY strength DESC", (rid,))]
-    st.markdown(f"### Hook options ({len(hooks)})")
+    st.markdown(f"## Hook options ({len(hooks)})")
     for h in hooks:
         st.markdown(f"""
         <div class='hook-row'>
@@ -223,31 +249,44 @@ def render_run_history():
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("### Sources")
+    st.markdown("## Sources")
+    # `failed` and `skipped` must never be confusable -- one is a fault in
+    # our own plumbing, the other a deliberate choice. The marker carries
+    # it in shape, and the state word carries it in language.
+    _STATE_WORD = {"ok": "ok", "empty": "empty",
+                   "skipped": "not consulted", "failed": "unavailable"}
     for s in conn.execute("SELECT * FROM source_calls WHERE run_id=? ORDER BY seq", (rid,)):
-        icon = f"<span class='status-dot status-{s['status']}'></span>"
-        detail = f"{s['cards']} cards" if s["status"] == "ok" else (s["reason"] or "")[:90]
-        st.markdown(f"{icon} **{s['source']}** — {s['status']} — {s['elapsed_ms']/1000:.1f}s — {detail}", unsafe_allow_html=True)
+        zrow(
+            s["source"],
+            state=_STATE_WORD.get(s["status"], s["status"]),
+            detail=(f"{s['cards']} cards" if s["status"] == "ok"
+                    else (s["reason"] or "")[:90]),
+            value=f"{s['elapsed_ms']/1000:.1f}s" if s["elapsed_ms"] else None,
+            status=s["status"],
+            muted=(s["status"] == "skipped"),
+            alert=(s["status"] == "failed"),
+        )
 
-    st.markdown("### Model calls")
+    st.markdown("## Model calls")
     for c in conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)):
         label = (f"{c['stage']} · {c['provider']} · "
                  f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
                  f"{c['elapsed_ms']/1000:.1f}s")
         with st.expander(label):
-            styled_header = (f"<span class='model-call-header'>{html.escape(c['stage'])} · {html.escape(c['provider'])} · "
-                             f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
-                             f"{c['elapsed_ms']/1000:.1f}s</span>")
-            st.markdown(styled_header, unsafe_allow_html=True)
+            # The expander label already says stage/provider/tokens/time.
+            # Repeating it verbatim as the first line inside was noise.
             if c["system_text"]:
                 st.markdown("<div class='eyebrow-sm'>SYSTEM</div>", unsafe_allow_html=True)
-                st.text(c["system_text"])
+                st.code(c["system_text"], language=None, wrap_lines=True)
             if c["prompt_text"]:
                 st.markdown("<div class='eyebrow-sm'>PROMPT — how this stage was instructed</div>", unsafe_allow_html=True)
-                st.text(c["prompt_text"])
+                # The prompt is authored in markdown. Kept as markdown
+                # source rather than rendered: what was actually sent to
+                # the model is the point, so fidelity beats prettiness.
+                st.code(c["prompt_text"], language="markdown", wrap_lines=True)
             if c["response_text"]:
                 st.markdown("<div class='eyebrow-sm'>RESPONSE</div>", unsafe_allow_html=True)
-                st.text(c["response_text"][:4000])
+                _render_response(c["response_text"])
 
 
 def render_provider_status():
@@ -261,7 +300,7 @@ def render_provider_status():
     """
     from zara.utils import health
 
-    st.markdown("### Provider status")
+    st.markdown("## Provider status")
     rows = health.key_status()
     ok = health.secrets_bridge_ok()
 
@@ -288,11 +327,17 @@ def render_provider_status():
         else:
             mark = "absent"
             note = "not set"
-        st.markdown(
-            f"<div style='font-family:Geist Mono,monospace;font-size:13px;'>"
-            f"<b>{r['name']}</b> &middot; {mark} &middot; {note} "
-            f"<span style='color:var(--color-stone);'>({r['tier']} — {r['purpose']})</span></div>",
-            unsafe_allow_html=True,
+        # Was an inline font-family:Geist Mono -- a font from the Zamp
+        # system that this build never loads, so it fell back to the
+        # browser's default monospace and read as a foreign object.
+        zrow(
+            r["name"],
+            state=mark,
+            detail=f"{r['tier']} \u2014 {r['purpose']}",
+            value=note,
+            status={"present": "ok", "absent": "empty"}.get(mark, "failed"),
+            alert=(mark == "suspicious"),
+            muted=(mark == "absent"),
         )
 
     st.caption("Key names and lengths only — values are never read or displayed.")
@@ -307,8 +352,11 @@ def render_provider_status():
 
 
 def render_budget_and_quota():
-    st.markdown("<div class='eyebrow'>System</div>", unsafe_allow_html=True)
-    st.markdown("## Budget & Quota")
+    render_page_header(
+        "System",
+        "Budget & quota",
+        "What is left, what is binding, and where the tokens went.",
+    )
 
     render_provider_status()
     st.markdown("---")
@@ -320,13 +368,23 @@ def render_budget_and_quota():
         hrs = quota.headroom()
         fc = quota.forecast()
         
-        st.markdown("### Quota Headroom")
+        st.markdown("## Quota headroom")
+        # Was: bold text, a raw CSS colour keyword ('green'/'orange'/'red'
+        # -- outside the palette entirely), and a full-width st.progress
+        # that was invisible at 0% and left a ~50px hole between every
+        # reading. Same row vocabulary as sources and stalls now.
         for h in hrs:
-            color = "green" if h["status"] == "ok" else ("orange" if h["status"] == "warn" else "red")
-            st.markdown(f"**{h['resource']}**: {h['used']:.0f} / {h['limit']:.0f} (resets in {int(h['resets_in_s']//60)}m) - <span style='color:{color}'>{h['status'].upper()}</span>", unsafe_allow_html=True)
-            st.progress(min(h["pct_used"], 1.0))
+            zrow(
+                h["resource"],
+                state=h["status"],
+                detail=f"resets in {int(h['resets_in_s']//60)}m",
+                value=f"{h['used']:,.0f} / {h['limit']:,.0f}",
+                status={"ok": "ok", "warn": "empty"}.get(h["status"], "failed"),
+                fill=min(h["pct_used"], 1.0),
+                alert=(h["status"] not in ("ok", "warn")),
+            )
             
-        st.markdown("### Runs & Forecast")
+        st.markdown("## Runs & forecast")
         c1, c2, c3 = st.columns(3)
         c1.metric("Recorded Runs", fc["recorded_runs"])
         c2.metric("Avg tokens/run", f"{int(fc['mean_tokens']):,}")
@@ -351,7 +409,7 @@ def render_budget_and_quota():
                     "structural on the free tier, not a fault."
                 )
             
-        st.markdown("### Token Share by Stage")
+        st.markdown("## Token share by stage")
         with telemetry.connect() as conn:
             rows = conn.execute("SELECT stage, SUM(prompt_tokens+completion_tokens) as t FROM usage WHERE provider != 'fixture' AND status NOT IN ('error', '429') GROUP BY stage ORDER BY t DESC").fetchall()
             if rows:
@@ -359,12 +417,26 @@ def render_budget_and_quota():
                 if not df.empty and 'stage' in df.columns:
                     st.bar_chart(df.set_index("stage"))
                 
-        st.markdown("### Recent 429 Stalls")
+        st.markdown("## Recent 429 stalls")
         with telemetry.connect() as conn:
             stalls = conn.execute("SELECT ts, stage, wait_ms FROM usage WHERE status = '429' ORDER BY ts DESC LIMIT 20").fetchall()
             if stalls:
                 for s in stalls:
-                    st.caption(f"`{s['ts']}` | **{s['stage']}** — waited {s['wait_ms']/1000:.1f}s")
+                    # A 429 that resolved in under a second is noise;
+                    # only a real wait earns the alert marker. Every row
+                    # was coral before, which made the list unreadable
+                    # and the genuinely slow stalls invisible.
+                    waited = s["wait_ms"] / 1000
+                    slow = waited >= 1.0
+                    zrow(
+                        s["stage"],
+                        state="stalled" if slow else "retried",
+                        detail=s["ts"],
+                        value=f"{waited:.1f}s",
+                        status="failed" if slow else "empty",
+                        muted=not slow,
+                        alert=slow,
+                    )
             else:
                 st.info("No recent stalls recorded.")
     except Exception as e:
@@ -396,7 +468,20 @@ def main():
         st.stop()
 
     with st.sidebar:
-        page = st.radio("View", ["Draft", "Run History", "Budget & Quota"], horizontal=True, label_visibility="collapsed")
+        render_brand()
+        # A segmented control IS the pill switcher the design calls for.
+        # This used to be a horizontal st.radio with CSS hiding the radio
+        # circles and repainting the labels as pills -- an imitation that
+        # depended on Streamlit's internal DOM and broke when it changed.
+        page = st.segmented_control(
+            "View",
+            ["Draft", "History", "Budget"],
+            default="Draft",
+            label_visibility="collapsed",
+            width="stretch",
+        )
+        if page is None:          # segmented_control returns None when cleared
+            page = "Draft"
         render_budget_meter()
         st.markdown("---")
         st.header("Zara Settings")
@@ -440,9 +525,11 @@ def main():
         try:
             tv = budget.get_credit_usage("tavily")
             st.markdown(
-                f"<div style='font-size:12px;color:var(--color-stone);'>"
-                f"tavily: <b>{tv['used']}</b>/{tv['limit']} credits ({tv['month']}) · "
-                f"apify spend: <b>${budget.get_mtd_spend():.3f}</b> MTD</div>",
+                f"<span class='zquiet'>tavily </span>"
+                f"<span class='zaccent'>{tv['used']}</span>"
+                f"<span class='zquiet'>/{tv['limit']} credits &middot; apify </span>"
+                f"<span class='zaccent'>${budget.get_mtd_spend():.3f}</span>"
+                f"<span class='zquiet'> MTD</span>",
                 unsafe_allow_html=True,
             )
         except Exception:
@@ -462,17 +549,24 @@ def main():
     if demo_mode and replay_snapshot:
         settings["replay_snapshot"] = replay_snapshot
     
-    if page == "Run History":
+    if page == "History":
         render_run_history()
         return
 
-    if page == "Budget & Quota":
+    if page == "Budget":
         render_budget_and_quota()
         return
 
-    render_hero()
-    
-    # Wrap all content below hero in a centered column
+    # The forest band that used to sit here is gone -- the dark zone is
+    # the sidebar now. Every page opens with the same three-part header
+    # instead, so the eye starts in the same place on each screen.
+    render_page_header(
+        "Draft",
+        "Generate a draft",
+        "Research a prospect, pick the signal worth leading with, and draft "
+        "for review. Nothing is ever sent.",
+    )
+
     _, col_main, _ = st.columns([1, 4, 1])
     with col_main:
         if admin_pass == "123":
@@ -575,8 +669,6 @@ def main():
                 st.error(f"Failed to load config: {e}")
             st.markdown("---")
         
-        st.markdown("<div class='eyebrow'>Single Prospect</div>", unsafe_allow_html=True)
-        st.markdown("## Generate Draft")
         
         with st.form("prospect_form"):
             col1, col2 = st.columns(2)
@@ -678,7 +770,7 @@ def main():
             st.caption("Deviations: " + " · ".join(icp_notes))
 
         # --- Regeneration controls ---
-        st.markdown("### Regenerate")
+        st.markdown("## Regenerate")
         col_style, col_regen, col_deep = st.columns([2, 1, 1])
         with col_style:
             style = st.selectbox("Draft style", [
@@ -738,24 +830,28 @@ def main():
         ranked = draft_res.ranked_prospect
 
         # --- Confidence badge ---
+        # Was a '●' glyph plus one of five hardcoded hex colours, two of
+        # which (#8a6d1a, #a33a1a) were not in the palette at all.
         badge_map = {
-            "person_authored": ("● strong — person-authored evidence", "#0d542b"),
-            "person_attributed": ("● medium — person-attributed evidence", "#8a6d1a"),
-            "company_action": ("● company-level evidence", "#8a6d1a"),
-            "database_only": ("● weak — database only", "#a33a1a"),
-            "no_signal": ("● no signal", "#f54320"),
+            "person_authored":   ("strong \u2014 person-authored", "is-strong"),
+            "person_attributed": ("medium \u2014 person-attributed", "is-medium"),
+            "company_action":    ("company-level evidence", "is-medium"),
+            "database_only":     ("weak \u2014 database only", "is-weak"),
+            "no_signal":         ("no signal", "is-weak"),
         }
-        badge_text, badge_color = badge_map.get(draft_res.claim_strength, ("● unknown", "#44403b"))
+        badge_text, badge_cls = badge_map.get(
+            draft_res.claim_strength, ("unknown", "")
+        )
         sq = getattr(draft_res.ranked_prospect, "signal_quality", "ok")
-        sq_str = " (thin signal)" if sq == "thin" else ""
+        if sq == "thin":
+            badge_text += " \u00b7 thin signal"
         st.markdown(
-            f"<div style='font-family:Inter,sans-serif;font-size:14px;color:{badge_color};"
-            f"font-weight:600;'>{badge_text}{sq_str}</div>",
+            f"<span class='zchip {badge_cls}'>{html.escape(badge_text)}</span>",
             unsafe_allow_html=True,
         )
 
         # --- Hook options panel ---
-        st.markdown("### Hook options")
+        st.markdown("## Hook options")
         if ranked.hooks:
             for i, h in enumerate(ranked.hooks):
                 age_text, is_stale = _age_label(getattr(h, "recency_days", None))
@@ -780,7 +876,7 @@ def main():
         # --- Editable draft ---
         if getattr(draft_res, "offer_is_generic", False):
             st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
-        st.markdown("### The draft (editable)")
+        st.markdown("## The draft (editable)")
         if draft_res.draft_text:
             # The key must change when the draft does. Streamlit gives session_state
             # precedence over `value=` for a keyed widget, so a fixed key made this box
@@ -817,11 +913,19 @@ def main():
 
         # --- Sources ---
         with st.expander(f"Sources ({len(results)})"):
+            _SW = {"ok": "ok", "empty": "empty",
+                   "skipped": "not consulted", "failed": "unavailable"}
             for r in sorted(results, key=lambda x: (x.rung, x.source)):
-                dot = f"<span class='status-dot status-{r.status}'></span>"
-                detail = f"{len(r.cards)} cards" if r.status == "ok" else (r.reason or "")
-                st.markdown(f"{dot} `{r.source}` — **{r.status}** — {detail}",
-                            unsafe_allow_html=True)
+                zrow(
+                    r.source,
+                    state=_SW.get(r.status, r.status),
+                    detail=(f"{len(r.cards)} cards" if r.status == "ok"
+                            else (r.reason or "")),
+                    value=f"rung {r.rung}",
+                    status=r.status,
+                    muted=(r.status == "skipped"),
+                    alert=(r.status == "failed"),
+                )
 
 if __name__ == "__main__":
     main()

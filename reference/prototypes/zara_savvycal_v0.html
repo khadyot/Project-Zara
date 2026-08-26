@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en" data-density="comfortable" data-display="instrument" data-excluded="show">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zara — SavvyCal v0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   ZARA · SavvyCal design system — v0
+   Source of truth: reference/savvycal_style.md
+   Deviations from reference are marked  ⟨DEV⟩  with reasoning.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* ── Colors (verbatim from reference) ─────────────────────────── */
+  --forest-stage:#0d542b;
+  --lime-sprout:#b9ff78;
+  --ember-coral:#f54320;
+  --coral-whisper:#ffe3e3;
+  --cream-paper:#fcf7ed;
+  --true-black:#000000;
+  --midnight-ink:#1c1917;
+  --stone:#44403b;
+  --slate:#292524;
+  --ash:#d6d3d1;
+  --fog:#e5e7eb;
+  --pure-white:#ffffff;
+  --moss:#008236;
+
+  /* ── Type families ────────────────────────────────────────────── */
+  /* ⟨DEV⟩ Display: reference says "GT Alpina Condensed — substitute
+     Playfair Display or Bodoni Moda *condensed*". Neither has a
+     condensed cut, which is why the current build reads wide and
+     bridal at 96px. Instrument Serif is natively narrow and
+     display-only — the closest available match to the real thing.
+     Switchable in Tweaks so the call can be overruled. */
+  --font-display:'Instrument Serif',serif;
+  --font-ui:'Inter',ui-sans-serif,system-ui,sans-serif;
+  /* ⟨NEW⟩ SavvyCal has no monospace. Reserved for ONE context: verbatim
+     machine output (.mono-panel), where character alignment is the point.
+     Everything else — IDs, timings, scores, source names — is Inter with
+     tabular figures, so the interface reads as one voice. */
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+
+  /* Reference's substitute rule for GT America *Extended* (UI chrome)
+     is "Inter at letter-spacing 0.02em" — applied systematically. */
+  --track-ui:0.02em;
+  --track-label:0.08em;   /* uppercase micro-labels */
+  --track-body:-0.007em;
+
+  /* ── TYPE RAMP — six steps, and nothing off-ramp ───────────────
+     Every font-size in this file resolves to one of these tokens.
+     A literal px font-size anywhere below is a bug. Hierarchy comes
+     from weight, case, tracking and colour before it comes from size. */
+  --t-mark:22px;   --lh-mark:1;      /* nav wordmark (logo) — only serif  */
+  --t-title:26px;  --lh-title:1.2;   /* one per screen                    */
+  --t-head:17px;   --lh-head:1.35;   /* card / section title              */
+  --t-body:15px;   --lh-body:1.55;   /* ALL running text, rows, controls  */
+  --t-meta:13px;   --lh-meta:1.45;   /* dim secondary metadata            */
+  --t-label:11px;  --lh-label:1.2;   /* uppercase micro-labels + chips    */
+
+  /* ── 8px grid ─────────────────────────────────────────────────── */
+  --s-1:8px; --s-2:16px; --s-3:24px; --s-4:32px; --s-5:40px; --s-6:48px; --s-8:64px;
+
+  --page-max:1200px;
+  --section-gap:40px;   /* ⟨DEV⟩ 64px in reference — tightened for dashboard density */
+  --card-pad:24px;
+  --gap:16px;
+
+  --r-card:8px; --r-pill:9999px; --r-btn:8px; --r-frame:24px;
+
+  --nav-h:56px;
+}
+
+/* Compact density — one lever, applied at the token layer so nothing
+   downstream has to know about it. */
+[data-density="compact"]{
+  --section-gap:24px; --card-pad:16px; --gap:12px;
+  --t-body:14px; --t-meta:12px; --t-head:16px;
+}
+[data-display="bodoni"]  { --font-display:'Bodoni Moda',serif; }
+[data-display="playfair"]{ --font-display:'Playfair Display',serif; }
+[data-excluded="hide"] .cand.is-excluded{ display:none; }
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background:var(--cream-paper);
+  color:var(--stone);
+  font-family:var(--font-ui);
+  font-size:var(--t-body);
+  line-height:var(--lh-body);
+  letter-spacing:var(--track-body);
+  font-feature-settings:'cv11';
+  -webkit-font-smoothing:antialiased;
+  text-wrap:pretty;
+}
+
+/* Headlines: True Black. Body: Stone. Reference forbids pure black
+   body copy on cream (contrast fatigue). */
+h1,h2,h3,h4{color:var(--true-black);margin:0;letter-spacing:var(--track-body);}
+
+/* ⟨FIX⟩ The serif is display-only. h2/h3 are functional section
+   labels and take the grotesk, not the serif. */
+h2{font-family:var(--font-ui);font-weight:700;font-size:var(--t-head);line-height:var(--lh-head);}
+h3{font-family:var(--font-ui);font-weight:700;font-size:var(--t-head);line-height:var(--lh-head);}
+h4{font-family:var(--font-ui);font-weight:700;font-size:var(--t-head);line-height:var(--lh-head);letter-spacing:var(--track-body);}
+
+a{color:var(--midnight-ink);text-decoration:none;border-bottom:1px solid var(--ash);}
+a:hover{border-bottom-color:var(--midnight-ink);}
+
+/* ═══ NAV — the forest stage, as site chrome (reference: dark bar,
+   logo left, pill switcher, actions right). Full-bleed. ═══════════ */
+.nav{
+  background:var(--forest-stage);
+  height:var(--nav-h);
+  display:flex;align-items:center;gap:var(--s-3);
+  padding:0 var(--s-3);
+  position:sticky;top:0;z-index:40;
+}
+.wordmark{
+  font-family:var(--font-display);
+  font-size:var(--t-mark);line-height:var(--lh-mark);
+  color:var(--cream-paper);
+  letter-spacing:0.01em;
+}
+.wordmark em{color:var(--lime-sprout);font-style:italic;}
+
+.pilltabs{display:flex;gap:var(--s-1);margin-left:var(--s-2);}
+.pilltab{
+  font-family:var(--font-ui);font-size:var(--t-body);font-weight:400;
+  letter-spacing:var(--track-ui);
+  color:var(--cream-paper);
+  background:transparent;border:none;
+  border-radius:var(--r-pill);
+  padding:4px 12px;cursor:pointer;
+  transition:background-color .1s ease,color .1s ease;
+}
+.pilltab:hover{background:rgba(252,247,237,.12);}
+.pilltab[aria-selected="true"]{background:var(--lime-sprout);color:var(--midnight-ink);}
+.pilltab:focus-visible{outline:2px solid var(--lime-sprout);outline-offset:2px;}
+
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:var(--s-2);}
+.nav-meta{
+  font-size:var(--t-meta);color:rgba(252,247,237,.62);
+  letter-spacing:var(--track-ui);font-variant-numeric:tabular-nums;
+}
+.btn-ghost-dark{
+  font-family:var(--font-ui);font-size:var(--t-body);letter-spacing:var(--track-ui);
+  color:var(--cream-paper);background:transparent;
+  border:1.5px solid rgba(252,247,237,.5);border-radius:var(--r-btn);
+  padding:6px 16px;cursor:pointer;transition:all .1s ease;
+}
+.btn-ghost-dark:hover{border-color:var(--cream-paper);background:rgba(252,247,237,.08);}
+
+/* ═══ SHELL ═══════════════════════════════════════════════════════ */
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:calc(100vh - var(--nav-h));}
+
+.sidebar{
+  background:var(--cream-paper);
+  border-right:1px solid var(--fog);   /* ⟨FIX⟩ sidebar and canvas no longer merge */
+  padding:var(--s-3);
+}
+.main{padding:var(--s-4) var(--s-3) var(--s-8);}
+.wrap{max-width:var(--page-max);margin:0 auto;}  /* ⟨FIX⟩ token finally consumed */
+
+/* ═══ MICRO-LABELS ════════════════════════════════════════════════
+   One treatment for every small uppercase label in the interface —
+   section eyebrows, row states, field keys, panel headers. Same family
+   as everything else; only size, weight, case and tracking separate it.
+   ⟨DEV⟩ The reference's coral squiggle underline is dropped at the
+   user's direction — it read as decoration at dashboard density. */
+.eyebrow,.eyebrow-sm,.rung-label,.src-state,.side-field label,
+.hook-meta .k,.cand-why .k,.tw-row > span,details.cand-more summary{
+  font-family:var(--font-ui);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:var(--track-label);
+  line-height:1.2;
+  color:var(--slate);
+}
+.eyebrow{font-size:var(--t-label);display:block;margin:0 0 var(--s-2);color:var(--midnight-ink);}
+.eyebrow-sm{font-size:var(--t-label);display:block;margin:0 0 var(--s-2);color:var(--midnight-ink);}
+
+/* ═══ CARDS ═══════════════════════════════════════════════════════ */
+.card{
+  background:var(--pure-white);
+  border:1px solid var(--fog);
+  border-radius:var(--r-card);
+  padding:var(--card-pad);
+}
+.card + .card{margin-top:var(--gap);}
+.section{margin-bottom:var(--section-gap);}
+
+.card-head{
+  display:flex;align-items:baseline;gap:var(--s-2);
+  margin:0 0 var(--s-2);flex-wrap:wrap;
+}
+.card-head h3{flex:0 0 auto;}
+.card-sub{
+  font-size:var(--t-meta);color:var(--slate);margin-left:auto;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ═══ RUN HEADER ══════════════════════════════════════════════════ */
+.run-head{margin-bottom:var(--section-gap);}
+.run-name{
+  /* ⟨DEV⟩ Was the display serif. Dropped at the user's direction —
+     one face across the interface. The serif now survives only in the
+     nav wordmark, where it is a logo rather than text. */
+  font-family:var(--font-ui);
+  font-weight:700;
+  font-size:var(--t-title);
+  line-height:var(--lh-title);
+  letter-spacing:-0.02em;
+  color:var(--true-black);
+  margin:0 0 6px;
+}
+.run-name .at{color:var(--stone);}
+.run-id{font-size:var(--t-body);color:var(--slate);font-variant-numeric:tabular-nums;}
+.run-id b{color:var(--midnight-ink);font-weight:500;}
+
+.verdict{
+  display:flex;flex-wrap:wrap;gap:var(--s-1);
+  margin-top:var(--s-2);
+}
+
+/* ═══ CHIPS ═══════════════════════════════════════════════════════ */
+.chip{
+  font-family:var(--font-ui);font-size:var(--t-label);font-weight:600;
+  letter-spacing:var(--track-label);text-transform:uppercase;
+  padding:4px 11px;border-radius:var(--r-pill);
+  border:1px solid var(--ash);color:var(--slate);
+  background:transparent;white-space:nowrap;
+}
+.chip b{font-weight:700;color:var(--midnight-ink);}
+.chip.solid{background:var(--midnight-ink);color:var(--cream-paper);border-color:var(--midnight-ink);}
+.chip.solid b{color:var(--cream-paper);}
+/* Lime badge: reference's own "Most popular" pattern — a non-interactive
+   accent badge is the one sanctioned lime fill outside buttons. */
+.chip.win{background:var(--lime-sprout);color:var(--midnight-ink);border-color:var(--lime-sprout);font-weight:700;}
+/* Coral as stroke only — never a fill. */
+.chip.alert{border:1.5px solid var(--ember-coral);color:var(--midnight-ink);font-weight:700;}
+.chip.mono{text-transform:none;letter-spacing:var(--track-ui);}
+
+.score-badge{
+  font-weight:700;font-size:var(--t-label);letter-spacing:var(--track-ui);
+  border:1.5px solid var(--ember-coral);border-radius:var(--r-pill);
+  color:var(--midnight-ink);padding:2px 9px;display:inline-block;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ═══ STATUS VOCABULARY  ⟨NEW⟩ ════════════════════════════════════
+   SavvyCal has no status system. Compass 7 requires that `failed`
+   and `skipped` never be confusable. Shape carries the meaning;
+   color only reinforces it, so the distinction survives grayscale
+   and colorblindness. Label text carries it a third time.        */
+.dot{
+  display:inline-block;width:11px;height:11px;border-radius:var(--r-pill);
+  flex:0 0 11px;box-sizing:border-box;
+}
+.dot.ok      { background:var(--midnight-ink); }
+.dot.empty   { background:transparent;border:1.5px solid var(--ash); }
+.dot.skipped { background:transparent;border:1.5px dashed var(--ash);opacity:.6; }
+.dot.failed  { background:transparent;border:3px solid var(--ember-coral); }
+.dot.running { background:var(--lime-sprout);border:1.5px solid var(--moss);animation:pulse 1.4s ease-in-out infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.dot.running{animation:none}}
+
+/* Completeness bar — proportions of the four states, encoded as
+   fill/hatch/dash rather than four colors. */
+.completeness{
+  display:flex;height:6px;border-radius:var(--r-pill);overflow:hidden;
+  border:1px solid var(--fog);background:var(--cream-paper);
+  margin:var(--s-2) 0 var(--s-3);
+}
+.completeness span{display:block;height:100%;}
+.cp-ok{background:var(--midnight-ink);}
+.cp-empty{background:repeating-linear-gradient(90deg,var(--ash) 0 1px,transparent 1px 4px);}
+.cp-skipped{background:repeating-linear-gradient(90deg,var(--ash) 0 2px,transparent 2px 6px);opacity:.6;}
+.cp-failed{background:var(--coral-whisper);box-shadow:inset 0 0 0 1.5px var(--ember-coral);}
+
+/* ═══ SOURCE BOARD ════════════════════════════════════════════════ */
+.rung-label{
+  font-size:var(--t-label);
+  display:flex;align-items:center;gap:var(--s-1);
+  margin:var(--s-3) 0 var(--s-1);
+}
+.rung-label::after{content:"";flex:1;height:1px;background:var(--fog);}
+.rung-label:first-of-type{margin-top:0;}
+
+.src-row{
+  display:grid;
+  grid-template-columns:11px 168px 92px 1fr auto;
+  align-items:center;gap:var(--s-2);
+  padding:7px 0;
+  border-bottom:1px solid var(--fog);
+  font-size:var(--t-body);line-height:1.4;
+}
+.src-row:last-child{border-bottom:none;}
+.src-name{font-size:var(--t-body);font-weight:500;color:var(--midnight-ink);}
+.src-state{font-size:var(--t-label);}
+.src-row.is-failed .src-state{color:var(--midnight-ink);font-weight:500;}
+.src-row.is-skipped{opacity:.62;}
+.src-detail{color:var(--stone);font-size:var(--t-meta);}
+.src-detail.reason{font-size:var(--t-meta);color:var(--slate);}
+.src-time{
+  font-size:var(--t-meta);color:var(--slate);
+  font-variant-numeric:tabular-nums;text-align:right;
+}
+
+/* Compass 7 honesty flag — must be visible, not buried. */
+.incomplete{
+  border:1.5px solid var(--ember-coral);   /* stroke, never fill */
+  border-radius:var(--r-card);
+  background:var(--coral-whisper);
+  padding:var(--s-2) var(--s-3);
+  margin-top:var(--s-3);
+  font-size:var(--t-body);color:var(--midnight-ink);
+}
+.incomplete b{font-weight:700;}
+
+/* ═══ MONO PANEL  ⟨NEW⟩ — "the system talking" ═══════════════════ */
+.mono-panel{
+  font-family:var(--font-mono);font-size:var(--t-meta);line-height:1.65;letter-spacing:0;
+  color:var(--slate);
+  background:var(--cream-paper);
+  border:1px solid var(--fog);
+  border-radius:var(--r-card);
+  padding:var(--s-2);
+  white-space:pre-wrap;word-break:break-word;
+  max-height:220px;overflow:auto;
+}
+.mono-panel.said{background:var(--coral-whisper);border-color:#f6d5d5;color:var(--midnight-ink);}
+
+/* ═══ DRAFT FRAME — reference's Product Screenshot Frame.
+   The draft IS the product artifact, so this is its correct home. */
+.draft-frame{
+  border:2px solid var(--ember-coral);
+  border-radius:var(--r-frame);
+  background:var(--pure-white);
+  box-shadow:0 24px 48px rgba(245,67,32,.15);   /* the one sanctioned shadow */
+  padding:var(--s-4);
+}
+.draft-subject{
+  font-size:var(--t-body);letter-spacing:var(--track-ui);
+  color:var(--slate);padding-bottom:var(--s-2);
+  border-bottom:1px solid var(--fog);margin-bottom:var(--s-3);
+}
+.draft-subject b{color:var(--midnight-ink);}
+.draft-body{
+  font-size:var(--t-body);line-height:1.7;color:var(--midnight-ink);
+  max-width:62ch;      /* reference: 65–75 char measure */
+  white-space:pre-wrap;
+}
+.draft-actions{display:flex;gap:var(--s-1);margin-top:var(--s-3);flex-wrap:wrap;}
+
+/* ═══ BUTTONS ═════════════════════════════════════════════════════ */
+.btn{
+  font-family:var(--font-ui);font-size:var(--t-body);font-weight:400;
+  letter-spacing:var(--track-ui);
+  padding:12px 24px;border-radius:var(--r-btn);cursor:pointer;
+  transition:background-color .1s ease,color .1s ease,border-color .1s ease,box-shadow .1s ease;
+}
+/* Lime = the only interactive fill in the system. */
+.btn-primary{background:var(--lime-sprout);color:var(--midnight-ink);border:1.5px solid var(--lime-sprout);}
+.btn-primary:hover{filter:brightness(1.04);box-shadow:0 0 0 4px rgba(185,255,120,.25);}
+.btn-ghost{background:transparent;color:var(--midnight-ink);border:1.5px solid var(--midnight-ink);}
+.btn-ghost:hover{background:var(--midnight-ink);color:var(--cream-paper);}
+.btn:focus-visible{outline:2px solid var(--midnight-ink);outline-offset:2px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;filter:none;box-shadow:none;}
+.btn:disabled:hover{background:transparent;color:var(--midnight-ink);}
+.btn-sm{padding:7px 16px;font-size:var(--t-body);}
+
+/* ═══ HOOKS ═══════════════════════════════════════════════════════ */
+.hook{
+  background:var(--pure-white);border:1px solid var(--fog);
+  border-radius:var(--r-card);padding:var(--s-2);
+}
+.hook + .hook{margin-top:var(--s-1);}
+.hook-top{display:flex;gap:var(--s-2);align-items:flex-start;}
+.hook-text{color:var(--midnight-ink);font-size:var(--t-body);line-height:1.5;}
+.hook-meta{
+  margin-top:var(--s-1);padding-top:var(--s-1);
+  border-top:1px solid var(--fog);
+  font-size:var(--t-meta);color:var(--stone);
+}
+.hook-meta .k{font-size:var(--t-label);margin-right:8px;}
+
+/* ═══ CANDIDATES ══════════════════════════════════════════════════ */
+.cand{
+  background:var(--pure-white);border:1px solid var(--fog);
+  border-radius:var(--r-card);padding:var(--s-2);
+}
+.cand + .cand{margin-top:var(--s-1);}
+.cand.is-winner{border:1.5px solid var(--ember-coral);}   /* coral as stroke */
+.cand.is-excluded{background:transparent;border-style:dashed;border-color:var(--ash);}
+.cand.is-excluded .cand-claim{color:var(--stone);}
+.cand-top{display:flex;align-items:center;gap:var(--s-1);flex-wrap:wrap;}
+.cand-claim{
+  color:var(--midnight-ink);font-size:var(--t-body);line-height:1.5;
+  margin-top:6px;
+}
+.cand-why{margin-top:6px;font-size:var(--t-meta);color:var(--stone);}
+.cand-why .k{font-size:var(--t-label);margin-right:8px;}
+.cand-url{
+  font-size:var(--t-meta);color:var(--slate);
+  margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+details.cand-more{margin-top:var(--s-1);}
+details.cand-more summary{
+  font-size:var(--t-label);cursor:pointer;list-style:none;padding:4px 0;
+}
+details.cand-more summary::-webkit-details-marker{display:none;}
+details.cand-more summary::before{content:"▸ ";color:var(--ember-coral);}
+details.cand-more[open] summary::before{content:"▾ ";}
+details.cand-more summary:hover{color:var(--midnight-ink);}
+details.cand-more > div{margin-top:6px;}
+
+/* ═══ SIDEBAR ═════════════════════════════════════════════════════ */
+.side-block{margin-bottom:var(--s-4);}
+.side-row{
+  display:flex;justify-content:space-between;gap:var(--s-1);
+  font-size:var(--t-body);padding:5px 0;
+  border-bottom:1px solid var(--fog);
+}
+.side-row:last-child{border-bottom:none;}
+.side-row .k{color:var(--slate);}
+.side-row .v{font-size:var(--t-meta);color:var(--midnight-ink);text-align:right;font-variant-numeric:tabular-nums;}
+.side-field{margin-bottom:var(--s-2);}
+.side-field label{display:block;font-size:var(--t-label);margin-bottom:5px;}
+.side-field input{
+  width:100%;background:var(--pure-white);
+  border:1px solid var(--fog);border-radius:var(--r-btn);
+  padding:8px 10px;font-family:var(--font-ui);font-size:var(--t-body);
+  letter-spacing:var(--track-body);color:var(--true-black);
+}
+.side-field input:focus{
+  outline:none;border-color:var(--midnight-ink);
+  box-shadow:0 0 0 1px var(--midnight-ink);
+}
+
+/* ═══ STAGE TIMELINE ══════════════════════════════════════════════ */
+.stage{
+  display:grid;grid-template-columns:11px 1fr auto;gap:var(--s-2);
+  align-items:center;padding:7px 0;border-bottom:1px solid var(--fog);
+  font-size:var(--t-body);
+}
+.stage:last-child{border-bottom:none;}
+.stage-name{font-size:var(--t-body);font-weight:500;color:var(--midnight-ink);}
+.stage-name span{font-family:var(--font-ui);color:var(--stone);font-size:var(--t-meta);}
+.stage-tok{font-size:var(--t-meta);color:var(--slate);font-variant-numeric:tabular-nums;}
+
+/* ═══ TWEAKS ══════════════════════════════════════════════════════ */
+#tweaks-toggle{
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  font-family:var(--font-ui);font-size:var(--t-body);letter-spacing:var(--track-ui);
+  background:var(--midnight-ink);color:var(--cream-paper);
+  border:none;border-radius:var(--r-pill);padding:10px 20px;cursor:pointer;
+}
+#tweaks-toggle:hover{background:var(--forest-stage);}
+#tweaks{
+  position:fixed;right:20px;bottom:20px;z-index:61;
+  width:250px;background:var(--pure-white);
+  border:1px solid var(--fog);border-radius:var(--r-card);
+  padding:var(--s-2);display:none;
+}
+#tweaks[data-open="true"]{display:block;}
+#tweaks h4{margin-bottom:var(--s-2);}
+.tw-row{margin-bottom:var(--s-2);}
+.tw-row:last-child{margin-bottom:0;}
+.tw-row > span{display:block;font-size:var(--t-label);margin-bottom:6px;}
+.tw-opts{display:flex;gap:4px;flex-wrap:wrap;}
+.tw-opts button{
+  font-family:var(--font-ui);font-size:var(--t-meta);letter-spacing:var(--track-ui);
+  background:transparent;border:1px solid var(--ash);border-radius:var(--r-pill);
+  padding:3px 10px;cursor:pointer;color:var(--slate);
+  transition:background-color .1s ease,color .1s ease;
+}
+.tw-opts button[aria-pressed="true"]{background:var(--lime-sprout);border-color:var(--lime-sprout);color:var(--midnight-ink);}
+#tweaks-close{
+  position:absolute;top:10px;right:12px;background:none;border:none;
+  cursor:pointer;color:var(--slate);font-size:var(--t-body);line-height:1;
+}
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════════════ */
+@media (max-width:960px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{border-right:none;border-bottom:1px solid var(--fog);}
+  .src-row{grid-template-columns:11px 1fr auto;row-gap:2px;}
+  .src-row .src-state{grid-column:2;}
+  .src-row .src-detail{grid-column:2 / -1;}
+  .nav{flex-wrap:wrap;height:auto;padding:10px var(--s-2);}
+  .nav-meta{display:none;}
+}
+.screen[hidden]{display:none;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wordmark">Zara<em>.</em></div>
+  <div class="pilltabs" role="tablist">
+    <button class="pilltab" role="tab" aria-selected="true"  data-screen="run">Run</button>
+    <button class="pilltab" role="tab" aria-selected="false" data-screen="draft">Draft review</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-meta">5be630f4948c · seed_demo · 2026-08-25 19:46</span>
+    <button class="btn-ghost-dark">New run</button>
+  </div>
+</nav>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="side-block">
+      <div class="eyebrow-sm">Prospect</div>
+      <div class="side-field"><label for="p-name">Name</label><input id="p-name" value="Jordan Ellis"></div>
+      <div class="side-field"><label for="p-co">Company</label><input id="p-co" value="Modern Treasury"></div>
+      <div class="side-field"><label for="p-title">Title</label><input id="p-title" value="Director of Ops"></div>
+      <button class="btn btn-primary btn-sm" style="width:100%">Run pipeline</button>
+    </div>
+
+    <div class="side-block">
+      <div class="eyebrow-sm">Config</div>
+      <div class="side-row"><span class="k">Profile</span><span class="v">standard</span></div>
+      <div class="side-row"><span class="k">Model</span><span class="v">gpt-oss-120b</span></div>
+      <div class="side-row"><span class="k">value_prop</span><span class="v">26565209ffe1</span></div>
+      <div class="side-row"><span class="k">Commit</span><span class="v">05316af<span style="color:var(--ember-coral)">+wip</span></span></div>
+    </div>
+
+    <div class="side-block">
+      <div class="eyebrow-sm">Cost</div>
+      <div class="side-row"><span class="k">Sources</span><span class="v">$0.0000</span></div>
+      <div class="side-row"><span class="k">Tokens in</span><span class="v">4,952</span></div>
+      <div class="side-row"><span class="k">Tokens out</span><span class="v">2,899</span></div>
+      <div class="side-row"><span class="k">LLM calls</span><span class="v">4 <span style="color:var(--slate)">(fixture)</span></span></div>
+    </div>
+  </aside>
+
+  <main class="main"><div class="wrap">
+
+    <!-- ══════════════════ RUN VIEW ══════════════════ -->
+    <section class="screen" id="screen-run">
+
+      <header class="run-head">
+        <h1 class="run-name">Jordan Ellis <span class="at">· Modern Treasury</span></h1>
+        <div class="run-id">run <b>5be630f4948c</b> · trigger <b>seed_demo</b> · 2026-08-25 19:46</div>
+        <div class="verdict">
+          <span class="chip solid">Outcome <b>OK</b></span>
+          <span class="chip">Claim strength <b>colleague-authored</b></span>
+          <span class="chip">Verifier <b>clean</b></span>
+          <span class="chip alert">ICP fit <b>unknown</b></span>
+        </div>
+      </header>
+
+      <div class="section">
+        <div class="eyebrow">Retrieval</div>
+        <div class="card">
+          <div class="card-head">
+            <h3>Source status board</h3>
+            <span class="card-sub">14 sources · 23 cards · 2 eligible</span>
+          </div>
+
+          <div class="completeness" role="img"
+               aria-label="7 sources ok, 1 empty, 1 failed, 5 skipped">
+            <span class="cp-ok"      style="flex:7"></span>
+            <span class="cp-empty"   style="flex:1"></span>
+            <span class="cp-failed"  style="flex:1"></span>
+            <span class="cp-skipped" style="flex:5"></span>
+          </div>
+
+          <div class="verdict" style="margin:0 0 var(--s-2)">
+            <span class="chip"><span class="dot ok" style="margin-right:6px"></span>7 ok</span>
+            <span class="chip"><span class="dot empty" style="margin-right:6px"></span>1 empty</span>
+            <span class="chip alert"><span class="dot failed" style="margin-right:6px"></span>1 failed</span>
+            <span class="chip"><span class="dot skipped" style="margin-right:6px"></span>5 skipped</span>
+          </div>
+
+          <div class="rung-label">Rung 0 — free</div>
+
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">GoogleNewsRSS</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">6 cards</span>
+            <span class="src-time">0.96s</span>
+          </div>
+          <div class="src-row is-failed">
+            <span class="dot failed"></span>
+            <span class="src-name">Compound</span>
+            <span class="src-state">UNAVAILABLE</span>
+            <span class="src-detail reason">HTTPStatusError: 413 Payload Too Large</span>
+            <span class="src-time">12.95s</span>
+          </div>
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">Jina</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">1 card</span>
+            <span class="src-time">2.19s</span>
+          </div>
+          <div class="src-row is-skipped">
+            <span class="dot skipped"></span>
+            <span class="src-name">Greenhouse</span>
+            <span class="src-state">not consulted</span>
+            <span class="src-detail reason">retired 2026-08-24 — job postings cut from the product</span>
+            <span class="src-time">—</span>
+          </div>
+          <div class="src-row is-skipped">
+            <span class="dot skipped"></span>
+            <span class="src-name">Lever</span>
+            <span class="src-state">not consulted</span>
+            <span class="src-detail reason">retired 2026-08-24 — job postings cut from the product</span>
+            <span class="src-time">—</span>
+          </div>
+          <div class="src-row is-skipped">
+            <span class="dot skipped"></span>
+            <span class="src-name">Ashby</span>
+            <span class="src-state">not consulted</span>
+            <span class="src-detail reason">retired 2026-08-24 — job postings cut from the product</span>
+            <span class="src-time">—</span>
+          </div>
+          <div class="src-row is-skipped">
+            <span class="dot skipped"></span>
+            <span class="src-name">SmartRecruiters</span>
+            <span class="src-state">not consulted</span>
+            <span class="src-detail reason">retired 2026-08-24 — job postings cut from the product</span>
+            <span class="src-time">—</span>
+          </div>
+          <div class="src-row is-skipped">
+            <span class="dot skipped"></span>
+            <span class="src-name">Recruitee</span>
+            <span class="src-state">not consulted</span>
+            <span class="src-detail reason">retired 2026-08-24 — job postings cut from the product</span>
+            <span class="src-time">—</span>
+          </div>
+
+          <div class="rung-label">Rung 1 — paid · gate opened (free rungs yielded &lt;2 person-tier cards)</div>
+
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">ExaLinkedIn</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">2 cards</span>
+            <span class="src-time">2.91s</span>
+          </div>
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">ExaNews</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">2 cards</span>
+            <span class="src-time">1.91s</span>
+          </div>
+          <div class="src-row">
+            <span class="dot empty"></span>
+            <span class="src-name">ExaBlog</span>
+            <span class="src-state">empty</span>
+            <span class="src-detail reason">no domain</span>
+            <span class="src-time">—</span>
+          </div>
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">ExaEdgar</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">2 cards</span>
+            <span class="src-time">2.54s</span>
+          </div>
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">ExaYouTube</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">2 cards</span>
+            <span class="src-time">2.25s</span>
+          </div>
+          <div class="src-row">
+            <span class="dot ok"></span>
+            <span class="src-name">Tavily</span>
+            <span class="src-state">ok</span>
+            <span class="src-detail">8 cards</span>
+            <span class="src-time">2.88s</span>
+          </div>
+
+          <div class="incomplete">
+            <b>Incomplete retrieval.</b> One source failed (Compound, 413).
+            A thin result here is not conclusive — it is not the same as
+            having looked and found nothing.
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow">Stages</div>
+        <div class="card">
+          <div class="stage">
+            <span class="dot ok"></span>
+            <span class="stage-name">ranker_pain_scoring <span>· fixture</span></span>
+            <span class="stage-tok">2,088 in / 1,610 out</span>
+          </div>
+          <div class="stage">
+            <span class="dot ok"></span>
+            <span class="stage-name">ranker_hooks <span>· fixture</span></span>
+            <span class="stage-tok">861 in / 666 out</span>
+          </div>
+          <div class="stage">
+            <span class="dot ok"></span>
+            <span class="stage-name">drafter <span>· fixture</span></span>
+            <span class="stage-tok">812 in / 297 out</span>
+          </div>
+          <div class="stage">
+            <span class="dot ok"></span>
+            <span class="stage-name">verifier_judge <span>· fixture</span></span>
+            <span class="stage-tok">1,191 in / 326 out</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow">Judgement</div>
+        <div class="card">
+          <div class="card-head"><h3>What Zara concluded</h3></div>
+          <div class="mono-panel said">ICP fit: unknown
+  · headcount unknown — could not verify
+
+Winner selected on proximity, not score.
+  ExaYouTube card scores 0.00 but is colleague_authored (person tier).
+  ExaNews card scores 0.80 but is company_action (company tier).
+  Compass 5: proximity to prospect outranks raw relevance.
+
+4 candidates excluded by Compass 6 (no two hooks of a kind).</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════ DRAFT REVIEW ══════════════════ -->
+    <section class="screen" id="screen-draft" hidden>
+
+      <header class="run-head">
+        <h1 class="run-name">Draft <span class="at">· for review</span></h1>
+        <div class="run-id">77 words · claim strength <b>colleague-authored</b> · verifier <b>clean</b>, passed, no self-correction</div>
+        <div class="verdict">
+          <span class="chip solid">Never auto-sent</span>
+          <span class="chip">Grounded in <b>1 card</b></span>
+          <span class="chip alert">ICP fit <b>unverified</b></span>
+        </div>
+      </header>
+
+      <div class="section">
+        <div class="draft-frame">
+          <div class="draft-subject"><b>Subject:</b> <span style="color:var(--slate)">[ not produced by this run ]</span></div>
+          <div class="draft-body">Hi Jordan,
+
+A colleague at Modern Treasury mentioned that you’re celebrating the company’s eighth birthday while reflecting on how payments infrastructure is evolving and what it means when money moves from A to B. It sounds like you’re deep in the challenges of building reliable, scalable payment flows.
+
+I’d love to explore how we can help your operations team automate those manual, reconciliation‑heavy processes so you can focus on innovation rather than back‑office toil.
+
+Best regards,
+Zamp</div>
+          <div class="draft-actions">
+            <button class="btn btn-primary">Approve for send</button>
+            <button class="btn btn-ghost">Edit</button>
+            <button class="btn btn-ghost" disabled>Send &mdash; disabled by design</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow">Hook options</div>
+        <div class="hook">
+          <div class="hook-top">
+            <span class="score-badge">0.73</span>
+            <span class="hook-text">Modern Treasury’s valuation surpassed $2 billion following its latest financing round, as reported by Bloomberg.</span>
+          </div>
+          <div class="hook-meta">
+            <div><span class="k">Why</span>A $2 billion valuation indicates rapid scaling, which for a Director of Ops means a looming increase in transaction volume and manual reconciliation tasks.</div>
+            <div style="margin-top:4px"><span class="k">Bridge</span>Our solution lets the ops team automate those reconciliation‑heavy processes, supporting growth without adding headcount.</div>
+          </div>
+        </div>
+        <div class="hook">
+          <div class="hook-top">
+            <span class="score-badge">0.68</span>
+            <span class="hook-text">The founders recently hosted a deep‑dive on fiat, stablecoins and building a PSP, a session that drew 33 viewers.</span>
+          </div>
+          <div class="hook-meta">
+            <div><span class="k">Why</span>Jordan Ellis, as Director of Ops, needs to stay ahead of product strategy; the founders’ discussion signals upcoming features that will directly impact operational workflows and reconciliation demands.</div>
+            <div style="margin-top:4px"><span class="k">Bridge</span>Our automation platform can streamline the heavy reconciliation work that will grow as Modern Treasury expands its PSP capabilities.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow">What it considered</div>
+        <div class="card" style="padding:var(--s-2);margin-bottom:var(--s-1)">
+          <span style="font-size:var(--t-body);color:var(--stone)">
+            23 candidates retrieved · 2 eligible · 21 excluded.
+            Excluded cards keep their evidence — “why was this thrown away?”
+            is unanswerable without it.
+          </span>
+        </div>
+
+        <div class="cand is-winner">
+          <div class="cand-top">
+            <span class="score-badge">0.00</span>
+            <span class="chip win">Winner</span>
+            <span class="chip mono">ExaYouTube</span>
+            <span class="chip">person tier</span>
+            <span class="chip solid">colleague authored</span>
+            <span class="chip mono">95d</span>
+          </div>
+          <div class="cand-claim">Mentioned on: The Founders on Fiat, Stablecoins, and Building the PSP</div>
+          <div class="cand-why"><span class="k">Chosen</span>Lowest score in the eligible set, highest proximity. Compass 5 — an authored signal beats a company action.</div>
+          <div class="cand-url">https://www.youtube.com/watch?v=et_Bc6hwwas</div>
+          <details class="cand-more"><summary>Evidence</summary>
+            <div class="mono-panel"># The Founders on Fiat, Stablecoins, and Building the PSP
+
+- Channel: Modern Treasury
+- Length: 01:00:44
+- Views: 33
+- Likes: 0
+- Published: 2026-05-22T07:00:09</div>
+          </details>
+        </div>
+
+        <div class="cand">
+          <div class="cand-top">
+            <span class="score-badge">0.80</span>
+            <span class="chip">Eligible</span>
+            <span class="chip mono">ExaNews</span>
+            <span class="chip">company tier</span>
+            <span class="chip">company action</span>
+            <span class="chip alert">1,784d old</span>
+          </div>
+          <div class="cand-claim">Mentioned on: Modern Treasury's Valuation Tops $2 Billion After Altimeter…</div>
+          <div class="cand-why"><span class="k">Pain</span><b style="font-weight:600;color:var(--midnight-ink)">structural_complexity</b> (0.80) — secured $100m debt facility for expansion.</div>
+          <div class="cand-url">https://www.bloomberg.com/news/articles/2021-10-06/modern-treasury-s-valuation-tops-2-billion-after-new-financing</div>
+          <details class="cand-more"><summary>Evidence</summary>
+            <div class="mono-panel">Modern Treasury’s Valuation Tops $2 Billion After New Financing - Bloomberg
+
+Deals
+
+Modern Treasury executives Matt Marcus, chief product officer and co-founder</div>
+          </details>
+        </div>
+
+        <div class="cand is-excluded">
+          <div class="cand-top">
+            <span class="score-badge">0.70</span>
+            <span class="chip alert">Excluded</span>
+            <span class="chip mono">ExaLinkedIn</span>
+            <span class="chip">person tier</span>
+            <span class="chip">database</span>
+          </div>
+          <div class="cand-claim">Mentioned on: modern treasury</div>
+          <div class="cand-why"><span class="k">Excluded</span>same hook kind as winner — Compass 6 swap test</div>
+          <div class="cand-url">https://linkedin.com/company/modern-treasury</div>
+        </div>
+
+        <div class="cand is-excluded">
+          <div class="cand-top">
+            <span class="score-badge">0.60</span>
+            <span class="chip alert">Excluded</span>
+            <span class="chip mono">GoogleNewsRSS</span>
+            <span class="chip">company tier</span>
+            <span class="chip">company action</span>
+          </div>
+          <div class="cand-claim">In the news: GrowIt Selects Modern Treasury to Power Payments for Real Estate Capital Raises — Business Wire</div>
+          <div class="cand-why"><span class="k">Excluded</span>same hook kind as winner — Compass 6 swap test</div>
+          <div class="cand-url">news.google.com/rss/articles/CBMi0gFBVV95cUxPYkRJcjFYNWtmVmcxeEpr…</div>
+        </div>
+
+        <div class="cand is-excluded">
+          <div class="cand-top">
+            <span class="score-badge">0.30</span>
+            <span class="chip alert">Excluded</span>
+            <span class="chip mono">GoogleNewsRSS</span>
+            <span class="chip">company tier</span>
+            <span class="chip">company action</span>
+          </div>
+          <div class="cand-claim">In the news: How Modern Treasury is building a payments platform for a hybrid money world — Tearsheet</div>
+          <div class="cand-why"><span class="k">Excluded</span>same hook kind as winner — Compass 6 swap test</div>
+        </div>
+
+        <div class="cand is-excluded">
+          <div class="cand-top">
+            <span class="score-badge">0.30</span>
+            <span class="chip alert">Excluded</span>
+            <span class="chip mono">GoogleNewsRSS</span>
+            <span class="chip">company tier</span>
+            <span class="chip">company action</span>
+          </div>
+          <div class="cand-claim">In the news: Modern Treasury Integrates With Polygon for USDC Payments — Polygon Labs</div>
+          <div class="cand-why"><span class="k">Excluded</span>same hook kind as winner — Compass 6 swap test</div>
+        </div>
+
+        <div class="card" style="padding:var(--s-2);margin-top:var(--s-1);text-align:center">
+          <span style="font-size:var(--t-meta);color:var(--slate)">[ 17 further candidates — not rendered in v0 ]</span>
+        </div>
+      </div>
+
+    </section>
+
+  </div></main>
+</div>
+
+<button id="tweaks-toggle" aria-expanded="false">Tweaks</button>
+<div id="tweaks" data-open="false" role="dialog" aria-label="Tweaks">
+  <button id="tweaks-close" aria-label="Close">✕</button>
+  <h4>Tweaks</h4>
+  <div class="tw-row">
+    <span>Display face</span>
+    <div class="tw-opts" data-attr="display">
+      <button data-val="instrument" aria-pressed="true">Instrument</button>
+      <button data-val="bodoni"     aria-pressed="false">Bodoni</button>
+      <button data-val="playfair"   aria-pressed="false">Playfair</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span>Density</span>
+    <div class="tw-opts" data-attr="density">
+      <button data-val="comfortable" aria-pressed="true">Comfortable</button>
+      <button data-val="compact"     aria-pressed="false">Compact</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span>Excluded candidates</span>
+    <div class="tw-opts" data-attr="excluded">
+      <button data-val="show" aria-pressed="true">Show</button>
+      <button data-val="hide" aria-pressed="false">Hide</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+
+  // Screen switching
+  document.querySelectorAll('.pilltab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.pilltab').forEach(function(t){
+        t.setAttribute('aria-selected', String(t === tab));
+      });
+      document.querySelectorAll('.screen').forEach(function(s){
+        s.hidden = (s.id !== 'screen-' + tab.dataset.screen);
+      });
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  // Tweaks
+  var panel  = document.getElementById('tweaks');
+  var toggle = document.getElementById('tweaks-toggle');
+  function open(v){
+    panel.dataset.open = String(v);
+    toggle.style.display = v ? 'none' : 'block';
+    toggle.setAttribute('aria-expanded', String(v));
+  }
+  toggle.addEventListener('click', function(){ open(true); });
+  document.getElementById('tweaks-close').addEventListener('click', function(){ open(false); });
+
+  document.querySelectorAll('.tw-opts').forEach(function(group){
+    group.addEventListener('click', function(e){
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      group.querySelectorAll('button').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      root.setAttribute('data-' + group.dataset.attr, btn.dataset.val);
+    });
+  });
+})();
+</script>
+</body>
+</html>

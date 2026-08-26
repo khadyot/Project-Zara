@@ -5,475 +5,692 @@ independently -- app.py was 814 lines holding both, which made concurrent edits
 to styling and to UI behaviour collide in one file.
 
 This module owns how Zara looks. app.py owns what it does.
+
+Design system: SavvyCal, per reference/savvycal_style.md.
+
+WHERE THINGS LIVE
+-----------------
+Anything Streamlit can express as a theme token lives in .streamlit/config.toml
+-- palette, radii, borders, the type ramp, semantic state colours, chart
+colours. Streamlit applies those to every widget it renders, including ones no
+hand-written selector would reach. This file holds only what the theme API
+cannot say: the hero, the page measure, and Zara's own components.
+
+Do not re-declare a colour or a font size here that config.toml already sets.
+Two sources of truth for the same value is how the previous build ended up with
+three different greens and thirteen different font sizes.
+
+THE TYPE RAMP
+-------------
+Six steps, and nothing off-ramp. A literal px font-size below is a bug --
+hierarchy comes from weight, case, tracking and colour before it comes from
+size, which is why the ramp can be this short.
 """
 import streamlit as st
 
 
 CUSTOM_CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;700&family=Barlow+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 
-/* Base Variables */
-:root {
-  /* Colors */
-  --color-forest-stage: #0d542b;
-  --color-lime-sprout: #b9ff78;
-  --color-ember-coral: #f54320;
-  --color-coral-whisper: #ffe3e3;
-  --color-cream-paper: #fcf7ed;
-  --color-true-black: #000000;
-  --color-midnight-ink: #1c1917;
-  --color-stone: #44403b;
-  --color-slate: #292524;
-  --color-ash: #d6d3d1;
-  --color-fog: #e5e7eb;
-  --color-pure-white: #ffffff;
-  --color-moss: #008236;
+:root{
+  /* ── Colours ── verbatim from reference/savvycal_style.md ───────── */
+  --forest-stage:#0d542b;
+  --lime-sprout:#b9ff78;
+  --ember-coral:#f54320;
+  --coral-whisper:#ffe3e3;
+  --cream-paper:#fcf7ed;
+  --true-black:#000000;
+  --midnight-ink:#1c1917;
+  --stone:#44403b;
+  --slate:#292524;
+  --ash:#d6d3d1;
+  --fog:#e5e7eb;
+  --pure-white:#ffffff;
+  --moss:#008236;
 
-  /* Typography — Font Families */
-  --font-gt-alpina-condensed: 'GT Alpina Condensed', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-gt-america-standard: 'GT America Standard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-gt-america-extended: 'GT America Extended', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-gt-america-condensed: 'GT America Condensed', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-intervariable: 'InterVariable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* ── Faces ──────────────────────────────────────────────────────
+     Inter carries the entire interface and is loaded by config.toml.
+     The display serif appears in exactly one place -- the hero
+     wordmark, where it is a logo rather than text. Mono is reserved
+     for verbatim machine output (st.text / st.code), where character
+     alignment is the point.                                        */
+  --font-display:'Instrument Serif',serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
-  /* Typography — Scale */
-  --text-caption: 10px;
-  --leading-caption: 1;
-  --text-body-sm: 14px;
-  --leading-body-sm: 1.43;
-  --text-body: 16px;
-  --leading-body: 1.5;
-  --tracking-body: -0.007px;
-  --text-subheading: 20px;
-  --leading-subheading: 1.5;
-  --tracking-subheading: -0.14px;
-  --text-heading-sm: 24px;
-  --leading-heading-sm: 1.33;
-  --tracking-heading-sm: -0.17px;
-  --text-heading: 30px;
-  --leading-heading: 1.38;
-  --tracking-heading: -0.21px;
-  --text-heading-lg: 38px;
-  --leading-heading-lg: 1.38;
-  --tracking-heading-lg: -0.95px;
-  --text-display: 96px;
-  --leading-display: 1.08;
+  --track-ui:0.02em;
+  --track-label:0.08em;
+  --track-body:-0.007em;
 
-  /* Typography — Weights */
-  --font-weight-regular: 400;
-  --font-weight-bold: 700;
+  /* ── TYPE RAMP ─────────────────────────────────────────────────
+     Six steps, and each one has a RULE for what belongs to it. A ramp
+     without rules is just a list of sizes, and things drift back out.
 
-  /* Spacing */
-  --spacing-unit: 8px;
-  --spacing-8: 8px;
-  --spacing-16: 16px;
-  --spacing-24: 24px;
-  --spacing-32: 32px;
-  --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-64: 64px;
-  --spacing-104: 104px;
+       t-title  26/700   the page. Exactly one per screen.
+       t-h2     19/700   a major section OF that page. Siblings all sit
+                         here: Sources, Draft, Verifier, Quota headroom,
+                         Recent stalls. If two things are peers, they
+                         are the same size -- no exceptions.
+       t-head   15/700   a division INSIDE a section. Rare on purpose.
+       t-body   15/400   every piece of running text, and every control
+                         the user reads or types into: form labels,
+                         inputs, buttons, alerts, row names, dropdowns.
+       t-meta   13/400   secondary readings only: captions, timings,
+                         reasons, URLs, the detail column of a row.
+       t-label  11/600   uppercase micro-labels: eyebrows, state words,
+                         metric captions.
 
-  /* Layout */
-  --page-max-width: 1200px;
-  --section-gap: 64px;
-  --card-padding: 24px;
-  --element-gap: 16px;
+     PRIORITY decides the level, not the widget. An alert is a sentence
+     the user reads, so it sits at t-body however much larger Streamlit
+     ships it; a button label is read and acted on, so it sits at
+     t-body however much smaller Streamlit ships it. Both are pinned
+     below, because left alone each Streamlit component picks its own
+     size and the page ends up with a dozen of them.
 
-  /* Border Radius */
-  --radius-lg: 8px;
-  --radius-3xl: 24px;
+     1rem = 15px = --t-body, set by baseFontSize in config.toml. */
+  --t-mark:1.6rem;    --lh-mark:1;
+  --t-title:1.733rem; --lh-title:1.2;    /* h1 — page title, once      */
+  --t-h2:1.267rem;    --lh-h2:1.3;      /* h2 — major section          */
+  --t-head:1rem;      --lh-head:1.4;    /* h3 — subsection (body+bold) */
+  --t-body:1rem;      --lh-body:1.55;
+  --t-meta:0.867rem;  --lh-meta:1.45;
+  --t-label:0.733rem; --lh-label:1.2;
 
-  /* Named Radii */
-  --radius-cards: 8px;
-  --radius-pills: 9999px;
-  --radius-buttons: 8px;
-  --radius-productframes: 24px;
+  /* ── 8px grid ───────────────────────────────────────────────────
+     Reference base unit. Every margin and pad below is a multiple. */
+  --s-1:8px; --s-2:16px; --s-3:24px; --s-4:32px; --s-5:40px; --s-6:48px; --s-8:64px;
 
-  /* Surfaces */
-  --surface-forest-stage: #0d542b;
-  --surface-cream-paper: #fcf7ed;
-  --surface-pure-white-card: #ffffff;
-  --surface-coral-whisper: #ffe3e3;
+  --page-pad:32px;
+  --page-max:1200px;
+  --card-pad:24px;
+
+  --r-card:8px; --r-pill:9999px;
 }
 
-/* Page Background */
-.stApp {
-    background-color: var(--color-cream-paper);
-    color: var(--color-stone);
-    font-family: 'Inter', sans-serif;
-    font-feature-settings: 'cv11';
-    letter-spacing: -0.007em;
+/* ═══ PAGE MEASURE ════════════════════════════════════════════════
+   layout="wide" runs body text edge-to-edge; on a wide display that is
+   a 200-character measure against the reference's 65-75. The
+   --page-max token existed in the previous build and was never
+   consumed by anything. */
+.stMain .block-container{
+  max-width:var(--page-max);
+  padding-left:var(--page-pad);
+  padding-right:var(--page-pad);
+  padding-top:var(--s-2);
+  padding-bottom:var(--s-8);
 }
 
-/* Typography Overrides */
-h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-    font-family: 'Playfair Display', serif !important;
-    color: var(--color-true-black) !important;
-    letter-spacing: 0px !important;
+/* ═══ PAGE HEADER ═════════════════════════════════════════════════
+   Replaces the forest band that used to float in the main column. The
+   dark zone is now the sidebar; the main column is the light zone, and
+   it opens the way a document opens — an eyebrow saying where you are,
+   a title, and one line of orientation. Same three parts on every page,
+   so the eye starts in the same place each time. */
+.zpage{
+  margin:0 0 var(--s-5);
+  padding-bottom:var(--s-3);
+  border-bottom:1px solid var(--fog);
+}
+.zpage .zpage-eyebrow{
+  font-size:var(--t-label);font-weight:600;
+  text-transform:uppercase;letter-spacing:var(--track-label);
+  color:var(--slate);display:block;margin-bottom:var(--s-1);
+}
+.zpage h1,.zpage .zpage-title{
+  font-size:var(--t-title);line-height:var(--lh-title);
+  font-weight:700;letter-spacing:-0.02em;color:var(--true-black);
+  margin:0;
+}
+.zpage .zpage-sub{
+  font-size:var(--t-meta);line-height:var(--lh-meta);
+  color:var(--slate);margin-top:6px;
 }
 
-#zara-hero {
-    background: radial-gradient(circle, #0d542b 0%, #008236 100%);
-    width: 100%;
-    margin-top: -6rem;
-    margin-bottom: 3rem;
-    padding: 6rem 1rem;
-    text-align: center;
+/* ═══ TYPOGRAPHY ══════════════════════════════════════════════════
+   Sizes and weights come from config.toml headingFontSizes /
+   headingFontWeights. Only colour and tracking are set here.
+   True Black for headings, Stone for body -- the reference forbids
+   pure black body copy on cream. */
+h1,h2,h3,h4,h5,h6,
+.stMarkdown h1,.stMarkdown h2,.stMarkdown h3{
+  color:var(--true-black);
+  letter-spacing:var(--track-body);
+}
+h1{letter-spacing:-0.02em;}
+/* Sections need air above them and almost none below — the gap belongs
+   between a section and the one before it, not between a heading and
+   the content it labels. */
+.stMarkdown h2{margin-top:var(--s-5)!important;margin-bottom:var(--s-2)!important;}
+.stMarkdown h3{margin-top:var(--s-3)!important;margin-bottom:var(--s-1)!important;}
+body,.stApp{letter-spacing:var(--track-body);text-wrap:pretty;}
+
+/* st.caption -- secondary metadata, one step down. */
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] p{
+  font-size:var(--t-meta)!important;
+  line-height:var(--lh-meta)!important;
+  color:var(--slate)!important;
 }
 
-#zara-hero h1 {
-    font-family: 'Playfair Display', serif !important;
-    font-weight: 700 !important;
-    font-size: 96px !important;
-    line-height: 1.08 !important;
-    color: var(--color-lime-sprout) !important;
-    margin-bottom: 1rem !important;
+/* ═══ MICRO-LABELS ════════════════════════════════════════════════
+   One treatment for every small uppercase label in the app.
+   Replaces the previous build's Barlow Condensed eyebrows and their
+   coral squiggle underline -- a second face and a decoration that
+   both fought the interface at dashboard density. */
+.eyebrow,.eyebrow-sm,.candidate-status{
+  font-family:inherit;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:var(--track-label);
+  line-height:var(--lh-label);
+  color:var(--slate);
+  display:inline-block;
+}
+.eyebrow{font-size:var(--t-label);color:var(--midnight-ink);margin:var(--s-3) 0 var(--s-1);}
+.eyebrow-sm{font-size:var(--t-label);color:var(--midnight-ink);margin:var(--s-2) 0 var(--s-1);}
+.candidate-status{font-size:var(--t-label);}
+
+/* ═══ BUTTONS ═════════════════════════════════════════════════════
+   Fill, radius and text colour all come from config.toml primaryColor.
+   Only the ghost/secondary treatment and the interaction states are
+   said here, because Streamlit has no token for them. */
+.stButton > button,
+.stDownloadButton > button,
+.stFormSubmitButton > button{
+  /* Ships smaller than body text. A button label is read and acted
+     on -- body size, same as the paragraph beside it. */
+  font-size:var(--t-body)!important;
+  font-weight:500;
+  letter-spacing:var(--track-ui);
+  padding:10px 22px;
+  transition:background-color .1s ease,color .1s ease,border-color .1s ease,box-shadow .1s ease;
+}
+.stButton > button[kind="secondary"],
+.stDownloadButton > button{
+  background-color:transparent;
+  color:var(--midnight-ink);
+  border:1.5px solid var(--midnight-ink);
+}
+.stButton > button[kind="secondary"]:hover,
+.stDownloadButton > button:hover{
+  background-color:var(--midnight-ink);
+  color:var(--cream-paper);
+  border-color:var(--midnight-ink);
+}
+.stButton > button[kind="primary"]:hover,
+.stFormSubmitButton > button:hover{
+  filter:brightness(1.12);
+  box-shadow:0 0 0 4px rgba(13,84,43,.18);
+}
+.stButton > button:focus-visible,
+.stDownloadButton > button:focus-visible,
+.stFormSubmitButton > button:focus-visible{
+  outline:2px solid var(--midnight-ink);
+  outline-offset:2px;
+}
+.stButton > button:disabled,
+.stDownloadButton > button:disabled{
+  opacity:.4;filter:none;box-shadow:none;cursor:not-allowed;
+}
+.stButton > button:disabled:hover{
+  background-color:transparent;color:var(--midnight-ink);
 }
 
-p, .stMarkdown p, label {
-    color: var(--color-stone) !important;
+.stButton > button p,
+.stDownloadButton > button p,
+.stFormSubmitButton > button p{font-size:var(--t-body)!important;}
+
+/* Form labels, expander summaries and selectbox values are all read at
+   the same priority as body copy. Streamlit sizes each independently;
+   pinned here so a form, a dropdown and a paragraph agree. */
+/* Size applies in both zones; COLOUR must not. Scoping this to the
+   main column was the bug -- Stone is near-black and the sidebar is
+   forest green. */
+[data-testid="stWidgetLabel"] p,
+[data-testid="stWidgetLabel"] label{
+  font-size:var(--t-body)!important;
+  line-height:var(--lh-body)!important;
+}
+.stMain [data-testid="stWidgetLabel"] p,
+.stMain [data-testid="stWidgetLabel"] label{color:var(--stone)!important;}
+[data-testid="stExpander"] summary p{
+  font-size:var(--t-body)!important;font-weight:500!important;
+}
+[data-baseweb="select"] div,
+[data-baseweb="popover"] li,
+[data-baseweb="menu"] li{font-size:var(--t-body)!important;}
+
+/* ═══ PILL TABS ═══════════════════════════════════════════════════
+   Reference's Top Nav Pill Tab: active = lime fill, ink text,
+   9999px radius. CSS-only -- no markup change in app.py. */
+div[data-baseweb="tab-list"]{border-bottom:none!important;gap:var(--s-1);}
+div[data-baseweb="tab-highlight"],
+div[data-baseweb="tab-border"]{display:none!important;}
+button[data-baseweb="tab"]{
+  border-radius:var(--r-pill)!important;
+  background-color:transparent!important;
+  color:var(--midnight-ink)!important;
+  font-size:var(--t-meta)!important;
+  font-weight:500!important;
+  letter-spacing:var(--track-ui)!important;
+  border:none!important;
+  padding:5px 14px!important;
+  margin-right:0!important;
+}
+button[data-baseweb="tab"]:hover{background-color:rgba(214,211,209,.35)!important;}
+button[data-baseweb="tab"][aria-selected="true"]{
+  background-color:var(--lime-sprout)!important;
+  color:var(--midnight-ink)!important;
+}
+button[data-baseweb="tab"] [data-testid="stMarkdownContainer"] p{
+  color:inherit!important;font-size:inherit!important;font-weight:inherit!important;
 }
 
-#zara-hero p {
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 18px !important;
-    color: var(--color-cream-paper) !important;
-    max-width: 600px !important;
-    margin: 0 auto !important;
+/* ═══ CONTAINERS ══════════════════════════════════════════════════ */
+[data-testid="stExpander"]{
+  background-color:var(--pure-white);
+  box-shadow:none!important;
+}
+[data-testid="stExpander"] summary{background-color:transparent;}
+[data-testid="stExpander"] summary:hover{background-color:rgba(229,231,235,.35);}
+[data-testid="stExpanderDetails"]{font-size:var(--t-meta);}
+
+/* Ships larger than body text. An alert is a sentence -- body size. */
+[data-testid="stAlert"]{
+  border-radius:var(--r-card)!important;
+  padding:var(--s-2) var(--s-3)!important;
+  box-shadow:none!important;
+}
+[data-testid="stAlert"],
+[data-testid="stAlertContainer"],
+[data-testid="stAlertContent"],
+[data-testid="stAlertTitle"],
+[data-testid="stAlert"] *:not(code):not(pre):not(svg):not(path){
+  font-size:var(--t-body)!important;
+  line-height:var(--lh-body)!important;
+}
+[data-testid="stAlertTitle"]{font-weight:700!important;}
+
+[data-testid="stMetric"]{
+  background-color:var(--pure-white);
+  border:1px solid var(--fog);
+  border-radius:var(--r-card);
+  padding:var(--s-2);
+}
+[data-testid="stMetricLabel"] p{
+  font-size:var(--t-label)!important;
+  font-weight:600!important;
+  text-transform:uppercase;
+  letter-spacing:var(--track-label)!important;
+  color:var(--slate)!important;
 }
 
-h1 {
-    font-size: 64px !important;
-    line-height: 1.08 !important;
+/* ═══ VERBATIM MACHINE OUTPUT ═════════════════════════════════════
+   st.text() renders the raw system / prompt / response bodies. This is
+   the one context in the app that earns a monospace face: it is a
+   transcript, and character alignment is the point. Everything else --
+   IDs, timings, scores, source names -- is Inter with tabular figures. */
+[data-testid="stText"],
+[data-testid="stText"] pre,
+div[data-testid="stText"] > pre{
+  font-family:var(--font-mono)!important;
+  font-size:var(--t-meta)!important;
+  line-height:1.65!important;
+  color:var(--slate)!important;
+  background-color:var(--cream-paper)!important;
+  border:1px solid var(--fog)!important;
+  border-radius:var(--r-card)!important;
+  padding:var(--s-2)!important;
+  white-space:pre-wrap!important;
+  word-break:break-word;
+  max-height:260px;overflow:auto;
 }
 
-/* Default Button: Outline Ghost */
-.stButton > button {
-    background-color: transparent !important;
-    color: var(--color-midnight-ink) !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 400 !important;
-    border: 1.5px solid var(--color-midnight-ink) !important;
-    border-radius: 8px !important;
-    padding: 12px 24px !important;
-    transition: all 0.1s ease;
+/* ═══ THE ROW ═════════════════════════════════════════════════════
+   Four places in this app show the same shape of information —
+   a marker, a name, a state, a detail, and a number:
+
+       sources          dot   ExaNews    ok       2 cards      1.9s
+       quota headroom   dot   groq TPD   ok       resets 646m  0/200k
+       stalls           dot   drafter    waited   2026-08-25   10.6s
+       stages           dot   drafter    fixture  812 in       297 out
+
+   They were four different ad-hoc layouts — ragged markdown, a
+   full-width progress bar that vanished at 0%, and a pipe-separated
+   caption. One grid now serves all four, so the columns line up down
+   the page and the vocabulary is learned once.
+
+   Numbers are right-aligned with tabular figures so digits stack. */
+.zrow{
+  display:grid;
+  grid-template-columns:11px minmax(0,15rem) 6.5rem minmax(0,1fr) auto;
+  align-items:baseline;
+  gap:var(--s-2);
+  padding:7px 0;
+  border-bottom:1px solid var(--fog);
+  font-size:var(--t-meta);
+  line-height:var(--lh-meta);
 }
-.stButton > button:hover {
-    background-color: var(--color-midnight-ink) !important;
-    color: var(--color-cream-paper) !important;
-    transform: none !important;
+.zrow:last-of-type{border-bottom:none;}
+.zrow .zr-name{
+  font-size:var(--t-body);font-weight:500;color:var(--midnight-ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.zrow .zr-state{
+  font-size:var(--t-label);font-weight:600;
+  text-transform:uppercase;letter-spacing:var(--track-label);
+  color:var(--slate);
+}
+.zrow .zr-detail{color:var(--stone);overflow:hidden;text-overflow:ellipsis;}
+.zrow .zr-value{
+  color:var(--slate);font-variant-numeric:tabular-nums;
+  text-align:right;white-space:nowrap;
+}
+.zrow.is-muted{opacity:.62;}
+.zrow.is-alert .zr-state{color:var(--midnight-ink);}
+
+/* A quota row carries a fill level. A 2px rule under the row reads at a
+   glance and costs no vertical space — unlike st.progress, which
+   reserved a full bar that was invisible at 0% and left ~50px holes
+   between every reading. */
+.zrow.has-fill{border-bottom:none;padding-bottom:2px;}
+.zfill{
+  height:2px;background:var(--fog);
+  margin:0 0 7px;border-bottom:1px solid transparent;
+}
+.zfill > span{display:block;height:100%;background:var(--forest-stage);}
+.zfill.is-alert > span{background:var(--ember-coral);}
+
+/* ═══ CHIP ════════════════════════════════════════════════════════
+   Claim strength used to render as a '●' glyph plus one of five
+   hardcoded hex colours, two of which were not in the palette at all.
+   It is a verdict, not a source state, so it gets its own shape -- but
+   the same three-level language the rest of the app uses: solid = we
+   have it, outline = partial, coral stroke = weak or absent. */
+.zchip{
+  display:inline-block;
+  font-size:var(--t-label);font-weight:600;
+  text-transform:uppercase;letter-spacing:var(--track-label);
+  padding:4px 11px;border-radius:var(--r-pill);
+  border:1.5px solid var(--ash);color:var(--slate);
+  background:transparent;
+}
+.zchip.is-strong{background:var(--midnight-ink);border-color:var(--midnight-ink);color:var(--cream-paper);}
+.zchip.is-medium{border-color:var(--midnight-ink);color:var(--midnight-ink);}
+.zchip.is-weak{border-color:var(--ember-coral);color:var(--midnight-ink);}
+
+/* ═══ INLINE CODE ═════════════════════════════════════════════════
+   app.py wraps IDs, timestamps, stage names and key names in markdown
+   backticks. Those mean "this is a literal value", not "this is source
+   code" -- but they render in the mono face at a different size,
+   scattered mid-sentence, which is the loudest source of the interface
+   looking like three different products. They keep a tint and tabular
+   figures so they still read as values, and take the interface's own
+   face. Block code (st.code) is deliberately NOT included: that really
+   is source, and stays monospace. */
+.stMarkdown :not(pre) > code,
+[data-testid="stCaptionContainer"] code{
+  font-family:inherit!important;
+  font-size:0.933em!important;
+  font-weight:500;
+  font-variant-numeric:tabular-nums;
+  color:var(--slate)!important;
+  background-color:rgba(214,211,209,.30)!important;
+  padding:1px 5px;
+  border-radius:4px;
+  white-space:nowrap;
 }
 
-/* Primary Button: Lime Sprout */
-.stButton > button[kind="primary"] {
-    background-color: var(--color-lime-sprout) !important;
-    border: none !important;
-    color: var(--color-midnight-ink) !important;
-    font-weight: 400 !important;
-    padding: 12px 24px !important;
-    border-radius: var(--radius-lg) !important;
+/* ═══ ZARA COMPONENTS ═════════════════════════════════════════════ */
+
+/* Source / verification status. SavvyCal has no status vocabulary, so
+   this is designed fresh against Compass 7: `failed` and `skipped` must
+   never be confusable -- one is a fault in our plumbing, the other a
+   deliberate choice. Shape carries the meaning; colour only reinforces
+   it, so the distinction survives greyscale and colour-blindness.
+   Note the previous build used Lime for `ok` and a coral FILL for
+   `failed`: the first overloaded the one interactive colour, the second
+   broke the reference's hardest rule (coral is stroke, never fill). */
+.status-dot{
+  display:inline-block;width:11px;height:11px;
+  border-radius:var(--r-pill);
+  margin-right:var(--s-1);
+  vertical-align:baseline;
+  box-sizing:border-box;
 }
-.stButton > button[kind="primary"]:hover {
-    background-color: var(--color-lime-sprout) !important;
-    color: var(--color-midnight-ink) !important;
-    transform: scale(1.02) !important;
-    box-shadow: 0 0 0 4px rgba(185,255,120,0.25) !important;
+.status-ok      { background-color:var(--midnight-ink); }
+.status-empty   { background-color:transparent;border:1.5px solid var(--ash); }
+.status-skipped { background-color:transparent;border:1.5px dashed var(--ash);opacity:.6; }
+.status-failed  { background-color:transparent;border:3px solid var(--ember-coral); }
+.status-running { background-color:var(--lime-sprout);border:1.5px solid var(--moss);
+                  animation:zara-pulse 1.4s ease-in-out infinite; }
+@keyframes zara-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.status-running{animation:none}}
+
+/* The draft. Reference's Product Screenshot Frame -- 2px coral stroke,
+   24px radius, warm coral-tinted shadow. The one shadow the system
+   permits, and the draft is the product artifact, so this is its home. */
+.draft-frame{
+  border:2px solid var(--ember-coral);
+  border-radius:24px;
+  padding:var(--s-4);
+  background-color:var(--pure-white);
+  box-shadow:0 24px 48px rgba(245,67,32,.15);
+  margin:var(--s-3) 0 var(--s-4);
+  font-size:var(--t-body);
+  line-height:1.7;
+  color:var(--midnight-ink);
+  max-width:62ch;
 }
 
-/* Input Fields */
-.stTextInput > div > div > input, .stTextArea textarea, .stSelectbox > div > div {
-    background-color: var(--color-pure-white) !important;
-    border: 1px solid var(--color-fog) !important;
-    border-radius: var(--radius-lg) !important;
-    color: var(--color-true-black) !important;
-    font-family: 'Inter', sans-serif !important;
-}
-.stTextInput > div > div > input:focus, .stTextArea textarea:focus, .stSelectbox > div > div:focus {
-    border-color: var(--color-midnight-ink) !important;
-    box-shadow: 0 0 0 1px var(--color-midnight-ink) !important;
-}
-
-/* Eyebrow Labels */
-.eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 18px;
-    color: var(--color-midnight-ink);
-    position: relative;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 16px;
-    margin-top: 16px;
-}
-.eyebrow::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 60%;
-    height: 3px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 3"><path d="M 0 1.5 Q 3 0 6 1.5 T 12 1.5" stroke="%23f54320" stroke-width="2" fill="none"/></svg>');
-    background-repeat: repeat-x;
-    background-size: 12px 3px;
+.score-badge{
+  border:1.5px solid var(--ember-coral);
+  border-radius:var(--r-pill);
+  font-weight:700;
+  font-size:var(--t-label);
+  letter-spacing:var(--track-ui);
+  color:var(--midnight-ink);
+  padding:3px 10px;
+  display:inline-block;
+  font-variant-numeric:tabular-nums;
 }
 
-/* Small eyebrow variant — sidebar labels overridden to 14px.
-   Shorter squiggle (50%, 2px) so it doesn't crowd a short label. */
-.eyebrow-sm {
-    font-family: 'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 14px;
-    color: var(--color-midnight-ink);
-    position: relative;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 2px;
+.candidate-claim-summary{color:var(--midnight-ink);font-size:var(--t-body);}
+.candidate-claim-summary.excluded{color:var(--stone);}
+.candidate-source-url{
+  color:var(--slate);font-size:var(--t-meta);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.eyebrow-sm::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 50%;
-    height: 2px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 2"><path d="M 0 1 Q 3 0 6 1 T 12 1" stroke="%23f54320" stroke-width="1.5" fill="none"/></svg>');
-    background-repeat: repeat-x;
-    background-size: 10px 2px;
+.candidate-snippet{
+  font-size:var(--t-meta);
+  line-height:var(--lh-meta);
+  border:1px solid var(--fog);
+  border-radius:var(--r-card);
+  background-color:var(--pure-white);
+  padding:var(--s-2);
+  margin-top:var(--s-1);
+}
+.candidate-snippet.excluded{color:var(--stone);}
+
+.hook-row{
+  background-color:var(--pure-white);
+  border:1px solid var(--fog);
+  border-radius:var(--r-card);
+  padding:var(--s-2);
+  margin-bottom:var(--s-1);
+  font-size:var(--t-body);
+}
+.hook-caption{
+  font-size:var(--t-meta);
+  line-height:var(--lh-meta);
+  color:var(--slate);
+  margin-top:var(--s-1);
+  padding-top:var(--s-1);
+  border-top:1px solid var(--fog);
 }
 
-/* Sidebar View toggle — horizontal radio restyled as Top Nav Pill Tabs
-   (active = lime fill, ink text, 9999px radius). CSS-only, no markup change. */
-section[data-testid="stSidebar"] div[role="radiogroup"] {
-    gap: 8px;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"] {
-    border-radius: var(--radius-pills) !important;
-    padding: 4px 12px !important;
-    background-color: transparent !important;
-    border: none !important;
-    cursor: pointer;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"]:hover {
-    background-color: rgba(229, 231, 235, 0.4) !important;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"] > div:first-child {
-    /* hide the radio circle — the pill fill is the selected state */
-    display: none !important;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"] > div:last-child p {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 14px !important;
-    letter-spacing: 0.02em !important;
-    font-weight: 400 !important;
-    color: var(--color-true-black) !important;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) {
-    background-color: var(--color-lime-sprout) !important;
-}
-section[data-testid="stSidebar"] label[data-baseweb="radio"]:has(input:checked) > div:last-child p {
-    color: var(--color-midnight-ink) !important;
+.model-call-header{font-size:var(--t-body);font-variant-numeric:tabular-nums;}
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════════════ */
+@media (max-width:820px){
+  :root{--page-pad:16px;}
+  #zara-hero{padding:var(--s-3) var(--page-pad);}
 }
 
-/* Alerts / Notifications */
-div[data-testid="stAlert"] {
-    background-color: var(--color-pure-white) !important;
-    border: 1px solid var(--color-fog) !important;
-    border-radius: var(--radius-lg) !important;
-    padding: 24px !important;
-    color: var(--color-stone) !important;
-    box-shadow: none !important;
+/* ═══ SIDEBAR — the Forest Stage zone ═════════════════════════════
+   Surface, text and border colours come from [theme.sidebar] in
+   config.toml. What is said here is only what the theme has no token
+   for: the brand mark, and Lime used as a text accent. Lime cannot be
+   a widget fill in the sidebar for the same reason as everywhere else
+   — Streamlit paints white text on primaryColor — but as ink on
+   forest it is the brand's most recognisable pairing. */
+section[data-testid="stSidebar"] .zbrand{
+  font-family:var(--font-display);
+  font-size:var(--t-mark);line-height:var(--lh-mark);
+  color:var(--cream-paper);
+  letter-spacing:0.01em;
+  display:block;
+  margin:0 0 var(--s-1);
 }
-div[data-testid="stAlert"] p, div[data-testid="stAlert"] div {
-    color: var(--color-stone) !important;
+section[data-testid="stSidebar"] .zbrand em{
+  color:var(--lime-sprout);font-style:italic;
 }
-div[data-testid="stAlert"]:has([data-testid="stIconMaterial"][title="error"]) {
-    border-left: 4px solid var(--color-ember-coral) !important;
+section[data-testid="stSidebar"] .zbrand-sub{
+  font-size:var(--t-label);font-weight:600;
+  text-transform:uppercase;letter-spacing:var(--track-label);
+  color:rgba(252,247,237,.55);
+  display:block;margin-bottom:var(--s-3);
 }
-
-/* Tabs (Pill Nav) */
-div[data-baseweb="tab-list"] {
-    border-bottom: none !important;
-    gap: 8px;
+section[data-testid="stSidebar"] .eyebrow,
+section[data-testid="stSidebar"] .eyebrow-sm{
+  color:var(--lime-sprout);
 }
-div[data-baseweb="tab-highlight"] {
-    display: none !important;
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3{color:var(--cream-paper)!important;}
+section[data-testid="stSidebar"] hr{border-color:rgba(252,247,237,.16);}
+section[data-testid="stSidebar"] .zr-name{color:var(--cream-paper);}
+section[data-testid="stSidebar"] .zrow{border-bottom-color:rgba(252,247,237,.14);}
+section[data-testid="stSidebar"] .zfill{background:rgba(252,247,237,.20);}
+section[data-testid="stSidebar"] .zfill > span{background:var(--lime-sprout);}
+/* Emphasis numbers in the dark zone: lime as ink. */
+section[data-testid="stSidebar"] .zaccent{color:var(--lime-sprout);font-weight:600;}
+section[data-testid="stSidebar"] .zquiet{color:rgba(252,247,237,.60);}
+section[data-testid="stSidebar"] .stMarkdown :not(pre) > code{
+  color:var(--lime-sprout)!important;
+  background-color:rgba(252,247,237,.10)!important;
 }
-button[data-baseweb="tab"] {
-    border-radius: var(--radius-pills) !important;
-    background-color: transparent !important;
-    color: var(--color-true-black) !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    letter-spacing: 0.02em !important;
-    border: none !important;
-    padding: 4px 12px !important;
-    margin-right: 0px !important;
-}
-button[data-baseweb="tab"][aria-selected="true"] {
-    background-color: var(--color-lime-sprout) !important;
-    color: var(--color-midnight-ink) !important;
-}
-button[data-baseweb="tab"] div[data-testid="stMarkdownContainer"] p {
-    color: inherit !important;
-}
-
-/* Sidebar Background */
-section[data-testid="stSidebar"] {
-    background-color: var(--color-cream-paper) !important;
-}
-
-/* Expanders */
-div[data-testid="stExpander"] {
-    background-color: var(--color-pure-white) !important;
-    border: 1px solid var(--color-fog) !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: none !important;
-}
-div[data-testid="stExpander"] summary {
-    background-color: transparent !important;
-}
-div[data-testid="stExpander"] summary:hover {
-    background-color: rgba(229, 231, 235, 0.3) !important;
+/* Anything that carries an explicit dark ink in the light zone has to
+   be restated here, or it renders near-black on forest. */
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] label,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] li,
+section[data-testid="stSidebar"] .stMarkdown{
+  color:var(--cream-paper)!important;
 }
 
-/* Custom Containers (Cards) */
-.card-container {
-    background-color: var(--color-pure-white);
-    border: 1px solid var(--color-fog);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-24);
-    margin-bottom: var(--spacing-24);
-    box-shadow: none;
+/* Captions inherit --slate, which is near-black and vanishes against
+   forest. In the dark zone they are cream at low opacity. */
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p{
+  color:rgba(252,247,237,.62)!important;
 }
 
-/* Metrics (Run History stat cards) */
-div[data-testid="stMetric"] {
-    background-color: var(--color-pure-white);
-    border: 1px solid var(--color-fog);
-    border-radius: var(--radius-lg);
-    padding: 16px;
+/* The row grid is sized for a 1200px main column. In a 264px sidebar
+   the name column collapsed and ellipsised "~33 runs left" to "~...".
+   The sidebar gets a two-column form of the same component: name and
+   number, nothing else. */
+section[data-testid="stSidebar"] .zrow{
+  grid-template-columns:11px minmax(0,1fr) auto;
+  gap:var(--s-1);
 }
-div[data-testid="stMetricLabel"] p {
-    font-family: 'Barlow Condensed', sans-serif !important;
-    text-transform: uppercase;
-    font-size: 12px !important;
-    letter-spacing: 0.05em !important;
-    color: var(--color-stone) !important;
-}
-div[data-testid="stMetricValue"] {
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 700 !important;
-    font-size: 24px !important;
-    color: var(--color-midnight-ink) !important;
+section[data-testid="stSidebar"] .zrow .zr-state,
+section[data-testid="stSidebar"] .zrow .zr-detail{display:none;}
+section[data-testid="stSidebar"] .zr-value{
+  color:var(--lime-sprout);font-weight:600;
 }
 
-/* Status Dots (source/verification status markers — emoji-free) */
-.status-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: var(--radius-pills);
-    margin-right: 8px;
-    vertical-align: middle;
-}
-.status-ok { background-color: #b9ff78; }
-.status-empty { background-color: #d6d3d1; }
-.status-failed { background-color: #f54320; }
-.status-skipped { background-color: transparent; border: 2px solid #d6d3d1; box-sizing: border-box; }
-.status-running { background-color: #008236; }
-
-/* Product Screenshot Frame (for Drafts) */
-.draft-frame {
-    border: 2px solid var(--color-ember-coral);
-    border-radius: var(--radius-3xl);
-    padding: 32px;
-    background-color: var(--color-pure-white);
-    box-shadow: 0 24px 48px rgba(245, 67, 32, 0.15);
-    margin-top: var(--spacing-24);
-    margin-bottom: var(--spacing-32);
+/* Streamlit gives sidebar widgets 13.125px -- close to t-meta (13.005)
+   without being it. Pinned, so the rail is deliberately one step down
+   rather than accidentally almost one step down. .zr-name/.zr-value are
+   spans and stay at their own level: the runs-left figure is the one
+   thing in here that outranks the controls. */
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] input,
+section[data-testid="stSidebar"] textarea,
+section[data-testid="stSidebar"] button p,
+section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p{
+  font-size:var(--t-meta)!important;
 }
 
-/* Phase 3: Run History Density Treatment */
-div[data-testid="stExpanderDetails"] { font-size: 14px; }
-
-.score-badge {
-    border: 1.5px solid var(--color-ember-coral);
-    border-radius: var(--radius-pills);
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    color: var(--color-midnight-ink);
-    padding: 2px 8px;
-    display: inline-block;
-}
-
-.candidate-status {
-    font-family: 'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
-.candidate-claim-summary {
-    color: var(--color-midnight-ink);
-    font-size: 14px;
-}
-.candidate-claim-summary.excluded {
-    color: var(--color-stone);
-}
-
-.candidate-source-url {
-    color: var(--color-slate);
-    font-size: 14px;
-}
-
-.candidate-snippet {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    border: 1px solid var(--color-fog);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-pure-white);
-    padding: 12px;
-    margin-top: 8px;
-}
-.candidate-snippet.excluded {
-    color: var(--color-stone);
-}
-
-.hook-row {
-    background-color: var(--color-pure-white);
-    border: 1px solid var(--color-fog);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    margin-bottom: 12px;
-}
-
-.hook-caption {
-    font-size: 12px;
-    color: var(--color-slate);
-    margin-top: 4px;
-}
-
-.model-call-header {
-    font-size: 14px;
-}
+/* Inputs on forest: the theme sets the fill, this softens the edge. */
+section[data-testid="stSidebar"] input,
+section[data-testid="stSidebar"] textarea{color:var(--cream-paper)!important;}
 </style>
 """
 
 
-def render_hero():
-    # Streamlit hack: inject a full-width HTML hero at the top
-    hero_html = """
-    <div id="zara-hero">
-        <h1>Project Zara</h1>
-        <p>
-            Automated, grounded, personalized outreach without the hallucination.
-        </p>
-    </div>
+import html as _html
+
+
+def render_brand():
+    """The wordmark, at the top of the Forest Stage zone."""
+    st.markdown(
+        "<span class='zbrand'>Zara<em>.</em></span>"
+        "<span class='zbrand-sub'>Outreach, drafted for review</span>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_page_header(eyebrow, title, sub=None):
+    """Every page opens the same way: where you are, what this is, why.
+
+    Replaces the forest band that used to float in the main column and
+    said the same marketing line on every screen.
     """
-    st.markdown(hero_html, unsafe_allow_html=True)
+    parts = [
+        "<div class='zpage'>",
+        f"<span class='zpage-eyebrow'>{_html.escape(eyebrow)}</span>",
+        f"<span class='zpage-title'>{_html.escape(title)}</span>",
+    ]
+    if sub:
+        parts.append(f"<div class='zpage-sub'>{sub}</div>")
+    parts.append("</div>")
+    st.markdown("".join(parts), unsafe_allow_html=True)
+
+
+def zrow(name, state=None, detail=None, value=None, status=None,
+         fill=None, muted=False, alert=False, escape=True):
+    """One row of the app's only tabular vocabulary.
+
+    Sources, quota headroom, stalls and stages are all this shape:
+    a status marker, a name, a state word, a detail, and a number. They
+    used to be four different ad-hoc layouts; this is the one.
+
+    `status` is a SourceResult state -- ok / empty / failed / skipped /
+    running -- and draws the marker. `fill` (0..1) draws a 2px level rule
+    under the row for quota-style readings.
+    """
+    e = (lambda x: _html.escape(str(x))) if escape else (lambda x: str(x))
+    cls = "zrow"
+    if muted:        cls += " is-muted"
+    if alert:        cls += " is-alert"
+    if fill is not None: cls += " has-fill"
+
+    dot = f"<span class='status-dot status-{status}'></span>" if status else "<span></span>"
+    out = (
+        f"<div class='{cls}'>{dot}"
+        f"<span class='zr-name'>{e(name)}</span>"
+        f"<span class='zr-state'>{e(state) if state else ''}</span>"
+        f"<span class='zr-detail'>{e(detail) if detail else ''}</span>"
+        f"<span class='zr-value'>{e(value) if value else ''}</span>"
+        f"</div>"
+    )
+    if fill is not None:
+        pct = max(0.0, min(float(fill), 1.0)) * 100
+        bar = "zfill is-alert" if alert else "zfill"
+        out += f"<div class='{bar}'><span style='width:{pct:.1f}%'></span></div>"
+    st.markdown(out, unsafe_allow_html=True)

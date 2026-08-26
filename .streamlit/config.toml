@@ -1,7 +1,134 @@
+# ─────────────────────────────────────────────────────────────────────
+# Zara — SavvyCal design system, expressed natively.
+#
+# Everything here that CAN be a theme token IS one, rather than a CSS
+# override in zara/ui/styles.py. Streamlit applies these to every widget
+# it renders, including ones no hand-written selector would reach — which
+# is the only way the interface stays consistent as the app grows.
+#
+# Palette source of truth: reference/savvycal_style.md
+# Type ramp mirrors the six steps declared in zara/ui/styles.py.
+# ─────────────────────────────────────────────────────────────────────
+
 [theme]
-base="light"
-primaryColor="#008236"
-backgroundColor="#fcf7ed"
-secondaryBackgroundColor="#ffffff"
-textColor="#1c1917"
-font="sans serif"
+base = "light"
+
+# ── Type ──────────────────────────────────────────────────────────────
+# One family for the whole interface. The display serif is used in exactly
+# one place (the hero wordmark) and is loaded by styles.py, not here.
+font        = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFont = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+codeFont    = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+
+# 1rem = 15px = --t-body. Every size below is a multiple of this root.
+baseFontSize   = 15
+baseFontWeight = 400
+
+#                   h1         h2        h3       h4      h5      h6
+#                 26px page   19px      15px     15px    15px    11px
+#                  title    section   subsect.  subsect. subsect. label
+headingFontSizes   = ["1.733rem", "1.267rem", "1rem", "1rem", "1rem", "0.733rem"]
+headingFontWeights = [700, 700, 700, 600, 600, 600]
+
+codeFontSize   = "0.833rem"   # --t-meta
+codeFontWeight = 400
+
+metricValueFontSize   = "1.133rem"
+metricValueFontWeight = 700
+
+# ── Surfaces & ink ────────────────────────────────────────────────────
+backgroundColor          = "#fcf7ed"   # Cream Paper — the default canvas
+secondaryBackgroundColor = "#ffffff"   # Pure White — card lift on cream
+textColor                = "#44403b"   # Stone — body ink.
+                                       # Reference forbids pure black body copy
+                                       # on cream (contrast fatigue). Headings
+                                       # take True Black via styles.py.
+
+# ── The one interactive colour ────────────────────────────────────────
+# Forest Stage drives every interactive control — buttons, sliders,
+# checkboxes, radios, toggles, progress bars, the segmented control.
+#
+# NOT Lime, despite the reference calling Lime the sole interactive fill:
+# Streamlit paints primary-button text white against primaryColor and
+# gives no way to change it, so a light fill is unreadable by
+# construction. Forest is the brand's anchor colour and forest-with-
+# cream is the hero's own pairing, so this stays inside the system.
+#
+# Lime keeps its reference role as a small NON-interactive accent —
+# score badges, winner chips — set in styles.py, where nothing is
+# painting white text on top of it.
+primaryColor = "#0d542b"
+
+# ── Structure ─────────────────────────────────────────────────────────
+baseRadius         = "8px"       # cards, inputs, buttons
+borderColor        = "#e5e7eb"   # Fog — the structural hairline
+dataframeBorderColor          = "#e5e7eb"
+dataframeHeaderBackgroundColor = "#fcf7ed"
+showWidgetBorder  = true
+showSidebarBorder = true         # sidebar and canvas are both cream; without
+                                 # this they merge into one undivided field
+
+# ── Links ─────────────────────────────────────────────────────────────
+linkColor     = "#1c1917"
+linkUnderline = true
+
+# ── Code ──────────────────────────────────────────────────────────────
+codeBackgroundColor = "#fcf7ed"
+codeTextColor       = "#292524"
+
+# ── Semantic states ───────────────────────────────────────────────────
+# Kept inside the warm palette. The reference bans introducing a new colour
+# zone, so these are tints of hues already in the system, not new hues.
+redColor            = "#f54320"   # Ember Coral — error accent (stroke/icon)
+redBackgroundColor  = "#ffe3e3"   # Coral Whisper — a sanctioned surface
+redTextColor        = "#1c1917"
+
+orangeColor           = "#8a6d3b"   # warm neutral — warning accent
+orangeBackgroundColor = "#f4ecd8"   # deeper cream, distinct from the page
+orangeTextColor       = "#1c1917"
+
+greenColor           = "#0d542b"   # Forest Stage — success accent
+greenBackgroundColor = "#eef7e4"   # Lime tint
+greenTextColor       = "#1c1917"
+
+blueColor           = "#44403b"   # info is neutral: the system has no blue
+blueBackgroundColor = "#ffffff"
+blueTextColor       = "#44403b"
+
+grayColor           = "#44403b"
+grayBackgroundColor = "#f2efe6"
+grayTextColor       = "#44403b"
+
+# ── Charts ────────────────────────────────────────────────────────────
+# Greens and warm neutrals only. Coral is excluded deliberately: the
+# reference makes it stroke/decoration, never a fill, and a bar IS a fill.
+chartCategoricalColors = ["#0d542b", "#008236", "#44403b", "#b9ff78", "#d6d3d1", "#1c1917"]
+chartSequentialColors  = ["#eef7e4", "#d3ecc4", "#b9ff78", "#7bc95a", "#008236", "#0d542b", "#08361b"]
+
+# ── Sidebar = the Forest Stage zone ───────────────────────────────────
+# The reference describes two zones that must not blend in one view:
+# Forest Stage and Cream Paper. The previous build had a green stripe
+# floating inside a cream page — blended, and structurally homeless.
+# Making the sidebar the dark zone and the main column the light one is
+# the honest reading: brand becomes structure instead of decoration.
+#
+# primaryColor here is Moss, not Lime, for the same reason as the main
+# theme: Streamlit paints white text on primaryColor, and white on lime
+# is unreadable. Lime is applied to sidebar micro-labels and emphasis
+# numbers via styles.py, where no white text lands on top of it.
+[theme.sidebar]
+# The sidebar is secondary chrome, so it runs ONE STEP DOWN from the
+# main column: its controls sit at t-meta and its section titles at
+# t-body-bold. That is a decision, not a default -- left alone Streamlit
+# gives the sidebar its own scale (13.125px text, 18.75px h2) which is
+# near the ramp without being on it, and "nearly right" is exactly what
+# reads as sloppy. Heading sizes are NOT inherited from [theme].
+headingFontSizes         = ["1.267rem", "1rem", "1rem", "1rem", "1rem", "0.733rem"]
+backgroundColor          = "#0d542b"
+secondaryBackgroundColor = "#0a4423"
+textColor                = "#fcf7ed"
+borderColor              = "#1a6b3a"
+primaryColor             = "#008236"
+linkColor                = "#b9ff78"
+codeBackgroundColor      = "#0a4423"
+codeTextColor            = "#d8f5c0"
