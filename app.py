@@ -48,6 +48,7 @@ from zara.models import Prospect
 from zara.orchestrator import run_end_to_end_pipeline
 from zara.s2 import render_decision_card
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
+from zara.ui.auth import developer_mode_unlocked
 
 # --- DESIGN SYSTEM ---
 # We inject the SavvyCal style tokens via custom CSS overriding Streamlit defaults.
@@ -588,7 +589,7 @@ def main():
 
     _, col_main, _ = st.columns([1, 4, 1])
     with col_main:
-        if admin_pass == "123":
+        if developer_mode_unlocked(admin_pass):
             st.markdown("<div class='eyebrow'>Advanced Configuration</div>", unsafe_allow_html=True)
             st.markdown("## Visual Settings Engine")
             st.info("You are editing the engine configuration visually. Changes take effect on the next run.")
