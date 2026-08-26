@@ -90,9 +90,20 @@ PYTHONPATH=. ./venv/bin/python -m zara.probe --name "Dana Lee" --company "Acme"
 
 ### Demo mode
 
-A sidebar toggle replays a recorded retrieval snapshot and stubs the model calls, so a full run
-completes with **zero network calls**. It exists because the free-tier rate limit below makes a
-live run unreliable to demo, and because a demo should not depend on someone else's uptime.
+A sidebar toggle replays a recorded retrieval snapshot and the recorded model responses, so a
+full run completes with **zero network calls**. The pipeline itself still runs: ranking,
+drafting and verification all execute for real against replayed inputs.
+
+Fixtures are keyed on a hash of the prompt, and the prompt contains the prospect's **name** — so
+demo mode only replays for a pair that was recorded. The recorded pairs are:
+
+| Name | Company | What it shows |
+|---|---|---|
+| Alex Rivera | ShipBob | a normal run, `company_action`, verifier clean |
+| Sam Okafor | Versapay | a normal run |
+| Jordan Ellis | Modern Treasury | a normal run |
+| Riley Chen | Northwind Freight | the `no_signal` path |
+| Dana Lee | Acme Logistics | `blocked_hallucination` — the verifier refusing its own draft |
 
 ### Tests
 
@@ -100,7 +111,7 @@ live run unreliable to demo, and because a demo should not depend on someone els
 env -i PATH=/usr/bin:/bin HOME=$HOME PYTHONPATH=. ./venv/bin/pytest tests/ -q
 ```
 
-49 tests, no live calls (fixtures replay). They must pass **twice consecutively** — the suite
+128 tests, no live calls (fixtures replay). They must pass **twice consecutively** — the suite
 has caught real non-determinism that a single green run hid.
 
 ## Configuration
@@ -108,6 +119,9 @@ has caught real non-determinism that a single green run hid.
 `value_prop.yaml` is the brain: the pains signals are scored against, each with the observables
 that would evidence it; the ICP rubric; the proximity weights; and the `never_reference`
 guardrails. The Settings UI edits it visually behind a developer-mode password.
+
+The Settings UI sits behind developer mode, which opens only against
+`ZARA_ADMIN_PASSWORD`. There is no default: unset means it never opens.
 
 ICP is **informational and never rejects a prospect**. If someone typed this name in, assume
 they had a reason; a headcount mismatch is a note on the card, not a veto.
@@ -117,12 +131,13 @@ These score *highest* on naive relevance and are unusable. Relevance is not perm
 
 ## Limits — read this before trusting a number
 
-- **The free Groq tier is 8,000 tokens/minute, and one prospect costs ~8K.** So a live run
-  routinely stalls ~40–50s waiting for the bucket to refill. This was measured, then attacked
-  from two directions (batching the ranker into one call, cutting the card cap 15→10) and it
-  **did not go away**: the ranker's completion tokens are reasoning tokens and do not scale
-  down with fewer cards. It is structural on the free tier. Demo mode is the mitigation; a paid
-  tier is the fix.
+- **Groq's free tier is per key: 8,000 tokens/minute and 200,000/day, each.** One prospect costs
+  ~16k tokens across ~4 calls, so a single key spends ~45s of every run asleep on its own 429 and
+  runs dry after about twelve prospects. Several keys can be pooled (`GROQ_API_KEY`,
+  `GROQ_API_KEY_2..10`, or a comma-separated `GROQ_API_KEYS`): calls are spread round-robin so the
+  per-minute bucket stops binding, and a 429 moves to the next key rather than sleeping. The
+  daily ceiling multiplies by the number of keys; the per-minute bucket does not, because one
+  call draws on one key.
 - **Gemini's free tier is ~20 requests per day, per model** — enough for about three prospects.
   It is a fallback, and cannot be the primary provider.
 - **Job postings were cut from the product.** A job ad is recruiter boilerplate, not the
