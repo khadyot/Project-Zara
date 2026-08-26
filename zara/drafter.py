@@ -125,8 +125,9 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     # round." came back as a headline fragment rather than something a person wrote.
     prompt += ("2. The evidence as a complete, grammatical clause in <=12 words -- not a headline "
                "fragment -- then the observation it leads to. Two sentences max.\n")
-    prompt += ("3. What we do about that specific thing. ONE mechanism, at most 20 words. Name the "
-               "single most relevant one; never list capabilities.\n")
+    prompt += ("3. What we do about that specific thing. ONE mechanism, at most 20 words, written as "
+               "a grammatical English sentence. Name the single most relevant one; never list "
+               "capabilities, and never stack time words (instantly / in real time / daily).\n")
     prompt += "4. The ask, as given. One sentence.\n"
     prompt += f"Sign: {sender_name}\n\n"
 

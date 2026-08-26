@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not contain any invented metrics, customer names, or specific claims about the prospect that are unsupported. All factual statements (e.g., ShipBob's $200M raise, the link between rapid expansion and reconciliation sprawl, manual processes causing month\u2011end delays) are backed by the provided evidence, and the rest are permissible value propositions or generic language."
+  },
+  "prompt_tokens": 1709,
+  "completion_tokens": 570
+}

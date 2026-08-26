@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "ShipBob's $200M round and reconciliation",
+    "draft_text": "Hi Test,\nShipBob raised $200M. That level of growth often leads to intercompany reconciliation sprawl, which can strain manual processes and delay financial closing, especially when multiple warehouses and third\u2011party carriers are involved daily.\nWe build a platform that automatically matches and reconciles inbound and outbound shipment data across all fulfillment centers in real\u2011time.\nWorth a 15-minute call next week?"
+  },
+  "prompt_tokens": 831,
+  "completion_tokens": 2942
+}

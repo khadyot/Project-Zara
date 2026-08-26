@@ -40,7 +40,13 @@ def _compute_icp_fit(cards: list[SignalCard], value_prop: dict) -> tuple[Literal
             if 'sector' in data: sector = data['sector']
 
     notes: list[str] = []
-    if headcount is None:
+    # A headcount of zero is a missing value wearing a number. Apify returned
+    # employeeCount 0 for a company that plainly has employees, and the card then
+    # read "headcount 0 -- outside preferred 50-2000 band" as though we had
+    # measured it. Same failure as the budget meter in F7: absence rendered with
+    # the confidence of a reading. Compass VII -- "couldn't look" is not "looked
+    # and found none".
+    if headcount is None or headcount <= 0:
         return "unknown", ["headcount unknown — could not verify"]
 
     if headcount < hc_pref_min or headcount > hc_pref_max:

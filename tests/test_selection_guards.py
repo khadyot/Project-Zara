@@ -211,3 +211,22 @@ def test_undated_card_still_wins_when_it_leads_by_a_clear_margin():
     dated = _ranked(0.20, 92, "company", "Company opens a new office")
     win, _, _ = _select_winner([undated, dated], [undated, dated], [])
     assert win is undated
+
+
+# --------------------------------------------------------------------------
+# 7. Absence must not be rendered as a number.
+# --------------------------------------------------------------------------
+
+def test_zero_headcount_reads_as_unknown_not_as_a_measurement():
+    """Apify returned employeeCount 0 for a company that plainly has employees,
+    and the decision card printed "headcount 0 -- outside preferred 50-2000
+    band" as though we had measured it."""
+    from zara.ranker import _compute_icp_fit
+
+    fit, notes = _compute_icp_fit([_card("Firmographics", "headcount: 0, sector: payments",
+                                         stype="firmographic")], {})
+    assert fit == "unknown"
+    assert any("unknown" in n for n in notes), notes
+    assert not any("outside preferred" in n for n in notes), (
+        "a missing headcount was reported as an ICP deviation"
+    )

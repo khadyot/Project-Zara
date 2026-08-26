@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on ShipBob\u2019s recent funding",
+    "draft_text": "Hi Test,\nShipBob raised $200M, valuing it over $1B. That likely expands reconciliation workload across teams, increasing significant manual effort and error risk.\nWe build a platform that automatically matches and posts intercompany transactions, reducing duplicate entry and overall audit time and improving compliance.\nWorth a 15-minute call next week?"
+  },
+  "prompt_tokens": 776,
+  "completion_tokens": 1840
+}
