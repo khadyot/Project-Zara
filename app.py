@@ -94,6 +94,18 @@ def _provenance(row: dict) -> str:
     return f"measured from Groq's own headers, {when}{one_of}{pooled}"
 
 
+def _show_detail() -> bool:
+    """Whether to open the live pipeline log while a run is in flight.
+
+    It used to open itself on every run. The per-source ladder and every model
+    call scrolling past is the right default for someone debugging the pipeline
+    and the wrong one for someone using the product -- the interesting output is
+    the decision card at the end, and the log pushes it off screen. Off by
+    default, one click away, and the run still records everything either way.
+    """
+    return bool(st.session_state.get("show_pipeline_detail", False))
+
+
 def render_budget_meter():
     """What is left, in the only unit that matters to the operator: runs.
 
@@ -346,7 +358,7 @@ def render_provider_status():
 
     st.caption(f"Secrets bridge: {bridge['state']} — {bridge['detail']}")
 
-    for r in rows:
+    def _key_row(r):
         if r["present"]:
             mark = "present"
             note = f"{r['length']} chars"
@@ -358,15 +370,41 @@ def render_provider_status():
         # Was an inline font-family:Geist Mono -- a font from the Zamp
         # system that this build never loads, so it fell back to the
         # browser's default monospace and read as a foreign object.
+        detail = f"{r['tier']} \u2014 {r['purpose']}"
+        if r["name"] == "GROQ_API_KEY":
+            # The pool is invisible otherwise: one row, five credentials, and a
+            # daily ceiling five times what this row's name suggests.
+            from zara.utils import keypool
+            _n = keypool.count()
+            if _n > 1:
+                detail += f" \u00b7 {_n} keys pooled"
         zrow(
             r["name"],
             state=mark,
-            detail=f"{r['tier']} \u2014 {r['purpose']}",
+            detail=detail,
             value=note,
             status={"present": "ok", "absent": "empty"}.get(mark, "failed"),
             alert=(mark == "suspicious"),
             muted=(mark == "absent"),
         )
+
+    # Required first, everything else folded away. Six providers listed flat reads
+    # as a sprawling stack held together with string; the three that must work are
+    # the product, and the fallbacks are an implementation detail until one fails.
+    required = [r for r in rows if r["tier"] == "required"]
+    secondary = [r for r in rows if r["tier"] != "required"]
+
+    for r in required:
+        _key_row(r)
+
+    if secondary:
+        absent = [r["name"] for r in secondary if not r["present"]]
+        label = f"Fallback and optional providers ({len(secondary)})"
+        if absent:
+            label += " \u2014 not required for a run"
+        with st.expander(label):
+            for r in secondary:
+                _key_row(r)
 
     st.caption("Key names and lengths only — values are never read or displayed.")
 
@@ -531,6 +569,13 @@ def main():
         st.markdown("<br><div class='eyebrow-sm'>3. Data Sources</div>", unsafe_allow_html=True)
         use_exa = st.checkbox("Exa (Web/News)", value=True)
         use_apify = st.checkbox("Apify (LinkedIn/Social)", value=True)
+        st.checkbox(
+            "Show pipeline detail",
+            key="show_pipeline_detail",
+            value=False,
+            help="Open the live retrieval and model-call log while a run is in flight. "
+                 "Off by default so the decision card is what you see when it finishes.",
+        )
         
         st.markdown("<br><div class='eyebrow-sm'>4. Developer Mode</div>", unsafe_allow_html=True)
         admin_pass = st.text_input("Admin Password", type="password")
@@ -749,7 +794,7 @@ def main():
                         on_event=lambda e: (t.event(e), on_event(e))[1],
                     )
 
-            with st.status("Zara is researching...", expanded=True) as status:
+            with st.status("Zara is researching...", expanded=_show_detail()) as status:
                 tr = {}
                 try:
                     results, draft_res = asyncio.run(run_backend(tr))
@@ -834,13 +879,13 @@ def main():
         draft_res = cache["draft_res"]
 
         if regen:
-            with st.status("Redrafting...", expanded=True):
+            with st.status("Redrafting...", expanded=_show_detail()):
                 _, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style))
                 st.session_state["zara_cache"]["draft_res"] = draft_res
                 st.session_state["zara_cache"]["run_id"] = new_run_id
 
         if deep:
-            with st.status("Running Tavily deep search...", expanded=True) as dstat:
+            with st.status("Running Tavily deep search...", expanded=_show_detail()) as dstat:
                 results, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style, trigger="ui_boost", fetch_tavily=True))
                 st.session_state["zara_cache"]["results"] = results
                 st.session_state["zara_cache"]["draft_res"] = draft_res
@@ -885,7 +930,7 @@ def main():
                     st.markdown(f"**Why it matters:** {h.rationale}")
                     st.markdown(f"**Bridge to offer:** {h.bridge}")
                     if st.button(f"Draft with this hook", key=f"hook_{i}", use_container_width=True):
-                        with st.status("Redrafting with selected hook...", expanded=True):
+                        with st.status("Redrafting with selected hook...", expanded=_show_detail()):
                             _, draft_res, new_run_id = asyncio.run(redraft(hook=h, style_name=style))
                             st.session_state["zara_cache"]["draft_res"] = draft_res
                             st.session_state["zara_cache"]["run_id"] = new_run_id
