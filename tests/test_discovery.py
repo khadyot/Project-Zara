@@ -3,6 +3,26 @@ import pytest
 from zara.utils.discovery import ATSDiscoverer
 import os
 
+# Both tests in this file reach the real ATS APIs over the network. That makes
+# them the only non-deterministic thing in a suite whose contract is "zero live
+# calls under fixtures", and they fail for reasons that have nothing to do with
+# this code: a slow endpoint, a captive network, a vendor rebuild. HANDOFF.md has
+# carried "test_known_companies is flaky" as a known-and-tolerated note, which is
+# the problem -- a gate you have learned to ignore is not a gate, and the day it
+# fails for a real reason nobody will look.
+#
+# They still earn their place: the SmartRecruiters-returns-200-for-gibberish
+# finding came from exactly this check, and only a live call can catch a vendor
+# changing that behaviour again. So they are opt-in rather than deleted.
+#
+#   ZARA_LIVE_TESTS=1 pytest tests/test_discovery.py
+#
+live_only = pytest.mark.skipif(
+    not os.environ.get("ZARA_LIVE_TESTS"),
+    reason="hits live ATS APIs; set ZARA_LIVE_TESTS=1 to run",
+)
+
+@live_only
 @pytest.mark.asyncio
 async def test_gibberish_company():
     # Remove cache if it exists for clean test
@@ -15,6 +35,7 @@ async def test_gibberish_company():
     assert platform is None, f"Expected None, got platform {platform} with slug {slug}"
     assert slug is None, f"Expected None, got slug {slug}"
 
+@live_only
 @pytest.mark.asyncio
 async def test_known_companies():
     if os.path.exists(".ats_cache.json"):

@@ -94,7 +94,7 @@ never_reference:
     terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
 
 # DECIDED: omitted by default in strict mode. Permissive mode allows this benchmark.
-proof_point: "We help companies in your sector cut month-end close times by up to 30-40% without ripping out existing ERPs."
+proof_point: ""
 
 # DECIDED 2026-08-23 by the human: sign as the company.
 # The drafter must sign exactly as configured and must not invent a human signer.

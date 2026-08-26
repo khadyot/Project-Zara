@@ -59,3 +59,8 @@ current_prod_snippets/
 
 # Last observed provider rate-limit statement (local cache, machine-specific)
 .ratelimit.json
+
+# Agent tooling installed into this repo, not part of the product.
+# .agents/rules/ IS tracked -- CLAUDE.md points at it.
+agent/
+.agents/skills/
