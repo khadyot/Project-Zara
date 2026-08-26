@@ -22,7 +22,7 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 
 `zara/` package: `fetchers/` (ATS ×5, Exa scoped, Google News RSS, compound search, Apify actors ×16, Tavily, Jina) → `ranker.py` (pain-matching + tier system, strict/permissive modes) → `drafter.py` → `verifier.py` (deterministic grounding pass + LLM judge; retries hallucinations, never kills the run) → `orchestrator.py` (`run_end_to_end_pipeline`, gap-filler gate: paid rungs fire only if free rungs yield <2 person-tier cards). `value_prop.yaml` is the brain config (pains with `observable_via`, computable ICP with vetoes, weights, guardrails). `sources.yaml` is the source registry.
 
-## The 10 Compasses (design constraints — reasoning in agent_transfer/C_to_AG_02.md)
+## The 10 Compasses (design constraints)
 
 1. Degrade, never refuse — but never silently. Always return something; claim strength varies, stated on the output's face.
 2. Relocated cost: the costly signal is judgment, not composition.
@@ -63,9 +63,10 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 
 ## Key docs
 
-- `HANDOFF.md` — session handoff, verified facts, locked decisions (read before assuming)
-- `CARRIED-FORWARD.md` — what survived the Zebra reset and why
-- `agent_transfer/` — three-party protocol logs (Claude brain / Antigravity executor / human relay); chronological, never append to old files
+> Session handoffs, working notes and rate-limit screenshots are gitignored: useful on
+> disk, not part of what this repository hands to a reader.
+
+- `agent_transfer/` — protocol logs from the build; chronological, never append to old files
 - `reference/data-source-strategy.md` — per-source pricing/limits traced to primary sources; **do not re-research**
 - `reference/competitor-research/sample-leads/test_leads.csv` — hostile 14-row CSV ingestion test set
 - `reference/ml_pipeline_part2.md` — two-tier pipeline design basis

@@ -169,7 +169,7 @@ These score *highest* on naive relevance and are unusable. Relevance is not perm
 
 ## Design constraints
 
-Ten of them, argued out in `agent_transfer/C_to_AG_02.md`. The load-bearing ones:
+Ten of them shaped this build. The load-bearing ones:
 
 1. Degrade, never refuse — but never silently.
 2. The costly signal is judgment, not composition.

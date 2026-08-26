@@ -64,3 +64,18 @@ current_prod_snippets/
 # .agents/rules/ IS tracked -- CLAUDE.md points at it.
 agent/
 .agents/skills/
+
+# Internal working notes and session artefacts. Useful on disk, not part of the
+# product a reviewer is being handed. They remain in earlier commits; history is
+# deliberately NOT rewritten, because that changes every SHA.
+HANDOFF.md
+HANDOFF-2026-08-25.md
+CARRIED-FORWARD.md
+DEMO-PLAN.md
+analysis_results.md
+audit_and_learnings.md
+project_zara_context.md
+.git_files.txt
+skills-lock.json
+Gemini API Key Rate Limits.*
+Groq API Key Rate Limit.*
