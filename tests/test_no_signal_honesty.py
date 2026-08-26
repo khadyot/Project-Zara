@@ -113,18 +113,39 @@ def test_honest_generic_copy_is_not_flagged(vp):
     assert pass1_grounding(HONEST, _no_signal_prospect(), vp) == []
 
 
-def test_proof_point_is_not_evidence_in_strict_mode(vp):
+# These two describe what happens WHEN a proof point is configured. They used to
+# read it out of value_prop.yaml, which meant emptying that field -- the correct
+# thing to do, since HANDOFF.md records proof_point as null deliberately -- broke
+# them. A test of "how a configured proof point behaves" must configure one, not
+# depend on production config holding a claim we do not want to ship.
+SANCTIONED = "cut month-end close times by up to 30-40% without ripping out existing ERPs"
+
+
+@pytest.fixture
+def vp_with_proof_point(vp):
+    return {**vp, "proof_point": SANCTIONED}
+
+
+def test_proof_point_is_not_evidence_in_strict_mode(vp_with_proof_point):
     """Grounding is a substring test, so a sanctioned '30-40%' licenses any '30'.
 
     In strict mode the drafter is forbidden to use proof_point, so admitting it
     as evidence would license exactly the claim we told the model not to make.
     """
-    assert vp.get("proof_point"), "this test is meaningless without a proof point"
-    strict = build_evidence_list(_no_signal_prospect(), vp, strictness="strict")
-    permissive = build_evidence_list(_no_signal_prospect(), vp, strictness="permissive")
-    assert vp["proof_point"] not in strict
-    assert vp["proof_point"] in permissive
+    strict = build_evidence_list(_no_signal_prospect(), vp_with_proof_point, strictness="strict")
+    permissive = build_evidence_list(_no_signal_prospect(), vp_with_proof_point, strictness="permissive")
+    assert SANCTIONED not in strict
+    assert SANCTIONED in permissive
 
 
-def test_permissive_mode_still_allows_the_sanctioned_proof_point(vp):
-    assert pass1_grounding(FABRICATED, _no_signal_prospect(), vp, strictness="permissive") == []
+def test_permissive_mode_still_allows_the_sanctioned_proof_point(vp_with_proof_point):
+    assert pass1_grounding(FABRICATED, _no_signal_prospect(), vp_with_proof_point,
+                           strictness="permissive") == []
+
+
+def test_shipped_config_carries_no_proof_point(vp):
+    """The default must stay empty. An invented benchmark in config is the same
+    defect as an invented benchmark in an email, one indirection earlier."""
+    assert not (vp.get("proof_point") or "").strip(), (
+        "value_prop.yaml has a proof_point again -- permissive mode will state it as fact"
+    )
