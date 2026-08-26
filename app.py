@@ -75,18 +75,22 @@ def _age_label(days):
 
 def _provenance(row: dict) -> str:
     """How much the number above deserves to be trusted."""
+    pool = row.get("pool_size") or 1
+    pooled = f" \u00b7 {pool} keys pooled" if pool > 1 else ""
     if row.get("source") != "measured":
-        return "estimated from this instance's own log \u2014 not the account total"
+        return ("estimated from this instance's own log \u2014 not the account total" + pooled)
     age = row.get("observed_age_s")
     if age is None:
-        return "measured from Groq's response headers"
+        return "measured from Groq's response headers" + pooled
     if age < 90:
         when = "just now"
     elif age < 3600:
         when = f"{int(age // 60)} min ago"
     else:
         when = f"{age / 3600:.1f}h ago"
-    return f"measured from Groq's own headers, {when}"
+    # A measured row is one key's answer; the ceiling above spans the pool.
+    one_of = " (one key of the pool)" if pool > 1 else ""
+    return f"measured from Groq's own headers, {when}{one_of}{pooled}"
 
 
 def render_budget_meter():

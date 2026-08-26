@@ -104,10 +104,12 @@ def walk_schema(schema_dict: dict):
                 walk_schema(item)
 
 def _get_api_key():
-    key = os.environ.get("GROQ_API_KEY")
-    if not key:
+    """The primary key. Kept for callers that need exactly one (probe, health)."""
+    from zara.utils import keypool
+    keys = keypool.groq_keys()
+    if not keys:
         raise ProviderAuthError("GROQ_API_KEY is missing from environment variables.")
-    return key
+    return keys[0]
 
 def _get_gemini_api_key():
     key = os.environ.get("GEMINI_API_KEY")
@@ -368,15 +370,25 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
     if tripped:
         groq_error = ProviderProbeFailedError(f"skipped, breaker open: {tripped}")
     else:
-        api_key = _get_api_key()
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
-        }
+        from zara.utils import keypool
+        _keys = keypool.groq_keys()
+        if not _keys:
+            raise ProviderAuthError("GROQ_API_KEY is missing from environment variables.")
+        # Start this call on the next key in the rotation. Groq's 8K TPM bucket is
+        # per key, and one run spends ~4 calls, so spreading them is what stops a
+        # run stalling ~45s against its own earlier calls.
+        _key_pos = keypool.next_start()
+        _keys_tried = 0
 
-        # 8K TPM is the binding limit. A 429/413 means wait for the token bucket,
-        # so honour the reset header rather than a fixed ladder.
-        for attempt in range(4):
+        # 8K TPM is the binding limit for ONE key. A 429 means that key's bucket is
+        # empty -- so move to the next key immediately, and only sleep once every
+        # key has refused. The reset header is honoured when we do have to wait.
+        for attempt in range(max(4, len(_keys))):
+            api_key = _keys[_key_pos % len(_keys)]
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            }
             _t0 = time.monotonic()
             try:
                 budget = remaining_time()
@@ -401,15 +413,26 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
                     wait = _parse_reset(resp.headers.get("x-ratelimit-reset-tokens")) or \
                            _parse_reset(resp.headers.get("retry-after")) or 20.0
                     from zara.utils import quota; quota.record("groq", GROQ_MODEL, stage=_stage.get(), prompt_tokens=0, completion_tokens=0, status="429", http_status=429, elapsed_ms=int((time.monotonic() - _t0) * 1000), wait_ms=int(wait * 1000))
+                    _keys_tried += 1
+                    if _keys_tried < len(_keys):
+                        # Another key still has an untouched bucket. Free, instant.
+                        _key_pos += 1
+                        print(f"WARNING: Groq 429, switching key ({_keys_tried}/{len(_keys)} exhausted)",
+                              file=sys.stderr)
+                        continue
+
                     budget = remaining_time()
                     if budget is not None and wait >= budget:
                         _trip_breaker("groq", wait, f"429, reset in {wait:.0f}s exceeds run budget")
                         raise ProviderProbeFailedError(f"429 rate limited, reset in {wait:.0f}s")
-                    if attempt == 3:
+                    if attempt >= max(3, len(_keys)):
                         _trip_breaker("groq", wait, "429 after retries")
                         raise ProviderProbeFailedError(f"429 rate limited after retries: {resp.text[:200]}")
-                    print(f"WARNING: Groq 429, waiting {wait:.1f}s (bucket reset)", file=sys.stderr)
+                    print(f"WARNING: Groq 429, all {len(_keys)} key(s) rate limited, "
+                          f"waiting {wait:.1f}s (bucket reset)", file=sys.stderr)
                     await asyncio.sleep(wait)
+                    _keys_tried = 0
+                    _key_pos += 1
                     continue
 
                 if resp.status_code != 200:

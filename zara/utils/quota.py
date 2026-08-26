@@ -56,9 +56,18 @@ def _window_start_and_reset(window: str, now: datetime.datetime):
 def get_limit(key: str) -> float:
     meta = LIMITS[key]
     val = os.environ.get(meta["env"])
-    if val is not None:
-        return float(val)
-    return float(meta["limit"])
+    limit = float(val) if val is not None else float(meta["limit"])
+
+    # Groq's allowances are per KEY, not per account, so pooling N keys multiplies
+    # the DAILY ceiling: five keys really is a million tokens a day. The per-minute
+    # buckets are per key too, but one call can only draw on one bucket, so the
+    # minute limits stay as they are -- the pool helps there by spreading calls
+    # across keys (see zara/utils/keypool.py), not by raising any single bucket.
+    if meta["provider"] == "groq" and meta["window"] == "day":
+        from zara.utils import keypool
+        limit *= max(1, keypool.count())
+
+    return limit
 
 def context() -> str:
     return os.environ.get("ZARA_CONTEXT", "unknown")
@@ -95,6 +104,14 @@ def record(provider: str, model: str, *, stage: str, prompt_tokens: int, complet
             )
     except Exception as e:
         print(f"[quota] record failed: {e}", file=sys.stderr)
+
+def _pool_size() -> int:
+    try:
+        from zara.utils import keypool
+        return max(1, keypool.count())
+    except Exception:
+        return 1
+
 
 def _measured(key: str, obs: dict):
     """Overlay the provider's own statement on our local tally, where it applies.
@@ -225,6 +242,10 @@ def headroom() -> list[dict]:
                 # "estimate" = our own tally, which cannot see other machines.
                 "source": source,
                 "observed_age_s": observed_age_s,
+                # How many credentials the ceiling above is spread over. A measured
+                # row reports the ONE key that served the last call, so the UI must
+                # be able to say which of the two numbers it is looking at.
+                "pool_size": _pool_size() if meta["provider"] == "groq" else 1,
             })
             
     return results
