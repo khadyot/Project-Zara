@@ -323,8 +323,20 @@ def render_run_history():
             alert=(s["status"] == "failed"),
         )
 
+    # Raw prompts and responses are the deepest layer of the audit trail and the
+    # least often wanted: every stage's full system text, prompt and JSON reply,
+    # inline, under a page whose job is "why did it choose this". Summarised by
+    # default, behind the same sidebar toggle that controls the live run log, so
+    # one switch means "show me the machinery" everywhere.
+    _calls = list(conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)))
+    _tok = sum((c["prompt_tokens"] or 0) + (c["completion_tokens"] or 0) for c in _calls)
     st.markdown("## Model calls")
-    for c in conn.execute("SELECT * FROM llm_calls WHERE run_id=? ORDER BY seq", (rid,)):
+    if not _show_detail():
+        st.caption(f"{len(_calls)} calls · {_tok:,} tokens. "
+                   f"Enable \u201cShow pipeline detail\u201d in the sidebar for the "
+                   f"full prompts and responses.")
+        _calls = []
+    for c in _calls:
         label = (f"{c['stage']} · {c['provider']} · "
                  f"{c['prompt_tokens']} in / {c['completion_tokens']} out · "
                  f"{c['elapsed_ms']/1000:.1f}s")
@@ -1009,8 +1021,39 @@ def main():
             else:
                 st.warning(f"Verifier: {v.status}. {v.reason or ''}")
 
-        # --- Decision card ---
-        with st.expander("Decision card (full audit trail)"):
+        # --- Why this hook ---
+        # The audit trail was entirely inside the expander, so the one question a
+        # reviewer actually has after reading the draft -- why THIS signal and not
+        # another -- was two clicks and a 25-line rejection list away. The answer
+        # is four facts; they belong above the fold, and the full trail stays
+        # underneath for anyone who wants to check the working.
+        rp = draft_res.ranked_prospect
+        win = rp.winning_card
+        st.markdown("<div class='eyebrow'>Why this hook</div>", unsafe_allow_html=True)
+        if win:
+            pain = win.pain_match.pain_id if win.pain_match else "no pain matched"
+            why = win.pain_match.reason if win.pain_match else "no reason recorded"
+            age = f"{win.recency_days} days old" if win.recency_days is not None else "undated"
+            zrow(
+                win.card.claim[:90],
+                state=win.proximity,
+                detail=why,
+                value=f"{win.score:.2f}",
+                status="ok",
+            )
+            zrow("evidence", state=pain, detail=age, value=draft_res.claim_strength,
+                 status="ok" if win.recency_days is not None else "empty",
+                 alert=(win.recency_days is None))
+            if win.card.source_url:
+                st.markdown(f"<span class='zquiet'>{win.card.source_url}</span>",
+                            unsafe_allow_html=True)
+        else:
+            zrow("no winning card", state="no_signal",
+                 detail="nothing prospect-specific was found; the opener is company level",
+                 status="empty", muted=True)
+
+        rejected = [c for c in rp.cards if c is not win]
+        with st.expander(f"What it rejected ({len(rejected)}) and the full audit trail"):
             st.markdown(render_decision_card(draft_res, results))
 
         # --- Sources ---
