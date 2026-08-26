@@ -278,7 +278,29 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     if not survivors:
         return None, None, []
 
+    # A near-tie breaks toward evidence we can date.
+    #
+    # A hook's job is to supply a reason to write NOW, and an undated card supplies
+    # no now. On the Stord run an undated "CFO Pros on the Move" listicle beat a
+    # dated $250M funding round 0.54 to 0.42 -- proximity `attributed` outweighs
+    # `company_action` by more than the undated penalty removes, so weight tuning
+    # alone will not reach this. The result was an opener built from a three-and-a-
+    # half-year-old appointment instead of the biggest thing that happened to the
+    # company this quarter.
+    #
+    # This is a preference, not a veto: an undated card that leads by a clear
+    # margin still wins, because sometimes it really is the best thing we have.
     win_final, win_card, _ = survivors[0]
+    if win_card.recency_days is None:
+        from zara.utils.config import load_value_prop
+        try:
+            margin = float(load_value_prop().get("ranker", {}).get("dated_preference_margin", 0.15))
+        except Exception:
+            margin = 0.15
+        dated = [(f, c, h) for f, c, h in survivors if c.recency_days is not None]
+        if dated and dated[0][0] >= win_final - margin:
+            win_final, win_card, _ = dated[0]
+            survivors = [dated[0]] + [x for x in survivors if x is not dated[0]]
     surviving_hooks = [h for _, _, h in survivors if h is not None]
     return win_card, win_final, surviving_hooks
 

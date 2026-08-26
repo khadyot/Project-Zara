@@ -174,3 +174,40 @@ def test_new_role_phrasing_is_a_recency_claim(text):
 ])
 def test_ordinary_uses_of_new_are_not_recency_claims(text):
     assert not _RECENCY_CLAIM.search(text), f"false positive on: {text}"
+
+
+# --------------------------------------------------------------------------
+# 6. A near-tie breaks toward evidence we can date.
+# --------------------------------------------------------------------------
+
+def _ranked(score, recency, tier, claim):
+    from zara.models import RankedCard, PainMatch
+    return RankedCard(
+        card=_card(claim, claim, date=None if recency is None else "2026-05-26T00:00:00Z",
+                   tier=tier),
+        pain_match=PainMatch(pain_id="structural_complexity", score=0.9, reason=claim),
+        proximity="attributed" if recency is None else "company_action",
+        recency_days=recency, score=score, excluded=None,
+    )
+
+
+def test_dated_card_wins_a_near_tie_against_an_undated_one():
+    """The Stord numbers exactly: an undated listicle at 0.54 against a dated
+    $250M funding round at 0.42. Proximity outweighs the undated penalty by more
+    than weight tuning can close, so selection has to state the preference."""
+    from zara.ranker import _select_winner
+
+    undated = _ranked(0.54, None, "person", "New CFO appointment at Stord")
+    dated = _ranked(0.42, 92, "company", "Stord raised $250M funding round")
+    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    assert win is dated, "a dateless hook won a near-tie over dated evidence"
+
+
+def test_undated_card_still_wins_when_it_leads_by_a_clear_margin():
+    """A preference, not a veto. Sometimes the undated card really is all we have."""
+    from zara.ranker import _select_winner
+
+    undated = _ranked(0.80, None, "person", "CEO describes reconciliation pain")
+    dated = _ranked(0.20, 92, "company", "Company opens a new office")
+    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    assert win is undated
