@@ -128,3 +128,50 @@ async def groq_probe() -> dict:
         return {"status": "unreachable", "detail": f"Probe failed: {msg[:200]}"}
     except Exception as e:  # noqa: BLE001 - a status panel must never crash the page
         return {"status": "unreachable", "detail": f"{type(e).__name__}: {str(e)[:200]}"}
+
+
+async def groq_probe_all() -> list[dict]:
+    """Probe every pooled key with one 1-token call each.
+
+    A pool is only worth what its weakest credential is worth, and "five keys are
+    configured" is not the same claim as "five keys work". Each row reports the
+    HTTP status and that key's own per-minute headroom, which is the thing that
+    proves the buckets really are separate rather than five names for one account.
+
+    Costs ~1 token per key. Never returns or logs a key value.
+    """
+    import httpx
+
+    from zara.utils import keypool
+    from zara.utils.provider import GROQ_MODEL, GROQ_URL
+
+    rows = []
+    async with httpx.AsyncClient() as client:
+        for i, (name, key) in enumerate(keypool.groq_key_sources()):
+            row = {"index": i, "name": name, "length": len(key)}
+            try:
+                r = await client.post(
+                    GROQ_URL,
+                    json={"model": GROQ_MODEL,
+                          "messages": [{"role": "user", "content": "hi"}],
+                          "max_tokens": 1},
+                    headers={"Authorization": f"Bearer {key}"},
+                    timeout=20.0,
+                )
+                row["http"] = r.status_code
+                row["remaining_tokens"] = r.headers.get("x-ratelimit-remaining-tokens")
+                row["limit_tokens"] = r.headers.get("x-ratelimit-limit-tokens")
+                row["remaining_requests"] = r.headers.get("x-ratelimit-remaining-requests")
+                if r.status_code == 200:
+                    row["status"] = "ok"
+                elif r.status_code == 429:
+                    row["status"] = "rate limited"
+                elif r.status_code == 401:
+                    row["status"] = "rejected"
+                else:
+                    row["status"] = f"http {r.status_code}"
+            except Exception as e:
+                row["status"] = "unreachable"
+                row["detail"] = type(e).__name__
+            rows.append(row)
+    return rows

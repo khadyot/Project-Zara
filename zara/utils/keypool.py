@@ -79,3 +79,31 @@ def reset():
     global _counter
     with _lock:
         _counter = itertools.count()
+
+
+def groq_key_sources() -> list[tuple[str, str]]:
+    """(env var name, key) for each pooled credential, deduplicated, in rotation
+    order. The NAME is safe to display; the key is for callers that must probe."""
+    found: list[tuple[str, str]] = []
+
+    primary = (os.environ.get("GROQ_API_KEY") or "").strip()
+    if primary:
+        found.append(("GROQ_API_KEY", primary))
+
+    for idx, chunk in enumerate((os.environ.get("GROQ_API_KEYS") or "").split(","), start=1):
+        chunk = chunk.strip()
+        if chunk:
+            found.append((f"GROQ_API_KEYS[{idx}]", chunk))
+
+    for i in range(2, _MAX_NUMBERED + 1):
+        extra = (os.environ.get(f"GROQ_API_KEY_{i}") or "").strip()
+        if extra:
+            found.append((f"GROQ_API_KEY_{i}", extra))
+
+    seen = set()
+    out = []
+    for name, k in found:
+        if k not in seen:
+            seen.add(k)
+            out.append((name, k))
+    return out

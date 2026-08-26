@@ -79,3 +79,6 @@ project_zara_context.md
 skills-lock.json
 Gemini API Key Rate Limits.*
 Groq API Key Rate Limit.*
+
+# Streamlit local secrets. Never commit.
+.streamlit/secrets.toml

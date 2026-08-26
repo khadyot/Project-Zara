@@ -459,13 +459,40 @@ def render_provider_status():
 
     st.caption("Key names and lengths only — values are never read or displayed.")
 
-    if st.button("Test Groq connection (~10 tokens)"):
-        with st.spinner("Probing Groq…"):
-            res = asyncio.run(health.groq_probe())
-        if res["status"] in ("ok", "throttled"):
-            st.success(f"{res['status']}: {res['detail']}")
+    # Per-key health. "Five keys are configured" and "five keys work" are different
+    # claims, and the pool is only worth what its weakest credential is worth. Each
+    # row shows that key's OWN per-minute headroom, which is also the evidence that
+    # the buckets are genuinely separate rather than five names for one account.
+    from zara.utils import keypool
+    pool = keypool.groq_key_sources()
+    if len(pool) > 1:
+        st.markdown("<div class='eyebrow-sm'>Groq key pool</div>", unsafe_allow_html=True)
+        for i, (name, key) in enumerate(pool):
+            probed = st.session_state.get("groq_pool_probe", {}).get(name)
+            if probed:
+                detail = probed["status"]
+                if probed.get("remaining_tokens"):
+                    detail += f" · {probed['remaining_tokens']}/{probed['limit_tokens']} tokens this minute"
+                status = "ok" if probed["status"] == "ok" else "failed"
+            else:
+                detail = "not probed this session"
+                status = "empty"
+            zrow(f"key {i + 1}", state=name, detail=detail,
+                 value=f"{len(key)} chars", status=status,
+                 muted=not probed, alert=(probed or {}).get("status") == "rejected")
+
+    if st.button(f"Test all Groq keys (~1 token each, {max(1, len(pool))} call(s))"):
+        with st.spinner("Probing every key in the pool…"):
+            rows = asyncio.run(health.groq_probe_all())
+        st.session_state["groq_pool_probe"] = {r["name"]: r for r in rows}
+        good = sum(1 for r in rows if r["status"] == "ok")
+        if good == len(rows) and rows:
+            st.success(f"All {good} key(s) accepted, each with its own per-minute bucket.")
+        elif good:
+            st.warning(f"{good} of {len(rows)} key(s) accepted. See the rows above.")
         else:
-            st.error(f"{res['status']}: {res['detail']}")
+            st.error("No key was accepted. Check the secrets for this deployment.")
+        st.rerun()
 
 
 def render_budget_and_quota():
@@ -610,16 +637,17 @@ def main():
         product = st.text_area("Product/Offer", value="We help operations teams automate manual, reconciliation-heavy processes", height=80)
         proof_point = st.text_area("Proof Point (Optional)", value="", height=80)
         
-        st.markdown("<br><div class='eyebrow-sm'>2. Strictness</div>", unsafe_allow_html=True)
-        strictness = st.radio(
-            "Ranker Mode",
-            ["Brand Safety (Strict)", "Pipeline Max (Permissive)"],
-            help="Strict mode requires verbatim evidence of pain. Permissive mode allows structural inferences."
-        )
-        
-        st.markdown("<br><div class='eyebrow-sm'>3. Data Sources</div>", unsafe_allow_html=True)
-        use_exa = st.checkbox("Exa (Web/News)", value=True)
-        use_apify = st.checkbox("Apify (LinkedIn/Social)", value=True)
+        # Strictness, the per-source checkboxes and the developer-mode password box
+        # were all removed from the sidebar. Each was a switch from an earlier stage
+        # of the build that no longer has a decision behind it: strictness is strict,
+        # every free source should always run, and a password box for a panel that
+        # cannot open (ZARA_ADMIN_PASSWORD is unset) is furniture that asks the
+        # operator a question with no right answer. The settings still exist and the
+        # code paths are unchanged -- they are just not choices this screen offers.
+        strictness = "Brand Safety (Strict)"
+        use_exa = True
+        use_apify = True
+
         st.checkbox(
             "Show pipeline detail",
             key="show_pipeline_detail",
@@ -627,11 +655,13 @@ def main():
             help="Open the live retrieval and model-call log while a run is in flight. "
                  "Off by default so the decision card is what you see when it finishes.",
         )
-        
-        st.markdown("<br><div class='eyebrow-sm'>4. Developer Mode</div>", unsafe_allow_html=True)
-        admin_pass = st.text_input("Admin Password", type="password")
 
-        st.markdown("<br><div class='eyebrow-sm'>5. Demo mode (offline)</div>", unsafe_allow_html=True)
+        # Only offer the developer gate when there is something it can unlock.
+        admin_pass = ""
+        if (os.environ.get("ZARA_ADMIN_PASSWORD") or "").strip():
+            admin_pass = st.text_input("Admin Password", type="password")
+
+        st.markdown("<br><div class='eyebrow-sm'>2. Demo mode (offline)</div>", unsafe_allow_html=True)
         demo_mode = st.checkbox(
             "Demo mode (offline)",
             help="Replay a recorded prospect with zero network calls. The pipeline runs "
