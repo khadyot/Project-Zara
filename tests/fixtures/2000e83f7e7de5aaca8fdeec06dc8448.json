@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No finance-related observable."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Music interview, unrelated to finance pains."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview, no specific pain observable."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Announcement of new CFO appointment."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO bio, lacks explicit pain indicator."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "CFO appointment announced, indicating leadership change."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Team list, no new finance leadership mentioned."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New CRO announced, not finance-specific."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Acquisition introduces new payment acquirer, expanding settlement paths."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Opinion piece, no observable finance event."
+      }
+    ]
+  },
+  "prompt_tokens": 1617,
+  "completion_tokens": 2045
+}

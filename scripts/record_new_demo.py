@@ -32,11 +32,23 @@ IDENTITY = {
 PAIRS = [
     ("Devin Weil", "ShipMonk", "Chief Financial Officer", "shipmonk"),
     ("Chermaine Hu", "Episode Six", "Co-Founder & Chief Financial Officer", "episodesix"),
-    ("Jon Anderson", "Payouts Network", "Chief Financial Officer", "payoutsnetwork"),
+    # Jon Anderson dropped 2026-08-28. His winning card is the announcement of his
+    # own appointment, so the email tells a CFO that hiring a CFO creates
+    # reconciliation work. The card is also undated, and the drafter kept calling
+    # it recent, which the verifier correctly blocked on the app path. The right
+    # fix is a guardrail against pitching someone their own hire; that is a
+    # product change, not a demo change, and it is not being rushed before a
+    # recording. Snapshot and fixtures stay on disk.
+    # ("Jon Anderson", "Payouts Network", "Chief Financial Officer", "payoutsnetwork"),
     # Midwest 3PL was dropped: its name reduces to "midwest", a common word, so
     # entity resolution kept pulling regional roundups instead of the firm.
     # Fulfyld is coined, obscure, and a single facility in Madison, Alabama.
-    ("AJ Khanijow", "Fulfyld", "Founder & Chief Executive Officer", "fulfyld"),
+    # Fulfyld dropped from the demo set 2026-08-28. Cleaning the snippets changed
+    # the hook prompt, so a different card won and its winning evidence went from
+    # 71 days old to 665. The draft is clean and the age label is honest, but a
+    # personalisation demo whose hook is 22 months old argues against itself.
+    # Snapshot and fixtures stay on disk; scripts/try_draft.py can still run it.
+    # ("AJ Khanijow", "Fulfyld", "Founder & Chief Executive Officer", "fulfyld"),
     # The no-signal path, kept from the original set. Its fallback prompt now
     # inherits _STYLE_RULES, which it never used to.
     ("Riley Chen", "Northwind Freight", None, "no_signal"),

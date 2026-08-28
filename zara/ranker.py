@@ -131,6 +131,37 @@ def _is_prospect_authored(card: SignalCard, person_name: str) -> bool:
     return mentions_prospect(card, person_name)
 
 
+# A third-party article that quotes the prospect verbatim is closer to their own
+# voice than a news item that merely announces their hire. Compass V ranks by
+# proximity to the prospect, and "he highlighted that '...'" IS the prospect
+# speaking, whoever published it. Without this, Jon Anderson's winner was a wire
+# story about his appointment while an interview containing his actual words on
+# payments infrastructure sat unused two cards down.
+_SPEECH = re.compile(r"\b(said|says|told|noted|notes|explains|explained|highlighted|highlights|"
+                     r"argues|argued|adds|added|emphasi[sz]ed|wrote|writes)\b", re.I)
+_QUOTED = re.compile(r"[\"\u201c]([^\"\u201d]{40,})[\"\u201d]")
+
+# Deliberately narrow. Requiring a real quoted span AND a speech verb introducing
+# it rejects the two things that look similar and are not: a colleague's
+# congratulation ("Excited to see Jon sharing his insights") carries no quote, and
+# a namesake's podcast transcript carries no speech verb before one.
+VOICE_BONUS = 1.25
+
+
+def quotes_prospect(card: SignalCard, person_name: str) -> bool:
+    """Is the prospect actually speaking here, even though someone else published it?"""
+    toks = _name_tokens(person_name)
+    if not toks:
+        return False
+    surname = toks[0].lower()
+    hay = f"{card.claim} {card.snippet}"
+    low = hay.lower()
+    if not re.search(r"\b" + re.escape(surname) + r"\b", low):
+        return False
+    return any(_SPEECH.search(low[max(0, m.start() - 200):m.start()])
+               for m in _QUOTED.finditer(hay))
+
+
 _ROLE_RE = re.compile(
     r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[,\-—|]\s*"
     r"((?:Chief[\w\s]*Officer|C[EFTOM]O|President|Founder|Co-?founder|"
@@ -351,7 +382,8 @@ def _company_is_mentioned(card, prospect) -> bool:
     return any(t in hay for t in tokens)
 
 
-def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict) -> float:
+def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict,
+                       voice: bool = False) -> float:
     """Relevance is a PRODUCT, not a sort tuple.
 
     The old winner sort keyed on `(proximity_weight, pain_score, tiebreak)`. Tuple
@@ -369,6 +401,11 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
     if max_prox == 0:
         max_prox = 1.0
     prox_mult = prox_val.get(proximity, 0) / max_prox
+    # Never applied to `authored`, which is already the ceiling. That keeps the
+    # bonus incapable of pushing a third-party article past the prospect's own
+    # post: 0.75 x 1.25 is still below 1.0.
+    if voice and proximity != "authored":
+        prox_mult *= VOICE_BONUS
 
     # Gentle on purpose: an old card should lose ties, not be disqualified. The
     # honesty guard already forces the draft to name the period rather than call
@@ -605,6 +642,10 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             prox = _compute_proximity(card, prospect)
             rec = _compute_recency(card.published_date)
             prox_mult = prox_val.get(prox, 0) / max_prox
+            # Same bonus in the pre-score, or a quoted card gets cut by the top-10
+            # cap before its relevance is ever computed.
+            if prox != "authored" and quotes_prospect(card, prospect.person_name if prospect else ""):
+                prox_mult *= VOICE_BONUS
             if rec is None:
                 rec_mult = 0.8
             elif rec <= 180:
@@ -685,7 +726,10 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                             if rc.guardrail_hit:
                                 final_score = round(s.score * 0.5, 4)
                                 
-                            relevance = _compute_relevance(final_score, rc.proximity, rc.recency_days, prox_val)
+                            relevance = _compute_relevance(
+                                final_score, rc.proximity, rc.recency_days, prox_val,
+                                voice=quotes_prospect(rc.card, prospect.person_name),
+                            )
                             # The docstring on _company_is_mentioned promised this
                             # downweight; nothing applied it, so the flag was decoration.
                             # A card that never names the company outscored every card

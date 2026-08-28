@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "CFO appointment and reconciliation impact",
+    "draft_text": "Hi Jon,\n\nThe CFO appointment signals a shift in leadership. The appointment aligns with a recent strategic expansion of the executive team.\n\nWhen executive teams expand, intercompany reconciliation tends to multiply. That leads to more manual cross checks across subsidiaries.\n\nWe run bots that pull transaction data from multiple ledgers and match them. They connect to ERP and payment gateways without custom code.\n\nIs the growing reconciliation load still manageable for you?\n\nZamp"
+  },
+  "prompt_tokens": 2165,
+  "completion_tokens": 3068
+}

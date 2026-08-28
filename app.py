@@ -46,6 +46,7 @@ except Exception as _e:
 os.environ["ZARA_SECRETS_BRIDGE"] = f"{SECRETS_BRIDGE_STATUS[0]}|{SECRETS_BRIDGE_STATUS[1]}"
 
 from zara.models import Prospect
+from zara import antitemplate
 from zara.orchestrator import run_end_to_end_pipeline
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 from zara.ui.auth import developer_mode_unlocked
@@ -913,7 +914,14 @@ def main():
                 # The trace lives in a ContextVar, and asyncio.run creates a fresh
                 # context, so it has to be opened inside the coroutine to be visible
                 # to the provider and orchestrator.
-                with trace_run(prospect, trigger="ui", profile="standard") as t:
+                # The repetition check compares this draft against the others
+                # drafted in this session. It used to run only in the recording
+                # script, so the product -- which is what gets demoed -- was the
+                # one place it never fired, and two prospects could go out with
+                # character-identical closing lines.
+                _batch = st.session_state.setdefault("draft_batch", antitemplate.DraftBatch())
+                with trace_run(prospect, trigger="ui", profile="standard") as t, \
+                        antitemplate.using(_batch):
                     tr["id"] = t.run_id
                     return await run_end_to_end_pipeline(
                         prospect, profile="standard", settings=settings,

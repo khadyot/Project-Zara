@@ -121,3 +121,22 @@ def batch():
         yield _ACTIVE
     finally:
         _ACTIVE = prev
+
+
+@contextmanager
+def using(b: "DraftBatch"):
+    """Run against a batch the caller owns and keeps.
+
+    The app scores one prospect per run, so batch() -- which makes a fresh,
+    empty batch -- can never fire there: there is nothing to compare against
+    inside a single run. The comparison the app needs is against the OTHER
+    prospects drafted in the same sitting, which means the batch has to outlive
+    the run and live in st.session_state. Hence a batch supplied from outside.
+    """
+    global _ACTIVE
+    prev = _ACTIVE
+    _ACTIVE = b
+    try:
+        yield b
+    finally:
+        _ACTIVE = prev

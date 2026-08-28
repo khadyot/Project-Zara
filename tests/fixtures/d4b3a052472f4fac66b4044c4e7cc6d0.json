@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Reconciliation load as leadership expands",
+    "draft_text": "Hi Jon,\n\nThe addition of a CFO expands the scope of intercompany reconciliation. That change surfaces hidden mismatches across subsidiaries.\n\nLeadership shifts introduce new entities and reporting lines, which stretch manual matching processes. The resulting spreadsheet churn can delay month end close.\n\nWe automate extraction of transaction data from multiple ledgers and accurate match entries without manual effort.\n\nDo you see the current reconciliation load becoming a bottleneck as the organization grows?\n\nZamp"
+  },
+  "prompt_tokens": 2190,
+  "completion_tokens": 2348
+}
