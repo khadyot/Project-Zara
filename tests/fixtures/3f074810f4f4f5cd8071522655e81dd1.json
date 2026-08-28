@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Automation for Reconciliation Workflows",
+    "draft_text": "Hi Riley,\n\nOur platform lets operations teams replace manual reconciliation steps with automated flows.\n\nIt pulls data from source systems, matches records, and writes results without human entry. The result is fewer errors and more time for strategic work.\n\nTeams that adopt the tool report smoother month end closes and clearer audit trails.\n\nDoes this align with what your team is looking to improve?\n\nZamp"
+  },
+  "prompt_tokens": 856,
+  "completion_tokens": 1675
+}

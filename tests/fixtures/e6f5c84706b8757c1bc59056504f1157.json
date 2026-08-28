@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "In your recent podcast you highlighted that legacy payments weren\u2019t built for today\u2019s fintech world and that modern issuer processing is key to scaling across markets.",
+        "rationale": "As CFO, legacy systems create manual reconciliation burdens that impact financial efficiency and scalability.",
+        "bridge": "Our platform automates reconciliation\u2011heavy processes, letting you move beyond legacy constraints and focus on growth.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "You appeared on Episode\u202f139 discussing community building with Hu Capital founder Jerlisa Fontaine.",
+        "rationale": "While community isn\u2019t a core finance function, as a co\u2011founder you\u2019re focused on ecosystem growth, which benefits from operational efficiency.",
+        "bridge": "Automating back\u2011office reconciliations frees your team to invest more time in community initiatives.",
+        "strength": 0.6
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your feature in the Finance and Accounting Technology Briefing\u2019s \u2018What\u2019s in Your Tech Stack?\u2019 series emphasized flexibility, scalability, and transparent vendor pricing.",
+        "rationale": "Those priorities align with a CFO\u2019s need to choose technology that scales without hidden costs.",
+        "bridge": "Our solution delivers a flexible, scalable automation layer with clear pricing, matching your tech\u2011stack criteria.",
+        "strength": 0.9
+      },
+      {
+        "card_index": 3,
+        "hook_text": "In your discussion on working\u2011capital tightening, smart funding, and financial agility you warned that rapid scaling can choke cash flow.",
+        "rationale": "Cash\u2011flow discipline is a top CFO concern, especially when manual processes obscure real\u2011time visibility.",
+        "bridge": "By eliminating manual reconciliations, our tool gives instant cash\u2011flow insight, supporting the agility you advocate.",
+        "strength": 0.92
+      }
+    ]
+  },
+  "prompt_tokens": 1350,
+  "completion_tokens": 1293
+}

@@ -159,7 +159,28 @@ def extract_json(text: str):
                     return None
     return None
 
+def _live_stages() -> set[str]:
+    """Stages that bypass fixtures entirely: called live, and never recorded.
+
+    ZARA_LIVE_STAGES=drafter lets one prospect be re-drafted for one or two calls
+    instead of re-recording all five. Four full re-records were spent iterating on
+    drafter wording before this existed, which is most of a day's Groq budget.
+
+    It is deliberately inert without USE_FIXTURES. The whole value is that
+    everything upstream still replays, so the shortlist and the hook handed to the
+    drafter do not move between attempts -- which is the trap documented above:
+    score the cards live and the downstream prompt text changes, so its hash never
+    matches. Bypassing a stage never writes a fixture, so a half-tuned prompt
+    cannot leak into the recorded set.
+    """
+    return {s.strip() for s in os.environ.get("ZARA_LIVE_STAGES", "").split(",") if s.strip()}
+
+
 def _record_fixture(prompt: str, system_instruction: str, content: str, usage: dict = None):
+    # Every provider calls this after a live response. A bypassed stage is being
+    # iterated on, not recorded, so it stops here rather than at each call site.
+    if _stage.get() in _live_stages():
+        return
     h = hashlib.md5((prompt + system_instruction).encode()).hexdigest()
     fixture_path = f"tests/fixtures/{h}.json"
     os.makedirs("tests/fixtures", exist_ok=True)
@@ -294,8 +315,15 @@ async def generate_content_with_retry(prompt: str, schema, system_instruction: s
     # mismatch" and cost ~50 wasted live calls and most of a day's Groq budget before
     # it was understood. Record with `fill`, never with fixtures off.
     _fx_mode = os.environ.get("USE_FIXTURES")
+    _bypass = stage in _live_stages()
+    if _bypass and not _fx_mode:
+        raise RuntimeError(
+            f"ZARA_LIVE_STAGES names stage '{stage}' but USE_FIXTURES is unset. That is "
+            "the fixtures-off footgun described above: upstream stages would be answered "
+            "live too, moving the shortlist under the prompt being tuned. Set USE_FIXTURES=1."
+        )
     _fx_path = None
-    if _fx_mode:
+    if _fx_mode and not _bypass:
         h = hashlib.md5((prompt + system_instruction).encode()).hexdigest()
         _fx_path = f"tests/fixtures/{h}.json"
         if not os.path.exists(_fx_path):

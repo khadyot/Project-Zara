@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The draft email claims that \"Finance teams allocate extra staff to keep the books balanced,\" which is a specific assertion about ShipMonk's finance team not supported by any of the provided evidence snippets."
+  },
+  "prompt_tokens": 1661,
+  "completion_tokens": 715
+}

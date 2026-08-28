@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy rails and reconciliation friction",
+    "draft_text": "Hi Chermaine,\n\nI read your post about legacy payments and the line about modern issuer processing stuck with me. Expanding into Japan and Singapore highlights the pressure to move beyond legacy constraints.\n\nFintechs that rely on old rails spend time untangling mismatched records. When reconciliation drifts, manual fixes become a bottleneck for scaling.\n\nWe run bots that reconcile payment data across systems and flag anomalies. The bots learn patterns and reduce the need for repetitive checks.\n\nIs this a friction point for the finance team?\n\nZamp"
+  },
+  "prompt_tokens": 2286,
+  "completion_tokens": 2265
+}

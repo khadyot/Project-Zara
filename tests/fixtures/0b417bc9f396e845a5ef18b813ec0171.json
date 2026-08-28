@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The draft email claims that eliminating the manual step could shrink the month\u2011end close by a day or two, which is a specific metric not supported by any of the provided evidence."
+  },
+  "prompt_tokens": 704,
+  "completion_tokens": 436
+}

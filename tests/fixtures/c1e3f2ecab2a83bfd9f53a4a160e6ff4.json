@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel fulfillment and reconciliation load",
+    "draft_text": "Hi Devin,\n\nYour new apparel\u2011specific fulfillment center targets returns and SKU complexity. The move should shift a sizable portion of returns processing away from manual handling.\n\nWhen SKU variety spikes, manual reconciliation consumes disproportionate accounting hours. That pressure surfaces as hidden labor in month\u2011end close. Finance teams allocate extra staff to keep the books balanced.\n\nWe run bots that cross\u2011check return transactions against SKU ledgers and post adjustments.\n\nIs the extra reconciliation load still manageable for your finance team?\n\nZamp"
+  },
+  "prompt_tokens": 1742,
+  "completion_tokens": 2437
+}

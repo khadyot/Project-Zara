@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Month\u2011end close and manual matching",
+    "draft_text": "Hi Jon,\n\nWhen payouts travel through several rails, month\u2011end close stalls as finance teams chase mismatches across disparate systems, extending the close window.\n\nZamp's engine cross\u2011checks payment records across ledgers, reconciling entries and flagging exceptions without human intervention.\n\nIf that manual step disappears, the close could shrink by a day or two, and analysts could redirect effort toward forecasting and risk modeling.\n\nIs the current manual effort still manageable for your team?\n\nZamp"
+  },
+  "prompt_tokens": 1939,
+  "completion_tokens": 1895
+}

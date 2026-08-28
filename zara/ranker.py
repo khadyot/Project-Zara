@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 from typing import Literal
 import sys
 
+from zara.evidence import clean_snippet
 from zara.models import (
     Prospect, SourceResult, SignalCard, RankedCard, RankedProspect, PainMatch
 )
@@ -76,12 +77,75 @@ def mentions_prospect(card: SignalCard, person_name: str) -> bool:
     return re.search(r"\b" + re.escape(surname) + r"\b", hay) is not None
 
 
+# Exa renders a LinkedIn post with the AUTHOR's bio block ahead of the body:
+# "**Keith Smith**: Founder, CEO and President at Payouts Network for 10 years ...".
+# That byline is the only reliable statement of who actually wrote the thing.
+_LINKEDIN_BIO = re.compile(r"^\*\*([^*]+?)\*\*:\s*(.+)$", re.M)
+
+
+def _post_author(card: SignalCard) -> tuple[str, str] | None:
+    """(name, role) of whoever wrote this post, or None if there is no byline."""
+    m = _LINKEDIN_BIO.search(card.snippet or "")
+    if not m:
+        return None
+    name, rest = m.group(1).strip(), m.group(2).strip()
+    # A real bio reads "Role at Company for N years ... Based in ...". A bolded
+    # line without any of that is a label in the body, not a byline.
+    if not re.search(r"\b(years?|experience|Based in)\b", rest, re.I):
+        return None
+    role = re.split(r"\s+for\s+\d|\.\s", rest)[0].strip(" .")
+    return (name, role) if name else None
+
+
+def _same_person(author: str, person_name: str) -> bool:
+    """Do these two strings name the same human?
+
+    Surname equality alone is not enough in either direction: Exa abbreviates, so
+    Fulfyld's founder appears as "AJ K." while we hold "AJ Khanijow". Given name
+    must agree; the surname may be an initial of the other.
+    """
+    a = [t.strip(".,").lower() for t in (author or "").split() if t.strip(".,")]
+    b = [t.strip(".,").lower() for t in (person_name or "").split() if t.strip(".,")]
+    if not a or not b or a[0] != b[0]:
+        return False
+    if len(a) == 1 or len(b) == 1:
+        return True
+    x, y = a[-1], b[-1]
+    return x == y or (len(x) == 1 and y.startswith(x)) or (len(y) == 1 and x.startswith(y))
+
+
+def _is_prospect_authored(card: SignalCard, person_name: str) -> bool:
+    """Did the PROSPECT write this, as opposed to merely appearing in it?
+
+    mentions_prospect only asks whether the surname occurs somewhere in the text,
+    and a colleague announcing someone's appointment names them repeatedly. That
+    is how Keith Smith's congratulatory repost about Jon Anderson was scored
+    `authored` -- the strongest label the product has -- and handed to the drafter
+    as "the recipient's own words", so the email told Jon what Jon supposedly said
+    while quoting Keith's bio. When a byline exists it decides; otherwise fall
+    back to the mention test, which is all there is for non-LinkedIn cards.
+    """
+    author = _post_author(card)
+    if author:
+        return _same_person(author[0], person_name)
+    return mentions_prospect(card, person_name)
+
+
 _ROLE_RE = re.compile(
     r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[,\-—|]\s*"
     r"((?:Chief[\w\s]*Officer|C[EFTOM]O|President|Founder|Co-?founder|"
     r"(?:VP|Vice President|Head|Director|Manager)(?:\s+of\s+[\w\s]+)?))",
     re.I,
 )
+
+
+def _speaker_label(card: SignalCard) -> str | None:
+    """Who to credit. The byline wins; _extract_speaker is the fallback for cards
+    that carry no bio block (news, transcripts)."""
+    author = _post_author(card)
+    if author:
+        return f"{author[0]}, {author[1]}" if author[1] else author[0]
+    return _extract_speaker(card)
 
 
 def _extract_speaker(card: SignalCard) -> str | None:
@@ -136,7 +200,7 @@ def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Li
             # Authored means AUTHORED. If the prospect is not in the content, this
             # is somebody else at the company talking -- still real evidence, but
             # it is their voice, not the prospect's.
-            if person_name and not mentions_prospect(card, person_name):
+            if person_name and not _is_prospect_authored(card, person_name):
                 return "colleague_authored"
             return "authored"
         if card.signal_type == "profile":
@@ -146,7 +210,7 @@ def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Li
             # Weil's post about operational focus at ShipMonk was being scored as
             # database-tier alongside his ZoomInfo entry.
             if "/posts/" in (card.source_url or "").lower():
-                if person_name and not mentions_prospect(card, person_name):
+                if person_name and not _is_prospect_authored(card, person_name):
                     return "colleague_authored"
                 return "authored"
             return "database"
@@ -518,7 +582,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             score=0.0,
             excluded=excluded,
             guardrail_hit=guardrail_hit,
-            attributed_to=_extract_speaker(card) if proximity == "colleague_authored" else None,
+            attributed_to=_speaker_label(card) if proximity == "colleague_authored" else None,
         )
         
     if to_score:
@@ -752,7 +816,7 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
     for idx, c in enumerate(top_cards):
         age = (f"published {c.recency_days} days ago" if c.recency_days is not None
                else "publication date unknown")
-        prompt += f"\n[{idx}] ({age}) {c.card.snippet[:450]}\n"
+        prompt += f"\n[{idx}] ({age}) {clean_snippet(c.card.snippet)}\n"
     prompt += (
         "\nFor each card output: hook_text (one sentence stating the specific fact to lead with), "
         "rationale (why this matters to THIS person — tie it to their actual role when the role is known "

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Month\u2011end close and manual matching",
+    "draft_text": "Hi Jon,\n\nYour appointment as CFO highlights the ongoing challenge of month\u2011end close when matching transactions remains manual across multiple systems.\n\nWhen reconciliation relies on hand\u2011crafted spreadsheets, the close often stalls as teams chase data across systems and duplicate effort. That friction tends to surface each reporting cycle, pulling focus from strategic analysis.\n\nWe run bots that cross\u2011check incoming payment data against ledger entries and surface any discrepancies for review.\n\nIs the current manual matching still sustainable for you?\n\nZamp"
+  },
+  "prompt_tokens": 2157,
+  "completion_tokens": 1533
+}

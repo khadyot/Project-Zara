@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains general value proposition statements and references to known expansion locations (Japan, Singapore) that are supported by the evidence. It does not include any invented metrics, customer names, or specific claims about Episode Six that lack supporting evidence."
+  },
+  "prompt_tokens": 2260,
+  "completion_tokens": 530
+}

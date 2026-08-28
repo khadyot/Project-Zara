@@ -50,6 +50,24 @@ from zara.orchestrator import run_end_to_end_pipeline
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 from zara.ui.auth import developer_mode_unlocked
 from zara.ui.text import clean_claim, short_reason, link_label
+
+
+def _claim_with_link(c) -> str:
+    """A rejected card's claim, with its source hung off the end.
+
+    The winner has always been clickable; the rejected list showed a reason and a
+    score and no way to go and look. That asks the reader to take on trust that
+    the thing was rightly set aside, which is the one thing this panel exists not
+    to do -- and it is the panel the whole "auditable in seconds" claim rests on.
+    Returns pre-escaped HTML, so callers pass escape=False.
+    """
+    name = html.escape(clean_claim(c.card.claim))
+    url = getattr(c.card, "source_url", None)
+    if not url:
+        return name
+    href = html.escape(str(url), quote=True)
+    return (f"{name} <a class='zr-src' href='{href}' target='_blank' rel='noopener'>"
+            f"{html.escape(link_label(url, limit=28))}</a>")
 from zara.ui.citations import attribute as attribute_sentences
 
 # --- DESIGN SYSTEM ---
@@ -1188,24 +1206,35 @@ def main():
                     if c.guardrail_hit:
                         reason = f"{reason} \u00b7 {c.guardrail_hit}"
                     zrow(
-                        clean_claim(c.card.claim),
+                        _claim_with_link(c),
                         state=c.proximity,
                         detail=short_reason(reason, limit=64),
                         value=f"{c.score:.2f}",
                         status="empty",
                         alert=bool(c.guardrail_hit),
+                        escape=False,
                     )
                 # The zero-score tail is real evidence that was considered and
                 # never contended. Counting it keeps that honest without
                 # spending twenty rows on it.
                 if unranked:
                     zrow(
-                        f"+{len(unranked)} more scored 0.00",
+                        f"{len(unranked)} more scored 0.00",
                         state="not ranked",
                         detail="retrieved, matched no pain, never in contention",
                         status="empty",
                         muted=True,
                     )
+                    for c in unranked:
+                        zrow(
+                            _claim_with_link(c),
+                            state=c.proximity,
+                            detail=short_reason(c.excluded or "matched no pain", limit=64),
+                            value="0.00",
+                            status="empty",
+                            muted=True,
+                            escape=False,
+                        )
 
         # --- Sources ---
         with st.expander(f"Sources ({len(results)})"):

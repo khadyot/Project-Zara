@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only generic statements, a reference to AJ's LinkedIn post (which is in the evidence), and the sender's value proposition. It does not include any invented metrics, customer names, or specific claims about AJ or Fulfyld that are unsupported by the provided evidence."
+  },
+  "prompt_tokens": 2598,
+  "completion_tokens": 373
+}

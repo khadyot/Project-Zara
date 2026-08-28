@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only general statements about manual month\u2011end close, spreadsheet\u2011based reconciliation, and a value proposition about bots\u2014all of which are supported by the evidence snippets. It references Jon Anderson as CFO, which is present in the evidence, and does not introduce any unsupported metrics, customer names, or fabricated quotes."
+  },
+  "prompt_tokens": 704,
+  "completion_tokens": 352
+}

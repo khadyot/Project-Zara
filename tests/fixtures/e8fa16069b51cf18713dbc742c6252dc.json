@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only general value\u2011proposition statements (e.g., automating reconciliation, smoother month\u2011end closes, clearer audit trails) which are consistent with the provided evidence. No invented metrics, customer names, or specific unsupported claims about the prospect are present."
+  },
+  "prompt_tokens": 631,
+  "completion_tokens": 613
+}

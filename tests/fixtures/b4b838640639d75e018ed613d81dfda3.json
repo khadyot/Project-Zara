@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Month\u2011end close and manual matching",
+    "draft_text": "Hi Jon,\n\nMonth\u2011end close often stalls when matching data across systems stays manual. The delay often pushes reporting into the next day, adding pressure on the finance rhythm.\n\nWhen reconciliation relies on hand\u2011crafted spreadsheets, errors creep in and the close stretches. Teams then spend extra cycles verifying each entry, which can distract from strategic analysis.\n\nWe run a service that pulls transaction data from each source and cross\u2011checks it to flag mismatches.\n\nIs the manual matching still a bottleneck for you?\n\nZamp"
+  },
+  "prompt_tokens": 2183,
+  "completion_tokens": 1761
+}

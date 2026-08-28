@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "List of 3PL firms, no finance observable"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO profile, lacks finance or payment observables"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO intro, no matching finance or payment observable"
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Funding round signals expansion financing, matches structural complexity"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Service list, no finance leadership or payment changes"
+      },
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "YouTube channel listing, unrelated to finance pains"
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Travel guide video, no finance or payment relevance"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder description, lacks finance system or payment observables"
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder CEO statement, no finance or payment observable"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Sponsorship pitch, no finance leadership or payment method changes"
+      }
+    ]
+  },
+  "prompt_tokens": 1715,
+  "completion_tokens": 1636
+}

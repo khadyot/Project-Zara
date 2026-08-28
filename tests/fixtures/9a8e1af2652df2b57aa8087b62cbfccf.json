@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy payments and reconciliation overhead",
+    "draft_text": "Hi Chermaine,\n\nI read your recent episode where you noted legacy payments aren\u2019t built for today\u2019s fintech world, and the point about constraints stuck with me.\n\nWhen the processing layer can\u2019t keep pace, teams spend disproportionate time untangling mismatched entries.\nThat pressure often surfaces as delayed settlements across regions.\n\nWe run a service that matches incoming payment data to internal ledgers, removing the manual reconciliation step.\n\nIs the time spent on reconciling manageable for your team?\n\nZamp"
+  },
+  "prompt_tokens": 2030,
+  "completion_tokens": 2125
+}

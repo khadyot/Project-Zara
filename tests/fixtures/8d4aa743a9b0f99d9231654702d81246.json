@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references AJ's publicly available LinkedIn post about choosing a fulfillment partner and makes general statements about e\u2011commerce reconciliation challenges. It does not include any specific metrics, customer names, or factual claims about AJ or Fulfyld that are unsupported by the provided evidence."
+  },
+  "prompt_tokens": 2602,
+  "completion_tokens": 414
+}

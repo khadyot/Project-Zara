@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains generic statements about reconciliation challenges and references a publicly supported comment by Chermaine Hu about legacy payments. It does not include any invented metrics, customer names, or specific claims about Episode Six that are not found in the evidence."
+  },
+  "prompt_tokens": 2253,
+  "completion_tokens": 293
+}

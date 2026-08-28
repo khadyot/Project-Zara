@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob\u2019s Simulation Terminal now lets you simulate the full fulfillment lifecycle in sandbox without touching real inventory.",
+        "rationale": "Even though Test\u2019s exact role is unknown, anyone involved with operations can benefit from a safe, end\u2011to\u2011end test environment that eliminates manual, reconciliation\u2011heavy trial runs.",
+        "bridge": "Our platform automates the manual reconciliation steps that typically follow such simulations, turning test results into reliable, production\u2011ready processes.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "The Operators podcast highlighted RomperJack\u2019s unique men\u2019s romper line and its partnership ecosystem.",
+        "rationale": "While Test\u2019s role isn\u2019t specified, the discussion shows ShipBob\u2019s work with diverse merchants, indicating a need for streamlined operations across unconventional product lines.",
+        "bridge": "Our automation solution can handle the complex, reconciliation\u2011heavy workflows that arise when supporting niche brands like RomperJack, freeing teams to focus on growth.",
+        "strength": 0.42
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob\u2019s Spring\u202f2026 release promises brand\u2011level delivery dates, trusted tracking, and AI that ships in days.",
+        "rationale": "For anyone in operations, the emphasis on AI\u2011driven shipping and reliable delivery dates signals a push to reduce manual error and improve fulfillment predictability.",
+        "bridge": "Our technology complements this AI focus by automating the reconciliation processes that still require human oversight, ensuring the promised delivery performance stays accurate.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob just launched its first Anthropic\u2011verified fulfillment connector, anchoring a new AI suite.",
+        "rationale": "The recent launch (21\u202fdays ago) shows ShipBob\u2019s commitment to AI\u2011enabled fulfillment, which directly impacts teams that manage complex, data\u2011heavy reconciliation tasks.",
+        "bridge": "Our solution can integrate with this connector to automatically reconcile transaction data, eliminating manual bottlenecks and accelerating the AI\u2011driven workflow.",
+        "strength": 0.91
+      }
+    ]
+  },
+  "prompt_tokens": 1246,
+  "completion_tokens": 1027
+}

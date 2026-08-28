@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only supported statements about ShipMonk's apparel-specific fulfillment center, manual reconciliation challenges, and the sender's automation offering. No invented metrics, customer names, or specific prospect claims are present."
+  },
+  "prompt_tokens": 1664,
+  "completion_tokens": 407
+}

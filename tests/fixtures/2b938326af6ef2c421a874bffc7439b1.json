@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel fulfillment and reconciliation",
+    "draft_text": "Hi Devin,\n\nShipMonk\u2019s new apparel-specific fulfillment center targets returns and SKU complexity, a move that reshapes how items flow through the system. The focus on apparel introduces a broader range of SKUs per order.\n\nHigher transaction volumes bring more manual reconciliation steps, which can pressure accounting resources. That adds extra entries that staff verify before closing the books.\n\nWe build bots that match incoming return data to inventory records and generate balanced entries.\n\nIs the expanding reconciliation effort beginning to feel like a hidden cost?\n\nZamp"
+  },
+  "prompt_tokens": 1998,
+  "completion_tokens": 2489
+}

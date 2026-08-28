@@ -376,6 +376,16 @@ div[data-testid="stText"] > pre{
   font-size:var(--t-body);font-weight:500;color:var(--midnight-ink);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
+/* Source link on a rejected row. Quiet by default: the claim is what the reader
+   scans, the link is what they reach for only when they want to check. */
+.zrow .zr-src{
+  font-size:var(--t-label);font-weight:500;
+  color:var(--slate);text-decoration:none;
+  border-bottom:1px solid var(--rule, currentColor);
+  margin-left:.5rem;white-space:nowrap;
+}
+.zrow .zr-src:hover{color:var(--zamp-blue,#005EFF);}
+.zrow.is-muted .zr-src{opacity:.75;}
 .zrow .zr-state{
   font-size:var(--t-label);font-weight:600;
   text-transform:uppercase;letter-spacing:var(--track-label);
