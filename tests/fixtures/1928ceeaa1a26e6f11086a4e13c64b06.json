@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains general value proposition statements and a call to action, all of which are supported by the provided evidence. No specific metrics, customer names, or factual claims about Chermaine or Episode Six are invented."
+  },
+  "prompt_tokens": 2217,
+  "completion_tokens": 394
+}

@@ -52,6 +52,11 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 - **Gemini `gemini-flash-latest` 503s intermittently** — retry with backoff, never fatal. Free tier is 20 req/day per model.
 - **SmartRecruiters returns HTTP 200 with `totalFound=0` for gibberish** — validate on payload, never status. Greenhouse `?content=true` returns JSON with HTML-entity-encoded content (`html.unescape` before BeautifulSoup).
 - **Gemini models that appear in `models.list()` may 404 on generate** — listing ≠ callable. `gemini-2.5-pro`/`gemini-2.5-flash` are retired for new users.
+- **`.streamlit/secrets.toml` beats the shell environment.** Streamlit exports secrets.toml into
+  `os.environ`, so `FOO=x streamlit run app.py` is silently ignored for any key the file also
+  defines. Cost a debugging cycle on `ZARA_ADMIN_PASSWORD`: the sidebar box appeared (key was
+  truthy) but every entered value failed, because the expected value came from secrets.toml.
+  Check that file first, not the shell.
 - Two files in `reference/research_results/` start with `#` and contain spaces/em-dashes — quote in shell.
 - Fixture-expiry defect: never write absolute dates in fixtures — pin ages (`event_date: daysAgo(6)`).
 

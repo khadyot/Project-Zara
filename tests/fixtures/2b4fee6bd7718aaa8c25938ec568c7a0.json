@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Your Midwest region saw 129 new industrial and supply\u2011chain facility projects through July\u202f2026, indicating a surge in logistics demand.",
+        "rationale": "As CFO of Midwest\u202f3PL, you\u2019re responsible for tracking the financial impact of this rapid expansion and ensuring cost\u2011effective operations amid higher volume.",
+        "bridge": "Our automation platform lets your operations team eliminate manual, reconciliation\u2011heavy processes, giving you cleaner data and tighter financial control.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Midwest\u202f3PL operates with a lean team of 2\u201110 employees while delivering warehousing, transportation, and contract packaging services.",
+        "rationale": "With a small staff, you likely shoulder much of the financial oversight yourself, making manual reconciliation a significant time drain for the finance function.",
+        "bridge": "Our solution automates those manual reconciliation tasks, freeing your limited team to focus on strategic financial decisions.",
+        "strength": 0.76
+      }
+    ]
+  },
+  "prompt_tokens": 839,
+  "completion_tokens": 581
+}

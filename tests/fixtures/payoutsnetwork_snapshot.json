@@ -1,0 +1,430 @@
+{
+  "prospect": "Payouts Network",
+  "person_name": "Jon Anderson",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "http 404",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 5265
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4324
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4295
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 5447
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4091
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Payouts Network Names Jamison Jaworski as Chief Revenue Officer - Business Wire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNSVUzWlhXVURKUE45amRzcEgxek51MzJBM0tCUXZJcXpOTl92WnFicmppRVQ3NHBEZ3EzQWlRVi1UUmJPZzVHZ2x1Ry1ocGJuSV9KQ0ozZlZxcmtjWWJQTXpUUEFvZ0Q1cm82M3Z6YjVpbGE0aGptSlFBalpZelc3cWIwQ0p4RkFXV1dVQWcwRTNvRXFvclJ2UExveEZDU3hFRHM4QmF3dnJfdEZtZTR3N05wQ2prd3VOMURHUg?oc=5",
+          "published_date": "Tue, 23 Jun 2026 07:00:00 GMT",
+          "snippet": "Payouts Network Names Jamison Jaworski as Chief Revenue Officer Business Wire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Thunes and Ontop Expand Global Real-Time Payouts Network - Thunes",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOVE0MUp4VWRTdXY5WGEzWE8wRG5wSGlIVmRxMWhnVy1hWjhDR254dTZ6X1VocnA1MmRQendSalp3RWgwdU92M3VRVHpPbEVid2tSLU00N2lFZWYwUTFxNTZmT0Q4Uzk4aDlPVmNyOVdzM21pYmNSZC1qUXdaTE9zVC1Jd3c0cGxyOXpPZjdRMkFMZVhCNkNmNW92dnpXNUlFalBaalIzM0xtVF9nZ25pbmY3eG5HekplMVBBYVROajZjc3c?oc=5",
+          "published_date": "Mon, 11 Aug 2025 07:00:00 GMT",
+          "snippet": "Thunes and Ontop Expand Global Real-Time Payouts Network Thunes",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Instant Financial and Payouts Network Launch Real-Time Direct-to-Bank Transfers for Earned Wage Access (EWA) - Business Wire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxNMXhlcmp3NXc5STNkVTJxaS1PakszQmRUenN4VGVsMk96Q3AyVUJQaDl2c1BXdTNRV0hzQVhtQllsZk04d25LSkVXVnNJZ1JBSUhueGhTR2xCUkxXa1VfRS00empCdnZzVFVUdERMeHBrTWJBUWtzTnlWcU5WdEFiNjQ1TEdWMXN4WHVVQ002a2lwdkwtTkFqcnlNOXRMWkp6LW8wTlFzamtlRVBSZU5KV3E2eXR0RW5hWTdTaTFpcnh6enh6clVzNmNsTDlXT0Z6eUMxa1d6TnZaZVRDUzh0X2J0M0dPTnVRejE1SlJja1ptMVFDeGc?oc=5",
+          "published_date": "Tue, 26 Aug 2025 07:00:00 GMT",
+          "snippet": "Instant Financial and Payouts Network Launch Real-Time Direct-to-Bank Transfers for Earned Wage Access (EWA) Business Wire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Banks Must Redesign Loyalty for a World Where Customers Don\u2019t Stick Around - The Financial Brand",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOOGZjeXluUXZkLVh3Yl9LaXRWZE40VjVDYVhIRGNjaUVzX1puRkpTUUFPcWFpRGJnSUFtMTVJa1R4MVo3ZWtIcXRCUGFsYnR4d0tkZndHbEI5MnM4NUVjSjhWUDVGckg1Vl94eU04Z09STVBZMDFJMHpiR3JUWmx1RVFZV1prS09Rd1l6SnZSN0EwNkEyMzY3WHd2Y29tOVVZdS1BczNn?oc=5",
+          "published_date": "Mon, 29 Dec 2025 08:00:00 GMT",
+          "snippet": "Banks Must Redesign Loyalty for a World Where Customers Don\u2019t Stick Around The Financial Brand",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Nuvei's Acquisition of Payoneer to Reshape Global Payments - FinTech Magazine",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNa0Q1NUxfVzJldFZvbkxvYWI5Smg5aFlTbmtlTFNsR0JMYy1jX1VIQTVxMTZ4bWJCNlNLWVBzUkMySG91d1FMZFU5S1lvam91SlJDWHhGT2pDcDdFQUZQbnFuSnZmTEZsR2tMaTdwRGprR2ViMmJEQnNDWHh1UXp2dHlGUkxJRnRZMDdTVg?oc=5",
+          "published_date": "Tue, 16 Jun 2026 07:00:00 GMT",
+          "snippet": "Nuvei's Acquisition of Payoneer to Reshape Global Payments FinTech Magazine",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Finix Introduces New Payment Features for Q1 - GlobeNewswire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOMnBqeUJZOXBJN0dGUy1teWZIOWt3UlNSeWxTd2Q0VW1ka2RyWUYtM2hvRGx4dllxZ0xvdWhTTlhWMkNWWnRwRFVNM1pHZDd2T0VXMmNkUDVmRndaSWxaWHI2d3pBTDVsNzBMS2QzWW5LanpXdjBSSEZpaUE1X01ZMENjOTZwRlhOSUpiUDVqMjJ3aGZDM19mc2xjZUZPMjVmNGhHV3VCNWJVbUhWSnZsQ3E4UE90aGM?oc=5",
+          "published_date": "Wed, 26 Mar 2025 07:00:00 GMT",
+          "snippet": "Finix Introduces New Payment Features for Q1 GlobeNewswire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1222
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "skipped",
+      "reason": "model capacity: groq tpm budget consumed",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 12623
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Payouts Network website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://payoutsnetwork.com",
+          "published_date": null,
+          "snippet": "Title: Payouts Network | Instant Digital Disbursements\n\nURL Source: https://payoutsnetwork.com/\n\nPublished Time: Wed, 26 Aug 2026 16:51:32 GMT\n\nMarkdown Content:\n[![Image 1: Payouts Network Logo Navy](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/6843513e9b2b85f2fac790d1_navy_logo%201.svg)](https://payoutsnetwork.com/)\n\n## Your payout dollars should do more than leave your account.\n\nPayouts Network helps businesses transform customer payouts, rewards, and incentives into experiences that increase engagement, strengthen loyalty, and increase revenue.\n\n[Let\u2019s talk ![Image 2: Up to the Right Arrow Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/6809383b257f0e32d44c4b7c_arrow-up-right.svg)](https://payoutsnetwork.com/demo)\n\nInstant Delivery\n\nYour Brand Experience\n\nMeasurable Results\n\n## Businesses spend billions solving customer needs.\n\nMost of those dollars create no lasting value.\n\nCompanies distribute money everyday through customer-service recovery, rewards, incentives, reimbursements, refunds, and promotions.\n\nTraditional payment platforms focus on completing the transaction.\n\n**Payouts Network helps businesses determine what the transactions should accomplish.**\n\n#### With Payouts Network\n\n![Image 3: Checkmark Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/68264e26ac9951652fce36f9_check(1).svg)\n\nResolve and immediate need\n\n![Image 4: Checkmark Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/68264e26ac9951652fce36f9_check(1).svg)\n\nCreate a better experience\n\n![Image 5: Checkmark Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/68264e26ac9951652fce36f9_check(1).svg)\n\nInfluence future behavior\n\n![Image 6: Checkmark Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/68264e26ac9951652fce36f9_check(1).svg)\n\nIncrease engagment and loyalty\n\n![Image 7: Checkmark Icon](https://cdn.prod.website-files.com/6808ec8f859d2fa5de2fcb88/68264e26ac9951652fce36f9_check(1).svg)\n\nGenerat",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1459
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Global Fintech Interview with Jon Anderson, Payouts Network",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/kbs45_global-fintech-interview-with-jon-anderson-activity-7273372678428708864-0hya",
+          "published_date": "2025-08-28T06:54:27.144Z",
+          "snippet": "# Excited to see Jon Anderson, our new CFO, sharing his strategic insights and vision for the future of and in this new Q&A with Global FinTech Series. His expertise and leadership are \u2026 | Keith Smith \u00b7 LinkedIn \u00b7 2024-12-13\n\n**Keith Smith**: Founder, CEO and President at Payouts Network for 10 years 5 months with 14 years of total professional experience. Previous roles include EVP General Manager at Edo Interactive. Based in Bozeman, Montana, United States [US].\n\n---\n\nExcited to see Jon Anderson, our new CFO, sharing his strategic insights and vision for the future of #fintech and #digitalpayments in this new Q&A with [Global FinTech Series](https://linkedin.com/company/global-fintech-series). His expertise and leadership are already making an impact as we continue to redefine #B2CPayments here at [Payouts Network](https://linkedin.com/company/payoutsnetwork). Check it out.\n\n## Engagement\n\n- Reactions: 25",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Jon Anderson, Chief Financial Officer of Payouts Network, discusses transformative trends in fintech, emphasizing operational efficiency, and user-centric design. In this interesting interview with the Global FinTech Series, he highlighted that \"Payments \u2026 | Prajakta Ayade",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/prajakta-ayade-213920163_global-fintech-interview-with-jon-anderson-activity-7269988869763158017-YbhB",
+          "published_date": "2024-12-04T00:00:00.000Z",
+          "snippet": "# Jon Anderson, Chief Financial Officer of Payouts Network, discusses transformative trends in fintech, emphasizing operational efficiency, and user-centric design. In this interesting interview with the Global FinTech Series, he highlighted that \"Payments \u2026 | Prajakta Ayade \u00b7 LinkedIn \u00b7 2024-12-04\n\n**Prajakta Ayade**: Senior Associate Brand at Repos for 1 year 1 month with 6 years 8 months of total professional experience. Previous roles include Content Writer at iTech Series, Senior Content Writer at Velocita Brand Consultants, and Assistant Marketing Manager at Frubites. Based in Pune Division, Maharashtra, India [IN].\n\n---\n\nJon Anderson, Chief Financial Officer of [Payouts Network](https://linkedin.com/company/payoutsnetwork), discusses transformative trends in fintech, emphasizing operational efficiency, and user-centric design. In this interesting interview with the [Global FinTech Series](https://linkedin.com/company/global-fintech-series), he highlighted that \"Payments networks are adapting by making it easier to integrate their solutions into apps and mobile wallets. They\u2019re also expanding their willingness to partner with and participate in the flow of crypto transactions, allowing them to connect with traditional financial infrastructure.\" when asked about how digital payment are affecting the payment networks.\n\nCatch more here - https://lnkd.in/dmixaeUg\n\n#Fintech #DigitalPayments #Innovation #FinancialTechnology #RealTimePayments\n\n## Engagement\n\n- Reactions: 1",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1797
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Y Combinator-Backed Balanced Launches A Standalone API For Next-Day ACH Payments | TechCrunch",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2013/02/14/balanced-payments-ach-api-omg/",
+          "published_date": "2013-02-14T00:00:00.000Z",
+          "snippet": "Y Combinator-Backed Balanced Launches A Standalone API For Next-Day ACH Payments | TechCrunch\n\n\u2013:\u2013:\u2013:\u2013\n\n\ud83d\udea8 Flash Sale \ud83d\udea8 Get $100 off your Disrupt 2026 ticket\n\nBack by popular demand: Save up to $300 on Disrupt\n\n# Y Combinator-Backed Balanced Launches A Standalone API For Next-Day ACH Payments\n\n8:00 AM PST \u00b7 February 14, 2013\n\nCollaborative consumption is all the rage these days, as new platforms have emerged to allow people to make goods or services easily available to others. But the rise of peer-to-peer marketplaces like Airbnb, Getaround, and TaskRabbit has also led to problems in payment infrastructure.\n\nY Combinator-backed startup Balanced is one company offering a way for companies like those to both take in and make payments to users on either side of the transaction. But what if they only need to make payments to users who provide the goods or services? With the launch of Balanced\u2019s Payouts API, announced to customers today, they\u2019ll be able to do that.\n\nBalanced provides a platform that is designed especially for peer-to-peer marketplace companies like CrowdTilt, Zaarly, and others. Those companies not only need payment processing on the consumer side, but they also need a way to quickly pay the people who provide services or make their goods available to others. In many cases, that makes it a more complete offering than some of the other options out there.\n\nAt the same time, not every marketplace needs or wants the complete payment solution. That\u2019s why Balanced is rel",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: MassPay and Coinbase Partner to Bring Stablecoin-Powered Payouts to Businesses Worldwide \u2013 Company Announcement - FT.com",
+          "signal_type": "news",
+          "source_url": "https://markets.ft.com/data/announce/full?dockey=600-202606111100PR_NEWS_USPRX____SF80878-1",
+          "published_date": null,
+          "snippet": "MassPay and Coinbase Partner to Bring Stablecoin-Powered Payouts to Businesses Worldwide \u2013 Company Announcement - FT.com\n\nCoinbase Global Inc\n\n### MassPay and Coinbase Partner to Bring Stablecoin-Powered Payouts to Businesses Worldwide\n\nJun 11 2026 16:00 BST\n\nPartnership enables enterprises to fund, hold, and disburse globally in USDC and local fiat - through a single integration\n\nLAS VEGAS , June 11, 2026 /PRNewswire/ -- MassPay Holdings LLC, a global payout orchestration platform, and Coinbase, the world's leading regulated cryptocurrency exchange, today announced a strategic partnership to bring stablecoin-powered cross-border payout capabilities to businesses worldwide.\n\nThe partnership combines MassPay's single-API global payout network - covering 180 countries across bank transfer, mobile wallet, and digital asset rails - with Coinbase's regulated digital asset infrastructure, institutional-grade safeguarding of digital assets, and extensive global licensing footprint. Together, they enable enterprise customers to move seamlessly between fiat currency, USDC, and other digital assets without managing separate crypto infrastructure.\n\nBridging Fiat and Digital Assets at Scale\n\nCorporate customers, marketplaces, and platforms using MassPay can now fund disbursements in USD - converting to USDC via Coinbase - or deposit USDC directly, then pay recipients in USDC, other digital assets, or local fiat currency. Coinbase's APIs handle wallet infrastructure, custody, and the onch",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2001
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Instant Financial and Payouts Network",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/news/instant-financial-and-payouts-network-launch-real-time-direct-to-bank-transfers-for-earned-wage-access-ewa",
+          "published_date": "2025-08-26T00:00:00.000Z",
+          "snippet": "News\n\n# Instant Financial and Payouts Network\u2122 Launch Real-Time Direct-to-Bank Transfers for Earned Wage Access (EWA)\n\nPublished Date:\n\nAugust 26, 2025\n\nAuthor:\n\nPayouts Network\n\nInstant Financial and Payouts Network\u2122 have announced a new capability that lets employees move earned wages to their existing bank accounts in real-time.\n\nReal-time, direct-to-bank deposits give workers more control over how they access earned pay while helping employers offer a modern experience.\n\n\u200d\n\nBozeman, Mont., and Atlanta \u2013 August 26, 2025 \u2013 Instant Financial(Instant), a leader in earned wage access (EWA) and digital tipping solutions, and Payouts NetworkTM, the modern B2C payments platform that transforms consumer experiences, today announced a new capability that lets employees move earned wages to their existing bank accounts in real-time. The update, delivered through Instant Pay, Instant\u2019s EWA solution and enabled by Payouts Network\u2019s real-time payouts technology, gives workers more choice and helps employers deliver a better pay experience.\n\n\u200d\n\nEWA supports retention and hiring: 74% of U.S. workers say they would stay longer at a job with same-day access to pay, and 86% say they\u2019d be more interested in applying for a job that pays the same day they work. By routing wages directly to a worker\u2019s preferred account, the companies aim to make access to earned pay faster, clearer and easier to manage.\n\n\u200d\n\n\u200dWhat\u2019s new and why it matters:\n\n- Direct-to-bank transfers of earned wages to an employ",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Payouts Network Expands Product Suite with Three New Service Offerings",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/news/payouts-network-expands-product-suite-with-three-new-service-offerings",
+          "published_date": null,
+          "snippet": "Payouts Network Expands Product Suite with Three New Service Offerings\n\nNews\n\n## Payouts Network\u2122 Expands Product Suite with Three New Service Offerings\n\nPublished Date:\n\nSeptember 12, 2021\n\nAuthor:\n\nPayouts Network\n\nNew features continue to make payouts faster and administration easier for users\n\n\u200d\n\nBOZEMAN, Mont. (July 13, 2021) \u2013 Payouts NetworkTM, the fintech services company leading the revolution in new and better payout capabilities, has added three new services to its product suite, continuing to make payouts and administration easier for businesses and their suppliers and workers.\n\n\u200d\n\nThe new features include:\n\n- Auto Deposit: Payouts are automatically deposited to registered payment accounts\n- SMS: Payees receive text alerts in real time when they are paid\n- Profile Management: Recurring payees can manage their payment accounts, automatic deposits and text settings via a self-service portal.\n\n\u200d\n\n\u201cThese three new management tools empower users to easily originate and manage payouts while leaving the complexities of systems and security to us,\u201d said Keith Smith, president and CEO of the company. \u201cThe new enhancements are consistent with the innovative products and advanced capabilities we offer and continue to set Payouts Network apart as the only fully turn-key platform for B2C and B2B disbursements.\u201d\n\n\u200d\n\nPayouts NetworkTM aims to simplify disbursements and improve payout processes while adding greater speed, flexibility and control for users. With the new features, ",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1659
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1808342/000180834220000001/0001808342-20-000001.txt",
+          "published_date": null,
+          "snippet": "0001808342-20-000001.txt : 20200407\n 0001808342-20-000001.hdr.sgml : 20200407\n 20200407153844\nACCESSION NUMBER: 0001808342-20-000001\nCONFORMED SUBMISSION TYPE: D\nPUBLIC DOCUMENT COUNT: 1\nITEM INFORMATION: 06b\nFILED AS OF DATE: 20200407\nDATE AS OF CHANGE: 20200407\nEFFECTIVENESS DATE: 20200407\n\nFILER:\n\n COMPANY DATA: \n COMPANY CONFORMED NAME: Payouts Network Inc.\n CENTRAL INDEX KEY: 0001808342\n IRS NUMBER: 462476446\n STATE OF INCORPORATION: DE\n FISCAL YEAR END: 1231\n\n FILING VALUES:\n FORM TYPE: D\n SEC ACT: 1933 Act\n SEC FILE NUMBER: 021-364475\n FILM NUMBER: 20779636\n\n BUSINESS ADDRESS: \n STREET 1: 5 WEST MENDENHALL ST., STE. 202\n CITY: BOZEMAN\n STATE: MT\n ZIP: 59715\n BUSINESS PHONE: 6154248901\n\n MAIL ADDRESS: \n STREET 1: 5 WEST MENDENHALL ST., STE. 202\n CITY: BOZEMAN\n STATE: MT\n ZIP: 59715\n \n \n D\n 1\n primary_doc.xml\n \n \n \n \n\n X0708 \n\n D \n\n LIVE \n\n \n 0001808342 \n Payouts Network Inc. \n \n 5 WEST MENDENHALL ST., STE. 202 \n BOZEMAN \n MT \n MONTANA \n 59715 \n \n 6154248901 \n DELAWARE \n \n None \n \n \n None \n \n Corporation \n \n true \n \n \n\n \n \n \n Miles \n Kilburn \n \n \n 5 West Mendenhall St., Ste 202 \n Bozeman \n MT \n MONTANA \n 59715 \n \n \n Director \n \n \n \n \n \n Daniel \n Geraty \n \n \n 5 West Mendenhall St., Ste 202 \n Bozeman \n MT \n MONTANA \n 59715 \n \n \n Director \n \n \n \n \n \n Keith \n Smith \n \n \n 5 West Mendenhall St., Ste 202 \n Bozeman \n MT \n MONTANA \n 59715 \n \n \n Executive Officer \n Director \n \n \n \n \n \n Jerry \n Nettuno \n \n \n 5 West Mendenhall St., Ste 202 \n Bozeman \n MT \n MONTANA \n 59715 \n \n \n Dire",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: EDGAR Filing Documents for 0001808342-21-000001",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1808342/000180834221000001/0001808342-21-000001-index.htm",
+          "published_date": null,
+          "snippet": "EDGAR Filing Documents for 0001808342-21-000001\n\n# Filing Detail\n\n Form D - Notice of Exempt Offering of Securities: SEC Accession No. 0001808342-21-000001 \n\nFiling Date 2021-02-16 Accepted 2021-02-16 15:33:27 Documents 1\n\nEffectiveness Date 2021-02-16\n\nItems Item 06b: \n\nDocument Format Files\n\n| Seq | Description | Document | Type | Size |\n| --- | --- | --- | --- | --- |\n| 1 | | primary_doc.html | D | |\n| 1 | | primary_doc.xml | D | 4715 |\n| | Complete submission text file | 0001808342-21-000001.txt | | 5746 |\n\nMailing Address 5 WEST MENDENHALL ST., STE. 202 BOZEMAN MT 59715 \n\nBusiness Address 5 WEST MENDENHALL ST., STE. 202 BOZEMAN MT 59715 6154248901 \n\nPayouts Network Inc. (Filer) CIK: 0001808342 (see all company filings)\n\nEIN.: 462476446 | State of Incorp.: DE | Fiscal Year End: 1231 Type: D | Act: 33 | File No.: 021-389563 | Film No.: 21637184",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2364
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Current Yes, \"Not That Good,\" Jon Anderson Responds To Steve Howe's \"Unthinkable\" Yes Comment",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=yPrDpgpazU4",
+          "published_date": null,
+          "snippet": "it's part one of our conversation with legendary yes singer john anderson i'm john boden from rocky stream music one thousand hands chapter one is an album that took 30 years to make it's finally available here's our conversation with john anderson oh john malanga asked what's your current relationship with steve howe well it's like anything you know um i did an interview a few months ago and they just put it out it's on mojo uh english and they're asking me will yes get together i'd love to i said i'd love to get together yes and steve just did one on rolling stone said never never was not going to happen but he knows that i'm very open but he has his own pocket and position to take you know that he he he has yes but i mean we both we both know the fans want you back in that band i mean that's not display but yeah but you know i wouldn't go back in that band because i don't think they're that good now i've said it now they're good but not that good if i could get a gig with uh jacob collier now that's good you know my band from orlando they're good and we proved it by touring we did incredible versions of uh starship trooper yeah and uh you know i'm gonna next year or spring time i i i would like to try uh close to the edge with them because it'd be cool to do it in a more 21st century style people might not like it but i'll try you know i'll try anything twice such a you had a major hand on that album especially because that's one of my favorites and i know the fans love th",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Jon Anderson & the band geeks live review #podcast #concertreview",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=cbURJ_jXUSA",
+          "published_date": "2026-05-09T00:00:00.000Z",
+          "snippet": "# Jon Anderson & the band geeks live review #podcast #concertreview\n\n- Channel: Curlessmania\n- Length: 02:11\n- Views: 1.2K\n- Likes: 53\n- Published: 2026-05-09T08:43:08-07:00\n- Category: Music\n- Language: en\n\n## Description\n\nJon Anderson and the band geeks were phenomenal!\n\n## Transcript\n\nHey everybody, Tom Kerless here from Kerlessmania. I'm here sitting in a hotel room in New Jersey.\nUm but I'm still um reveling in the Jon Anderson and the band Geeks concert that I just saw uh right before I left in Royal Oak, Michigan, right outside of Detroit.\nUm really cool little intimate theater in the in the heart of the city and man, he he brought it. I mean, Jon Anderson is 82 years old and he was singing so well.\nI couldn't believe it. He was hitting all the notes. He was he he was very he was great. He was still a great frontman at 82 and the band Geeks were incredible. They were so so good.\nThey opened with Close to the Edge.\nPlayed the whole thing from start to finish, first song and they played it flawlessly and I literally was almost to the point of wow, I just got my money's worth right there. Just just hearing Close to the Edge all the way through done that well.\nIt was like, oh my god. And then they went into Perpetual Change like right after that. It's one of another one of my all-time favorite Yes songs.\nAnd they played that flawlessly. And they played Awaken on the second half.\nThey played Soon, which was just incredible. He was he sang it perfectly.\nAnd I literally was a",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1695
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Jon Anderson, CFO | Payouts Network",
+          "signal_type": "person_mention",
+          "source_url": "https://payoutsnetwork.com/team-members/jon-anderson",
+          "published_date": null,
+          "snippet": "Payouts Network Logo White\n\nLet\u2019s talk\n\nUp to the Right Arrow Icon\n\nBio\n\n## Jon Anderson\n\nChief Financial Officer\n\nJon C. Anderson is the Chief Financial Officer at Payouts NetworkTM and is an experienced finance and operations executive. With more than 25 years of experience, Jon has led strategic planning, financial systems implementation, and growth initiatives for SaaS, financial services, and public companies.\n\n\u200d [...] \u200d\n\nJon\u2019s experience in financial strategy and systems integration makes him a valuable strategic partner for growing technology-enabled businesses. At Payouts Network, Jon will focus on advancing the company\u2019s financial strategy, driving scalable growth and implementing technology-driven financial processes.\n\n\u200d [...] \u200d\n\nMost recently, Jon served as the Chief Financial Officer and Chief Operations Officer at Dama Technology, where he built financial operating systems from the ground up, growing the business from start-up to processing more than $6 billion in annual transaction volume. In addition, he raised more than $25 million in Series B and C financing and led the successful $65 million acquisition and integration of a SaaS company.\n\n\u200d",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payouts Network\u2122 Expands Executive Team with CFO Jon ...",
+          "signal_type": "person_mention",
+          "source_url": "https://payoutsnetwork.com/news/payouts-network-expands-executive-team-with-cfo-jon-anderson",
+          "published_date": null,
+          "snippet": "Payouts Network\u2122, the modern B2C payments platform that transforms consumer experiences, has appointed Jon Anderson as Chief Financial Officer.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payouts Network Expands Executive Team With CFO Jon Anderson",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/posts/fintech-finance_payouts-network-expands-executive-team-with-activity-7255229033037066240-tgnL",
+          "published_date": null,
+          "snippet": "Payouts Network Expands Executive Team With CFO Jon Anderson \u201cJon's experience in guiding companies through IPOs and complex financial",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "About Payouts Network | 30+ Years in Payments",
+          "signal_type": "person_mention",
+          "source_url": "https://payoutsnetwork.com/about",
+          "published_date": null,
+          "snippet": "Team\n\n## Our Team\n\n### Keith Smith\n\nCEO\n\n### Steve Bacastow\n\nChief Technology and Compliance Officer\n\n### Jon Anderson\n\nChief Financial Officer\n\n### Judson Preuss\n\nChief Product Officer\n\n### Jamison Jaworski\n\nChief Revenue Officer\n\n### Justin Cook\n\nVP of Operations\n\nBoard\n\n## Our Board\n\n### E. Miles Kilburn\n\nBoard Member\n\n### Dan Geraty\n\nBoard Member\n\n### Mark Putman\n\nBoard Member\n\n### Garen Staglin\n\nBoard Member\n\n### Keith Smith\n\nBoard Member\n\nOur Story\n\n## Trailblazers in Innovation [...] ### Disrupt\n\nWe started disrupting payments in 1999, delivering first-of-its-kind payment solutions, from prepaid, credit and debit, to mobile payments and digital wallets. Today, we\u2019re disrupting B2C payments with fast, flexible, secure transactions for hundreds of use cases.\n\n### Scale\n\nThe Payouts NetworkTM platform enables thousands of banks, issuers, enterprise brands, merchant acquirers, and fintechs to layer technology into their tech stack or loyalty program and pay smarter at scale. [...] A one-of-a-kind payment platform that helps businesses deliver real-time payouts for compensation, incentive, reward, or loyalty payments exactly when and how consumers and businesses prefer.\n\n### Inno",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payouts Network - 2026 Company Profile, Funding & Competitors - Tracxn",
+          "signal_type": "news",
+          "source_url": "https://tracxn.com/d/companies/payouts-network/__U5QfbTMqzikB4Sniqd2PdwDM1oD7QmBzO-SjwAO-6WA",
+          "published_date": null,
+          "snippet": "Payouts Network has raised a total funding of $3.9M over 4 rounds. Its first funding round was on Jan 2014. Payouts Network has 7 institutional investors.\n\nlock [...] Logo for Selfbook\nLogo for Payouts Network\nLogo for Delerrok\nLogo for Yantra Financial Technologies\nLogo for RTA Transit Benefit Fare Program\nLogo for Travel Merchant Solutions\nLogo for Lynnbrook Group\nLogo for 1 Fintech\nLogo for Roll Credits\nLogo for Example Company\nlock\n\n## Payouts Network's Investments and acquisitions\n\n## Reports related to Payouts Network\n\nAn image depicting Payments - Sector Report\n\nPayments - Sector Report\n\n## News related to Payouts Network\n\nlock\nlock [...] | 2nd | Logo for Payouts Network  Payouts Network 2013, Bozeman  (United States), Series A | Provider of end-to-end payment solutions for B2B and B2C transactions | $3.9M | Mosaik Partners, Wolfe  & 5 others | 53/100 |\n| 3rd | Logo for Delerrok  Delerrok 2012, Vista  (United States), Acquired | Account-based fare collection solution for transportation businesses  Boss Capital Partners | 27/100 |",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payouts Network - Payouts Network is the leading next-gen B2C payment and disbursements provider. You originate, we handle the rest.",
+          "signal_type": "news",
+          "source_url": "https://www.linkedin.com/company/payoutsnetwork",
+          "published_date": null,
+          "snippet": "possible. #PCIDSS #PaymentSecurity #Fintech [Likes: 6, Comments: 0]; Payouts Network (2w): We\u2019re excited to join #FTEGlobal 2026 in Dallas! Payouts Network helps airlines and travel brands turn customer payouts, rewards and incentives into experiences that do more than complete a transaction. They solve an immediate need, create a better customer experience, strengthen loyalty and produce measurable value. We don\u2019t just move money. We help travel brands use every payout to influence what",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Payouts Network, Payix Collaborate to Offer Speedy Loan Funding",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/news/payouts-network-payix-collaborate-to-offer-speedy-loan-funding",
+          "published_date": null,
+          "snippet": "Payouts NetworkTM is revolutionizing payouts. We give businesses more speed, flexibility, and control in how they securely pay their customers, workers, and suppliers. Anytime, Anywhere, Any payment type, with our powerful, rules-based platform that is integrated with the world\u2019s leading global payments technology companies. Innovation doesn\u2019t start by accident. That\u2019s why we\u2019ve assembled fintech visionaries and market leaders to deliver on our mission. Not tomorrow. Today. [...] With Payouts NetworkTM Instant Payouts solution, lenders can now make payments available almost instantaneously without physical interaction and without requiring recipients to share their sensitive banking account details. This new digital disbursement capability gives lenders better cash flow management and helps their customers with quicker loan funding. For consumers, this allows them to complete last minute and emergency payments in near real time, avoiding late fees, overdrafts and damage [...] \u200d\n\nThis innovation comes at a time when the global digital lending market is booming. According to Grand View Research, the market was valued at US $4.87 billion in 2020 and is expected to expand at a compound",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "News and Updates | Payouts Network",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/news",
+          "published_date": null,
+          "snippet": "### Payouts Network\u2122 Expands Sales Leadership Team with Chris Razaki as Vice President of Sales\n\nPayouts Network\u2122 welcomes Chris Razaki as Vice President of Sales to lead strategic growth. With 25+ years in payments and loyalty, he strengthens the expanding leadership team.\n\nLearn More\n\nUp to the Right Icon.svg)\n\n.jpg)\n\n### Payouts Network\u2122 Expands Executive Team with Chief Product Officer Judson Preuss\n\nJudson Preuss has joined Payouts Network\u2122 as Chief Product Officer (CPO)\n\nLearn More [...] Service recovery payments turn service failures into loyalty wins. Learn the science behind the recovery paradox, the 7x ROI math, and how to build a digital program.\n\nLearn More\n\nUp to the Right Icon.svg)\n\n### Payouts Network\u2122 Appoints Doug Denny as Vice President of Sales\n\nPayouts Network appoints Doug Denny, a 20-year payments industry veteran, as Vice President of Sales to lead enterprise payout and refund modernization.\n\nLearn More\n\nUp to the Right Icon.svg) [...] Payouts Network Logo White\n\nLet\u2019s talk\n\nUp to the Right Arrow Icon\n\nNews\n\n## Payouts NetworkTM News\n\nLearn more about how the world pays out.\n\n### Payouts Network\u2122 Names Jamison Jaworski as Chief Revenue Officer\n\nPayouts Networ",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "About Payouts Network | 30+ Years in Payments",
+          "signal_type": "person_mention",
+          "source_url": "https://payoutsnetwork.com/about",
+          "published_date": null,
+          "snippet": "Team\n\n## Our Team\n\n### Keith Smith\n\nCEO\n\n### Steve Bacastow\n\nChief Technology and Compliance Officer\n\n### Jon Anderson\n\nChief Financial Officer\n\n### Judson Preuss\n\nChief Product Officer\n\n### Jamison Jaworski\n\nChief Revenue Officer\n\n### Justin Cook\n\nVP of Operations\n\nBoard\n\n## Our Board\n\n### E. Miles Kilburn\n\nBoard Member\n\n### Dan Geraty\n\nBoard Member\n\n### Mark Putman\n\nBoard Member\n\n### Garen Staglin\n\nBoard Member\n\n### Keith Smith\n\nBoard Member\n\nOur Story\n\n## Trailblazers in Innovation",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Keith Smith, CEO | Payouts Network",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/team-members/keith-smith",
+          "published_date": null,
+          "snippet": "\u200d\n\nAs founder, CEO and President of Payouts NetworkTM, he is focused on expanding the company's market-leading payments platform. This revolutionary technology gives businesses more speed, flexibility, and control over payments to workers, customers, and suppliers, and transforms customer experiences across a variety of industries.\n\n\u200d [...] \u200d\n\nBefore establishing Payouts NetworkTM, Keith founded CorFire in partnership with Korean mobile comm SK C&C. He was a founding member of Firethorn, an early U.S. leader in mobile banking, and ITC (acquired by inComm), a leader in gift cards and reloadable prepaid cards. Previously, Keith was a senior executive at Concord EFS (acquired by First Data) and an EVP at Vital Processing (acquired by TSYS) as well as CEO of Vital Merchant Services.\n\n\u200d [...] \u200d\n\nKeith serves as an advisor to Schedulicity, a leading online scheduling platform for discovering and booking local services in more than 50 different industries. Most recently, he was appointed to the board of Fintech Atlanta, a coalition of companies working to advance Atlanta as a global capital of financial technology.\n\nLinkedIn\n\nLinkedIn Icon in black.svg)Book a Demo\n\nUp to the Right Arrow I",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "News and Updates | Payouts Network",
+          "signal_type": "news",
+          "source_url": "https://payoutsnetwork.com/news",
+          "published_date": null,
+          "snippet": "Payouts Network Logo White\n\nLet\u2019s talk\n\nUp to the Right Arrow Icon\n\nNews\n\n## Payouts NetworkTM News\n\nLearn more about how the world pays out.\n\n### Payouts Network\u2122 Names Jamison Jaworski as Chief Revenue Officer\n\nPayouts Network names payments veteran Jamison Jaworski as Chief Revenue Officer to accelerate growth in real-time business-to-consumer payouts.\n\nLearn More\n\nUp to the Right Icon.svg)\n\n### The Complete Guide to Service Recovery Payments [...] ### Payouts Network\u2122 Expands Sales Leadership Team with Chris Razaki as Vice President of Sales\n\nPayouts Network\u2122 welcomes Chris Razaki as Vice President of Sales to lead strategic growth. With 25+ years in payments and loyalty, he strengthens the expanding leadership team.\n\nLearn More\n\nUp to the Right Icon.svg)\n\n.jpg)\n\n### Payouts Network\u2122 Expands Executive Team with Chief Product Officer Judson Preuss\n\nJudson Preuss has joined Payouts Network\u2122 as Chief Product Officer (CPO)\n\nLearn More [...] Service recovery payments turn service failures into loyalty wins. Learn the science behind the recovery paradox, the 7x ROI math, and how to build a digital program.\n\nLearn More\n\nUp to the Right Icon.svg)\n\n### Payouts Network\u2122 Appoints Doug Den",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Keith Smith",
+          "signal_type": "news",
+          "source_url": "https://www.linkedin.com/in/kbs45",
+          "published_date": null,
+          "snippet": "## Activity\n- Excited to share that I've joined Payouts Network as Chief Revenue Officer! Payouts Network is the real-time B2C payout platform that leading\u2026  \nLiked by Keith Smith  \nView Post  \nActivity Image\n\n- 5 years ago today, we sold our very first plane ticket! \u2708\ufe0f Since then we've welcomed over 16 million Guests across 80+ cities, all while creating a\u2026  \nLiked by Keith Smith  \nView Post  \nActivity Image [...] - Most service recovery fails because it is too slow. When something goes wrong, customers don\u2019t want a form. They want a fix. Payouts Network\u2026  \nShared by Keith Smith  \nView Post  \nActivity Image\n\n- Throwback to a classic insight from Keith Smith, shared with The Financial Brand \ud83d\udc47 His quote reminds us that loyalty is a relationship built on\u2026  \nLiked by Keith Smith  \nView Post  \nActivity Image [...] - What happens when the card is no longer at the center of payments? David Keenan, Global Head of Payment Networks at FIS, shares his perspective in\u2026  \nLiked by Keith Smith  \nView Post  \nActivity Image\n\n- Quick clarification because it comes up a lot: Payouts Network helps brands deliver service recovery. This is instant payouts and digital credits\u2026  \nShared by Keith Smith  \n",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2464
+    }
+  ]
+}

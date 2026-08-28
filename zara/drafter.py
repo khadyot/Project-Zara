@@ -25,6 +25,37 @@ def compute_claim_strength(winning_card: RankedCard | None) -> Literal["person_a
         return "person_attributed"
     return "no_signal"
 
+# The voice rules for every email this product writes, hook or no hook.
+#
+# These lived inside draft_email's main path, so the no-signal fallback -- the
+# one draft that most needs to sound like a person wrote it, because it has no
+# evidence to lean on -- never saw them. It shipped "I'm reaching out because",
+# "streamline your operations" and "I'd love to", all three banned by name a few
+# lines away. Module level so there is one copy and both callers get it.
+_STYLE_RULES = (
+    "You write cold outreach emails a busy operator would actually reply to.\n\n"
+    "Never narrate your own reasoning. Never explain why you are writing.\n\n"
+    "Banned: \"I noticed\", \"I saw your recent\", \"It sounds like\", \"I'd love to explore\",\n"
+    "\"I'd love to\", \"I'm reaching out because\", \"in your space\", \"leverage\", \"solutions\",\n"
+    "\"streamline\", \"back-office toil\", \"reach out\", \"higher-value work\",\n"
+    "\"minimal setup\", \"seamless\".\n\n"
+    "Never use an em dash or an en dash. Use a comma, a full stop, or a colon. "
+    "This is absolute: a dash of that kind is the single clearest tell that a "
+    "machine wrote the message, and it undoes the point of the whole exercise.\n\n"
+    "Plain, specific, unhurried. No exclamation marks.\n\n"
+    "Sentence rhythm carries more of the tell than vocabulary does. Vary the lengths.\n"
+    "Do not write three sentences in a row of similar length.\n\n"
+    "Also banned, because they are the shapes a machine reaches for:\n"
+    "- Setup-and-reverse: \"It is not X, it is Y\", \"The question is not X but Y\",\n"
+    "  \"X is not the problem, Y is\". State Y.\n"
+    "- Listing what something is not before saying what it is.\n"
+    "- Fragments for emphasis: \"That is it.\", \"Every time.\"\n"
+    "- Adverbs. Cut all of them.\n"
+    "- Passive voice. Name who does the thing.\n"
+    "- Any sentence that would work as a pull quote. You are writing to one person."
+)
+
+
 async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None, hook: object = None, style: str = "auto") -> DraftOutput | None:
     winning_card = ranked_prospect.winning_card
     sender_name = value_prop.get("sender_person") or value_prop.get("sender_name", "Zamp")
@@ -53,10 +84,19 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         if style and style != "auto":
             fallback_prompt += f"- Email opening style: {style}.\n"
             
-        fallback_system = ("You are an expert B2B SDR drafting concise, generic outreach emails. "
-                           "4-7 words for subject, no colon-clause, names the specific thing not "
-                           "the benefit. Never use an em dash or an en dash; use a comma, a full "
-                           "stop, or a colon.")
+        # This path used to carry its own short system prompt, which meant the
+        # no-signal email was the ONE draft that never saw the style rules. It
+        # opened "I'm reaching out because", promised to "streamline your
+        # operations" and closed with "I'd love to" -- three phrases banned by
+        # name a hundred lines below. The honest-degradation path was the
+        # sloppiest thing the product produced. It gets the same rules now.
+        fallback_system = (
+            _STYLE_RULES
+            + "\n\nYou have no prospect-specific signal. Write the company-level version: say "
+              "plainly what you do and why it might matter to a company like theirs. Do not "
+              "manufacture a hook, do not imply you researched them, and do not apologise for "
+              "having nothing. Subject: 4-7 words, no colon-clause, name the thing not the benefit."
+        )
         try:
             resp = await generate_content_with_retry(
                 prompt=fallback_prompt,
@@ -115,23 +155,52 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += f"WHAT WE DO: {offer}\n"
     prompt += f"THE ASK: {cta}\n\n"
 
-    prompt += "SHAPE (50-90 words total):\n"
-    # First name only. "Hi Stephanie Fielding," is how nothing a human ever wrote
-    # begins, and it announces the automation before the first comma.
+    # The four moves stay. I removed them once and the emails got worse: with only
+    # constraints and no running order, "vary the lengths" plus "offer it as a
+    # hypothesis" produced "I could be wrong.", "Maybe I'm off." and "I appreciate
+    # your insight." as standalone sentences. The skeleton holds the email tight;
+    # what made every email identical was the fixed closing line, not the shape.
+    #
+    # Each constraint below is here because a live run broke it:
+    #   - a word budget, after "one sentence, mechanism not benefit" came back as
+    #     six clauses and forty words wearing a sentence's punctuation;
+    #   - "grammatical clause", after "Stord raised $250M funding round." arrived
+    #     as a headline fragment;
+    #   - first name only, because "Hi Stephanie Fielding," announces the
+    #     automation before the first comma.
+    prompt += ("SHAPE (50-90 words total). Four moves, in this order. They are not four sentences\n"
+               "of equal weight, so vary the lengths. Do not spend a sentence on hedging: say the\n"
+               "observation once, as a hypothesis, and move on.\n")
     _first_name = (ranked_prospect.prospect.person_name or "").strip().split(" ")[0]
     prompt += f"1. \"Hi {_first_name or ranked_prospect.prospect.person_name},\" on its own line.\n"
-    # "One sentence, mechanism not benefit" was satisfiable by a run-on: a live run
-    # produced six clauses and forty words -- TMS, WMS, ERP, match, reconcile,
-    # generate, flag, log -- which is a capability list wearing a sentence's
-    # punctuation. A word budget is enforceable in a way "one sentence" is not.
-    # The evidence clause got the same treatment after "Stord raised $250M funding
-    # round." came back as a headline fragment rather than something a person wrote.
     prompt += ("2. The evidence as a complete, grammatical clause in <=12 words -- not a headline "
-               "fragment -- then the observation it leads to. Two sentences max.\n")
+               "fragment -- then the observation it leads to. Two sentences max.\n"
+               "   Do not begin the observation with \"That suggests\", \"That means\", \"This means\", "
+               "\"That could mean\" or \"That implies\". Every draft used one of them; start with the "
+               "thing itself instead.\n"
+               "   The observation is a guess about how work like theirs usually goes, not a "
+               "finding about them: never assert it about their company as fact, and never spend "
+               "a separate sentence saying you might be wrong. Do not open it with a stock frame "
+               "either. \"Teams of this size\", \"Teams at this scale\" and \"Companies like yours\" "
+               "are banned openers, and so is any other formula you would reuse on the next "
+               "prospect. Get into the generalisation a different way each time.\n"
+               "   Do not greet the fact or praise it. \"Excited to see\", \"Great to see\", "
+               "\"Congratulations on\", \"I enjoyed\" and \"Interesting to read\" are all banned: "
+               "state what they did or said, flat, and move to the observation.\n"
+               "   The recipient's name appears in the greeting and NOWHERE else. \"Jon Anderson "
+               "shared strategic insights\" is written at a man called Jon about a man called Jon. "
+               "Say \"you\", or say what was said without naming anyone. Same for their job title.\n"
+               "   Never state how old the evidence is. The age is given to you so you do not "
+               "miscall something recent, not to be repeated back: \"posted 362 days ago\" in an "
+               "email to a stranger is not something a person writes.\n")
     prompt += ("3. What we do about that specific thing. ONE mechanism, at most 20 words, written as "
                "a grammatical English sentence. Name the single most relevant one; never list "
                "capabilities, and never stack time words (instantly / in real time / daily).\n")
-    prompt += "4. The ask, as given. One sentence.\n"
+    # "The ask, as given" put the same closing sentence on every email this has ever
+    # written. Read two in a row and the template is the first thing you see. The ask
+    # stays the same ASK; the wording is the writer's to fit to what came before it.
+    prompt += ("4. Close by asking for what THE ASK describes. Do not reuse its wording verbatim, "
+               "and do not open that sentence with \"Worth\". One sentence.\n")
     prompt += f"Sign: {sender_name}\n\n"
 
     # An undated card cannot support ANY claim about when the thing happened.
@@ -161,21 +230,14 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         prompt += "\n".join(feedback_tokens)
 
     system_instruction = (
-        "You write cold outreach emails a busy operator would actually reply to.\n\n"
-        "- The recipient already knows their own news. Reference it in at most 12 words, as proof\n"
-        "  you read it. Never summarise it back to them.\n"
-        "- The value of the email is the observation AFTER the evidence: what that fact usually\n"
-        "  means operationally. Offer it as a hypothesis you could be wrong about, not as a\n"
-        "  diagnosis of them.\n"
-        "- Describe what we do as a mechanism, concretely. No benefit adjectives, no outcome claims.\n"
-        "- Never narrate your own reasoning. Never explain why you are writing.\n\n"
-        "Banned: \"I noticed\", \"I saw your recent\", \"It sounds like\", \"I'd love to explore\",\n"
-        "\"I'm reaching out because\", \"in your space\", \"leverage\", \"solutions\",\n"
-        "\"streamline your operations\", \"back-office toil\", \"reach out\".\n\n"
-        "Never use an em dash or an en dash. Use a comma, a full stop, or a colon. "
-        "This is absolute: a dash of that kind is the single clearest tell that a "
-        "machine wrote the message, and it undoes the point of the whole exercise.\n\n"
-        "Plain, specific, unhurried. No exclamation marks."
+        _STYLE_RULES
+        + "\n\n"
+          "- The recipient already knows their own news. Reference it in at most 12 words, as proof\n"
+          "  you read it. Never summarise it back to them.\n"
+          "- The value of the email is the observation AFTER the evidence: what that fact usually\n"
+          "  means operationally. Offer it as a hypothesis you could be wrong about, not as a\n"
+          "  diagnosis of them.\n"
+          "- Describe what we do as a mechanism, concretely. No benefit adjectives, no outcome claims."
     )
         
     try:

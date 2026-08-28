@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only statements about Jon Anderson that are supported by the evidence (his participation in a Global FinTech Series Q&A and the manual\u2011matching issue causing month\u2011end close delays). No invented metrics, customer names, or unsupported specific claims about the prospect are present."
+  },
+  "prompt_tokens": 1797,
+  "completion_tokens": 496
+}

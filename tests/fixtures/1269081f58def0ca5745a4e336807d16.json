@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on your tech stack",
+    "draft_text": "Hi Chermaine,\nYou discussed technology decisions focused on flexibility and scalability. That means you encounter manual reconciliation bottlenecks as you scale.\nWe build APIs that reconcile transaction data across systems.\nCould we schedule a brief 15\u2011minute call next week?\nZamp"
+  },
+  "prompt_tokens": 1101,
+  "completion_tokens": 967
+}

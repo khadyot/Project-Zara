@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The draft email claims that Episode Six\u2019s finance team still reconciles many transactions manually, a specific fact about the prospect that is not supported by any evidence snippet. This constitutes an invented claim about the prospect."
+  },
+  "prompt_tokens": 2122,
+  "completion_tokens": 377
+}

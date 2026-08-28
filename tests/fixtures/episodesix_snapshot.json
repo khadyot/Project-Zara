@@ -1,0 +1,430 @@
+{
+  "prospect": "Episode Six",
+  "person_name": "Chermaine Hu",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "26 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2224
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1737
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2115
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1703
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1797
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Episode Six CFO on scaling a fintech with discipline - CFO.com",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPaG9QVnpGTVBRS0lnUGtGY21CaF96OWRCZ2RBeUNMNlJNNGoxTU5zR2JWV2pPajJQTmt4TWtTdUVtR1EtNENDT0s4Mks4dWNCcnlrODNmTG5ZRXk4dkVWd2V4RTRkb1ROeUhxejlPWlBxVUlCRlBCNkpPS1g1cXgtSkNzY0RNeGVicTc3d3ZiSmdBcXR4MnR6cDFHcDk?oc=5",
+          "published_date": "Tue, 07 Apr 2026 07:00:00 GMT",
+          "snippet": "Episode Six CFO on scaling a fintech with discipline CFO.com",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Episode Six teams with Decisionly on dispute automation - FinTech Global",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNOEpIRUp3NU5LdklmcHB4bWM2N1czZ0d6QmtUUjM0YmRiR20zNDdNWXdRbGdKRDdQTTgzamdUeTZPcHpHc0k0QmVrMlVqWjRJUmtBTEQ1RFFneWhoUkdudVR4aUhNR0VCX09TNDgyVHM4ZEhzeDhiSFJlaFFtTmtwZ1dVakhMa3U4bUZRYk9vdm5DUkdv?oc=5",
+          "published_date": "Tue, 07 Jul 2026 07:00:00 GMT",
+          "snippet": "Episode Six teams with Decisionly on dispute automation FinTech Global",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Episode Six and Fireblocks Join Forces to Deliver Unified Payments Solution Bridging Traditional and Digital Finance - Business Wire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxOMllzdWpVQlBxSHJ6b1I0M2pZT3pyWGhEa3VRM1pLVHBacDNMVGN4S0x5cjRPZmdLb2pSQk1oY2F5ZHF0TVZ1Zy1jMkZmZUItbzFlZXNHYWpVdFR5Q3Q5VEtyVUpRbklGQl9XTjJHWEtlS0llTzR3U1pvb1lqdm5aSUVEemt3OThST2x3MEhEODBhUjhHMWpYTTFPMU5fOWNEZGJ4dW9JRVVZckdFeVJvV3NMZWVpeDJTOGZJdURXZVd1QVcxNGxhZS1LRFBpS2NJbzJtaDRULTBXcktVcnQ3V2djaHlkN2IxeWFlRnRuaUlLM0dYbUIxaGxLcm5MeVNtMEpj?oc=5",
+          "published_date": "Mon, 10 Nov 2025 08:00:00 GMT",
+          "snippet": "Episode Six and Fireblocks Join Forces to Deliver Unified Payments Solution Bridging Traditional and Digital Finance Business Wire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Episode Six Revenue 2024: $29.4M ARR, $67M Raised - GetLatka",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1lOXhhWGFFdHRoLW9heDlSY1Iwb1JqSDdhakNUaUlfS0JEWk00bE9IaW9yYzAzcFU4VnRMMVQzN1Izb2NGdVNlYllva1dhT3AtU1JqZg?oc=5",
+          "published_date": "Mon, 23 Dec 2024 08:00:00 GMT",
+          "snippet": "Episode Six Revenue 2024: $29.4M ARR, $67M Raised GetLatka",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Trustly and Episode Six Partner on US Pay-by-Bank Adoption - PYMNTS.com",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQYTBDZlNNSVFsa19ybXhEOUROOFNVRy16ZkpEQ0xOTHhvOXZram5aLXNGakpYdWQ1di1SQXc2Wi1WWkNNOUZ5R2RSQjJ1bjFJRFRzTEhYSzhRc2Zhbk1SaVVDcVpibDZBbW9yeFhXM014V2JHS0R6RnRaaDRFOWdsR2dkbW96TXk1LUR1VjlOYWVsRlpmdE9TRk45dzNrb2FtMmc?oc=5",
+          "published_date": "Tue, 09 Sep 2025 07:00:00 GMT",
+          "snippet": "Trustly and Episode Six Partner on US Pay-by-Bank Adoption PYMNTS.com",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Episode Six and Sharesies launch New Zealand\u2019s First Spend-to-Invest Debit Card - The Fintech Times",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZ1FyT1kySV9lNFFPSXlEQVpNMHdIRTd6QnR3b252V1d0Yi03MWZnMHdlSi1IaFk2dlYzSUxKTnROaGQ3Y2hsSmpNMTJEdEtJZFlXc2V5am1xZXBNTGZpbTBJUmVURl9jZnNoakUzTkpCVURyS1VOb19YU3RNNWxjQjY5cVZlVUR0andNWWdtendQZWNuNFlQZm5oVHF1RWtxZ1UxejkyMFVfRDg?oc=5",
+          "published_date": "Tue, 25 Nov 2025 08:00:00 GMT",
+          "snippet": "Episode Six and Sharesies launch New Zealand\u2019s First Spend-to-Invest Debit Card The Fintech Times",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1164
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 11762
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Episode Six website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://episodesix.com",
+          "published_date": null,
+          "snippet": "Title: Modern card issuing platform and ledger management | Episode Six\n\nURL Source: https://episodesix.com/\n\nMarkdown Content:\nWe use cookies to improve your browsing experience, to honor your preferences, and to learn more about how visitors use our website. You can learn more about our cookies and how we use information from them in our [Cookie Policy](https://nam02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fepisodesix.com%2Fcookie-policy%2F&data=05%7C01%7Ckatherine.hamilton%40episodesix.com%7C8ef120186b2f4074034208dad864d41e%7C70bfe626571f44f388a92f666e27eb11%7C0%7C0%7C638060224831129280%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=du2gGu9kvRoq0%2BauNJkPI22nN58NSwh%2BCjGGvHuMFnA%3D&reserved=0) and [Privacy Policy](https://nam02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fepisodesix.com%2Fprivacy-policy%2F&data=05%7C01%7Ckatherine.hamilton%40episodesix.com%7C8ef120186b2f4074034208dad864d41e%7C70bfe626571f44f388a92f666e27eb11%7C0%7C0%7C638060224831129280%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=Mss7L5odOl2sM9Ao9S4%2BAINo2Bkcnchr8jVVDzEK%2B70%3D&reserved=0).\n\nAccept all cookies Decline non-essential cookies\n\n[![Image 13: Episodesix-logo](https://episodesix.com/hubfs/Episodesix-logo.svg)](https://episodesix.com/)\n\n*   [Solutions](javascript:;)\n    *   [**Cards**](https://episodesix.com/solutions/cards)\n        *   [Issuer processing](https://episodesix.com/solutions/issuer-processing)\n        *   [Prepaid cards](https://episodesix.com/solutions/prepaid-cards)\n        *   [Debit cards](https://episodesix.com/solutions/debitcards)\n        *   [Credit cards](https://episodesix.com/solutions/creditcards)\n        *   [Commercial cards](https://episodesix.com/solutions/commercialcards)\n        *   [Installment cards](https://episodesix.com/solutions/installment-cards)\n        *   [Virtual cards](https://episodesix.com",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 7767
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Chermaine Hu",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/in/chermainehu",
+          "published_date": "2026-07-23T00:00:00.000Z",
+          "snippet": "# Chermaine Hu\n\nCFO & Co-Founder of Episode Six\n\nAustin, Texas, United States (US)\n\n500 connections \u2022 1,604 followers\n\n## About\n\nCFO & Co-Founder of Episode Six\n\nTotal Experience: 11 years and 6 months\n\n## Experience\n\n### Co-Founder & CFO - Episode Six (Current)\n\nJan 2015 - Present (11 years and 6 months)\n\nDepartment: Finance & Accounting \u2022 Level: C-Level\n\n## Education\n\n### University of Cambridge\n\n1994 - 1998 (4 years)\n\n## Social\n\n### Linkedin\n\n- [2026-03-05 \u00b7 Posted \u00b7 39 reactions] [Legacy payments weren\u2019t built for the world fintech operates in...](https://www.linkedin.com/posts/chermainehu_building-a-fintech-company-from-the-ground-activity-7435466664676323328-hBb-)\n  > Legacy payments weren\u2019t built for the world fintech operates in today.\n  >\n  > When we started Episode Six, the goal was simple: give banks and fintechs the infrastructure they need to launch and scale without being constrained by legacy systems.\n  >\n  > I recently joined @Venture:F to talk about what building modern issuer processing actually looks like \u2014 and what we have learned expanding Episode Six across markets like Japan, Australia, Singapore, Hong Kong and the UK.\n  >\n  > We also discussed why Austin\u2019s fintech ecosystem continues to grow \u2014 and the momentum for women shaping this industry.\n  >\n  > If you are building in fintech, payments, or embedded finance, I hope you find the conversation useful.\n  >\n  > \ud83c\udfa7 Listen here:\n  > https://lnkd.in/gsdaXWDh\n\n- [2022-06-02 \u00b7 Reshared \u00b7 63 reactions] [So pro",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Legacy payments weren\u2019t built for the world fintech operates in today. | Chermaine Hu",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/chermainehu_building-a-fintech-company-from-the-ground-activity-7435466664676323328-hBb-",
+          "published_date": "2026-03-05T00:00:00.000Z",
+          "snippet": "# Legacy payments weren\u2019t built for the world fintech operates in today. | Chermaine Hu \u00b7 LinkedIn \u00b7 2026-03-05\n\n**Chermaine Hu**: Co-Founder & CFO at Episode Six for 11 years 6 months with 11 years 6 months of total professional experience. Based in Austin, Texas, United States [US].\n\n---\n\nLegacy payments weren\u2019t built for the world fintech operates in today.\n\nWhen we started [Episode Six](https://linkedin.com/company/episode-six), the goal was simple: give banks and fintechs the infrastructure they need to launch and scale without being constrained by legacy systems.\n\nI recently joined @Venture:F to talk about what building modern issuer processing actually looks like \u2014 and what we have learned expanding [Episode Six](https://linkedin.com/company/episode-six) across markets like Japan, Australia, Singapore, Hong Kong and the UK.\n\nWe also discussed why Austin\u2019s fintech ecosystem continues to grow \u2014 and the momentum for women shaping this industry.\n\nIf you are building in fintech, payments, or embedded finance, I hope you find the conversation useful.\n\n\ud83c\udfa7 Listen here:\nhttps://lnkd.in/gsdaXWDh\n\n## Comments\n\n**[John Sanchez](https://linkedin.com/in/john-sanchez-31444440)** \u00b7 2026-03-06\n> Continued success!\n\n## Engagement\n\n- Reactions: 39",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2218
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Episode Six raises $48M to streamline payment processes",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2023/05/23/episode-six-raises-48m-to-streamline-payment-processes/",
+          "published_date": "2023-05-23T00:00:00.000Z",
+          "snippet": "Episode Six raises $48M to streamline payment processes | TechCrunch\n\n# Episode Six raises $48M to streamline payment processes\n\n Kyle Wiggers \n\n11:25 AM PDT \u00b7 May 23, 2023\n\nAustin, Texas\u2013based Episode Six, a payments and banking infrastructure provider, today announced that it raised $48 million in a Series C funding round led by Avenir with participation from Anthos Capital. In an email, CEO John Mitchell said that the tranche will be used to expand Episode Six\u2019s go-to-market efforts and scale its business as the company looks to drive digital transformation journeys for banks and companies operating within the payments space.\n\nEpisode Six was founded in 2015 by Mitchell, Chermaine Hu and Futeh Kao. Seeking to overcome the limitations of legacy payments tech, the co-founders built a platform designed to streamline various payment processes while reducing costs.\n\n\u201cFor CTOs and heads of product who want to grow their books and create competitive products, our platform allows them to launch new products quickly to meet a customer\u2019s evolving needs and capture market share,\u201d Mitchell told TechCrunch in an email interview. \u201cFor CIOs looking for payments at scale with safety, security, reliability and cost effectiveness, the platform delivers bank-grade payments\u2019 infrastructure built by industry experts.\u201d\n\nEpisode Six offers a range of different products to tackle specific, typical roadblocks in payments. For example, one of its clients, First Fidelity Bank, used the platform to c",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Episode Six Inc - Company Profile and News",
+          "signal_type": "news",
+          "source_url": "https://www.bloomberg.com/profile/company/2270244D:US",
+          "published_date": null,
+          "snippet": "Episode Six Inc - Company Profile and News - Bloomberg Markets Skip To Content\n\nQuick Links\n\nRecently Viewed Companies\n\n# Episode Six Inc\n\nEpisode Six Inc. operates as a payments technology company. The Company offers enterprise-grade payment processing and digital ledger infrastructure for banks, and companies looking to offer payments to their customers. Episode Six serves clients worldwide.\n\nTerms of Service Do Not Sell or Share My Personal Information Trademarks Privacy Policy\n\nHelp\u00a92026 Bloomberg L.P. All Rights Reserved.",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2042
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Episode Six and Sharesies partner to launch new debit card linking everyday spending to long-term investing",
+          "signal_type": "news",
+          "source_url": "https://buzz.episodesix.com/episode-six-and-sharesies-partner-to-launch-new-debit-card-linking-everyday-spending-to-long-term-investing",
+          "published_date": "2025-11-19T00:00:00.000Z",
+          "snippet": "Episode Six and Sharesies partner to launch new debit card linking everyday spending to long-term investing\n\n# Episode Six and Sharesies partner to launch new debit card linking everyday spending to long-term investing\n\nBack To All Posts\n\nNovember 19, 2025\n\nFollow us on Facebook\n\nFollow us on LinkedIn\n\nNew program allows New Zealanders to grow wealth with every transaction\n\nWellington, November 20, 2025 \u2013 Episode Six, a leading global technology provider of enterprise-grade card issuing and ledger infrastructure, today announced its partnership with leading wealth app Sharesies, to support its newly released debit card. The debit card is the first of its kind in New Zealand to allow customers to earn investments on their spending.\n\nEpisode Six\u2019s modern card issuing and ledger technology will power Sharesies\u2019 new debit card offering, enabling multi-currency support, virtual account provisioning, and integrated foreign exchange capabilities. This infrastructure allows Sharesies\u2019 customers to move seamlessly between spending and investing within a single platform.\n\n\"Customer experience is at the heart of everything we do. It\u2019s fantastic to partner with a company that truly understands this and offers a solution that perfectly supports our goal. With our debit card, we want our customers to feel confident and in control of their spending while actively supporting their financial future,\u201d says General Manager of Sharesies Personal, Scott Nixon.\n\n\u201cSharesies is at the forefront of m",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: FIS and Episode Six Launch the FIS International Issuing Hub to Power the Next Era of Payments",
+          "signal_type": "news",
+          "source_url": "https://buzz.episodesix.com/fis-and-episode-six-launch-the-fis-international-issuing-hub-to-power-the-next-era-of-payments",
+          "published_date": "2025-06-03T00:00:00.000Z",
+          "snippet": "FIS and Episode Six Launch the FIS International Issuing Hub to Power the Next Era of Payments\n\n# FIS and Episode Six Launch the FIS International Issuing Hub to Power the Next Era of Payments\n\nBack To All Posts\n\nJune 3, 2025\n\nFollow us on Facebook\n\nFollow us on LinkedIn\n\nFIS and Episode Six took the stage at Money20/20 to announce their partnership to launch the FIS International Issuing Hub\n\nLondon, June 03, 2025 \u2013 Today at Money20/20, FIS and Episode Six announced a major step forward for the financial services industry: the launch of the FIS International Issuing Hub \u2014 a fully cloud-native ecosystem designed to help banks and issuers modernize their payments infrastructure and bring innovative products to market, fast.\n\nThis new solution brings together FIS\u2019s global scale and trusted technology with Episode Six\u2019s flexible, future-ready issuer processing capabilities. The result? An ecosystem that meets financial institutions where they are \u2014 and equips them to grow, evolve, and lead in an increasingly digital world.\n\n\u201cWe\u2019re excited to partner with FIS to deliver a solution that brings unmatched scalability and flexibility to the market,\u201d said John Mitchell, CEO and Co-Founder of Episode Six. \u201cFIS International Issuing Hub sets a new standard in payments, empowering companies to thrive in a rapidly evolving digital economy. FIS International Issuing Hub gives our clients the power to scale, innovate, and excel.\u201d\n\nThe FIS International Issuing Hub is the perfect answer for ",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1503
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: onesix_8k.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1877461/000147793223000938/onesix_8k.htm",
+          "published_date": null,
+          "snippet": "onesix_8k.htm\n\nUNITED STATES\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWASHINGTON, DC 20549\n\nFORM 8-K\n\nCURRENT REPORT PURSUANT TO\n\nSECTION 13 OR 15(D) OF THE\n\nSECURITIES EXCHANGE ACT OF 1934\n\nDate of report (Date of earliest event reported): February 6, 2023\n\n1606 CORPORATION\n\n(Exact Name of Registrant as Specified in Charter)\n\n| Nevada | 000-53425 | 86-1497346 |\n| --- | --- | --- |\n| (State or Other Jurisdiction of Incorporation) | (Commission File Number) | (IRS Employer Identification No.) |\n\n2425 E. Camelback Rd Suite 150\n\nPhoenix, AZ 85016\n\n(Address of Principal Executive Offices) (Zip Code)\n\n(602) 481-1544\n\n(Registrant\u2019s telephone number, including area code)\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n\n\u2610 Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n\u2610 Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n\n\u2610 Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n\n\u2610 Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\n\nSecurities registered pursuant to Section 12(b) of the Act:\n\n| Title of each class | Trading Symbol(s) | Name of each exchange on which registered |\n| --- | --- | --- |\n| Common | CBDW | OTC Pink Sheets |\n\nIndicate by check mark whether the registrant is an emerging",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: onesix_8k.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1877461/000147793224004901/onesix_8k.htm",
+          "published_date": null,
+          "snippet": "onesix_8k.htm\n\nUNITED STATES\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C. 20549\n\nFORM 8-K\n\nPursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934\n\nDate of Report (Date of earliest event reported): August 15, 2024\n\n1606 Corp.\n\n(Exact name of registrant as specified in its charter)\n\n| Nevada | 000-56467 | 86-1497346 |\n| --- | --- | --- |\n| (State or Other Jurisdiction | (Commission File | (I.R.S. Employer |\n| of Incorporation) | Number) | Identification Number) |\n\n2425 E. Camelback Rd Suite 150 Phoenix, AZ 85016\n\n(Address of principal executive offices, including zip code)\n\n(602) 481-1544\n\n(Registrant\u2019s telephone number, including area code)\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2. below):\n\n\u2610 Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n\u2610 Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n\n\u2610 Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n\n\u2610 Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\n\nSecurities registered pursuant to Section 12(b) of the Act:\n\n| Title of each class | Trading Symbol(s) | Name of each exchange on which registered |\n| --- | --- | --- |\n| N/A | N/A | N/A |\n\nIndicate by check mark whether the ",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2120
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Episode 139: Hu Capital Founder, Jerlisa \"Juju\" Fontaine speaks about her journey building community - YouTube",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=ebLMzUzi6kk",
+          "published_date": "2026-03-24T00:00:00.000Z",
+          "snippet": "Episode 139: Hu Capital Founder, Jerlisa \"Juju\" Fontaine speaks about her journey building community - YouTube\n\nEpisode 139: Hu Capital Founder, Jerlisa \"Juju\" Fontaine speaks about her journey building community - YouTube\n[](https://www.youtube.com/)[](https://www.youtube.com/)\n[About](https://www.youtube.com/about/)[Press](https://www.youtube.com/about/press/)[Copyright](https://www.youtube.com/about/copyright/)[Contact us](https://www.youtube.com/t/contact_us/)[Creators](https://www.youtube.com/creators/)[Advertise](https://www.youtube.com/ads/)[Developers](https://developers.google.com/youtube)[Terms](https://www.youtube.com/t/terms)[Privacy](https://www.youtube.com/t/privacy)[Policy & Safety](https://www.youtube.com/about/policies/)[How YouTube works](https://www.youtube.com/howyoutubeworks?utm_campaign=ytgen&utm_source=ythp&utm_medium=LeftNav&utm_content=txt&u=https://www.youtube.com/howyoutubeworks?utm_source=ythp&utm_medium=LeftNav&utm_campaign=ytgen)[Test new features](https://www.youtube.com/new)\n&copy; 2026 Google LLC",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: S6, EP6 - \u201cHow Caregiving Reshapes Your Life, Identity, and Relationships\" (with CherylAnn Haley) - YouTube",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=WTVeIxOjLJE",
+          "published_date": "2026-06-23T00:00:00.000Z",
+          "snippet": "S6, EP6 - \u201cHow Caregiving Reshapes Your Life, Identity, and Relationships\" (with CherylAnn Haley) - YouTube\n\nS6, EP6 - \u201cHow Caregiving Reshapes Your Life, Identity, and Relationships\" (with CherylAnn Haley) - YouTube\n[](https://www.youtube.com/)[](https://www.youtube.com/)\n[About](https://www.youtube.com/about/)[Press](https://www.youtube.com/about/press/)[Copyright](https://www.youtube.com/about/copyright/)[Contact us](https://www.youtube.com/t/contact_us/)[Creators](https://www.youtube.com/creators/)[Advertise](https://www.youtube.com/ads/)[Developers](https://developers.google.com/youtube)[Terms](https://www.youtube.com/t/terms)[Privacy](https://www.youtube.com/t/privacy)[Policy & Safety](https://www.youtube.com/about/policies/)[How YouTube works](https://www.youtube.com/howyoutubeworks?utm_campaign=ytgen&utm_source=ythp&utm_medium=LeftNav&utm_content=txt&u=https://www.youtube.com/howyoutubeworks?utm_source=ythp&utm_medium=LeftNav&utm_campaign=ytgen)[Test new features](https://www.youtube.com/new)[NFL Sunday Ticket](https://tv.youtube.com/learn/nflsundayticket)\n&copy; 2026 Google LLC",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1611
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "CFO Chermaine Hu on Episode Six's tech stack and fintech leadership | Episode Six posted on the topic | LinkedIn",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/posts/episode-six_payments-fintech-leadership-activity-7379168229325299713-pjjF",
+          "published_date": null,
+          "snippet": "Great to see our CFO and co-founder, Chermaine Hu, featured in the Finance and Accounting Technology Briefing\u2019s \u201cWhat\u2019s in Your Tech Stack?\u201d series. Chermaine shares how Episode Six approaches technology decisions with the same mindset we bring to payments infrastructure: flexibility, scalability, and a focus on solving real-world problems for customers. Her perspective on navigating vendor partnerships, balancing innovation with practicality, and what she wishes software providers would do [...] Great insight Chermaine. My magic wand would also bring more transparency to software pricing. Congrats on all that you are building at E6!\n\nLike Reply  1 Reaction\n\n See more comments \n\nTo view or add a comment, sign in\n\n## More Relevant Posts\n\n PaymentGenes\n\n  39,825 followers\n\n  + Report this post [...] Henry Allen, CFO at fintech firm Caxton Group, shares critical insights on finance leadership in today\u2019s rapidly evolving sector. From the undervalued power of storytelling and the necessity of humility to the ongoing battle against data issues and a culture of distrust, his reflections reveal the multifaceted challenges modern CFOs must navigate. As technology accelerates and consumer sc",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Episode Six | APIs.io Providers",
+          "signal_type": "person_mention",
+          "source_url": "https://apis.io/providers/episode-six",
+          "published_date": null,
+          "snippet": "Episode Six is a global payment technology company founded in 2015 by John Mitchell, Chermaine Hu and Futeh Kao that supplies banks, fintechs and brands with a cloud-native card issuing and ledger management platform marketed as TRITIUM. The platform is described by the company as an API-first open architecture delivering real-time RESTful API processing for credit, debit, prepaid, commercial, installment and virtual card programs alongside a parallel ledger supporting virtual accounts, [...] `aid: episode-six\nname: Episode Six\ndescription: Episode Six is a global payment technology company founded in 2015 by John Mitchell, Chermaine Hu and Futeh Kao\nthat supplies banks, fintechs and brands with a cloud-native card issuing and ledger management platform marketed as TRITIUM.\nThe platform is described by the company as an API-first open architecture delivering real-time RESTful API processing for [...] description: The TRITIUM platform API is Episode Six's real-time RESTful interface for card issuing, issuer processing and\nledger management \u2014 card program setup, account and ledger operations, transaction processing and product configuration.\nEpisode Six markets it as an \"API-first op",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "About Episode Six | Cards and Ledger Infrastructure Experts",
+          "signal_type": "person_mention",
+          "source_url": "https://episodesix.com/about-us",
+          "published_date": null,
+          "snippet": "Dash.fi\n\nCredit Corp Logo White 1\n\nSHB Logo White 1\n\nClip path group (2).svg)\n\nAtono Logotype White 1\n\nOTT Logo White 1\n\nNomi Health Logo White 1\n\nAnna Money\n\nEtraveli\n\nZen.com-1\n\nLogo_Sharsies_Large\n\nLogo_Trustly_Large\n\nLogo_CIMB_Large\n\nLogo_xMoney_Large\n\nLogo_YooFinancial_Large\n\nLogo_Loop_Large\n\n## Meet our team\n\nJohn Mitchell\n\nJohn Mitchell\n\nCEO & Co-Founder\n\nChermaine Hu\n\nChermaine Hu\n\nCFO & Co-Founder\n\nFuteh Kao\n\nFuteh Kao\n\nCTO & Co-Founder\n\nBrian Muse-McKenney\n\nBrian Muse-McKenney [...] Underpinning Episode Six is our proprietary, cloud-native platform that helps banks and fintechs leave legacy behind and build payments products their customers love.\n\nFrom there, the founders attracted several visionary allies across major payments industry players to support and grow Episode Six, as they built a global team to bring their vision to market. We currently have employees in 20 countries and support clients on 5 continents. [...] ##### Episode Six is a global provider of enterprise-grade card issuing and ledger infrastructure for financial technology companies, banks, and brands.\n\nOur platform delivers the innovative capabilities needed to compete with disruptors and lead the mar",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Episode Six - 2026 Company Profile, Team, Funding & Competitors - Tracxn",
+          "signal_type": "person_mention",
+          "source_url": "https://tracxn.com/d/companies/episode-six/__xmrhPLYByfcXYNudGgeOWnjIY7Ox7KoVWN6wJRc7fQY",
+          "published_date": null,
+          "snippet": "Episode Six has raised a total funding of $85M over 4 rounds. Its first funding round was on Mar 03, 2017. Its latest funding round was a Series C round on Apr 28, 2023 for  $\\\\\\\\\\. 2 investors participated in its latest round.  Episode Six has 6 institutional investors.\n\nlock [...] lock\n\n| Date of Funding | Funding Amount | Round Name | Post-Money Valuation | Revenue Multiple | Lead Investors | Other Investors |\n ---  ---  --- \n| Apr 28, 2023 | 8814197 | Series C | 6627290 | 1803853 | 9550775 | 3555807 |\n| Feb 25, 2021 | 1295031 | Series B | 1444770 | 3037559 | 7789294 | 9288325 |\n| Jul 22, 2020 | 2810644 | Series A | 1980162 | 2314609 | HSBC | Mastercard & 1 more |\n\nlock\n\n## Episode Six's founders and board of directors\n\n### Episode Six's employee count trend [...] Employee count trend for Episode Six\nlock\nchrome_extension_cta_illustration\n\n## Episode Six's Competitors and alternates",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "US fintech Episode Six secures $48m in Series C funding",
+          "signal_type": "news",
+          "source_url": "https://www.fintechfutures.com/venture-capital-funding/us-fintech-episode-six-secures-48m-in-series-c-funding",
+          "published_date": null,
+          "snippet": "#### Standard Metrics lands $20m to develop investor portfolio management platform by Francis Bignell Aug 26, 2026Fintech Start-upsImage 21: Repodo - FinTech News #### Lunar founders launch new AI audit company Repodo by Tyler Pathe Aug 26, 2026Venture Capital FundingImage 22: KPMG - FinTech News #### UK fintech funding plummets to decade low, latest KPMG data finds by Tyler Pathe Aug 25, 2026Venture Capital FundingImage 23: Fasset - fintech news #### Stablecoin-focused neobank Fasset raises [...] menuImage 2: FinTech Futures\n\nSubscribe\n\nVenture Capital Funding\n\nStandard Metrics lands $20m to develop investor portfolio management platformStandard Metrics lands $20m to develop investor portfolio management platform\n\nbyFrancis Bignell\n\nAug 26, 2026\n\n1 Min Read\n\nImage 12: US Bank - FinTech NewsWealthTech\n\nUS Bank Investment Services deploys Fenergo's CLM platformUS Bank Investment Services deploys Fenergo's CLM platform\n\nbyCameron Emanuel-Burns\n\nAug 26, 2026\n\n1 Min Read [...] Fasset raises $68m Series C led by SBI by Tyler Pathe Aug 25, 2026",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Episode Six raises $48M to streamline payment processes | TechCrunch",
+          "signal_type": "person_mention",
+          "source_url": "https://techcrunch.com/2023/05/23/episode-six-raises-48m-to-streamline-payment-processes",
+          "published_date": null,
+          "snippet": "Kyle Wiggers\n\nAustin, Texas\u2013based Episode Six, a payments and banking infrastructure provider, today announced that it raised $48 million in a Series C funding round led by Avenir with participation from Anthos Capital. In an email, CEO John Mitchell said that the tranche will be used to expand Episode Six\u2019s go-to-market efforts and scale its business as the company looks to drive digital transformation journeys for banks and companies operating within the payments space. [...] Partner Content\n\nTechCrunch Brand Studio\n\nCrunchboard\n\nContact Us\n\nenterprise startups, VC funding, saas\n\nImage Credits:Nuthawut Somsuk / Getty Images\n\nFintech\n\n# Episode Six raises $48M to streamline payment processes\n\nKyle Wiggers [...] + Zack Whittaker\n Anduril reportedly in talks to raise funding at $100B valuation, more than 3x last year\u2019s mark\n\n  + Ram Iyer\n Tesla\u2019s robotaxis are moving in reverse\n\n  + Sean O'Kane\n How OpenAI\u2019s human mistake led to the AI-powered hack on Hugging Face\n\n  + Lorenzo Franceschi-Bicchierai\n Jack Dorsey is taking on Slack with Buzz, a group chat platform for teams and their AI agents\n\n  + Amanda Silberling\n\nLoading the next article\n\nError loading the next article",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Episode Six - 2026 Company Profile & Team",
+          "signal_type": "news",
+          "source_url": "https://tracxn.com/d/companies/episode-six/__xmrhPLYByfcXYNudGgeOWnjIY7Ox7KoVWN6wJRc7fQY",
+          "published_date": null,
+          "snippet": "Episode Six has raised a total funding of $85M over 4 rounds. Its first funding round was on Mar 03, 2017. Its latest funding round was a Series C round on Apr 28, 2023 for  $\\\\\\\\\\. 2 investors participated in its latest round.  Episode Six has 6 institutional investors.\n\nlock [...] | Rank | Company Details | Short Description | Total Funding | Investors | Tracxn Score |\n ---  ---  --- |\n| 1st | Logo for Cardless  Cardless 2019, San Francisco  (United States), Series C | Credit cards for consumers | $150M | Activant Capital, Spark Capital  & 18 others | 72/100 |\n| 2nd | Logo for Mindgate  Mindgate 2008, Mumbai  (India), Acquired | Provider of digital payment platform, retail, transaction banking, and other solutions | $10.2M | ACI Worldwide, PayU | 68/100 | [...] | 9th | Logo for Brim Financial  Brim Financial 2017, Toronto  (Canada), Series C | NFC-enabled credit card payment solution for individuals | $102M | EPIC Ventures, Export Development Canada  & 7 others | 58/100 |\n| 10th | Logo for Wibmo  Wibmo 1999, Cupertino  (United States), Acquired | Provider of payment processing technology and fraud management solutions | $2.58M | Accel, Western Technology Investment  & 6 others | ",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Federal government announces funding for athletes, sport infrastructure projects \u2013 July 27, 2026",
+          "signal_type": "news",
+          "source_url": "https://www.youtube.com/watch?v=wwTmmoPvFF4",
+          "published_date": null,
+          "snippet": "Oval in all of her questioning during her uh sort of roundts with politicians from across the country. Thank you Deborah. [applause] So on behalf of the University of Calgary, I again offer my sincere thanks to the government of Canada and the government of Alberta for this important investment. The Olympic Oval is a source of pride for all of us here at the University of Calgary. And as we embark on critical enhancements made possible by today's funding announcements, we know it will be an [...] All right. Well, good morning everybody and thank you for joining us today for this important funding announcement for Calgary and a number of other communities here in Canada. I am Corey Hogan. I'm the member of parliament for Calgary Confederation. You are currently in Calgary Confederation. It's my great honor that I represent the University of Calgary, which is an institution that I used to work for before I was elected as well. And I I'd like to begin by acknowledging we're on the [...] # Federal government announces funding for athletes, sport infrastructure projects \u2013 July 27, 2026\n## cpac\n263000 subscribers\n25 likes\n\n### Description\n1122 views\nPosted: 27 Jul 2026\nAt a news conferen",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "CFO Chermaine Hu on Episode Six's tech stack and fintech ...",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/posts/episode-six_payments-fintech-leadership-activity-7379168229325299713-pjjF",
+          "published_date": null,
+          "snippet": "Great to see our CFO and co-founder, Chermaine Hu, featured in the Finance and Accounting Technology Briefing\u2019s \u201cWhat\u2019s in Your Tech Stack?\u201d series. Chermaine shares how Episode Six approaches technology decisions with the same mindset we bring to payments infrastructure: flexibility, scalability, and a focus on solving real-world problems for customers. Her perspective on navigating vendor partnerships, balancing innovation with practicality, and what she wishes software providers would do [...] pressure points before they hit. \ud83d\udd39 Tightening working capital \u2014 accelerating receivables, managing payables strategically, and optimising inventory. \ud83d\udd39 Securing smart funding \u2014 balancing equity, debt, and alternative financing to maintain flexibility. \ud83d\udd39 Embedding financial agility \u2014 empowering finance teams to adapt plans quickly as conditions shift. High-growth businesses don\u2019t just chase top-line growth they manage cash like oxygen. Without it, even the most promising strategy suffocates. \ud83d\udc49 [...] Growth is exciting but it can also be one of the most dangerous times for a business. Scaling too quickly without the right financial discipline often leads to over-trading, strained liquidity, a",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "About Episode Six | Cards and Ledger Infrastructure Experts",
+          "signal_type": "person_mention",
+          "source_url": "https://episodesix.com/about-us",
+          "published_date": null,
+          "snippet": "Dash.fi\n\nCredit Corp Logo White 1\n\nSHB Logo White 1\n\nClip path group (2).svg)\n\nAtono Logotype White 1\n\nOTT Logo White 1\n\nNomi Health Logo White 1\n\nAnna Money\n\nEtraveli\n\nZen.com-1\n\nLogo_Sharsies_Large\n\nLogo_Trustly_Large\n\nLogo_CIMB_Large\n\nLogo_xMoney_Large\n\nLogo_YooFinancial_Large\n\nLogo_Loop_Large\n\n## Meet our team\n\nJohn Mitchell\n\nJohn Mitchell\n\nCEO & Co-Founder\n\nChermaine Hu\n\nChermaine Hu\n\nCFO & Co-Founder\n\nFuteh Kao\n\nFuteh Kao\n\nCTO & Co-Founder\n\nBrian Muse-McKenney\n\nBrian Muse-McKenney [...] Chief Revenue Officer\n\nLaura Adams\n\nLaura Adams\n\nChief Legal Officer\n\nDaryn Griggs\n\nDaryn Griggs\n\nManaging Director - APAC\n\nLoong Sam\n\nLoong Sam\n\nGeneral Manager, Japan\n\nRoss Hamilton\n\nRoss Hamilton\n\nEVP, IT Operations & CISO\n\nMike Wienke\n\nMike Wienke\n\nSVP, Marketing\n\nMatthew Little\n\nMatthew Little\n\nVP, Product\n\nFrank Yen\n\nFrank Yen\n\nVP, Engineering\n\nManikandan Chandramohan\n\nManikandan Chandramohan\n\nVP, Client Operations\n\nKallan Hogan\n\nKallan Hogan\n\nHead of Sales Excellence and Lending [...] Jen Mitchell\n\nJen Mitchell\n\nHead of People\n\n## The origin of Episode Six\n\n##### Our co-founders have been making waves in the global payments industry for decades, developing payments programs before the t",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Top 3 Priorities for CFOs in 2026 - Gartner C-level Communities",
+          "signal_type": "news",
+          "source_url": "https://www.evanta.com/resources/cfo/survey-report/top-3-priorities-for-cfos-in-2026",
+          "published_date": null,
+          "snippet": "Share this page\n\n\n\nIn 2026, Chief Financial Officers (CFOs) are navigating a rapidly evolving business landscape shaped by digital transformation, economic uncertainty, and the accelerating adoption of AI and automation. As one CFO community member shared, \u201cWe have to strike the right balance between the advancement of AI technology, focusing on the talent pool, having a collaborative mindset, creative thinking, and problem-solving \u2013 and these are all shifting.\u201d [...] Across the enterprise, CFOs are aligning closely with their C-suite peers on priorities such as operational excellence, cost management, and innovation. Their ability to anticipate trends, respond to disruption, and lead with vision and agility will be critical to organizational success in the years ahead. [...] Capacity constraints are a major barrier, with 61% of CFO survey respondents citing competing priorities as their most significant challenge. Many finance leaders are responding by investing in talent transformation, including upskilling existing teams, attracting tech-savvy professionals, and building centers of excellence to centralize and automate core processes. One CFO explained, \u201cWe\u2019ve established a grou",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Episode Six CFO on scaling a fintech with discipline",
+          "signal_type": "person_mention",
+          "source_url": "https://www.cfo.com/news/episode-six-cfo-chermaine-hu-on-scaling-fintech-with-discipline/814135",
+          "published_date": null,
+          "snippet": "Claire Bramley says CFOs chasing board seats need to show they can think like enterprise leaders, not just modern finance leaders.\n\nTraders work on the floor of the New York Stock Exchange during morning trading on June 04, 2026 in New York City. Stocks opened mixed, with the S&P 500 and Nasdaq falling while the Dow Jones Industrial Average rose more than 500 points after dropping 600 points at the previous day's close. (\nImage attribution tooltip\nImage attribution tooltip [...] ### New York beats out San Francisco for top tech talent hub: Trial Balance\n\n## The Latest\n\nRyan Gwillim\nImage attribution tooltip\nImage attribution tooltip\n\n### Brunswick CFO sets course in a changing boating market\n\nRyan Gwillim explains why Brunswick\u2019s mix of boats, engines and marine technology gives the holding company a unique position across the entire boating lifecycle. [...] semiconductor-cpu\nImage attribution tooltip\nImage attribution tooltip\n\n### The working capital squeeze behind the semiconductor surge\n\nThe Hackett Group found semiconductor revenue jumped 32% last year as AI demand surged, but turning that growth into cash is taking longer.\n\nDr. Susan McKeon CFO and Associate Lab Director, Broo",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2983
+    }
+  ]
+}

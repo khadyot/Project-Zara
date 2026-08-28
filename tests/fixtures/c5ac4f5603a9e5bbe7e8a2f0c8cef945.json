@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month-end close",
+    "draft_text": "Hi Jon,\nYou announced your new CFO role in a Global FinTech Q&A. Month-end close often stalls when teams match data manually across systems, adding hours of repetitive work.\nWe build bots that pull transaction data from each ledger and reconcile it automatically.\nCan we schedule a brief call next week to explore?\nZamp"
+  },
+  "prompt_tokens": 1216,
+  "completion_tokens": 1443
+}

@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipMonk recently launched an apparel\u2011specific fulfillment center to tackle returns and SKU complexity.",
+        "rationale": "As CFO, the cost and financial impact of returns and SKU management are key metrics you oversee, and reducing complexity can improve margins.",
+        "bridge": "Our automation platform can streamline the reconciliation of return transactions and SKU inventories, giving you clearer financial visibility and lower manual effort.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In your Feb\u202f5\u202f2026 LinkedIn post you highlighted that operational excellence drives merchant success.",
+        "rationale": "Operational excellence is directly tied to financial performance, a priority for you as CFO, especially when scaling the business.",
+        "bridge": "By automating reconciliation\u2011heavy processes, our solution removes manual bottlenecks, helping you sustain the operational excellence you champion.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipMonk is featuring senior leaders, including founder Jan\u202fBednar, as mentors for an upcoming leadership camp.",
+        "rationale": "While the snippet doesn\u2019t mention you, the company\u2019s focus on leadership development signals a culture that values efficient, data\u2011driven decision\u2011making\u2014areas where finance leadership plays a role.",
+        "bridge": "Our automation tools free up finance teams from tedious reconciliations, allowing leaders to devote more time to mentorship and strategic initiatives.",
+        "strength": 0.6
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipMonk announced your appointment as the new Chief Financial Officer.",
+        "rationale": "Stepping into the CFO role often involves evaluating and improving financial processes, especially those that are manual and error\u2011prone.",
+        "bridge": "Our solution automates reconciliation\u2011heavy workflows, giving you faster, more accurate financial data to support strategic decisions early in your tenure.",
+        "strength": 0.9
+      }
+    ]
+  },
+  "prompt_tokens": 903,
+  "completion_tokens": 1008
+}

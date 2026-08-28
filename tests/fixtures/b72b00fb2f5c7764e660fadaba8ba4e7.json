@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Fintech payments and reconciliation",
+    "draft_text": "Hi Chermaine,\n\nLegacy payments weren\u2019t built for the world fintech operates in today. Reconciliation teams spend hours each day wrestling with outdated transaction flows and manual data entry errors, which become systemic.\n\nWe build bots that match incoming payments to ledger entries without manual input.\n\nCould we schedule a brief call next week to see if this approach fits your workflow?\n\nZamp"
+  },
+  "prompt_tokens": 1285,
+  "completion_tokens": 1982
+}

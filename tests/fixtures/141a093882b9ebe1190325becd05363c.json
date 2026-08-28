@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Automating month end close at Payouts Network",
+    "draft_text": "Hi Jon,\nYour CFO appointment notes experience guiding companies through IPOs.\nThat suggests month end close may still rely on manual matching across systems, adding latency and risk to financial reporting.\nWe build a connector that reconciles transactions between your ERP and payment platform, eliminating manual effort and errors.\nDo you have 15 minutes next week to discuss the idea?\nZamp"
+  },
+  "prompt_tokens": 1072,
+  "completion_tokens": 2531
+}

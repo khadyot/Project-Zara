@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about invoice reconciliation",
+    "draft_text": "Hi Bruce,\nYour LinkedIn profile shows 500 connections and 657 followers. Teams of that size often spend significant time reconciling freight invoices and chasing mismatches.\nWe build bots that match invoices to shipment data, reducing manual entry.\nCan we schedule a brief call next week to see if it fits?\nZamp"
+  },
+  "prompt_tokens": 1208,
+  "completion_tokens": 1379
+}

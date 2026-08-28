@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only includes statements supported by the provided evidence (e.g., month-end close manual matching, Jon Anderson's CFO role and participation in Global FinTech Series). It does not introduce any invented metrics, customer names, or specific prospect claims lacking support."
+  },
+  "prompt_tokens": 1817,
+  "completion_tokens": 512
+}

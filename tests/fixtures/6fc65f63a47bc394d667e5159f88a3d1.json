@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All statements about the prospect are supported by the provided evidence; no invented metrics, customer names, or unsupported factual claims are present."
+  },
+  "prompt_tokens": 671,
+  "completion_tokens": 557
+}

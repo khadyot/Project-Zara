@@ -1,0 +1,390 @@
+{
+  "prospect": "Fulfyld",
+  "person_name": "AJ Khanijow",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on greenhouse",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1609
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1802
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 3671
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "1 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2051
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 3534
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: InVia to Install Robots in Alabama Warehouse - Los Angeles Business Journal",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNMHlqcVlKcVRuOEJNV0lUNnpldHVuNXE3c0k3OXlxbHk3Rk9kOHhNQ2oyc1lVeFBVQzBFS1NHbWpkU0hKTDA2ZHE3MWZFZkkyRVNvNUVEYlZmcTBpdVVNeFNCN3ZYLV9xQ0hYa1N3R1gyUXpTM1VWQzdYOHVhT0ZoNTVVNnpqMF9zTm1VeEZOTUFSOW1RQkE?oc=5",
+          "published_date": "Wed, 04 May 2022 07:00:00 GMT",
+          "snippet": "InVia to Install Robots in Alabama Warehouse Los Angeles Business Journal",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: 20 Leading 3PL Companies - Inbound Logistics",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFB1S2JValhtQ1Jobkc4Z3VXVVcwS2RubVJNb1c2TmdkRFo4Ukc5OFZWak9Ma3JZVEZ0NlM3ekwyMkpNU21hWllvRDVWeGZRVWdlVmhYQWlDRGNRZmw0R0NFZVExUUJGSkE?oc=5",
+          "published_date": "Tue, 09 Jan 2024 08:00:00 GMT",
+          "snippet": "20 Leading 3PL Companies Inbound Logistics",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1021
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "skipped",
+      "reason": "model capacity: groq tpm budget consumed",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 8772
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Fulfyld website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://fulfyld.com",
+          "published_date": null,
+          "snippet": "Title: 3PL Fulfillment Service and eCommerce Warehouse | Fulfyld\n\nURL Source: https://fulfyld.com/\n\nPublished Time: Wed, 26 Aug 2026 09:55:22 GMT\n\nMarkdown Content:\n**4.9/5** from 114+ growing D2C brands\n\n## Switch to 3PL fulfillment that just works. Easy.\n\n**3PL eCommerce fulfillment for brands that want a partner, not a platform.** Fulfyld is the third-party fulfillment and warehousing partner you can rely on for a personalized approach and efficient order fulfillment.\n\nRate back in 1 business day Most brands live in ~2 weeks Real human support\n\nFeatured in\n\n**99.9%**pick accuracy\n\n**Today\u2019s orders**LIVE \u00b7 same-day\n\nSKU-4471 Vitamin C Serum Shipped\n\nSKU-2210 Recovery Balm Packing\n\nSKU-9082 Daily Greens Shipped\n\n**$0**hidden fees \u2014 flat per-order rate\n\n**1 _PM_**same-day order cutoff\n\n**2 _days_**dock-to-stock receiving\n\nLIVE FROM THE FLOOR Order #18,402 picked & packed **\u2192 Birmingham, AL \u00b7 same-day**\n\nThird-party fulfillment has never been easier to trust.\n\nWhat is Fulfyld?\n\n### Fulfillment without the headaches.\n\n**Fulfyld is a third-party logistics (3PL) company** that picks, packs, and ships eCommerce orders for growing D2C brands. Every customer gets a dedicated account manager, a formal SLA backed by financial credits, and one flat all-inclusive per-order rate. No surprise fees, no queues, no nonsense.\n\nFounded 2016\n\nSupport Dedicated account manager for every brand\n\nBest for D2C brands, 500\u20135,000+ orders/mo\n\nProducts If you can sell it, we can ship it\n\nPricing model Flat per-order rate, all-inclusive\n\nGuarantee SLA backed by automatic credits\n\nSpeed Same-day by 1PM \u00b7 dock-to-stock in 2 days\n\nCoverage USA & Canada \u00b7 8+ cart integrations\n\nTired of your current 3PL?\n\n## Hidden fees, ticket queues, and reps who don\u2019t know your brand. Sound familiar?\n\nFulfyld is the switch. One dedicated account manager, an SLA backed by real credits, and all-inclusive per-order pricing, so the bad parts of your old 3PL just stop.\n\nThe switch, side by side\n\nYour current 3PL\n\nfulf",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1175
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: AJ K.",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/in/akhanijow",
+          "published_date": "2026-08-07T00:00:00.000Z",
+          "snippet": "# AJ K.\n\nFounder & CEO at Fulfyld\n\nHuntsville, Alabama, United States (US)\n\n500 connections \u2022 2,886 followers\n\n## About\n\nAt Fulfyld, we offer e-commerce business services for every step of the supply chain. We'll simplify, upgrade and refine your fulfillment and distribution process \u2014saving you time and money.\n\nTotal Experience: 19 years and 2 months\n\n## Experience\n\n### Chief Executive Officer - [Fulfyld](https://www.linkedin.com/company/fulfyld) (Current)\n\nJan 2014 - Present (12 years and 7 months) in Huntsville, Alabama Area\n\nDepartment: General Management \u2022 Level: C-Level\n\nFulfyld is a Transportation, Logistics, Supply Chain and Storage company. Fulfyld is a 3PL fulfillment service and eCommerce warehouse provider. They offer a wide range of fulfillment services and solutions for various industries. Fulfyld has 10-20 employees, founded in 2014. Headquartered in Madison, Alabama, United States. Its workforce is distributed across United States and Philippines.\n\n### President - Khanitech (Current)\n\nJul 2007 - Present (17 years and 8 months) in Madison, AL\n\nManufacturers Rep & Consulting\n\nDepartment: General Management \u2022 Level: President/Vice President\n\n### Global Business Development - Tecvox\n\nFeb 2013 - May 2018 (5 years and 3 months)\n\n- Maintain relationships with customers and OEM teams across the globe to present new products and support current business\n- Facilitate customer meetings with engineering teams\n- Assist and create interactive/informational presentations for ",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Choosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide: | AJ K.",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/akhanijow_ecommerce-fulfillment-3pl-activity-7257023540883779584-VH4o",
+          "published_date": "2024-10-29T00:00:00.000Z",
+          "snippet": "# Choosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide: | AJ K. \u00b7 LinkedIn \u00b7 2024-10-29\n\n**AJ K.**: Chief Executive Officer at Fulfyld for 12 years 7 months with 19 years 2 months of total professional experience. Previous roles include Global Business Development at Tecvox, Consultant at Capgemini, and President at HSVdining.com. Based in Huntsville, Alabama, United States [US].\n\n---\n\nChoosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide:\n\n\u26a0\ufe0f **Avoid rookie mistakes**: Don\u2019t fall for the 'cheapest is best' trap, especially when looking at a 3PL. Low-cost options might not provide great service or, in turn, happy customers! \ud83d\uded1\n\n\ud83d\udd0d **Think long-term**: Your fulfillment partner is an investment in quality and customer satisfaction! \ud83d\udca1\n\n\ud83d\udcac **Stay connected**: Communication is essential. Logistics hiccups happen, so make sure your partner is ready to solve issues together. Regular check-ins keep everything running smoothly! \ud83d\udcde\n\nBuilding a strong partnership early can lead to big rewards. Let\u2019s connect and succeed together! \ud83e\udd1d\n\n#ecommerce #fulfillment #3pl\n\n![Choosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide: | AJ K. image](https://media.licdn.com/dms/image/v2/D4E10AQGZGv6MicCO4A/image-shrink_800/image-shrink_800/0/1730209239684?e=2147483647&v=beta&t=y4G4BtvoPOOmUSoM5KvG_U2nyfW4bcH0NKe9iOYFD5s)\n\n## Comments\n\n**[Dmytro Suslov](https://lin",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2464
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Fylamynt raises $6.5M for its cloud workflow automation platform | TechCrunch",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2020/12/02/fylamynt-raises-6-5m-for-its-cloud-workflow-automation-platform/",
+          "published_date": "2020-12-02T00:00:00.000Z",
+          "snippet": "Fylamynt raises $6.5M for its cloud workflow automation platform | TechCrunch\n\n\u2013:\u2013:\u2013:\u2013\n\n\ud83d\udea8 Flash Sale \ud83d\udea8 Get $100 off your Disrupt 2026 ticket\n\nBack by popular demand: Save up to $300 on Disrupt\n\n# Fylamynt raises $6.5M for its cloud workflow automation platform\n\n9:45 AM PST \u00b7 December 2, 2020\n\nFylamynt, a new service that helps businesses automate their cloud workflows, today announced both the official launch of its platform as well as a $6.5 million seed round. The funding round was led by Google\u2019s AI-focused Gradient Ventures fund. Mango Capital and Point72 Ventures also participated.\n\nAt first glance, the idea behind Fylamynt may sound familiar. Workflow automation has become a pretty competitive space, after all, and the service helps developers connect their various cloud tools to create repeatable workflows. We\u2019re not talking about your standard IFTTT- or Zapier-like integrations between SaaS products, though. The focus of Fylamynt is squarely on building infrastructure workflows. While that may sound familiar, too, with tools like Ansible and Terraform automating a lot of that already, Fylamynt sits on top of those and integrates with them.\n\nhttps://techcrunch.com/wp-content/uploads/2020/12/fylamynt.gif Image Credits: Fylamynt\n\n\u201cSome time ago, we used to do Bash and scripting \u2014 and then [ \u2026 ] came Chef and Puppet in 2006, 2007. SaltStack, as well. Then Terraform and Ansible,\u201d Fylamynt co-founder and CEO Pradeep Padala told me. \u201cThey have all done an extremely good job ",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Plenful raises $9M to automate healthcare workflows | TechCrunch",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2023/10/10/plenful-raises-9m-to-automate-healthcare-workflows/",
+          "published_date": "2023-10-10T00:00:00.000Z",
+          "snippet": "Plenful raises $9M to automate healthcare workflows | TechCrunch\n\n# Plenful raises $9M to automate healthcare workflows\n\n Kyle Wiggers \n\n5:30 AM PDT \u00b7 October 10, 2023\n\nPlenful, a startup developing workflow automation tools for healthcare providers, has emerged from stealth with $9 million in a funding round led by Bessemer Venture Partners.\n\nCo-founder and CEO Joy Liu says that the proceeds will be put toward building out Plenful\u2019s platform, growing the company\u2019s 20-person team (particularly on the engineering, product development, sales and operations sides) and scaling Plenful\u2019s customer base, which currently stands at around 20 healthcare companies.\n\n\u201cThe pharmacy industry is facing technician burnout and workload overload, contributing to high turnover rates and high labor shortage in the industry,\u201d Liu told TechCrunch in an email interview \u201cPlenful helps save time on menial-tasks by automating administrative work to free up time and allow technicians and care teams to focus on top of license activities.\u201d\n\nBefore Plenful, Liu was a health system specialty pharmacy operator with the-now-Walgreens-owned Shields Health Solutions, where she says that she experienced firsthand how manual and time-consuming many of the pharmacy workflows were \u2014 and how they bogged down her team.\n\nIt\u2019s an industry-wide challenge.\n\nAccording to a survey from health tech company Holon Solutions, 77% of healthcare workers are experiencing burnout, with the top reasons being not enough people to g",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1709
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Going Live Checklist Fulfyld",
+          "signal_type": "news",
+          "source_url": "https://www.fulfyld.com/docs/going-live-checklist-fulfyld/",
+          "published_date": "2026-06-15T00:00:00.000Z",
+          "snippet": "\u00d7\n\nServices\n\nCore Fulfillment 2 Day Guaranteed Fulfillment Pick and Pack Fulfillment E-Fulfillment Services D2C Fulfillment B2B Fulfillment Enterprise Fulfillment Inventory Fulfillment Custom Fulfillment Premium Fulfillment Temperature Controlled\n\n3PL Solutions Boutique 3PL White Label Fulfillment Multi-Brand Fulfillment\n\nPlatform Specific Shopify Fulfillment Amazon SFP & FBA Prep eCommerce Fulfillment OmniChannel Fulfillment\n\nKitting & VAS Value-Added Services Kitting Services\n\nReturns Reverse Logistics Returns Management\n\nCrowdfunding & Subscription Crowdfunding Fulfillment Kickstarter Fulfillment Subscription Box\n\nInfluencer & Creator Influencer Fulfillment YouTube Fulfillment TikTok Fulfillment\n\nIndustries\n\nApparel, Fashion & Beauty Apparel Fulfillment Accessory Fulfillment Jewelry Fulfillment Beauty & Cosmetics Makeup 3PL Eye Shadow 3PL Hair Care Fulfillment\n\nHealth & Wellness Healthcare Fulfillment Supplement Fulfillment Nutraceuticals CBD Fulfillment Medical Equipment\n\nConsumer Goods & Retail Consumer Packaged Goods Edible Products Baby Products Pet Supplies Retail Fulfillment\n\nHome & Lifestyle Home Goods Home Improvement Bedding Fulfillment Kitchen Goods 3PL Outdoor Equipment\n\nElectronics & Specialty Electronics Fulfillment Auto Parts Fulfillment Lithium / Battery Fragile Goods Oversized & Bulky Lightweight Products Swag Fulfillment Emerging Markets\n\nMedia & Literature Book Fulfillment Literature Fulfillment Media Fulfillment\n\nCompany\n\nAbout Us Dedicated Account Manag",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Knowledge Base",
+          "signal_type": "news",
+          "source_url": "https://www.fulfyld.com/knowledge/",
+          "published_date": null,
+          "snippet": "\u00d7\n\nServices\n\nCore Fulfillment 2 Day Guaranteed Fulfillment Pick and Pack Fulfillment E-Fulfillment Services D2C Fulfillment B2B Fulfillment Enterprise Fulfillment Inventory Fulfillment Custom Fulfillment Premium Fulfillment Temperature Controlled\n\n3PL Solutions Boutique 3PL White Label Fulfillment Multi-Brand Fulfillment\n\nPlatform Specific Shopify Fulfillment Amazon SFP & FBA Prep eCommerce Fulfillment OmniChannel Fulfillment\n\nKitting & VAS Value-Added Services Kitting Services\n\nReturns Reverse Logistics Returns Management\n\nCrowdfunding & Subscription Crowdfunding Fulfillment Kickstarter Fulfillment Subscription Box\n\nInfluencer & Creator Influencer Fulfillment YouTube Fulfillment TikTok Fulfillment\n\nIndustries\n\nApparel, Fashion & Beauty Apparel Fulfillment Accessory Fulfillment Jewelry Fulfillment Beauty & Cosmetics Makeup 3PL Eye Shadow 3PL Hair Care Fulfillment\n\nHealth & Wellness Healthcare Fulfillment Supplement Fulfillment Nutraceuticals CBD Fulfillment Medical Equipment\n\nConsumer Goods & Retail Consumer Packaged Goods Edible Products Baby Products Pet Supplies Retail Fulfillment\n\nHome & Lifestyle Home Goods Home Improvement Bedding Fulfillment Kitchen Goods 3PL Outdoor Equipment\n\nElectronics & Specialty Electronics Fulfillment Auto Parts Fulfillment Lithium / Battery Fragile Goods Oversized & Bulky Lightweight Products Swag Fulfillment Emerging Markets\n\nMedia & Literature Book Fulfillment Literature Fulfillment Media Fulfillment\n\nCompany\n\nAbout Us Dedicated Account Manag",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1703
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Form8 k.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1892492/000149315224050898/form8-k.htm",
+          "published_date": null,
+          "snippet": "UNITED STATES\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C. 20549\n\nFORM 8-K\n\nCURRENT REPORT\n\nPursuant to Section 13 or 15(d) of the\n\nSecurities Exchange Act of 1934\n\nDate of Report (Date of earliest event reported): December 19, 2024\n\nEIGHTCO HOLDINGS INC.\n\n(Exact name of registrant as specified in its charter)\n\n| Delaware | 001-41033 | 87-2755739 |\n| --- | --- | --- |\n| (State or other jurisdiction of incorporation) | (Commission File Number) | (IRS Employer Identification No.) |\n\n| 101 Larry Holmes Drive Suite 313 Easton, PA | 18042 |\n| --- | --- |\n| (Address of principal executive offices) | (Zip Code) |\n\nRegistrant\u2019s telephone number, including area code: (888) 765-8933\n\n(Former name or former address, if changed since last report)\n\nNot Applicable\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2. below):\n\n\u2610 Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n\u2610 Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n\n\u2610 Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n\n\u2610 Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\n\nSecurities registered pursuant to Section 12(b) of the Act:\n\n| Title of each class | Trading Symbol(s) | Name of each exchange o",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1892492/000149315222025924/form8-k.htm",
+          "published_date": null,
+          "snippet": "## UNITED STATES\n\n## SECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C. 20549\n\nFORM 8-K\n\nCURRENT REPORT\n\nPursuant to Section 13 or 15(d) of the\n\nSecurities Exchange Act of 1934\n\nDate of Report (Date of earliest event reported): September 14, 2022\n\nCRYPTYDE, INC.\n\n(Exact name of registrant as specified in its charter)\n\n| Delaware | 001-41033 | 87-2755739 |\n| --- | --- | --- |\n| (State or other jurisdiction of | (Commission | (IRS Employer |\n| incorporation) | File Number) | Identification No.) |\n\n| 200 9th Avenue North, Suite 220 Safety Harbor, Florida | 34695 |\n| --- | --- |\n| (Address of principal executive offices) | (Zip Code) |\n\nRegistrant\u2019s telephone number, including area code: (866) 980-2818\n\n(Former name or former address, if changed since last report)\n\nNot Applicable\n\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2. below):\n\n\u2610 Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n\n\u2610 Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n\n\u2610 Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n\n\u2610 Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\n\nSecurities registered pursuant to Section 12(b) of the Act:\n\n| Title of each class | Trading Symbol(s) | Name",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1614
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/@TanyaKhanijow",
+          "published_date": null,
+          "snippet": "Tanya Khanijow - YouTube",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=mq9pk_PdA3o",
+          "published_date": "2022-08-31T00:00:00.000Z",
+          "snippet": "# Bangkok like never before! Comprehensive travel guide from my solo trip to Thailand | Tanya Khanijow\n\n- Channel: Tanya Khanijow\n- Length: 21:17\n- Views: 269.8K\n- Likes: 5.7K\n- Published: 2022-08-31T05:07:11-07:00\n- Category: Travel & Events\n- Keywords: tanya khanijow, travel videos, india travel content, traveller from india, indian travel vlogger, indian travel content, indian vlogger, thailand, bangkok, bangkok travel guide, thailand travel series, thailand trip, solo trip, solo in Thailand\n- Language: en-GB\n\n## Description\n\nDuring my stay in Bangkok, I wanted to try some of the excellent food, and grand malls, visit Wat Arun, and Wat Pho, and primarily go for a cycling trip to the green lungs of the city - Bang Krachao. Overall, I had a fantastic time in Bangkok and I think I'd be eager to visit again sometime. Perhaps for some actual shopping in its malls next time? What's on your Thailand bucket list? Did you think any of the places that I've mentioned in this vlog will make it to the cut?\n\nAlso, this video is sponsored by Sabre! To join their journey to make travel better, click here: https://www.sabre.com/careers/\n\nYou may skip to the following points in the video for more information:\n\n\u25b6 Check out my gear on Kit: https://kit.co/tanyakhanijow\n\nLet's connect on Social Media.\n\u25cf Instagram: https://www.instagram.com/tanyakhanijow/\n\u25cf Facebook: https://www.facebook.com/TanyaKhanijowtravels\n\u25cf Pinterest: https://in.pinterest.com/tanyakhanijow/\n\u25cf Twitter: https://twitter.com/",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1554
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "The Ecommerce Lifecycle with AJ Khanijow",
+          "signal_type": "person_mention",
+          "source_url": "https://www.thelogisticsoflogistics.com/the-ecommerce-lifecycle-with-aj-khanijow",
+          "published_date": null,
+          "snippet": "AJ Khanijow is the founder of Fulfyld, a warehousing and fulfillment company based in Huntsville, Alabama. AJ and his team at Fulfyld specialize",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Selecting an E-commerce Fulfillment Partner with AJ Khanijow",
+          "signal_type": "person_mention",
+          "source_url": "https://podcasts.apple.com/be/podcast/selecting-an-e-commerce-fulfillment-partner-with/id1409735368?i=1000436922840&l=nl",
+          "published_date": null,
+          "snippet": "I (AJ Khanijow) am the founder and CEO of Fulfyld, an e-commerce fulfillment company that specializes in B2C shipments and home delivery.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "AJ K. - Fulfyld",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/in/akhanijow",
+          "published_date": null,
+          "snippet": "# AJ K.\nFulfyld\nHuntsville, Alabama, United States, US  \n500 connections, 2823 followers\n\n## About\nAt Fulfyld, we offer e-commerce business services for every step of the supply chain\u2026\n\n## Experience\n### Fulfyld  \nFulfyld  \nN/A - Present   \nN/A  \n\n###   \n  \nN/A - Present   \nN/A  \n\n###   \n  \nN/A - Present   \nN/A  \n\n###    \n   \nN/A - Present   \nN/A  \n\n## Education\n### Auburn University  \nN/A  \n2008 - 2012  \nNone\n\n## Publications\nN/A\n\n## Honors & Awards\nN/A\n\n## Certifications\nN/A [...] - Choosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide: \u26a0\ufe0f Avoid rookie mistakes: Don\u2019t fall\u2026  \nShared by AJ K.  \nView Post  \nActivity Image [...] - Jeff Burns (Kenco MHE Solutions) - \n- Frank Bello (Global Freight Services, an affiliate of Li & Fung) - \n- Scott Wolcott (Raymond Storage Concepts, Inc.) - \n- Evan Armstrong (Armstrong & Associates, Inc.) - \n- Christopher L. Hills (Hillendale Farm) - \n- Victor Cruz (Logical Solution Services, Inc.) - \n- Tim Judge (Agillitics) - \n- Kris Wiegman (USA Couriers, Inc) - \n- David Canfield (Interlog USA Inc.) - \n- Ron Roman (Self-employed) -",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "3PL Fulfillment Service and eCommerce Warehouse | Fulfyld",
+          "signal_type": "person_mention",
+          "source_url": "http://www.fulfyld.com",
+          "published_date": null,
+          "snippet": "Fulfyld is a third-party logistics (3PL) company that picks, packs, and ships eCommerce orders for growing D2C brands. Every customer gets a dedicated account manager, a formal SLA backed by financial credits, and one flat all-inclusive per-order rate. No surprise fees, no queues, no nonsense.\n\nFounded\n:   2016\n\nSupport\n:   Dedicated account manager for every brand\n\nBest for\n:   D2C brands, 500\u20135,000+ orders/mo\n\nProducts\n:   If you can sell it, we can ship it [...] Fulfyld is a leading solution for third-party fulfillment in the USA and Canada, known for reliability and expertise. Your products are in safe hands.\n\nFocus on your brand\n\n## Let us handle order fulfillment so you can focus on building your brand.\n\nFulfyld handles everything from storage selection to packing and fulfilling orders, with seamless integration across all major eCommerce platforms. Every customer gets a dedicated account manager. [...] A 3PL (third-party logistics provider) stores your inventory and ships your orders for you. Fulfyld is a 3PL based in the Huntsville, Alabama metro. We receive your products, store them, then pick, pack, and ship orders to your customers, with real-time tracking and a dedicate",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Logistics and 3PL leaders bring fulfillment innovation to NextGen 2026 - Supply Chain Management Review",
+          "signal_type": "news",
+          "source_url": "https://www.scmr.com/article/logistics-and-3pl-leaders-bring-fulfillment-innovation-to-nextgen-2026",
+          "published_date": null,
+          "snippet": "Sponsorship opportunities remain available, including a limited number of Gold Sponsorships. Gold Sponsors receive a premium speaking opportunity built around a 30-minute customer case study presented jointly with an end-user customer, giving attendees the opportunity to learn directly from organizations implementing supply chain technologies in real-world environments. [...] Logistics providers are being asked to do more than move and store products. Customers increasingly expect their 3PL partners to help redesign networks, deploy automation, improve inventory accuracy, manage risk and create the visibility needed to make faster decisions. Fulfillment operations face a similar mandate as companies balance speed and service with cost, labor constraints and rising operational complexity. [...] The NextGen Supply Chain Conference continues to attract support from technology providers and service organizations looking to engage senior supply chain decision-makers. Current sponsors include:\n\n Diamond Sponsor: Zion Solutions Group\n Platinum Sponsor: Gather AI\n Gold Sponsors: Cycle Labs, Dematic, Geek+, Dexory and Zimark\n Bronze Sponsor: Verity\n Associate Sponsors: AutoScheduler and Arg",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Fall 2026 Government Funding: AMIC, SWODF/EODF & More",
+          "signal_type": "news",
+          "source_url": "https://funding.ryan.com/blog/government-funding/fall-2026-government-funding-deadlines",
+          "published_date": null,
+          "snippet": "Connect with Ryan\u2019s Government Funding team to discuss your upcoming project and get started on your Fall 2026 funding applications before key intake windows close.\n\nBlog Tags: Business Expansion, Federal Funding, Government Grants, Government Loans, Innovation, Ontario Provincial Funding, Research & Development\n\n## Subscribe to Funding Updates\n\nGet the top Canadian government funding news, delivered to your inbox. You can unsubscribe at any time.\n\n## Let\u2019s Find You Funding [...] For eligible business projects, funding may cover up to 15% of eligible project costs, with performance-based loans of up to $5 million. Up to 30% of an eligible loan may be forgiven, to a maximum of $500,000, when investment, job, and payroll targets are met. Certain small and rural businesses may qualify for grants of up to $500,000, while some strategic new investments may receive grants of up to $1.5 million. [...] Stream, Southwestern Ontario Development Fund (SWODF), Eastern Ontario Development Fund (EODF), and Trade Diversification Corridors Fund (TDCF) require detailed project plans, budgets, and evidence of measurable economic outcomes. Ontario businesses considering government funding in late 202",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Funding Breaking News and Press Releases ...",
+          "signal_type": "news",
+          "source_url": "https://www.businesswire.com/newsroom/subject/funding",
+          "published_date": null,
+          "snippet": "#### Create a PressPass Account\n\n#### Find the Right Newsfeed for Your Site\n\n#### Find the Right Newsfeed for Your Site\n\n\u00a9 2026 Business Wire, Inc. [...] Alcon_CMYK_Tag.jpg\n\n## Deep Cogito Raises $43M Series A to Advance the Post-Training Engine for Frontier Intelligence\n\ndeep-cogito-logo.jpg\n\n## Transfyr Launches Physical AI Platform for Science with $25M Seed Funding\n\nTransfyr_Lockup_Black%404x.jpg\n\n## Agentrys Raises $24.5 Million to Build Agentic Design Automation for Chipmakers\n\nAgentrys_Logo.jpg\n\n## Conti Federal Expands Indo-Pacific Presence with $16M Contract in Guam\n\nConti_Federal_Logo_Horizontal_Color_Tagline_For_Digital_Use.jpg [...] ## KNOT Offshore Partners LP Acquires Hedda Knutsen and Completes $225 Million Loan Refinancing\n\nKnot_Logo_with_icon.jpg\n\n## JIOS Secures $277 Million Financing for Industrial Outdoor Storage Portfolio\n\njadian_logo_rgb_f_ios_full-color.jpg\n\n## Voya Energy Unveils Metal Fuels Energy System, Closes $35 Million Series A\n\nVoya_Logo_Full_Color.jpg\n\n##### Turn Your News Into Headlines!\n\n#### Get Story Ideas Delivered to Your Inbox\n\n## Media & Journalist Tools\n\n#### Create a PressPass Account",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "3PL Fulfillment Service and eCommerce Warehouse | Fulfyld",
+          "signal_type": "news",
+          "source_url": "https://www.fulfyld.com",
+          "published_date": null,
+          "snippet": "> \u201cFor 2 years Fulfyld was an intricate part of our day-to-day operations, always willing to adjust, update, and grow alongside AMMD. Any issues were treated as top priority.\u201d\n\nAMAmy Myers, MDCEO\n\n> \u201cTimely and thorough replies from our account manager. Easy-to-use platform.\u201d\n\nHSHebron SamuelCEO, Cubbit\n\n> \u201cNo matter what happens, good or bad, there is always a quick resolution. We have never had a question or problem go unanswered.\u201d\n\nMHManuela HouvardasCollonil North America [...] > \u201cWe\u2019ve had such an amazing transition with the Fulfyld team and received the best customer service. We feel the team is an extension of our company.\u201d\n\nWEWendy EllisBeauty Stash\n\n> \u201cTheir commitment to precision, efficiency, and communication has been instrumental in elevating our success. Their partnership has become indispensable.\u201d\n\nMMMegan MoseleyRadicle Science [...] ReturnsReverse LogisticsReturns Management\n\nCrowdfunding & SubscriptionCrowdfunding FulfillmentKickstarter FulfillmentSubscription Box\n\nInfluencer & CreatorInfluencer FulfillmentYouTube FulfillmentTikTok Fulfillment\n\nApparel, Fashion & BeautyApparel FulfillmentAccessory FulfillmentJewelry FulfillmentBeauty & CosmeticsMakeup 3PLEye Shado",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "3PL Fulfillment Service and eCommerce Warehouse | Fulfyld",
+          "signal_type": "news",
+          "source_url": "https://www.fulfyld.com",
+          "published_date": null,
+          "snippet": "> \u201cFor 2 years Fulfyld was an intricate part of our day-to-day operations, always willing to adjust, update, and grow alongside AMMD. Any issues were treated as top priority.\u201d\n\nAMAmy Myers, MDCEO\n\n> \u201cTimely and thorough replies from our account manager. Easy-to-use platform.\u201d\n\nHSHebron SamuelCEO, Cubbit\n\n> \u201cNo matter what happens, good or bad, there is always a quick resolution. We have never had a question or problem go unanswered.\u201d\n\nMHManuela HouvardasCollonil North America [...] > \u201cYou guys are the best, fast, reliable, and accommodating at every step. My account manager Alfonzo has been super responsive. You really are an extension of our team.\u201d\n\nJCJordan CaroCEO, Alternate Route\n\n> \u201cEvery member of the Fulfyld team has been wonderful to work with. They are responsive and knowledgeable, and any need has been solved quickly.\u201d\n\nVLVictoria LambPlant Wave [...] By minimizing overheads and adhering to best-in-class processes, we provide your company with flat-rate pricing on order fulfillment.\n\n### See what switching saves you\n\nGet a free quote\n\nCustomer love\n\n## What our customers are saying.\n\n> \u201cAs a start-up, we needed a 3PL partner that would grow with us and Fulfyld IS IT! Afte",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "AJ K. - Fulfyld",
+          "signal_type": "news",
+          "source_url": "https://www.linkedin.com/in/akhanijow",
+          "published_date": null,
+          "snippet": "- CEO @JenniferSey at Stand For Women in Philadelphia today. @IWV Talking corporate responsibility and major athletic brands unwillingness to stand\u2026  \nLiked by AJ K.  \nView Post  \nActivity Image\n\n- I had the incredible opportunity to be on Fox 29 Philadelphia, WTXF chatting about Slick Chicks and our rollout in Target stores. \ud83c\udf89 Huge thanks to\u2026  \nLiked by AJ K.  \nView Post  \nActivity Image\n\n- \ud83c\udfd2  \nLiked by AJ K.  \nView Post  \nActivity Image [...] - When Aurora James, the founder and creative director of shoe and accessories label Brother Vellies, found herself yearning for a vibe shift, she\u2026  \nLiked by AJ K.  \nView Post  \nActivity Image\n\n- I can't start my day without this one thing\u2026 A checklist! Checklists are essential tools for staying organized and productive, whether at work or\u2026  \nLiked by AJ K.  \nView Post  \nActivity Image [...] - Choosing the right fulfillment partner is key to growing your e-commerce store! \ud83d\ude80 Here\u2019s a quick guide: \u26a0\ufe0f Avoid rookie mistakes: Don\u2019t fall\u2026  \nShared by AJ K.  \nView Post  \nActivity Image",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Fulfyld CEO, Founder, Key Executive Team, Board of Directors ...",
+          "signal_type": "news",
+          "source_url": "https://www.cbinsights.com/company/fulfyld/people",
+          "published_date": null,
+          "snippet": "Explore {Fulfyld's key management people. Discover current leadership team members including founders, CEO, other executives and board directors.",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Fulfyld: 3PL Pricing & Locations | Fulfill.com",
+          "signal_type": "news",
+          "source_url": "https://www.fulfill.com/3pl/profile/fulfyld",
+          "published_date": null,
+          "snippet": "Fulfyld specializes in providing tailored e-commerce fulfillment solutions for a diverse range of products, particularly those requiring careful handling or specialized kitting. We excel in serving emerging and established brands across various industries, including health and beauty, apparel, consumer goods, and subscription boxes. Our boutique approach means we can adapt to unique product specifications and custom packaging requirements, ensuring your brand's identity is maintained throughout [...] Based in Huntsville, Alabama, Fulfyld has offered ecommerce fulfillment services for every step of the supply chain since 2016. Their customers range from local to global companies, each with unique ecommerce fulfillment needs. Fulfyld integrates directly with ecommerce marketplaces and shopping carts to simplify your shipping process. They ship same-day, every day, for one flat-rate. Unlike many of 3PL competitors, Fulfyld hasbeen and will continue to be focused solely on ecommerce. As experts [...] Getting started with Fulfyld is a streamlined and efficient process designed to get your products moving quickly. Our onboarding typically involves an initial consultation to understand yo",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2817
+    }
+  ]
+}

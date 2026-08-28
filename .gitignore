@@ -82,3 +82,4 @@ Groq API Key Rate Limit.*
 
 # Streamlit local secrets. Never commit.
 .streamlit/secrets.toml
+DEMO-CHEATSHEET.md

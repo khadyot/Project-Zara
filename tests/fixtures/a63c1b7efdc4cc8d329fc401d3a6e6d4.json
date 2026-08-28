@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month end close",
+    "draft_text": "Hi Jon,\nYour Q&A with Global FinTech Series was posted 362 days ago. Teams of this size usually spend many hours each month matching data across systems.\nWe build a connector that pulls transaction data into a single ledger for automatic matching.\nCould we schedule a brief call next week to see if this fits your priorities?\nZamp"
+  },
+  "prompt_tokens": 1199,
+  "completion_tokens": 838
+}

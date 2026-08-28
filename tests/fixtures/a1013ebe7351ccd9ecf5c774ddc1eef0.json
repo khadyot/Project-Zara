@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not contain any invented metrics, customer names, or specific factual claims about Bruce Amerman or Midwest 3PL that are unsupported by the provided evidence. It only references the verified acquisition and makes permissible speculative statements."
+  },
+  "prompt_tokens": 1038,
+  "completion_tokens": 316
+}

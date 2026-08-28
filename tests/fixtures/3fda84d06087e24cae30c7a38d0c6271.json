@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": false,
+    "reason": "The email claims that reconciliation teams spend hours each day wrestling with outdated transaction flows and manual data entry errors. This specific metric (hours each day) is not supported by any of the provided evidence snippets, making it an invented factual claim."
+  },
+  "prompt_tokens": 2227,
+  "completion_tokens": 607
+}

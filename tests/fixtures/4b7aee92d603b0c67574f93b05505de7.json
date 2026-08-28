@@ -1,0 +1,22 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I see you're the Chief Financial Officer of Midwest 3PL based in Cedar Rapids, IA.",
+        "rationale": "As CFO, you oversee financial reporting and cost control, so any manual, reconciliation\u2011heavy processes directly impact your bottom line and the efficiency of your finance team.",
+        "bridge": "Our platform automates those reconciliation tasks for operations teams, delivering cleaner data and freeing up finance resources for higher\u2011value analysis.",
+        "strength": 0.72
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your career progression from public accounting\u2014audit, tax, and valuation\u2014to CFO of a warehousing and logistics firm stands out.",
+        "rationale": "That audit and valuation background means you prioritize accurate, auditable financial data, and manual reconciliations can be a major source of risk and effort.",
+        "bridge": "By automating manual reconciliation, our solution gives you more reliable data, reduces audit friction, and lets you focus on strategic financial planning.",
+        "strength": 0.86
+      }
+    ]
+  },
+  "prompt_tokens": 768,
+  "completion_tokens": 568
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "C.H. Robinson acquisition \u2013 reconciliation impact",
+    "draft_text": "Hi Bruce,\nC.H. Robinson announced the acquisition of DeSpir Logistics. Such M&A expands reconciliation workload across finance teams, adding layers of intercompany matching and manual adjustments.\nWe embed a ledger\u2011matching engine that auto\u2011reconciles intercompany freight invoices, posting adjustments to your ERP ledger.\nIf you have 15 minutes next week, I can walk through a quick demo of the engine and discuss fit."
+  },
+  "prompt_tokens": 1123,
+  "completion_tokens": 2128
+}

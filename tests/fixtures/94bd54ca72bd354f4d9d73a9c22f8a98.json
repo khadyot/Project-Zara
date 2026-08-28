@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month-end close",
+    "draft_text": "Hi Devin,\nI saw ShipMonk\u2019s post welcoming you as CFO.\nThat might mean month-end close will feel tighter than before.\nIf the close drags, the finance team may spend extra hours on manual matching.\nOur platform reads transaction data from ERP and shipping systems, then matches entries to eliminate manual reconciliation.\nI could be wrong.\nDo you have 15 minutes next week to discuss?\nZamp"
+  },
+  "prompt_tokens": 1064,
+  "completion_tokens": 1962
+}

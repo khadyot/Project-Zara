@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month-end close",
+    "draft_text": "Hi Jon,\nJon Anderson shared strategic insights in Global FinTech Series Q&A. Month-end close stalls when teams reconcile data by hand across systems, extending the reporting cycle and pulling senior staff into repetitive tasks.\nWe build bots that pull transaction data and match entries.\nCan we schedule a brief call next week to explore?"
+  },
+  "prompt_tokens": 1323,
+  "completion_tokens": 2531
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Sandbox testing for fulfillment",
+    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal is now in every sandbox account. That lets teams test fulfillment flows without touching live inventory, reducing manual reconciliation before go-live.\nWe build bots that reconcile sandbox data to source systems, eliminating hand\u2011coded mapping steps.\nDo you have 20 minutes next week to see if it fits?\nZamp"
+  },
+  "prompt_tokens": 1263,
+  "completion_tokens": 1058
+}

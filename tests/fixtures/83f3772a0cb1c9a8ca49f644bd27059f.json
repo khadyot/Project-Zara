@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month\u2011end close",
+    "draft_text": "Hi Jon,\nYou shared strategic insights in a Global FinTech Series Q&A. Month\u2011end close likely stalls when reconciliation relies on manual matching across systems.\nWe build bots that pull transaction data and reconcile entries.\nCan we schedule a brief call next week to explore?"
+  },
+  "prompt_tokens": 1395,
+  "completion_tokens": 751
+}

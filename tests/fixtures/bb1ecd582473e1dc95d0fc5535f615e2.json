@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Question about reconciliation at Midwest 3PL",
+    "draft_text": "Hi Bruce,\nYou serve as CFO of Midwest 3PL in Cedar Rapids. That likely means you manage many manual reconciliations. We build bots that reconcile transaction data across all your systems. Could we schedule a 15 minute call next week to discuss?"
+  },
+  "prompt_tokens": 1018,
+  "completion_tokens": 1225
+}

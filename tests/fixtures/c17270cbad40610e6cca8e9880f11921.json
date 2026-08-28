@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick note on recent acquisition",
+    "draft_text": "Hi Bruce,\nC.H. Robinson announced acquisition of DeSpir Logistics. Such M&A often expands reconciliation workload across finance teams.\nWe build bots that pull transaction data from each system into a single ledger for automatic matching.\nCould we schedule a brief 15 minute call next week to discuss?"
+  },
+  "prompt_tokens": 1086,
+  "completion_tokens": 761
+}

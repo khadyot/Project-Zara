@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel fulfillment expansion and reconciliation",
+    "draft_text": "Hi Devin,\nShipMonk opened an apparel fulfillment center to reduce returns and SKU complexity. Teams that add a dedicated center often see reconciliation workloads rise sharply. We build bots that automatically match inbound shipments to inventory records, eliminating manual reconciliation. Could we schedule a brief call next week to explore if this fits your plans?\nZamp"
+  },
+  "prompt_tokens": 1081,
+  "completion_tokens": 1166
+}

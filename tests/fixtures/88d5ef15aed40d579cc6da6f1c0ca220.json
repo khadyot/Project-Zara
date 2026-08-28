@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel fulfillment expansion and ops automation",
+    "draft_text": "Hi Devin,\nShipMonk launched an apparel-specific fulfillment center to tackle returns and SKU complexity. Such expansion forces ops teams to add manual reconciliation steps, stretching staff and increasing error risk.\nWe build bots that reconcile inventory counts and flag mismatches for review.\nWould a brief call next week fit your schedule?\nZamp"
+  },
+  "prompt_tokens": 1247,
+  "completion_tokens": 2644
+}

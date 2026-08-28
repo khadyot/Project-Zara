@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "generic finance podcast, no specific observable"
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO listing, no explicit recent appointment"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "mentor announcement, unrelated to finance observables"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "close_drag",
+        "score": 0.9,
+        "reason": "new CFO announcement"
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "executive list, no new appointment evidence"
+      },
+      {
+        "index": 28,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "executive list, no new appointment evidence"
+      },
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO tenure since Oct 2024, beyond 6\u2011month window"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "data breach news, not payment or finance observable"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "data breach news, not payment or finance observable"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "data breach news, not payment or finance observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1671,
+  "completion_tokens": 1709
+}

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO appointment announced, but timing not within six months"
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast promotion, no observable finance or operational pain"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mentor announcement unrelated to finance or operational observables"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New CFO announced, but no date confirming recent appointment"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Data breach news, not linked to finance observables"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Data breach news, unrelated to listed pains"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Data breach announcement, no relevant observable"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue figures, but no explicit volume or transaction growth"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO profile without recent appointment evidence"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.7,
+        "reason": "Launches new fulfillment center, indicating operational expansion"
+      }
+    ]
+  },
+  "prompt_tokens": 1521,
+  "completion_tokens": 1781
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Automation for Fulfyld fulfillment",
+    "draft_text": "Hi AJ,\nFulfyld lists Core Fulfillment, 2 Day Guaranteed, and Shopify Fulfillment. Managing many service lines often creates reconciliation bottlenecks across orders and inventory, leading to delayed shipments and extra labor.\nWe build bots that sync order data to inventory logs, eliminating manual matching and reducing error rates.\nCan we schedule a brief call next week to see if this fits your workflow and discuss automation options?\nZamp"
+  },
+  "prompt_tokens": 1405,
+  "completion_tokens": 1468
+}

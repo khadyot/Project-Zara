@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy payments and reconciliation",
+    "draft_text": "Hi Chermaine,\nLegacy payments weren\u2019t built for the world fintech operates in today. Fintech teams often wrestle with manual reconciliation when legacy rails limit flexibility.\nWe build bots that reconcile transaction data across systems without manual entry.\nCould we schedule a brief call next week to explore if this fits your workflow?\nZamp"
+  },
+  "prompt_tokens": 1352,
+  "completion_tokens": 787
+}

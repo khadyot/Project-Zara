@@ -2,6 +2,7 @@ import yaml
 import os
 import re
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import asyncio
 from pydantic import BaseModel, Field
 from typing import Literal
@@ -92,8 +93,44 @@ def _extract_speaker(card: SignalCard) -> str | None:
     return None
 
 
+# Lead-database and org-chart hosts. A scraped row in a contact database is not
+# the person speaking, however prominently their name sits in the title. Typed
+# "person_mention" by the fetcher, these were landing on `attributed` and taking
+# the 3x proximity weight that tier carries: a ShipMonk run led with a lead411
+# row and an Instagram hire announcement while an 11-day-old news story sat
+# three places below, and Devin Weil's own LinkedIn post sat below that.
+_DIRECTORY_HOSTS = (
+    "zoominfo.com", "rocketreach.co", "lead411.com", "datanyze.com", "theorg.com",
+    "seamless.ai", "apollo.io", "lusha.com", "signalhire.com", "contactout.com",
+    "leadiq.com", "success.ai", "equilar.com", "owler.com", "pitchbook.com",
+    "clearbit.com", "hunter.io", "snov.io", "uplead.com", "adapt.io",
+    "crunchbase.com", "peopledatalabs.com",
+)
+
+
+def _is_directory_row(card: SignalCard) -> bool:
+    url = (card.source_url or "").lower()
+    # A post is authored content wherever it sits, so it is never a directory row.
+    if "/posts/" in url:
+        return False
+    # The same LinkedIn profile arrived twice on one run: Exa typed it "profile"
+    # and Tavily typed it "person_mention", so one copy scored as a database row
+    # and the other as person-tier evidence. The URL is what decides, not the
+    # fetcher that happened to find it.
+    if "linkedin.com/in/" in url:
+        return True
+    return any(h in url for h in _DIRECTORY_HOSTS)
+
+
 def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Literal["authored", "colleague_authored", "attributed", "company_action", "database"]:
     person_name = prospect.person_name if prospect else ""
+
+    # Checked before tier: a directory row is a directory row whatever the
+    # fetcher tagged it, and the whole point of the tier is proximity to the
+    # person's own voice.
+    if _is_directory_row(card):
+        return "database"
+
     if card.tier == "person":
         if card.signal_type == "social":
             # Authored means AUTHORED. If the prospect is not in the content, this
@@ -103,6 +140,15 @@ def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Li
                 return "colleague_authored"
             return "authored"
         if card.signal_type == "profile":
+            # Exa tags both /in/ profiles and /posts/ under "profile". The first is
+            # a directory row; the second is the prospect writing in their own
+            # words, which is the strongest evidence this product can find. Devin
+            # Weil's post about operational focus at ShipMonk was being scored as
+            # database-tier alongside his ZoomInfo entry.
+            if "/posts/" in (card.source_url or "").lower():
+                if person_name and not mentions_prospect(card, person_name):
+                    return "colleague_authored"
+                return "authored"
             return "database"
         if person_name and not mentions_prospect(card, person_name):
             return "company_action"
@@ -148,14 +194,47 @@ def _now() -> datetime:
 
 
 def _compute_recency(published_date: str | None) -> int | None:
+    """Age in days, or None when the source gave us no usable date.
+
+    Two formats arrive here. Exa sends ISO 8601. Google News RSS sends RFC 822
+    ("Tue, 04 Aug 2026 07:00:00 GMT"), which fromisoformat cannot read -- so
+    parsing ISO alone left every news card undated, and a silent
+    `except: return None` hid it.
+
+    That cost real hooks. Undated cards take the worst multiplier in
+    _pre_score, so all six GoogleNewsRSS cards fell outside card_cap and were
+    never scored. Worse, the recency_reserve promotion below filters on
+    `is not None`, so the guard written to stop precisely this could not see
+    them. A ShipBob run led with a 2021 funding round while a three-week-old
+    product launch sat in the rejected pile.
+    """
     if not published_date:
         return None
-    try:
-        dt = datetime.fromisoformat(published_date.replace("Z", "+00:00"))
-        return max(0, (_now() - dt).days)
-    except Exception:
+    raw = str(published_date).strip()
+    # Several fetchers store the string "None" rather than the value.
+    if not raw or raw.lower() in ("none", "null"):
         return None
 
+    dt = None
+    try:
+        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            dt = parsedate_to_datetime(raw)
+        except (TypeError, ValueError):
+            return None
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return max(0, (_now() - dt).days)
+
+
+# How hard to push down a card whose evidence never names the prospect's company.
+# A penalty, not a veto: a genuine post by the prospect that omits their employer
+# is exactly the case this must not kill, so it stays in the running and keeps its
+# flag on the decision card. It just stops beating cards that ARE about them.
+NAMESAKE_PENALTY = 0.35
 
 THIN_SIGNAL_FLOOR = 0.35
 
@@ -178,11 +257,33 @@ def _company_is_mentioned(card, prospect) -> bool:
     the prospect that never names their employer is the case this must not kill,
     so a miss DOWNWEIGHTS rather than excludes (see the guardrail_hit path).
     """
-    tokens = [t for t in re.split(r"[^a-z0-9]+", (prospect.company or "").lower())
+    raw = (prospect.company or "").lower().strip()
+    if not raw:
+        return True
+    hay = f"{card.claim} {card.snippet[:500]} {card.source_url or ''}".lower()
+
+    # The whole name, as a phrase, always counts.
+    if raw and raw in hay:
+        return True
+    # ...and with punctuation and spacing removed, so "Midwest 3PL" matches
+    # "midwest3pl.com" and "C.H. Robinson" matches "CH Robinson".
+    squashed = re.sub(r"[^a-z0-9]+", "", raw)
+    if squashed and squashed in re.sub(r"[^a-z0-9]+", "", hay):
+        return True
+
+    tokens = [t for t in re.split(r"[^a-z0-9]+", raw)
               if len(t) >= 4 and t not in _COMPANY_NOISE]
     if not tokens:
         return True
-    hay = f"{card.claim} {card.snippet[:500]} {card.source_url or ''}".lower()
+
+    # One significant token is not an identification when that token is a common
+    # word. "Midwest 3PL" reduces to "midwest" ("3pl" is too short to keep), and
+    # a C.H. Robinson press release that says "midwest" anywhere passed the check
+    # -- which is how a CFO at Midwest 3PL got drafted an email about somebody
+    # else's acquisition. With a single token, require it in the claim, where a
+    # match means the card is titled about them rather than merely adjacent.
+    if len(tokens) == 1:
+        return tokens[0] in card.claim.lower()
     return any(t in hay for t in tokens)
 
 
@@ -393,7 +494,16 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # Person-tier proximity asserts "this is about our prospect". If the
         # employer is never mentioned, that assertion is unbacked -- downweight it
         # so a namesake cannot quietly win, and say so on the card.
-        if not excluded and not guardrail_hit and proximity in ("authored", "attributed"):
+        # colleague_authored belongs here too. It makes the same unbacked
+        # assertion -- "this evidence is about our prospect's company" -- and
+        # leaving it out let a basketball interview win a logistics prospect:
+        # _company_is_mentioned returned False, but the check never ran.
+        # Every tier, not a chosen few. A company_action card about a DIFFERENT
+        # company reads as plausible in a way the obvious junk does not: a live
+        # run drafted "C.H. Robinson announced acquisition of DeSpir Logistics"
+        # to a CFO at Midwest 3PL, and the verifier passed it clean because the
+        # sentence is true. It is simply true about somebody else.
+        if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
                 guardrail_hit = "possible namesake: company never mentioned in the evidence"
 
@@ -512,6 +622,14 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                                 final_score = round(s.score * 0.5, 4)
                                 
                             relevance = _compute_relevance(final_score, rc.proximity, rc.recency_days, prox_val)
+                            # The docstring on _company_is_mentioned promised this
+                            # downweight; nothing applied it, so the flag was decoration.
+                            # A card that never names the company outscored every card
+                            # that did, and a CFO at Midwest 3PL got an email about
+                            # C.H. Robinson acquiring DeSpir Logistics. True sentence,
+                            # wrong company, verifier clean.
+                            if rc.guardrail_hit and rc.guardrail_hit.startswith("possible namesake"):
+                                relevance *= NAMESAKE_PENALTY
                             ranked_cards_map[s.index] = RankedCard(
                                 card=rc.card, pain_match=pm, proximity=rc.proximity,
                                 recency_days=rc.recency_days, score=relevance, excluded=None,
@@ -558,6 +676,37 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     # saw it. Every run produced exactly two hooks. Dedup now happens inside
     # _select_winner, on the articulated set.
     eligible = [c for c in final_cards if c.excluded is None]
+
+    # In strict mode a card whose evidence never names the company cannot WIN.
+    # The downweight alone was not enough: hook strength multiplies the score, and
+    # a meaty acquisition story out-argued a thin but correct card by 0.009. So a
+    # CFO at Midwest 3PL kept getting an email about C.H. Robinson buying DeSpir
+    # Logistics -- a true sentence about the wrong company, which the verifier
+    # passes because it is checking grounding, not identity.
+    #
+    # Permissive mode keeps the old downweight-only behaviour (Compass IV and X:
+    # infer structurally, label it, never hard-block). And nothing is dropped from
+    # the decision card either way -- these still render under "What it rejected"
+    # carrying their flag, which is the difference between "we looked and set this
+    # aside" and "we never looked".
+    if strictness != "permissive":
+        named = [c for c in eligible
+                 if not (c.guardrail_hit or "").startswith("possible namesake")]
+        if named:
+            eligible = named
+
+        # A lead-database row cannot be the hook either. "Your profile notes a
+        # career that began in public accounting" is true, and it is also just a
+        # scrape of a directory page read back to the person it describes: no
+        # event, no reason to write today. When a company genuinely has nothing,
+        # the honest output is the no-signal path and the banner that comes with
+        # it, not a hook manufactured from a contact record.
+        real = [c for c in eligible if c.proximity != "database"]
+        if real:
+            eligible = real
+        else:
+            eligible = []
+
     eligible.sort(key=lambda x: (x.score, _tiebreak(x.card)), reverse=True)
     shortlist = eligible[:int(vp.get("ranker", {}).get("hook_shortlist", 4))]
 

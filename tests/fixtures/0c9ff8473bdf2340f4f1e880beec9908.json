@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about your tech stack",
+    "draft_text": "Hi Chermaine,\nYour Finance and Accounting Technology Briefing interview highlighted flexibility, scalability, real\u2011world focus. That likely means your team wrestles with manual reconciliation. We build a connector that matches payments to invoices, removing manual steps. Could we find 15 minutes next week to discuss?"
+  },
+  "prompt_tokens": 1060,
+  "completion_tokens": 864
+}

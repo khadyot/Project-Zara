@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only generic value\u2011proposition language and references to services (Core Fulfillment, 2\u2011Day Guaranteed, Shopify Fulfillment) that are listed in the evidence. It does not introduce any specific metrics, customer names, or factual claims about Fulfyld that are unsupported by the provided snippets."
+  },
+  "prompt_tokens": 2219,
+  "completion_tokens": 471
+}

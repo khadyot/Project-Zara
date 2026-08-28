@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not contain any invented metrics, customer names, or specific factual claims about Bruce Amerman or Midwest 3PL that are unsupported by the provided evidence. The mention of the C.H. Robinson acquisition is supported, and the rest are permissible value\u2011proposition statements."
+  },
+  "prompt_tokens": 1648,
+  "completion_tokens": 293
+}

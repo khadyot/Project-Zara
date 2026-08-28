@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable finance-related information."
+      }
+    ]
+  },
+  "prompt_tokens": 1715,
+  "completion_tokens": 1090
+}

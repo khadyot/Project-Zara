@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Generic 3PL advice, no observable finance or operational pain."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Company overview lacks any observable finance or operational triggers."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast description mentions challenges but no explicit observable related to pains."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Acquisition announced, indicating M&A-driven structural complexity."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Deal mentions network boost, but lacks explicit volume or expansion details."
+      },
+      {
+        "index": 22,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Midwest facility expansion signals scaling operations and headcount growth."
+      },
+      {
+        "index": 24,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Acquisitions and footprint expansion reflect structural complexity from rapid growth."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO profile lacks recent appointment date or relevant finance system changes."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Warehouse demolition news, no observable finance or operational pain."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tax break negotiation unrelated to finance system or operational pain observables."
+      }
+    ]
+  },
+  "prompt_tokens": 1798,
+  "completion_tokens": 2543
+}

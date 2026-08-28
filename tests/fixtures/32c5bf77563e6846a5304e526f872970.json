@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "In your LinkedIn post 173 days ago you called out that legacy payments weren\u2019t built for the fintech world today.",
+        "rationale": "As CFO you\u2019re focused on payment infrastructure costs and the manual reconciliation burden that outdated systems create for your operations team.",
+        "bridge": "Our platform automates those reconciliation\u2011heavy processes, turning legacy payment friction into a streamlined, cost\u2011effective workflow.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "You appeared on Episode 139 of the Hu Capital podcast 154 days ago discussing community building.",
+        "rationale": "While community initiatives aren\u2019t a direct finance function, as CFO you oversee resource allocation and can benefit from efficiencies that free up budget for strategic programs.",
+        "bridge": "By automating manual reconciliation, our solution frees operational budget and staff time that can be redirected toward community\u2011focused projects.",
+        "strength": 0.6
+      },
+      {
+        "card_index": 2,
+        "hook_text": "In the Finance and Accounting Technology Briefing\u2019s \u201cWhat\u2019s in Your Tech Stack?\u201d series you emphasized flexibility, scalability, and solving real\u2011world problems.",
+        "rationale": "Those priorities align with a CFO\u2019s need to balance innovation with cost control and vendor risk when selecting technology solutions.",
+        "bridge": "Our automation tool is built for flexible integration and scales with transaction volume, directly addressing the reconciliation challenges you highlighted.",
+        "strength": 0.9
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your recent feature in the Finance and Accounting Technology Briefing highlighted a tech\u2011stack mindset centered on flexibility and scalability.",
+        "rationale": "As CFO you must ensure that any new tool can grow with the business while keeping operational overhead low.",
+        "bridge": "Our solution delivers scalable, low\u2011maintenance automation for reconciliation, matching the flexible, future\u2011proof approach you advocate.",
+        "strength": 0.9
+      }
+    ]
+  },
+  "prompt_tokens": 1035,
+  "completion_tokens": 889
+}

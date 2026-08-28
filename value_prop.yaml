@@ -100,7 +100,10 @@ proof_point: ""
 # The drafter must sign exactly as configured and must not invent a human signer.
 sender_name: "Zamp"
 sender_person: ""
-cta: "Worth a 15-minute call next week?"
+# Describes the ask, it is not the sentence. Written as a sentence, it WAS the
+# sentence: four consecutive drafts closed "Worth a 15-minute call next week?"
+# verbatim, which is the clearest mass-mail tell a batch of emails can carry.
+cta: "a short call next week to see whether this is worth their time"
 
 # Ranker Tie-Breaking Weights
 # These control how the ranker breaks ties when multiple signals have the same pain score.

@@ -1,0 +1,410 @@
+{
+  "prospect": "Midwest 3PL",
+  "person_name": "Bruce Amerman",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on greenhouse",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 3868
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 3940
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4082
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "3 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4653
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4043
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Crews tearing down empty warehouse off First Avenue and 29th Street NE in Cedar Rapids - thegazette.com",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQYl96eWNFa284cGNHZjlHMUJhZnE3bEs4clJubXlOcGRNbWwyYnJoNXVuX3lHU29qWlFWRE9GdEtiX082bzhnT0tfUm5QcGwwRkJRUzZyeDVBUFIzRHo2Qlo3d0JlSE55ZHRNTXZMNmdRYVVEUFgxMWtpd0xDZDBhNzhwaGVEM1hCbmFHTkdIUjZoQUhERFRYeVRmdnlONUw5eUs4UlpKZUMxc1dsRlB0SkhMRDlHRmtVR1R6SFFNQ0hJM2ZRTDVmWjJtZVRrY3lIdlVWUEZBeEttWENTcWFLcy1SVWdmVmt2TWRFTFZIMnk0aC1Sekh5N2pTTmkwR1o0R3c?oc=5",
+          "published_date": "Mon, 18 Sep 2023 07:00:00 GMT",
+          "snippet": "Crews tearing down empty warehouse off First Avenue and 29th Street NE in Cedar Rapids thegazette.com",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Joshua A. Trebian Obituary Mar 31, 2026 - lawjonesfuneralhome.com",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBqRHF3SlExaHpkYUoyZklsZzdQdUZ0Tk1McllFZzdxUDBkYi16MkRJNGhDNTRMeW5xSTgycFlMVDdwYV9UVm9vZGpmai01NC01UGY5Q3d5RXhuSGtZODN1eWxrNTZ3QjFCRDNWcmhR?oc=5",
+          "published_date": "Tue, 31 Mar 2026 07:00:00 GMT",
+          "snippet": "Joshua A. Trebian Obituary Mar 31, 2026 lawjonesfuneralhome.com",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Koch bolsters retail fulfillment network in SOS deal - FreightWaves",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNaEN4Y3lVbjExNi1OM056MlJocmk4V1ZpRVJWbWttY3dSX0NxTFY2N0ZOR0JUcnhEbW9SNkNCb0lUSGJoblQwQlE4OFFBNm5pNmRtc0h4Zjd5SzdpN2FIX1dCQ21QMkRLYy1ud2F1YlowbmxQWVFNVWQ3M1hGd3VVMEV6cnRKRkFFNW10c2VXaw?oc=5",
+          "published_date": "Tue, 13 Jan 2026 08:00:00 GMT",
+          "snippet": "Koch bolsters retail fulfillment network in SOS deal FreightWaves",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: Unfazed by owner\u2019s past, Cedar Rapids City Council agrees to negotiate $2.3 million tax break - thegazette.com",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxPSTloWHBtenFrTFNsYmhkS0ZBekttNkw5bW9IQjBPOWNnMmkwSVJ6a2pjc0hRV1I3c3c4QURPU0gwbThxc01fdnBUVWg1M0Vfc2ZrcHM1SjJRR0lKTmNIYUlJWHptVmpoWl9VR2c1NVJGanNJNEU1bEduX3JiTzlWYkFrQVB3VmIyNFFPdXhCYXpKV1FjVjFtaE5LMkJfblM2R0R3X1NaTGVDSUl4YllGcEZ0WG9RUlpiVFNrUG9wQV93T3l2ZFlVeDY2OWxmX1l4cXpyUXRnQVc4TEFaVUZkampKdlFVTzNQSXo2TUdPOEdRdVdESWM0bHNqUmU2dXNtb2c?oc=5",
+          "published_date": "Tue, 24 Oct 2017 07:00:00 GMT",
+          "snippet": "Unfazed by owner\u2019s past, Cedar Rapids City Council agrees to negotiate $2.3 million tax break thegazette.com",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 770
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 10059
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Midwest 3PL website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://midwest3pl.com",
+          "published_date": null,
+          "snippet": "Title: Midwestern Trading, Contract Warehousing, Third Party Logistics, Iowa Warehouse\n\nURL Source: https://midwest3pl.com/\n\nMarkdown Content:\n[Video 3](https://midwest3pl.com/pic/headera-compressed.mp4)\n\n## **WAREHOUSING AND HANDLING**\n\n#### If you are looking for an all inclusive way to handle your warehousing and supply chain management, **you've come to the right place.**\n\n#### **Our business** specializes in integrating operation, warehousing and transportation services that can be scaled and customized to your needs based on market conditions and the demands and delivery service requirements for your products and materials. We go beyond logistics and include value-added services related to the production or procurement of goods. Our **third party logistic (3pl)** services will cater to **your business**.\n\n[**Contact us**](https://midwest3pl.com/Contact.aspx) today or [**get a quote**.](https://midwest3pl.com/quote.aspx)\n\n#### **'What Can We Do For You?' We can help with part, or all of your supply chain management and supply based needs!**\n\n* * *\n\n![Image 1](https://midwest3pl.com/pic/whfront.jpg)\n\n#### We measure our success by your satisfaction. When you hire us to move your freight you can count on our deliveries to be on time. Our professional Freight Coordinator works hard and is experienced, highly trained and proactive. We are committed to using the most current communication technologies and 24/7 Warehouse management software to meet and exceed your warehouse and logistics needs.\n\n* * *\n\n![Image 2](https://midwest3pl.com/pic/rack3.jpg)\n\n### Flexible layout of warehouse\n\n#### Our facilities are configured according to your needs, meaning we offer both cost-effective, block-stacked storage for consumer and industrial products, as well as food hygiene standard racked warehousing. AIB distribution center certification means that your product is tracked from the first moment it is delivered till the final destination and meets all standards. We inspect and ",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2776
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Bruce J. Amerman",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/in/bruceamermanjr",
+          "published_date": "2026-06-12T00:00:00.000Z",
+          "snippet": "# Bruce J. Amerman\n\nCFO at Midwest 3PL\n\nIowa City-Cedar Rapids Area (US)\n\n500 connections \u2022 655 followers\n\n## About\n\nCareer: My career has evolved from public accounting, where I gained expertise in audit, tax, and business valuation, to a leadership role as CFO of a privately held warehousing and logistics company. This diverse background has provided me with a comprehensive understanding of financial operations, strategic planning, and corporate governance. Throughout my corporate career, I have specialized in financial management, corporate taxation, and operational efficiency, ensuring compliance, optimizing financial performance, and supporting business growth. I stay ahead of industry changes by engaging in continuous learning, professional networking, and industry research to drive informed decision-making. Goals: As CFO, my goal is to enhance financial performance, optimize tax strategies, and support business expansion in the warehousing and logistics sector. I aim to identify cost-saving opportunities, streamline financial operations, and provide strategic insights to drive profitability. By leveraging data-driven decision-making and collaboration, I seek to strengthen financial resilience, navigate industry challenges, and contribute to long-term business success.\n\nTotal Experience: 26 years and 1 month\n\n## Experience\n\n### Chief Financial Officer - [Midwest 3pl](https://www.linkedin.com/company/midwest-3pl) (Current)\n\nJan 2025 - Present (1 year and 6 months)\n\nDepar",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Midwest 3pl",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/company/midwest-3pl",
+          "published_date": null,
+          "snippet": "# Midwest 3pl\n\nMidwest 3pl is a Warehousing and Storage company. Midwestern Trading is a leading third party logistics (3PL) provider offering warehousing, transportation, freight management, and contract packaging services. They specialize in integrating operation, warehousing, and transportation services that can be scaled and customized to meet market conditions and delivery service requirements for products and materials. They also provide value-added services related to the production or procurement of goods. Midwest 3pl employs 3 people and has an annual revenue of $22.2M. Headquartered in Cedar Rapids, Iowa, United States.\n\n## About\n\nLeading Third Party Logistics (3PL) provider of warehousing, transportation, freight management, and contract packaging. Supply Chain Management company, you can always count on us to handle your problems and products.\n\n## Company Details\n- Industry: Warehousing and Storage\n- Type: Privately Held\n- Headquarters: Cedar Rapids, United States\n- Homepage: midwest3pl.com\n- Status: active\n- Ownership: Private\n- Aliases: midwest 3pl, midwestern trading 3pl, integrated supply chain solutions\n- LinkedIn: linkedin.com/company/midwest-3pl\n- Linkedin Followers: 96\n- Phone: 800.972.5854\n- SIC Codes: 42, 422\n- NAICS Codes: 49, 493\n\n## Financials\n- Annual Revenue: USD 22,187,933\n\n## Workforce\n- Employees: 3 (1-10 employees)\n- Key Executives:\n  - Bruce J. Amerman: Chief Financial Officer\n- Breakdown:\n  - By Country: United States: 3 (19%)\n  - By Departmen",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2218
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Saia Expands Midwest Network with New Facilities in Minnesota and Missouri \u2013 Company Announcement - FT.com",
+          "signal_type": "news",
+          "source_url": "https://markets.ft.com/data/announce/detail?dockey=1330-9749821en-3J63MPL46VAHA9DBKAKMA8C4NL",
+          "published_date": null,
+          "snippet": "Saia Expands Midwest Network with New Facilities in Minnesota and Missouri \u2013 Company Announcement - FT.com\n\n# Company Announcements\n\n### Saia Expands Midwest Network with New Facilities in Minnesota and Missouri\n\nJun 19 2026 15:58 BSTSource: GlobeNewswire\n\nSaia Expands Midwest Network with New Facilities in Minnesota and Missouri\n\nJOHNS CREEK, Ga., June 19, 2026 (GLOBE NEWSWIRE) -- Saia Inc. (NASDAQ: SAIA), a leading provider of less-than-truckload (LTL) transportation services, announced the opening of two new terminals this month in Duluth, Minnesota, and Columbia, Missouri, as part of the company\u2019s continued investment in expanding and strengthening its nationwide network.\n\nThe Duluth terminal opened earlier this month, while the Columbia facility officially began operations this week.\n\nThe new terminals give customers expanded access to Saia\u2019s network across key Midwest markets, with stronger regional coverage, and added capacity to support growing shipping needs.\n\n\u201cThese additions reflect our ongoing commitment to strategically growing our footprint where customers need reliable service and capacity most,\u201d said Saia Executive Vice President of Operations Patrick Sugar. \u201cBy continuing to invest in our infrastructure, we\u2019re able to create stronger connections across our network and support more efficient freight movement for our customers.\u201d\n\nThe Duluth facility enhances Saia\u2019s ability to serve northern Minnesota and surrounding markets, while the Columbia terminal strength",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: C.H. Robinson Boosts High-Value Cargo Capabilities with Acquisition of DeSpir Logistics\u2122 \u2013 Company Announcement - FT.com",
+          "signal_type": "news",
+          "source_url": "https://markets.ft.com/data/announce/detail?dockey=600-202606221605BIZWIRE_USPRX____20260622_BW962595-1",
+          "published_date": "2026-06-22T00:00:00.000Z",
+          "snippet": "C.H. Robinson Boosts High-Value Cargo Capabilities with Acquisition of DeSpir Logistics\u2122 \u2013 Company Announcement - FT.com\n\n# Company Announcements\n\nCH Robinson Worldwide Inc\n\n### C.H. Robinson Boosts High-Value Cargo Capabilities with Acquisition of DeSpir Logistics\u2122\n\nJun 22 2026 21:05 BST\n\nEDEN PRAIRIE, Minn.--(BUSINESS WIRE)--Jun. 22, 2026-- C.H. Robinson (NASDAQ: CHRW), the global leader in Lean AI supply chains, today announced it has acquired DeSpir Logistics, a specialized provider of secure transportation solutions and cargo escort services for mission-critical, high-value freight across North America.\n\nThis acquisition strengthens C.H. Robinson\u2019s capabilities in premium, defensible services where security, compliance, and execution excellence are key decision drivers. This builds on the company\u2019s ability to deliver tailored solutions for highly sensitive, regulated shipments across industries such as healthcare, life sciences, data centers, aerospace, and high-value retail \u2014 where precision, pre-planning, and real-time visibility are critical. Demand for these services is accelerating as supply chains become more complex and cargo theft grows more sophisticated.\n\n\u201cWith DeSpir, we\u2019re strengthening how we help customers move freight that requires an extra layer of protection. This is the kind of cargo where the stakes are incredibly high, like life-saving pharmaceuticals that must stay within strict temperature ranges, or critical data center equipment that is frequently",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1744
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Home Page - Midwestern Trading, Contract Warehousing, Third Party Logistics, Iowa Warehouse",
+          "signal_type": "news",
+          "source_url": "https://www.midwest3pl.com/",
+          "published_date": null,
+          "snippet": "Home Page - Midwestern Trading, Contract Warehousing, Third Party Logistics, Iowa Warehouse\n\nThird Party Logistics\n\n---\n\nHome Page - Midwestern Trading, Contract Warehousing, Third Party Logistics, Iowa Warehouse\n[\n![](pic/midwes3plwhiteheader.png)](./)\n* [Home](./)\n* [Why Midwest 3pl](#)\n [Outsourcing](https://www.midwest3pl.com/About)\n [Glossary of Terms](https://www.midwest3pl.com/glossary)\n* [Warehousing](warehousing)\n* [Transportation & Logistics](shipping)\n* [Farming](farming)\n* [HLC & ROW](https://hawkeyeland.co/)\n* [Contact](Contact)\nThird Party\nLogistics\n# **WAREHOUSING AND HANDLING**\n#### If you are looking for an all inclusive way to handle your warehousing and\nsupply chain management, **you've come to the right place.**\n#### **Our business** specializes in integrating operation, warehousing and transportation services that can be scaled and customized to your needs based on market conditions and the demands and delivery service requirements for your products and materials. We go beyond logistics and include value-added services related to the production or procurement of goods. Our **third party logistic (3pl)** services will cater to **your business**.\n[**Contact us**](https://www.midwest3pl.com/Contact.aspx) today or [\n**get a quote**. ](https://www.midwest3pl.com/quote.aspx)\n#### **'What Can We Do For You?' We can help with part, or all of your supply chain management and supply based needs!**\n![](pic/whfront.jpg)\n#### We measure our success by your satisfactio",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: More about us - Midwestern Trading, Contract ...",
+          "signal_type": "news",
+          "source_url": "https://www.midwest3pl.com/moreinfo",
+          "published_date": null,
+          "snippet": "More about us - Midwestern Trading, Contract Warehousing, Third Party Logistics, Iowa Warehouse\n\n### Relationships Are Front and Center...\n\nYou are much more than a \"load\" to us. We want to get to know you, your businesses so that we can be a long-term ally, we build and have industry expertise and want to share that with you. Our staff works hard to keep current with transportation, warehouse and logistics information, and watch for any relevant pertinent news that may apply to your business and the industry. Planning and frequent communication is key to your satisfaction. We keep our shippers and carriers informed. We know when a load is picked up, its progress in transit and when it will be delivering If there is a change, you will hear about if from us first. At Midwest 3PL we contract with reliable carriers, the best in the industry. We are honest, ethical, and trustworthy\n\n---\n\n### Transportation\n\nMidwest 3PL is a transportation intermediary or third party logistics company where we act as a facilitator to arrange the efficient and economic movement of your goods. We work with only the best carriers and service thousands of shippers.\n\nWe bring the two together. The transportation needs of the cargo interested with the corresponding capacity and the special equipement offered by the truck.\n\n---\n\n### Warehousing / Warehouse Management System\n\nWe have been serving corporate warehousing needs for over 20 years.\n\nWe offer full service warehousing for a variety of products. A",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1199
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/278165/000149315221028052/ex99-1.htm",
+          "published_date": null,
+          "snippet": "Exhibit 99.1\n\nOMNIQ Receives additional $3.0 Million Purchase Agreement from Midwest-Based Third-Party Logistics Client\n\n| \u25cf | This order follows the $4 Million purchase agreement announced on October 27, 2021 from the same customer and the $2 Million order announced just two days ago for Intelligent Healthcare Carts from the Israeli largest HMO |\n| --- | --- |\n| \u25cf | Customer with annual revenue of over $400 million and more than 3,000 employees |\n| \u25cf | OMNIQ to provide Android-based rugged data collection, computing and communication equipment to distribution centers across the United States |\n| \u25cf | Contract includes Technical Support Services and device management software. |\n\nSALT LAKE CITY \u2014 OMNIQ Corp (NASDAQ: OMQS) (\u201cOMNIQ\u201d or \u201cthe Company\u201d), a provider of Supply Chain and Artificial Intelligence (AI)-based solutions, announced today that it has received an approximately $4.0 million purchase agreement from a top, Midwest based (3PL) third party logistics client. omniQ will supply Android-based rugged data collection, computing and communication equipment to the 3PL customer\u2019s distribution centers across the United States. The 3PL customer has annual revenue of over $400 million and more than 3,000 employees. The multi-year deployment including the previous agreement announced on October 27, 2021 is valued at approximately $7.0 million.\n\nThis order follows the following orders announced during the 4 th quarter:\n\n| \u25cf | $2 Million order from Israel\u2019s largest HMO for Intel",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/278165/000149315221026409/ex99-1.htm",
+          "published_date": null,
+          "snippet": "EX-99.1 \n\nExhibit 99.1\n\nOMNIQ Receives $4.0 Million Purchase Agreement from Midwest-Based Third-Party Logistics Client\n\n| \u25cf | Multi-year deployment valued at approximately $4.0 million, includes an immediate $400,000 opening delivery |\n| --- | --- |\n| \u25cf | Continued deliveries are planned for fiscal year 2022 and beyond |\n| \u25cf | Customer with annual revenue of over $400 million and more than 3,000 employees |\n| \u25cf | OMNIQ to provide Android-based rugged data collection, computing and communication equipment to distribution centers across the United States |\n| \u25cf | Contract includes Technical Support Services and device management software. |\n\nSALT LAKE CITY \u2014 OMNIQ Corp (NASDAQ: OMQS) (\u201cOMNIQ\u201d or \u201cthe Company\u201d), a provider of Supply Chain and Artificial Intelligence (AI)-based solutions, announced today that it has received an approximately $4.0 million purchase agreement from a top, Midwest based (3PL) third party logistics client. omniQ will supply Android-based rugged data collection, computing and communication equipment to the 3PL customer\u2019s distribution centers across the United States. The 3PL customer has annual revenue of over $400 million and more than 3,000 employees. The multi-year deployment is valued at approximately $4.0 million, which includes an immediate $400,000 opening delivery\n\nThe rugged all-touch computer for workers inside or outside the four walls has complete cellular network flexibility, faster WiFi connections, superior barcode capture, a high quality ",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1487
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: 3PL Lessons from the Front Lines | E19",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=fGHIduOAq3s",
+          "published_date": null,
+          "snippet": "# 3PL Lessons from the Front Lines | E19\n\n- Channel: Locus Robotics\n- Length: 16:38\n- Views: 135\n- Likes: 4\n- Published: 2025-05-12T03:45:06-07:00\n- Category: Science & Technology\n- Keywords: 3PL, warehouse automation, warehouse management\n- Language: en-US\n\n## Description\n\nIn this episode of Warehouse Automation Matters, Mary Hart interviewed Chris Caouette, Chief Revenue Officer at North Bay Distribution, on challenges and innovations in the 3PL and e-commerce fulfillment space. They explored the evolving role of 3PLs, the importance of technology and automation, strategies for competitive shipping rates, and how to improve customer satisfaction and inventory management. Caouette shared insights on emerging challenges in the logistics industry and offered advice for brands evaluating 3PL partners.\n\n## Chapters\n\n- 00:00 Introduction to 3PL and E-commerce Challenges\n- 02:12 The Evolving Role of 3PLs\n- 04:43 Balancing Customer Experience and Costs\n- 06:54 Strategies for Competitive Shipping Rates\n- 09:35 Ensuring High Order Accuracy\n- 11:29 Improving Customer Satisfaction through Logistics\n- 12:30 Inventory Management Solutions\n- 14:04 Emerging Challenges and Opportunities for 3PLs\n- 15:16 Advice for Brands Evaluating 3PL Partners\n- 16:33 North Bay Distribution's Unique Value Proposition\n\n## Transcript\n\nMary Hart\nWelcome to Warehouse Automation Matters. I'm your host Mary Hart and I'm here with Chris Caouette,\u00a0\nChief Revenue Officer at North Bay Distribution to talk about e-co",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: The Biggest Mistake E-Commerce Brands Make Choosing a 3PL",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=n-YRCOgOt8w",
+          "published_date": "2026-05-05T00:00:00.000Z",
+          "snippet": "What are the biggest mistakes you see commerce brands make, you know, when choosing a 3PL and how they can avoid them? Yeah, it's a a big one that always sticks out is a shopping only for price. You there it's got a you have to you dive deeper, right? They're a margin protector. Really there you have to look at them as not just a vendor. It's is a true partnership. They're an extension of your brand. They're your hands, eyes, and ears. They are a tool in your toolbox that you lean on for the expertise to, you know, mitigate issues down the road, right? Most brands nowadays with obviously a lot of you know, the uh you know, AI and the search engines you're able to prompt these and get a good questionnaire or give, you know, good insight questions on what you're looking for. So, there there's they're asking the right questions more and more so now, right? But still if you are comparing only on cost, then that's it could get a little dangerous, right?",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1344
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Bruce Amerman Email & Phone Number",
+          "signal_type": "person_mention",
+          "source_url": "https://rocketreach.co/bruce-amerman-email_17290551",
+          "published_date": null,
+          "snippet": "Bruce Amerman, based in Cedar Rapids, IA, US, is currently a Chief Financial Officer at Midwest 3pl. Bruce Amerman brings experience from previous roles at",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Bruce J. Amerman, Jr - Midwest 3pl",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/in/bruceamermanjr",
+          "published_date": null,
+          "snippet": "# Bruce J. Amerman, Jr\nMidwest 3pl\nIowa City-Cedar Rapids Area, US  \n500 connections, 657 followers\n\n## About\nCareer: My career has evolved from public accounting, where I gained expertise in\u2026\n\n## Experience\n### Midwest 3pl  \nMidwest 3pl  \nN/A - Present   \nN/A  \n\n###    \n   \nN/A - Present   \nN/A  \n\n###    \n   \nN/A - Present   \nN/A  \n\n###    -  .      \n   -  .      \nN/A - Present   \nN/A  \n\n###     \n    \nN/A - Present   \nN/A [...] ## Education\n### University of Iowa - Henry B. Tippie College of Business  \nN/A  \n2012 - 2019  \nNone\n\n### N/A  \nN/A  \n2002 - 2006  \nNone\n\n### N/A  \nN/A  \n1998 - 2002  \nNone\n\n## Publications\nN/A\n\n## Honors & Awards\nN/A\n\n## Certifications\nCertificate in Leadership (University of Iowa); ALMI (LOMA); ACS (LOMA); FLMI Level I (LOMA); AAPA (LOMA)\n\n## Volunteering\nN/A\n\n## Languages\nN/A\n\n## Organizations\nN/A\n\n## Activity\n- UFG Insurance  \nNone  \nView Post  \n\n- UFG Insurance  \nNone  \nView Post [...] - UFG Insurance  \nNone  \nView Post  \n\n- Tax Foundation  \nNone  \nView Post  \n\n- Tax Foundation  \nNone  \nView Post  \n\n- UFG Insurance  \nNone  \nView Post  \n\n- Bruce J. Amerman, Jr  \nNone  \nView Post  \n\n- Tax Foundation  \nNone  \nView Post  \n\n- National Association of Insuran",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Midwest 3pl",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/company/midwest-3pl",
+          "published_date": null,
+          "snippet": "## Employees\nRick Stickle (N/A):  Bruce J. Amerman, Jr (N/A):  Pam Penisten (N/A):  Raymond Osburn (N/A): [...] # Midwest 3pl\nN/A\nWarehousing and Storage \u2022 Cedar Rapids, Iowa \u2022 96 followers \u2022 2-10 employees\n\n## Overview\nLeading Third Party Logistics (3PL) provider of warehousing, transportation, freight management, and contract packaging. Supply Chain Management company, you can always count on us to handle your problems and products.\n\n### Website\n\n### Crunchbase\nN/A\n### LinkedIn\nN/A\n\n### Industry\nWarehousing and Storage [...] ## Similar Companies",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "CHASERS TRUCKING INC",
+          "signal_type": "person_mention",
+          "source_url": "https://brokersnapshot.com/Company?dot=",
+          "published_date": null,
+          "snippet": "Breaking\n\nSupreme Court rules 9\u20130 in Montgomery v. Caribe Transport II \u2014 federal preemption for freight brokers eliminated. What this means for your brokerage \u2192\n\n# Login to your Account\n\nAccess your BrokerSnapshot tools, saved searches, monitored brokers, validations, and account services.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "3PL Market Update | Capstone Partners",
+          "signal_type": "news",
+          "source_url": "https://www.capstonepartners.com/insights/article-3pl-market-update",
+          "published_date": null,
+          "snippet": "Capstone advised Thermo King dealer and service provider to the Refrigerated Transportation space, CSTK, on its February 2026 sale to Thermo King parent company, Trane Technologies (NYSE:TT). The acquisition vertically integrates Thermo King\u2019s service and dealership network with the addition of CSTK\u2019s 10 site locations in the Midwest and Northeast, a strong customer base, and a team of more than 200 employees, according to a press release.4 Specifically, the transaction brings Thermo King [...] Thoma Bravo Acquires WWEX Group and Merges with Portfolio Company Auctane (March 2026, $5 Billion, 1.0x EV/Revenue) \u2013 PE firm Thoma Bravo completed its majority stake acquisition of WWEX Group from a consortium of investors\u2014including CVC Capital Partners (ENXTAM:CVC), Providence Equity Partners, Ridgemont Equity Partners, and PSG Equity\u2014for an estimated enterprise value of $5 billion (March 2026, 1.0x EV/Revenue). WWEX provides 3PL, parcel, and freight services under its Worldwide Express, [...] Private equity (PE) transaction activity in the sector has accelerated through YTD 2026, spurred by late 2025 interest rate cuts and burgeoning opportunities to deploy technology-enabled 3PL capabili",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Midwest 3PL Warehouse Solutions for 2026 Tariff Volatility",
+          "signal_type": "news",
+          "source_url": "https://distributorsterminal.com/navigating-2026-tariff-volatility-with-a-midwest-3pl",
+          "published_date": null,
+          "snippet": "the Midwest to keep your supply chain efficient, adaptable, and ready for growth. [...] Skip to content\n\n (812) 466-2225%20466-2225)\n\nRequest a Quote\n\n 466-2225%20466-2225)\n\nRequest a Quote\n\n# Navigating 2026 Tariff Volatility with a Midwest 3PL [...] and working with Distributors Terminal\u2019s Indiana and Midwest 3PL warehousing and distribution solutions ensures your supply chain remains resilient and adaptable throughout these shifts.",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Press Release: Midwest Refrigerated Services Announces Leadership Changes",
+          "signal_type": "news",
+          "source_url": "https://www.midwestrefrigerated.com/press-release-midwest-refrigerated-services-announces-leadership-changes",
+          "published_date": null,
+          "snippet": "Midwest Refrigerated Services is a full-service 3PL provider offering refrigerated transportation, cold storage warehousing, and value-added services for the food industry. Headquartered in Elkhorn, Wisconsin, MRS operates an integrated network designed to scale with its customers as their needs evolve. Through its \u201cBuilt to Scale\u201d approach, MRS aligns infrastructure, technology, and operations to support long-term growth, guided by its commitment to Midwest Values . . . Nationwide Service. [...] (April 1, 2026) Elkhorn, WI \u2013 Midwest Refrigerated Services (MRS), a Midwest-based third-party logistics provider specializing in refrigerated transportation, warehousing, and value-added services, today announced a leadership realignment designed to support continued growth and strengthen operational execution across its integrated network. [...] MRS has appointed Matt Pomeroy as President & Chief Financial Officer, effective April 1, 2026. Over the past five years, Pomeroy has strengthened financial discipline, improved operational visibility, and supported key growth initiatives, including new facility development.",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Capital Is Moving in July 2026 in the Midwest: 129 Industrial Projects Signal a Region Rebuilding Its Manufacturing Core - Daily Independent",
+          "signal_type": "news",
+          "source_url": "https://www.yourvalley.net/stories/capital-is-moving-in-july-2026-in-the-midwest-129-industrial-projects-signal-a-region-rebuilding,714653",
+          "published_date": null,
+          "snippet": "JACKSONVILLE, Fla., Aug. 25, 2026 (SEND2PRESS NEWSWIRE) \u2014 Capital investment across the Midwest held strong through July 2026, with new construction, facility expansion, equipment modernization, and plant renovation activity spanning key industries including food, metals, aerospace, automotive, industrial equipment and plastics. Our research team tracked 129 new industrial, manufacturing, and supply chain facility projects across the Midwest, says Industrial SalesLeads, Inc. [...] JACKSONVILLE, Fla., Aug. 25, 2026 (SEND2PRESS NEWSWIRE) \u2014 Capital investment across the Midwest held strong through July 2026, with new construction, facility expansion, equipment modernization, and plant renovation activity spanning key industries including food, metals, aerospace, automotive, industrial equipment and plastics. Our research team tracked 129 new industrial, manufacturing, and supply chain facility projects across the Midwest, says Industrial SalesLeads, Inc. [...] IMAGE CAPTION: Capital Is Moving in July 2026 in the Midwest: 129 Industrial Projects Signal a Region Rebuilding Its Manufacturing Core | Capital investment across the Midwest held strong through July 2026, with new construction",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Job Opportunity: CFO \u2013 3PL Logistics Our private client is seeking a ...",
+          "signal_type": "news",
+          "source_url": "https://www.linkedin.com/posts/jimtolan_job-opportunity-cfo-3pl-logistics-our-activity-7290029619708067840-OgUG",
+          "published_date": null,
+          "snippet": "Job Opportunity: CFO \u2013 3PL Logistics Our private client is seeking a dynamic Chief Financial Officer with a proven track record in 3PL",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Wolter Names New CFO to Support Growth | Wolter, Inc.",
+          "signal_type": "news",
+          "source_url": "https://www.wolterinc.com/news/wolter-group-llc-names-mike-matt-as-chief-financial-officer-strengthening-financial-leadership-for-continued-growth",
+          "published_date": null,
+          "snippet": "Expanding service capabilities across Wolter Inc.\u2019s Midwest & Southeast footprint while continuing national growth.\n Aligning real estate & asset management decisions with long-term business strategies.\n Strengthening financial systems to ensure scalability and sustainable growth for all Wolter entities.\n\nLeadership Comments [...] #### Wolter Expands into the Mid-South with Acquisition of Delta Materials Handling\n #### Wolter Acquires CSI Materials Handling Amid Surging Demand for Warehouse Capacity in Chicago\n #### Wolter Awarded Fifteenth Consecutive MHEDA MVP Award in 2025\n #### Wolter Inc. Acquires Carson Industries, Expanding Operations into the Carolinas\n #### Wolter Group LLC Names Mike Matt as Chief Financial Officer, Strengthening Financial Leadership for Continued Growth [...] About Wolter Inc.\n\nWolter Inc. is a leading provider of forklifts and material handling equipment, automation and robotics, power systems, cranes and hoists, storage solutions, docks & doors and more. With a focus on innovation, safety, and customer success, Wolter Inc. helps businesses improve efficiency and productivity across the Midwest, Southeast and beyond.\n\nPrevious\n\nNext\n\n### Recent News",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "CFO's on the Move: March 2026 - Controllers Council",
+          "signal_type": "news",
+          "source_url": "https://controllerscouncil.org/cfos-on-the-move-march-2026",
+          "published_date": null,
+          "snippet": "Finance leadership continues to evolve as organizations navigate economic uncertainty, shifting investment priorities, and growing demand for real-time insight. March appointments reflect a focus on capital allocation, operational discipline, and forward-looking strategy. Controllers Councils\u2019 take a closer look at 15 CFOs driving change and shaping what\u2019s next for the finance function.\n\n## Delta Air Lines Appoints Erik Snell as New CFO [...] COVID-19\n CPA/CPE\n Credit\n Crisis Management\n Cybersecurity\n Data\n Digital Transformation\n Economics/Economy\n Enterprise Resource Planning (ERP)\n Events\n Finance\n Finance Automation\n Financial Forecasting\n Financial Planning\n Financial Reporting\n Forecasting\n Foreign Exchange\n FP&A\n Funding\n Governance\n HR/Talent\n Insurance\n Investing\n KPIs\n Leadership\n Lease Management\n Legislation\n Marketing\n Meet The Controller/CFO\n Mergers and Acquisitions\n Microsoft Dynamics 365\n Outsourcing\n Procurement [...] Procurement\n Professional Growth\n Quickbooks\n Reconciliations\n Risk Management\n Sales Revenue\n Sales Tax\n Scenario Planning\n Software\n Spend Management\n Sponsor News\n Startups\n Supply Chain\n Tax\n Technology\n Top Recommendations\n Training\n Treasury\n ",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Americold Announces CFO Transition and Expanded Leadership Roles to Support Company\u2019s Growth Plan - Ferguson Partners",
+          "signal_type": "news",
+          "source_url": "https://www.fergusonpartners.com/americold-announces-cfo-transition-and-expanded-leadership-roles-to-support-companys-growth-plan",
+          "published_date": null,
+          "snippet": "Ferguson Partners\n\n# Americold Announces CFO Transition and Expanded Leadership Roles to Support Company\u2019s Growth Plan\n\nSeasoned Real Estate Executive Chris Papa Appointed Chief Financial Officer Effective February 23, 2026; Company Reaffirms Full-Year 2025 AFFO Outlook [...] \u201cWe are thrilled to welcome Chris to the Americold leadership team as our next CFO,\u201d said Rob Chambers, Chief Executive Officer of Americold. \u201cHis extensive real estate experience and strong financial acumen align well with our strategic focus as we continue to execute against our 2026 priorities and position the Company for future growth. Chris is well known to the investment community and will play a key role in strengthening our balance sheet, supporting disciplined capital allocation, and [...] ATLANTA, Jan. 26, 2026 (GLOBE NEWSWIRE) \u2014 Americold Realty Trust, Inc. (NYSE: COLD), a global leader in temperature-controlled logistics, real estate, and value-added services, today announced that Christopher (\u201cChris\u201d) Papa will join the Company as Executive Vice President and Chief Financial Officer, effective Monday, February 23, 2026.",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2616
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only mentions a generic pain point (manual reconciliation bottlenecks) that is supported by the evidence list and does not introduce any specific metrics, customer names, or quotes not found in the provided snippets."
+  },
+  "prompt_tokens": 2096,
+  "completion_tokens": 484
+}

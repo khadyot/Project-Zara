@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about finance reconciliation",
+    "draft_text": "Hi Bruce,\nYou serve as CFO of Midwest 3PL in Cedar Rapids. That suggests you oversee extensive manual reconciliation across finance and operations.\nWe create scripts that extract data from your TMS, align it to ERP fields, and write it removing manual entry.\nCan we schedule a 15 minute call next week to explore how this fits your finance workflow? Zamp"
+  },
+  "prompt_tokens": 1073,
+  "completion_tokens": 1796
+}

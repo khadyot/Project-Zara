@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on month\u2011end close",
+    "draft_text": "Hi Jon,\nYou announced your new CFO role in a Global FinTech Q&A. Month\u2011end close stalls when finance teams match data manually across multiple legacy systems, creating bottlenecks. We build bots that pull transaction data from each source and reconcile entries without manual steps. Can we schedule a brief call next week to see whether this approach could ease your close process?\nZamp"
+  },
+  "prompt_tokens": 1378,
+  "completion_tokens": 1812
+}

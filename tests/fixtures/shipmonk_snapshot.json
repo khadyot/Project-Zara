@@ -1,0 +1,430 @@
+{
+  "prospect": "ShipMonk",
+  "person_name": "Devin Weil",
+  "results": [
+    {
+      "source": "Greenhouse",
+      "rung": 2,
+      "status": "empty",
+      "reason": "52 roles, none ICP-relevant",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2456
+    },
+    {
+      "source": "Lever",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on lever",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1849
+    },
+    {
+      "source": "Ashby",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on ashby",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1617
+    },
+    {
+      "source": "SmartRecruiters",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on smartrecruiters",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1596
+    },
+    {
+      "source": "Recruitee",
+      "rung": 2,
+      "status": "empty",
+      "reason": "not on recruitee",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1665
+    },
+    {
+      "source": "GoogleNewsRSS",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "In the news: Shipmonk Revenue 2024: $225M Est. ARR, $300M Raised - GetLatka",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5XakUxTHl3T0VIVkhuZE5wMTI3dEx2MFAwVWZqemRfVkdfTkFEbU5HTDNVYlhELVlsVE5XdzJTbkV0SkhxWnBvemRaeWtXcDJh?oc=5",
+          "published_date": "Mon, 10 Aug 2026 07:00:00 GMT",
+          "snippet": "Shipmonk Revenue 2024: $225M Est. ARR, $300M Raised GetLatka",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipMonk Opens First Fulfillment Center Designed Specifically for Apparel Brands - Business Wire",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPWjl3Yjh0c2FTUlZ1LXhNUkQtekNYbVhMc3NnOEhLem5CZFlkUnp5RVlucGFrcWJVTTBhWFBfMk41LTR2Ymo2WjNWeTVwWk1aaVE0bDg1eGptMnZEbDduNzRnLUZtN3dmSWtZRnR6TllBaEZBU0ctNkg4Q1pza0lPa1hWamVOT0d6MFlzRGt5a2UzZVdfVTNYOHhqZzlkUFNaUGtWcy03M1RrZTBCd19LSXIyM2VlMEs0RVBReHNyS1ctaUNPdUo4RHRTUHdTaVFETFFF?oc=5",
+          "published_date": "Thu, 02 Apr 2026 07:00:00 GMT",
+          "snippet": "ShipMonk Opens First Fulfillment Center Designed Specifically for Apparel Brands Business Wire",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipMonk Launches Apparel-Specific Fulfillment Center to Tackle Returns, SKU Complexity - WWD",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMi-wFBVV95cUxPbjhmWmdjbGRNWk1QdlJRaFRwMjh5bmQwa05NdnBHUjRZQTNLVjZ1RFVIRWxNQzNPUmMtQkRUaVVXUTlXR1BEQV9fblhDekMtamZRbTF0aUU0cnZKcWJzX1c3ZDFoRU52TnpKUWZXWERWU0lhcU93N3dhOFkzS1M0NEYwUnRIOE53RGdCcWdiVmM4T210ZlRjOUdpdV9RckllbjhIeG0zSi0tckM5ZnRCa3hSSXNtelR6MDh5VkUwRFd3ZjM0OURIQ2x6a0E0TDN6bjM1MnlFaS1aTTJJRjUwU0x0LWZDODBUVzJRR0ViZURRVGFwUXRPUzNIOA?oc=5",
+          "published_date": "Tue, 07 Apr 2026 07:00:00 GMT",
+          "snippet": "ShipMonk Launches Apparel-Specific Fulfillment Center to Tackle Returns, SKU Complexity WWD",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipMonk Breach Impacts 13,689 Trezor Customers in 7 Countries - Hackread",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE0zcFZQN0tVZUdha0h3eEtPRDY4WS1IU1ZLc0ZScE1UcW1YMDh6THZLbnh5ZWRVQ2tPbDNmQ1hCa1pVSktQNEhyNXhsSnBTSWNvQVBMRFF4bEhiYW93NTJjNEIyaWFGR2Fudk9CY3VDRXU0OVhv?oc=5",
+          "published_date": "Fri, 14 Aug 2026 07:00:00 GMT",
+          "snippet": "ShipMonk Breach Impacts 13,689 Trezor Customers in 7 Countries Hackread",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipMonk Breach Puts Nearly 14K Trezor Customers at Phishing Risk - CoinMarketCap",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPNlRESmxpZ0t0LWdZQ0x6TnJNS3d2eFVaT1ZvRExMY3Jvb0RERk1yUDI0RXdFWm4wSnZCMVAxNkpGTWJENVpkanFad2NacEwtR2ZSczlPa1FuS21qc3MwM2o1ZlktTU43ZWR3QlAxWGpjOEdhR3doZHlsaFlDQ25NMXI0X0tQSWRlZ3lkQ2pKVUhBYUYwUGlr?oc=5",
+          "published_date": "Thu, 13 Aug 2026 07:00:00 GMT",
+          "snippet": "ShipMonk Breach Puts Nearly 14K Trezor Customers at Phishing Risk CoinMarketCap",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "In the news: ShipMonk Data Breach Exposes 13,689 Trezor Customers\u2019 Personal Information - cyberpress.org",
+          "signal_type": "news",
+          "source_url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFA0T1JtR3BzbXlLN1FnU0tSS1h2MG1tTVF5clh3Qlg1cF95SmVHd21Ra0RBX21TUTZMb1NMd2tWcnhId2pzNW84R0xnWVVzYS1ILU84Q2lsb9IBV0FVX3lxTFA0T1JtR3BzbXlLN1FnU0tSS1h2MG1tTVF5clh3Qlg1cF95SmVHd21Ra0RBX21TUTZMb1NMd2tWcnhId2pzNW84R0xnWVVzYS1ILU84Q2lsbw?oc=5",
+          "published_date": "Fri, 14 Aug 2026 07:34:41 GMT",
+          "snippet": "ShipMonk Data Breach Exposes 13,689 Trezor Customers\u2019 Personal Information cyberpress.org",
+          "tier": "company",
+          "source": "GoogleNewsRSS",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 794
+    },
+    {
+      "source": "Compound",
+      "rung": 0,
+      "status": "failed",
+      "reason": "HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413; HTTPStatusError: Client error '413 Payload Too Large' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413",
+      "cards": [],
+      "cost_usd": 0.0,
+      "elapsed_ms": 11678
+    },
+    {
+      "source": "Jina",
+      "rung": 0,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "ShipMonk website positioning",
+          "signal_type": "firmographic",
+          "source_url": "https://shipmonk.com",
+          "published_date": null,
+          "snippet": "Title: ShipMonk: Leading E-commerce Fulfillment & 3PL Services\n\nURL Source: https://shipmonk.com/\n\nMarkdown Content:\n[Skip to content](https://shipmonk.com/#content)\n\n[![Image 1: ShipMonk Logo](https://www.shipmonk.com/wp-content/uploads/2025/01/logo.svg)](https://www.shipmonk.com/)\n\n*    Solutions  Close Solutions Open Solutions ## Fulfillment Solutions  [B2B Fulfillment Efficiently fulfill bulk orders for retailers and partners](https://www.shipmonk.com/fulfillment-solutions/b2b-fulfillment)[Cross-Border Fulfillment Hassle-free global shipping with DDP and Section 321](https://www.shipmonk.com/fulfillment-solutions/cross-border)[Ecommerce Fulfillment Fast shipping that keeps your customers happy](https://www.shipmonk.com/fulfillment-solutions/3pl-ecommerce-fulfillment)[Fulfillment Locations Smart warehouses for faster, affordable deliveries](https://www.shipmonk.com/resources/fulfillment-locations)[Marketplace Fulfillment Simplified solutions for FBA, Prime, and crowdfunding](https://www.shipmonk.com/fulfillment-solutions/marketplace-fulfillment)   ## Services  [Bonded Warehouses Duty-free storage solution](https://www.shipmonk.com/fulfillment-solutions/bonded-warehouses)[Customizations Personalize order with custom packaging and more](https://www.shipmonk.com/fulfillment-solutions/customizations)[Dangerous Goods Simplify hazardous materials shipping](https://www.shipmonk.com/fulfillment-solutions/hazardous-materials)[Post Purchase Enhance customer relationships with our services](https://www.shipmonk.com/fulfillment-solutions/post-purchase)[Reverse Logistics / Returns Easy returns that keep customers coming back](https://www.shipmonk.com/fulfillment-solutions/reverse-logistics)[Shipping & Transportation Virtual Carrier Network (VCN) & 2-Day shipping](https://www.shipmonk.com/fulfillment-solutions/shipping)   ![Image 2: Two women in white Outcast beachwear pose by a pink wall\u2014elegance and ease, just like ShipMonk makes fulfillment. via ShipMonk.com](blob:http://lo",
+          "tier": "company",
+          "source": "Jina",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4450
+    },
+    {
+      "source": "ExaLinkedIn",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Devin Weil",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/in/devin-weil-7965741",
+          "published_date": "2026-07-08T00:00:00.000Z",
+          "snippet": "# Devin Weil\n\nChief Financial Officer @ ShipMonk | Fortune 100 | PE-backed companies\n\nPalm Beach Gardens, Florida, United States (US)\n\n500 connections \u2022 1,550 followers\n\n## About\n\nChief Financial Officer @ ShipMonk | Fortune 100 | PE-backed companies\n\nTotal Experience: 30 years and 8 months\n\n## Experience\n\n### Chief Financial Officer - [ShipMonk](https://www.linkedin.com/company/shipmonk) (Current)\n\nOct 2024 - Present (1 year and 10 months) in Fort Lauderdale, Florida, United States\n\nShipMonk is a leading provider of third party logistics (3PL) solutions tailored to direct-to-consumer businesses.\n\nDepartment: Finance & Accounting \u2022 Level: C-Level\n\nShipMonk is a Transportation, Logistics, Supply Chain and Storage company. ShipMonk has 300-400 employees (+10% YoY) and has annual revenue in the $300M-$400M range, founded in 2014. Headquartered in Fort Lauderdale, Florida, United States, with presence in Czechia, Mexico, and United Kingdom. Its workforce is distributed across 10 countries (including United States, Czechia, Mexico, Canada, and Philippines). Has $365.1M in total funding, with 3 prior funding rounds.\n\n### Senior Vice President, Finance - [XPO](https://www.linkedin.com/company/xpologistics)\n\nOct 2021 - Jun 2024 (2 years and 8 months) in Ann Arbor, Michigan, United States\n\nXPO (NYSE: XPO) is a leading provider of freight transportation, primarily a top-three provider of truck brokerage and less-than-truckload (LTL) capacity in North America. XPO helps companies to de-",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Here at ShipMonk, focus wins. Operational excellence wins. Merchants win. That\u2019s how you build a durable, scalable business. Excited for what\u2019s ahead. Lets go! | Devin Weil",
+          "signal_type": "profile",
+          "source_url": "https://www.linkedin.com/posts/devin-weil-7965741_here-at-shipmonk-focus-wins-operational-activity-7425182823994593281-dXVL",
+          "published_date": "2026-02-05T00:00:00.000Z",
+          "snippet": "# Here at ShipMonk, focus wins. Operational excellence wins. Merchants win. That\u2019s how you build a durable, scalable business. Excited for what\u2019s ahead. Lets go! | Devin Weil \u00b7 LinkedIn \u00b7 2026-02-05\n\n**Devin Weil**: Chief Financial Officer at ShipMonk for 1 year 10 months with 30 years 7 months of total professional experience. Previous roles include Senior Vice President, Finance at XPO, Vice President, Finance and CFO Carrier Business Services at Carrier, and Vice President, Finance and CFO (Refrigeration Segment) at Carrier. Based in Palm Beach Gardens, Florida, United States [US].\n\n---\n\nHere at ShipMonk, focus wins. Operational excellence wins. Merchants win. That\u2019s how you build a durable, scalable business. Excited for what\u2019s ahead. Lets go!\n\n**Reshared from [ShipMonk](https://linkedin.com/company/shipmonk):**\n> BREAKING: The biggest announcement in ShipMonk history. There's been a lot of speculation about what our next move would be. Today, CEO and Co-founder Kevin Sides is putting the rumors to rest and sharing the vision for where we're headed. ShipMonk is officially announcing...\n\n## Comments\n\n**[Nick Cassie](https://linkedin.com/in/nickcassie)** \u00b7 2026-02-05\n> #FOCUS\n\n**[ShipMonk](https://linkedin.com/company/shipmonk)** \u00b7 2026-02-05\n> \ud83d\ude80\ud83d\ude80\ud83d\ude80\n\n**[Patrick Poidomani](https://linkedin.com/in/patrick-poidomani-86183b112)** \u00b7 2026-02-05\n> Congratulations! So many companies failing to take advantage of this readily available lever while looking for gains.\n\n**[Don Perry](htt",
+          "tier": "person",
+          "source": "ExaLinkedIn",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1727
+    },
+    {
+      "source": "ExaNews",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Florida-based logistics provider ShipMonk raises $290 ...",
+          "signal_type": "news",
+          "source_url": "https://techcrunch.com/2020/12/02/florida-based-logistics-provider-shipmonk-raises-290-million-on-the-back-of-rising-ecommerce-demand/",
+          "published_date": "2020-12-02T00:00:00.000Z",
+          "snippet": "Florida-based logistics provider ShipMonk raises $290 million on the back of rising eCommerce demand | TechCrunch\n\n# Florida-based logistics provider ShipMonk raises $290 million on the back of rising eCommerce demand\n\n Jonathan Shieber \n\n5:01 AM PST \u00b7 December 2, 2020\n\nJan Bednar started ShipMonk with $70,000 in winnings from a string of student business plan competitions and launched the business that just closed on $290 million in new funding from a small warehouse with no air conditioning in the middle of Florida.\n\nWhile Bednar\u2019s new offices are still inside the warehouse his company operates, they now have air conditioning\u2026 and a $290 million financing round from Summit Partners to grow its business.\n\nThe Ft. Lauderdale, Fla.-based ShipMonk provides a slew of shipping and logistics services for small to medium-sized eCommerce businesses and right now \u2014 given the continuing COVID-19 pandemic \u2014 business is good.\n\n\u201c We help SMBs and mid-market direct to consumer companies manage their supply chains. Help get their products from suppliers to facilities and connect with all of their sales channels including B2B \u2026 order management, transportation management, reverse logistics,\u201d said Bednar. \n\nThe company\u2019s largest customers can book anywhere from $150 million to $250 million in revenue, but most of ShipMonk\u2019s customers are actually small businesses pulling in between $1 million and $10 million on average.\n\nIt\u2019s for these businesses that ShipMonk will fill its warehouses in Pen",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Meet The Czech Entrepreneur Whose E-Commerce ...",
+          "signal_type": "news",
+          "source_url": "https://www.forbes.com/sites/igorbosilkovski/2021/01/27/meet-the-czech-entrepreneur-whose-e-commerce-fulfillment-platform-just-raised-65-million/",
+          "published_date": "2021-01-27T00:00:00.000Z",
+          "snippet": "Meet The Czech Entrepreneur Whose E-Commerce Fulfillment Platform Just Raised $65 Million\n* [Subscribe To Newsletters](https://account.forbes.com/newsletters)\n* [Trump Tracker](https://www.forbes.com/trump/)\n* [Billionaires](https://www.forbes.com/worlds-billionaires/)\nBillionaires\n[View AllBillionaires](https://www.forbes.com/worlds-billionaires/)\n* [World's Billionaires](https://www.forbes.com/billionaires/)\n* [Forbes 400](https://www.forbes.com/forbes-400/)\n* [America's Richest Self-Made Women](https://www.forbes.com/self-made-women/)\n* [China's Richest](https://www.forbes.com/china-billionaires/)\n* [India's Richest](https://www.forbes.com/india-billionaires/)\n* [Indonesia's Richest](https://www.forbes.com/indonesia-billionaires/)\n* [Korea's Richest](https://www.forbes.com/korea-billionaires/list/)\n* [Thailand's Richest]()\n* [Japan's Richest](https://www.forbes.com/japan-billionaires/list/)\n* [Australia's Richest](https://www.forbes.com/australia-billionaires/)\n* [Taiwan's Richest](",
+          "tier": "company",
+          "source": "ExaNews",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2013
+    },
+    {
+      "source": "ExaBlog",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: ShipMonk Insights: Revolutionizing Data Access",
+          "signal_type": "news",
+          "source_url": "https://www.shipmonk.com/resources/content-hub/data-insights",
+          "published_date": "2026-02-17T00:00:00.000Z",
+          "snippet": "ShipMonk Insights: Revolutionizing Data Access\n\n#### Category:\n\n#### Published:\n\n# Your Fulfillment Data, On Demand: ShipMonk Insights\n\nData is the lifeblood of ecommerce, but for too long, it\u2019s been trapped behind support tickets and CSV exports. Today, we\u2019re changing that.\n\nThis approach may work for basic insights, but it doesn\u2019t scale for mid\u2011market and enterprise brands managing hundreds of SKUs, multiple channels and constant cost pressure. Data requests can bottleneck in BI teams or CX queues, leaving merchants waiting days for insights that need to be acted on immediately.\n\nAt ShipMonk, we believe that timely, accurate information shouldn\u2019t be a privilege, it should be table stakes. That\u2019s why we\u2019re launching ShipMonk Insights, an in\u2011platform analytics solution that gives merchants direct access to trustworthy fulfillment data. With Insights you can build your own reports and dashboards in minutes, right from within the ShipMonk platform.\n\n### ShipMonk Insights: Your New Fulfillment Command Center\n\nWe are thrilled to launch ShipMonk Insights, an in-platform analytics solution that gives you direct, unfiltered access to trustworthy fulfillment data.\n\nInsights is more than just a set of charts; it\u2019s a single source of truth that aligns your team and the ShipMonk team on the exact same definitions for service levels, costs, and performance. You no longer have to wonder if your internal math matches ours\u2014the data is unified.\n\n### Stop Guessing, Start Optimizing\n\nWith Insi",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Photo-Proof Returns Enhance Returns Management Process",
+          "signal_type": "news",
+          "source_url": "https://www.shipmonk.com/resources/content-hub/photo-proof-returns",
+          "published_date": "2026-01-16T00:00:00.000Z",
+          "snippet": "Photo-Proof Returns Enhance Returns Management Process\n\n#### Category: \n\n#### Published: \n\n- January 16, 2026 \n\n# Beyond the Black Box: Why Your Returns Process Needs a Visual Audit Trail\n\nIn the high-stakes world of ecommerce, data is the engine behind everything from ad spend to inventory forecasting. Yet, for many brands, the ecommerce returns remain a frustrating black box. You know an item came back, and you know it wasn\u2019t \u201cnew,\u201d but the why is often lost in a sea of manual tickets and vague reports.\n\nAt ShipMonk, we believe the final step of the fulfillment journey shouldn\u2019t be the most opaque. That\u2019s why we\u2019re introducing Photo-Proof Returns aka Quality Guard: a visual-first approach to reverse logistics that turns a cost center into a source of actionable intelligence.\n\n### From Ambiguity to Actionable Intelligence\n\nWhen an item arrives at our returns station in non-pristine condition, our associates don\u2019t just flag it\u2014they document it. By capturing overview shots and high-resolution detail close-ups, we surface the \u201cground truth\u201d directly on your RMA page.\n\nThis shift from text-based reports to visual evidence provides three immediate competitive advantages:\n\n- Definitive Dispute Resolution: Replace \u201che-said, she-said\u201d with objective evidence. Your support team can resolve customer edge cases and claims in seconds, not days.\n- A \u201cQuality Control\u201d Feedback Loop: When you see the same tear or packaging failure across 50 photos, you don\u2019t just have a return problem\u2014you ",
+          "tier": "company",
+          "source": "ExaBlog",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 2240
+    },
+    {
+      "source": "ExaEdgar",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Document 1 - file: def14a-akabrandsinc2026.htm",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1865107/000186510726000016/def14a-akabrandsinc2026.htm",
+          "published_date": null,
+          "snippet": "Document\n\nTABLE OF CONTENTS\n\nUNITED STATES\n\nSECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C. 20549\n\n_______________\n\nSCHEDULE 14A\n\nProxy Statement Pursuant to Section 14(a) of the\n\nSecurities Exchange Act of 1934\n\n_______________\n\n| Filed by the Registrant | x | Filed by a Party other than the Registrant | o |\n| --- | --- | --- | --- |\n\nCheck the appropriate box:\n\n| o | Preliminary Proxy Statement |\n| --- | --- |\n| o | Confidential, for Use of the Commission Only (as permitted by Rule 14a-6(e)(2)) |\n| x | Definitive Proxy Statement |\n| o | Definitive Additional Materials |\n| o | Soliciting Material Pursuant to \u00a7240.14a-12 |\n\nA.K.A. BRANDS HOLDING CORP.\n\n(Name of registrant as specified in its charter)\n\n(Name of Person(s) Filing Proxy Statement, if other than the Registrant)\n\nPayment of Filing Fee (Check all appropriate boxes):\n\n| x | No fee required. |\n| --- | --- |\n| o | Fee paid previously with preliminary materials. |\n| o | Fee computed on table in exhibit required by Item 25(b) per Exchange Act Rules 14a-6(i)(1) and 0-11. |\n\n---\n\nTABLE OF CONTENTS\n\n---\n\nTABLE OF CONTENTS\n\nDear Fellow Stockholders,\n\nWe are pleased to invite you to attend the Annual Meeting of Stockholders of a.k.a. Brands Holding Corp. (\u201ca.k.a. Brands\u201d or the \u201cCompany\u201d) to be held on May 20, 2026, at 11 a.m. Pacific Time (the \u201cAnnual Meeting\u201d). This year\u2019s Annual Meeting will be conducted virtually, via live audio webcast. You will be able to attend the meeting online by visiting www.virtualshareholder",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Filed pursuant to rule 253(g)(2)",
+          "signal_type": "news",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1824930/000168316821000672/ryse_253g2.htm",
+          "published_date": null,
+          "snippet": "Table of Contents\n\nFiled pursuant to rule 253(g)(2)\n\nFile Number: 024-11397\n\nOFFERING CIRCULAR DATED FEBRUARY 22, 2021\n\nRYSE INC.\n\n20 Camden St.\n\nToronto, Ontario\n\nM5V 1V1,\n\nwww.helloryse.com\n\nUP TO 2,104,718 CLASS B COMMON SHARES\n\nSEE \u201cSECURITIES BEING OFFERED\u201d AT PAGE 34\n\nMINIMUM INVESTMENT: $499.10 (70 Shares)\n\nWe are offering a maximum of 2,104,718 Class B Common Shares (the \u201cMaximum Amount\u201d) on a \u201cbest efforts\u201d basis.\n\n| Common Shares | Price to Public | | Placement Agent Discounts and Commissions* | | Proceeds to Issuer Before Expenses | |\n| --- | --- | --- | --- | --- | --- | --- |\n| Per share ** | $ | 7.13 | $ | 0.0713 | $ | 7.0587 |\n| Total maximum | $ | 15,756,639.30 | $ | 150,067 | $ | 14,856,572.30 |\n\n* The company has engaged Rialto Markets LLC (\u201cRialto\u201d) to act as a placement agent for this offering and to perform certain administrative and technology-related functions as set forth in \u201cPlan of Distribution.\u201d The company will pay a cash commission of 1% to Rialto on sales of the Class B Common Shares. The company may pay a cash commission of a 6% to Rialto on sales of up to $5,000,000 in Class B Common Shares sold solely due to Rialto\u2019s direct selling efforts up to an amount not exceeding $300,000. The company will also pay a $2,750 advance fee for reasonable accountable out of pocket expenses actually anticipated to be incurred by Rialto. Any unused portion of this fee not actually incurred by Rialto will be returned to the company. FINRA fees will be paid by th",
+          "tier": "company",
+          "source": "ExaEdgar",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1772
+    },
+    {
+      "source": "ExaYouTube",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "Mentioned on: Finance as the Operating Heartbeat: Why Your CFO Needs Dirt Under Their Fingernails",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=_gQXTC4JYAg",
+          "published_date": null,
+          "snippet": "The value that we provide has been recognized because we can see the entire business so we can translate what's happening on the floor to what's happening in the numbers. >> Welcome back to CFO Weekly where we're talking [music] with financial leaders about how to build efficiency in their teams, create time for strategy, and ultimately get results. >> [music] >> This podcast is brought to you by Personiv, the trusted leader in finance and accounting outsourcing for over 30 years. See how Personiv's [music] customized solutions can help you streamline your operations with teams that start as small as one. Visit the website [music] at personiv.com to learn more. I'm your host Megan Weis. Let's jump right in. Welcome back to CFO Weekly. Today I'm chatting with Devon Weil, the Chief Financial Officer at ShipMonk, one of the fastest-growing technology-driven fulfillment solution platforms in the world. With a deep background in finance leadership across organizations like XPO and Carrier, Devon has built his career inside some of the most operationally complex environments in the supply chain and logistics space. His experience spans corporate finance, performance improvement, network operations, and leading teams through transformational change. Today we'll dive into Devon's journey, explore how CFOs can become catalysts for operational excellence, and unpack the role finance plays in driving performance, efficiency, and strategic clarity in businesses where execution is everyth",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mentioned on: Unknown",
+          "signal_type": "social",
+          "source_url": "https://www.youtube.com/watch?v=LRWM6inUmvM",
+          "published_date": "2024-04-08T00:00:00.000Z",
+          "snippet": "# ShipBob vs ShipMonk: Which is Right for You?\n\n- Channel: Dropshipping Hustle\n- Length: 04:17\n- Views: 133\n- Keywords: ShipBob, ShipMonk, ShipBob vs ShipMonk, shipbob fulfillment, shipbob pricing\n- Language: en\n\n## Description\n\nDelve into the comparison between ShipBob and ShipMonk! Discover the differences in features, pricing, and performance to determine the ideal fulfillment partner for your eCommerce needs. Join us as we analyze these leading providers to help you make the best choice for your business. \n\n\u2b07\ufe0fStart Using Shipbob\u2b07\ufe0f\n\ud83d\udc49 https://bit.ly/ShipBob-Fulfillment-Shipping\n************************************************************\n\n\ud83d\udd02 Join our Telegram Group and Stay Connected \ud83d\udd02\n\u27bd https://t.me/+Ckzeym3kPd8xNDhk\n\n## Transcript\n\nin the world of e-commerce fulfillment services are key players to start us off we'll introduce two leading fulfillment Services ship Bob and shipmonk ship Bob hailing from The Windy City of Chicago has been a beacon of efficient Ecommerce Solutions since its Inception in 2014 its mission to make Logistics as breezy as a Lake Michigan gust for small to medium-sized businesses on the flip side we have chipmunk a Florida Bay company that saw its first light in 2014 as well with a monk-like focus it's committed to helping businesses of all sizes streamline their fulfillment processes these two Giants are in the business of fulfillment Services a vital Link in the e-commerce chain they handle storage packaging and shipping of online orders allowing ",
+          "tier": "person",
+          "source": "ExaYouTube",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 1551
+    },
+    {
+      "source": "Tavily",
+      "rung": 1,
+      "status": "ok",
+      "reason": null,
+      "cards": [
+        {
+          "claim": "DEVIN WEIL NEW CHIEF FINANCIAL OFFICER ShipMonk",
+          "signal_type": "person_mention",
+          "source_url": "https://www.instagram.com/p/DCpGBDGxHiL",
+          "published_date": null,
+          "snippet": "@theshipmonk is thrilled to welcome Devin Weil as our new Chief Financial Officer! Devin brings a wealth of experience and expertise to the",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Devin Weil",
+          "signal_type": "person_mention",
+          "source_url": "https://www.linkedin.com/in/devin-weil-7965741",
+          "published_date": null,
+          "snippet": "- As the countdown to the camp continues, we are more than excited to introduce some of our mentors! As young people navigate their leadership journey and encounter challenges and experiences they haven't before, having someone who has walked the journey before, makes all the difference. Joining us at the camp this year are: \ud83e\uddd1\ud83c\udffc\u200d\ud83d\ude80 Jan Bednar , a seasoned entrepreneur and founder of ShipMonk , a leading technology-driven fulfillment company revolutionizing how eCommerce brands manage their supply [...] - Today marks four years with ShipMonk. Whoop whoop!! Four years ago, I had many options. I chose ShipMonk carefully, and looking back, it remains one of the best professional decisions I've made. In these four years, I have learned more than I did in the previous decade I spent in this industry. Not because it has been easy, but because I have been surrounded by people who challenge me to think bigger, learn faster, and continuously improve. The folks I work alongside (on the green mile IYKYK) [...] - Four years at ShipMonk. Multiple promotions. Most recently, recognized with ShipMonk's Merchant First Award. Gustavo Auler has earned that recognition by building real relationships with",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipMonk Company Profile | Management and Employees List",
+          "signal_type": "person_mention",
+          "source_url": "https://www.datanyze.com/companies/shipmonk/410762135",
+          "published_date": null,
+          "snippet": "| Name & Title | Social | Contact Info |\n --- \n| Aras Kolya  Chief Revenue Officer | Email  Phone | Reveal for Free |\n| Hugh Joiner  Chief Technology Officer | Email  Phone | Reveal for Free |\n| Devin Weil  Chief Financial Officer | Email  Phone | Reveal for Free |\n| Stuart Horowitz  Chief People Officer | Email  Phone | Reveal for Free |\n| Myrna Negron  Director, Controller | Email  Phone | Reveal for Free |\n| Christopher Leigh  General Counsel | Email  Phone | Reveal for Free | [...] From its inception in 2014, ShipMonk has operated with a singular guiding principle: to help small and medium-sized ecommerce businesses scale by offering technology-driven fulfillment solutions that enable business founders to devote more time to the things that matter most in their businesses. Put simply, ShipMonk helps ecommerce companies stress less and grow more. Headquartered in Fort Lauderd  ale, FL, ShipMonk has employees across facilities in Fort Lauderdale, FL, Pittston, PA, Los [...] Company Overview\n\nTeam Members\n\nEmail Formats\n\nWant to find more companies like this? Use GTM.AI in your AI tool of choice\n\nclose\n\nlogo\n\nSign Up\n\nLog in\n\ncrystals\n\nFind Contacts\n\nHomepage  >  Freight & Logisti",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Mastering the Operational Finance Leadership Style for CFOs",
+          "signal_type": "person_mention",
+          "source_url": "https://insights.personiv.com/cfo-weekly/cfo-operational-finance-leadership-style",
+          "published_date": null,
+          "snippet": "Currently serving as CFO of ShipMonk, Devin oversees finance for one of the fastest-growing tech-enabled fulfillment platforms in the world, managing 12",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Helping Online Merchants Scale: ShipMonk Raises $290M To Meet E-commerce Demand",
+          "signal_type": "news",
+          "source_url": "https://news.crunchbase.com/startups/helping-online-merchants-scale-shipmonk-raises-290m-to-meet-e-commerce-demand",
+          "published_date": null,
+          "snippet": "Artificial intelligence \u2022 Crypto \u2022 Fintech \u2022 Health, Wellness & Biotech \u2022 M&A \u2022 Seed funding \u2022 Startups\n\n## Startups Are Still Acquiring Startups, Led By Ultra-High-Valuation Unicorns\n\nJoanna Glasner\n\nAugust 24, 2026\n\nAmid fierce competition for an edge in the AI race, well-funded startups commonly find it\u2019s simply faster to buy another company than try to build...\n\n#### Featured [...] Stay up to date with recent funding rounds, acquisitions, and more with the Crunchbase Daily.\n\n#### You may also like\n\nIllustration of money pie.\n\nArtificial intelligence \u2022 Liquidity \u2022 M&A \u2022 Public Markets \u2022 Robotics \u2022 SaaS \u2022 Startups\n\n## Inside The Private-Market Divide: EquityZen\u2019s Phil Haslett On AI, SaaS And Secondaries\n\nMary Ann Azevedo\n\nAugust 25, 2026 [...] August 25, 2026\n\nThe market for private-company shares has become a much bigger part of the startup ecosystem. In this Crunchbase News Q&A, EquityZen co-founder Phil...\n\nIllustration of a boot being pulled by its bootstrap.\n\nArtificial intelligence \u2022 Startups \u2022 Venture\n\n## Why Bootstrapped Businesses Are More Relevant Than Ever\n\nGuest Author\n\nAugust 25, 2026",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipMonk raises another $65 million to propel international ...",
+          "signal_type": "news",
+          "source_url": "https://refreshmiami.com/news/129254-2",
+          "published_date": null,
+          "snippet": "On the heels of its $290 million investment in December, ShipMonk has announced a $65 million raise from Periphas Capital.  \n ShipMonk\u2019s total funding now exceeds $365 million, including previous funding from Summit Partners SJF Ventures, Grotech Ventures and Supply Chain Ventures. [...] The funding announcement comes as ShipMonk accelerates its national and international expansion to support more customers with new locations, expanded carrier partnerships and technology enhancements to its platform.  \n The Fort Lauderdale-based ecommerce logistics provider specializes in serving small and mid-sized merchants, and today serves more than 1,000 of them with inventory management software, automation tech and multi-channel order fulfillment services. [...] Nancy Dahlberg\n\nLatest posts by Nancy Dahlberg (see all)\n\n 10+ things to know in #MiamiTech: loanDepot bring tech jobs, plus news from Mark43, PowerUs, Longeveron, Scale2Miami, OutRival, Research Park at FAU, Ondas, Florida Chamber & more - August 14, 2026\n OpenFX acquires Global Ledger, taps Novo co-founder to build multi-currency accounts - August 7, 2026\n Wayy bags $2M pre-seed to become an AI-powered sales co-founder for entrepre",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Newsroom - ShipMonk | Fulfillment Center | Order Fulfillment Services",
+          "signal_type": "news",
+          "source_url": "https://www.shipmonk.com/resources/newsroom",
+          "published_date": null,
+          "snippet": "News\n\n## ShipMonk Named to Inbound Logistics\u2019 2026 Top 100 3PLs\n\nShipMonk Named to Inbound Logistics\u2019 2026 Top 100 3PLs Annual list recognizes the logistics partners keeping ...\n\nRead More\n\nJonathan Briggs of ShipMonk beams warmly by the Out of the Box podcast title on a purple background\u2014straight from ShipMonk.com. via ShipMonk.com\n\n News\n\n## What Is a Bonded Warehouse \u2014 and Should Your Brand Be Using One?\n\nThis post is based on a recent conversation on the Out of the Box (OOTB) podcast, ...",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipMonk - 2026 Company Profile & Team",
+          "signal_type": "news",
+          "source_url": "https://tracxn.com/d/companies/shipmonk/__P-htHY0JPHxo_vsKhq9HaRqrmzJL6fqcUvFVTDPsoPI",
+          "published_date": null,
+          "snippet": "| Rank | Company Details | Short Description | Total Funding | Investors | Tracxn Score |\n ---  ---  --- |\n| 1st | Logo for Delhivery  Delhivery 2011, Gurugram  (India), Public | Platform offering end-to-end parcel delivery, warehousing, cross-border, and fulfillment services | $1.25B | Fidelity Investments, GIC  & 38 others | 87/100 | [...] ShipMonk has raised a total funding of $365M over 3 rounds. Its first funding round was on Nov 01, 2018. Its latest funding round was a Series B round on Jan 27, 2021 for  $\\\\\\\\\\. 1 investor participated in its latest round.  ShipMonk has 7 institutional investors. [...] | 4th | Logo for Cainiao  Cainiao 2013, Hangzhou  (China), Acquired | Tech-enabled end-to-end delivery service provider | $290M | Khazanah Nasional Berhad, GIC  & 6 others | 76/100 |\n| 5th | Logo for Locus  Locus 2015, Milpitas  (United States), Acquired | Provider of an AI-powered platform for optimizing logistics and delivery | $82.5M | GIC, Tiger Global Management  & 33 others | 73/100 |",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Devin Weil - Chief Financial Officer at ShipMonk | The Org",
+          "signal_type": "person_mention",
+          "source_url": "https://theorg.com/org/shipmonk/org-chart/devin-weil",
+          "published_date": null,
+          "snippet": "Title: Devin Weil - Chief Financial Officer at ShipMonk | The Org\n# Devin Weil. ### Chief Financial Officer. Devin Weil is the Chief Financial Officer at ShipMonk since October 2024, bringing extensive financial leadership experience from prior roles such as Senior Vice President of Finance at XPO from October 2021 to June 2024, and Vice President of Finance and CFO at Carrier. With a strong background in finance across various sectors, Devin has held significant positions at United Technologies, focusing on financial leadership for major divisions within Carrier. Prior to that, roles included CFO at Performance Fibers and Global Operations Finance Leader at ADC, with early experience in financial planning and analysis at Honeywell and as an Air Cavalry Troop Commander in the US Army. Devin holds a Bachelor of Science from the United States Military Academy at West Point and an MBA in Finance, Strategy, and Operations from Carnegie Mellon University's Tepper School of Business. ## Org chart. This person is not in the org chart. ## Teams. This person is not in any teams. ## Offices. This person is not in any offices. ## Related people. ### Kevin Entricken. ### Derek B. ### Sumit Ban",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "Devin Weil | ShipMonk | Email, Chief Financial Officer",
+          "signal_type": "person_mention",
+          "source_url": "https://www4.lead411.com/Devin_Weil_15190321.html",
+          "published_date": null,
+          "snippet": "Title: Devin Weil | ShipMonk | Email, Chief Financial Officer\n# Devin Weil. ## **Chief Financial Officer at ShipMonk**. ## Devin Weil Email & Contact Information. ## Devin Weil Current Workplace: ShipMonk. Transportation, Logistics, Supply Chain and Storage,Freight Transportation Arrangement,eCommerce Order Fulfillment,Storage and Warehousing,Inventory Management Software,Subscription Box Fulfillment,Crowdfunding Campaign Fulfillment,3PL, saas Read More. Transportation, Logistics, Supply Chain and Storage. ## View Colleagues. ## Data Solutions. ## Who We Serve. ## resources. ## Company. #### \u00a9 2025 Lead411 All Rights Reserved | Your Privacy Choices | Privacy Policy | Do Not Sell | CCPA | Terms Of Use |\u00a0Lead411 is a registered data broker under applicable state laws, including under Texas law. To conduct business in Texas, a data broker must register with the Texas Secretary of State (Texas SOS). Information about data broker registrants is available on the Texas SOS website.",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "[ShipMonk Information](/shipmonk-profile_b5582877f692cfe4 \"ShipMonk Information\")",
+          "signal_type": "news",
+          "source_url": "https://rocketreach.co/shipmonk-profile_b5582877f692cfe4",
+          "published_date": null,
+          "snippet": "# ShipMonk Information. Since 2014, ShipMonk has operated with a singular guiding principle: help ecommerce brands scale through technology-driven fulfillment solutions that enable entrepreneurs to devote more time to the things that matter most in their businesses. Put simply, here at ShipMonk we help ecommerce brands STRESS LESS and GROW MORE. Each year, ShipMonk is recognized by ecommerce industry leaders and publications for our commitment to innovation. | **Phone** | (855) 222-4601 222-4601 \"ShipMonk's phone\") |. | **Keywords** | Ecommerce Order Processing, Order Fulfillment, Direct To Consumer Fulfillment, Third Party Logistics, Scalable Fulfillment, E Commerce Logistics, Outsourced Fulfillment, Fulfillment Automation, 3pl, Fulfillment Solutions, Inventory Management, Warehousing, Supply Chain, Returns Management, Distribution, Shipping, Dropshipping, Global Fulfillment |. **ShipMonk** employee's phone or email? ## **ShipMonk Questions**. ### What is the annual revenue of ShipMonk? **The ShipMonk annual revenue** was **$483.1 million** in 2026. ### Who is the Co-Founder and Chief Executive Officer of ShipMonk? **Kevin Sides** is the Co-Founder and Chief Executive Officer of S",
+          "tier": "company",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        },
+        {
+          "claim": "ShipMonk Company Profile | Management and Employees ...",
+          "signal_type": "person_mention",
+          "source_url": "https://www.datanyze.com/companies/shipmonk/410762135",
+          "published_date": null,
+          "snippet": "| Name & Title | Social | Contact Info |\n --- \n| Aras Kolya  Chief Revenue Officer | Email  Phone | Reveal for Free |\n| Hugh Joiner  Chief Technology Officer | Email  Phone | Reveal for Free |\n| Devin Weil  Chief Financial Officer | Email  Phone | Reveal for Free |\n| Stuart Horowitz  Chief People Officer | Email  Phone | Reveal for Free |\n| Myrna Negron  Director, Controller | Email  Phone | Reveal for Free |\n| Christopher Leigh  General Counsel | Email  Phone | Reveal for Free | [...] | Brandon Journey  General Manager | Email  Phone | Reveal for Free |\n| John Cillie  Director, Product Management | Email  Phone | Reveal for Free |\n| Jacob Dauerman  Head of Financial Planning & Analysis | Email  Phone | Reveal for Free |\n| Marissa Stafford  Senior Director, Continuous Improvement | Email  Phone | Reveal for Free |\n| Cynthia Ortiz  General Manager | Email  Phone | Reveal for Free |\n| Stefan Boyd  Head of Operations, Finance & Analytics | Email  Phone | Reveal for Free | [...] ...Read More\n\n### Popular Searches\n\nShipMonk Inc\n\nShipMonk\n\nShipMonk Marketing Agency\n\nBedabox LLC\n\nShipMonk Co\n\n### Primary Industries\n\nFreight & Logistics ServicesTransportationTrucking, Moving & Storage\n\n###",
+          "tier": "person",
+          "source": "Tavily",
+          "eligibility": "eligible"
+        }
+      ],
+      "cost_usd": 0.0,
+      "elapsed_ms": 4389
+    }
+  ]
+}

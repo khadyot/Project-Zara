@@ -47,9 +47,10 @@ os.environ["ZARA_SECRETS_BRIDGE"] = f"{SECRETS_BRIDGE_STATUS[0]}|{SECRETS_BRIDGE
 
 from zara.models import Prospect
 from zara.orchestrator import run_end_to_end_pipeline
-from zara.s2 import render_decision_card
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 from zara.ui.auth import developer_mode_unlocked
+from zara.ui.text import clean_claim, short_reason, link_label
+from zara.ui.citations import attribute as attribute_sentences
 
 # --- DESIGN SYSTEM ---
 # We inject the SavvyCal style tokens via custom CSS overriding Streamlit defaults.
@@ -105,6 +106,11 @@ def _show_detail() -> bool:
     default, one click away, and the run still records everything either way.
     """
     return bool(st.session_state.get("show_pipeline_detail", False))
+
+
+def rp_cards_for_citation(draft_res):
+    """The cards a claim could legitimately have come from."""
+    return draft_res.ranked_prospect.cards
 
 
 def render_budget_meter():
@@ -1064,6 +1070,48 @@ def main():
         else:
             st.warning("No draft generated. Try Deep Search for more signal, or loosen strictness.")
 
+        # --- The same draft, with every claim traced to its source ---
+        # The draft and its evidence used to live in two panels, so checking a
+        # sentence meant opening the audit trail and comparing by eye. Nobody does
+        # that for the third prospect of the morning, and an unchecked claim is the
+        # failure this whole product exists to prevent. One click per sentence.
+        if draft_res.draft_text:
+            with st.expander("Draft with sources"):
+                _cards = [c.card for c in rp_cards_for_citation(draft_res) if c.excluded is None]
+                _win = (draft_res.ranked_prospect.winning_card.card
+                        if draft_res.ranked_prospect.winning_card else None)
+                marked, sources = attribute_sentences(draft_res.draft_text, _cards, _win)
+
+                lines = []
+                for sentence, num in marked:
+                    text = html.escape(sentence)
+                    if num:
+                        url = html.escape(sources[num - 1].source_url or "", quote=True)
+                        text += (f"<a class='zcite' href='{url}' target='_blank' "
+                                 f"rel='noopener' title='Open the source'>{num}</a>")
+                    lines.append(f"<p class='zcline'>{text}</p>")
+                st.markdown("".join(lines), unsafe_allow_html=True)
+
+                if sources:
+                    st.markdown("<div class='eyebrow-sm'>Sources</div>", unsafe_allow_html=True)
+                    for i, c in enumerate(sources, 1):
+                        zrow(
+                            clean_claim(c.claim, 64),
+                            state=f"[{i}]",
+                            detail=link_label(c.source_url),
+                            value=c.source,
+                            status="ok",
+                        )
+                    st.caption(
+                        "A sentence with no marker is ours, not the evidence's: the pattern we "
+                        "expect and the ask. Only claims traced to a retrieved card are cited."
+                    )
+                else:
+                    st.caption(
+                        "Nothing in this draft traces to a retrieved card. That is what a generic "
+                        "offer looks like, and it is why the banner above says so."
+                    )
+
         # --- Verification status ---
         if draft_res.verification:
             v = draft_res.verification
@@ -1088,18 +1136,26 @@ def main():
             why = win.pain_match.reason if win.pain_match else "no reason recorded"
             age = f"{win.recency_days} days old" if win.recency_days is not None else "undated"
             zrow(
-                win.card.claim[:90],
+                clean_claim(win.card.claim, 90),
                 state=win.proximity,
                 detail=why,
                 value=f"{win.score:.2f}",
                 status="ok",
             )
-            zrow("evidence", state=pain, detail=age, value=draft_res.claim_strength,
+            zrow("evidence", state=pain, detail=age,
+                 value=draft_res.claim_strength.replace("_", " "),
                  status="ok" if win.recency_days is not None else "empty",
                  alert=(win.recency_days is None))
             if win.card.source_url:
-                st.markdown(f"<span class='zquiet'>{win.card.source_url}</span>",
-                            unsafe_allow_html=True)
+                # Was the raw href. A Google News redirect is ~300 characters of
+                # base64 that wraps across three lines and tells the reader nothing.
+                _u = html.escape(win.card.source_url, quote=True)
+                st.markdown(
+                    f"<span class='zquiet'>source &middot; "
+                    f"<a href='{_u}' target='_blank' rel='noopener'>"
+                    f"{html.escape(link_label(win.card.source_url))}</a></span>",
+                    unsafe_allow_html=True,
+                )
         else:
             zrow("no winning card", state="no_signal",
                  detail="nothing prospect-specific was found; the opener is company level",
@@ -1107,7 +1163,49 @@ def main():
 
         rejected = [c for c in rp.cards if c is not win]
         with st.expander(f"What it rejected ({len(rejected)}) and the full audit trail"):
-            st.markdown(render_decision_card(draft_res, results))
+            # This used to dump render_decision_card() straight into st.markdown.
+            # That function formats for print(): fixed-width columns and single
+            # newlines, which a proportional font and Markdown collapse into one
+            # unreadable paragraph. It also re-rendered the draft, the hooks and
+            # the verification, all of which are already on screen above. What
+            # belongs here is only what is NOT elsewhere: the deviations and the
+            # rejected set. render_decision_card stays as the CLI's renderer.
+            notes = getattr(rp, "icp_notes", None)
+            if notes:
+                st.markdown("<div class='eyebrow-sm'>Deviations &mdash; noted, never blocking</div>",
+                            unsafe_allow_html=True)
+                for n in notes:
+                    st.caption(n)
+
+            if not rejected:
+                st.caption("Nothing else was retrieved, so nothing was rejected.")
+            else:
+                scored = sorted((c for c in rejected if c.score > 0),
+                                key=lambda c: c.score, reverse=True)
+                unranked = [c for c in rejected if c.score <= 0]
+                for c in scored:
+                    reason = c.excluded or "eligible but outscored"
+                    if c.guardrail_hit:
+                        reason = f"{reason} \u00b7 {c.guardrail_hit}"
+                    zrow(
+                        clean_claim(c.card.claim),
+                        state=c.proximity,
+                        detail=short_reason(reason, limit=64),
+                        value=f"{c.score:.2f}",
+                        status="empty",
+                        alert=bool(c.guardrail_hit),
+                    )
+                # The zero-score tail is real evidence that was considered and
+                # never contended. Counting it keeps that honest without
+                # spending twenty rows on it.
+                if unranked:
+                    zrow(
+                        f"+{len(unranked)} more scored 0.00",
+                        state="not ranked",
+                        detail="retrieved, matched no pain, never in contention",
+                        status="empty",
+                        muted=True,
+                    )
 
         # --- Sources ---
         with st.expander(f"Sources ({len(results)})"):
@@ -1118,7 +1216,7 @@ def main():
                     r.source,
                     state=_SW.get(r.status, r.status),
                     detail=(f"{len(r.cards)} cards" if r.status == "ok"
-                            else (r.reason or "")),
+                            else short_reason(r.reason)),
                     value=f"rung {r.rung}",
                     status=r.status,
                     muted=(r.status == "skipped"),

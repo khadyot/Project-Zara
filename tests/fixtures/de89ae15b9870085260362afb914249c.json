@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy payments and reconciliation at Episode Six",
+    "draft_text": "Hi Chermaine,\nLegacy payments weren\u2019t built for the world fintech operates in today. When core systems rely on outdated flows, teams spend hours reconciling mismatched records across multiple platforms. We build bots that pull transaction data and match it to internal ledgers for your finance team. Could we schedule a brief call next week to see if this approach fits your workflow?"
+  },
+  "prompt_tokens": 1362,
+  "completion_tokens": 1749
+}

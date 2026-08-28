@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on the DeSpir acquisition",
+    "draft_text": "Hi Bruce,\nC.H. Robinson announced acquiring DeSpir Logistics. It may increase intercompany reconciliation sprawl, though I could be mistaken. Our platform matches transaction records across systems using rule based matching to auto create journal entries. Do you have fifteen minutes next week to explore this? I can share details.\nZamp"
+  },
+  "prompt_tokens": 1075,
+  "completion_tokens": 1880
+}

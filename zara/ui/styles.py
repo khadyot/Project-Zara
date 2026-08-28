@@ -363,7 +363,7 @@ div[data-testid="stText"] > pre{
    Numbers are right-aligned with tabular figures so digits stack. */
 .zrow{
   display:grid;
-  grid-template-columns:11px minmax(0,15rem) 6.5rem minmax(0,1fr) auto;
+  grid-template-columns:11px minmax(0,18rem) 7.5rem minmax(0,1fr) auto;
   align-items:baseline;
   gap:var(--s-2);
   padding:7px 0;
@@ -573,6 +573,20 @@ section[data-testid="stSidebar"] .zr-name{color:var(--cream-paper);}
 section[data-testid="stSidebar"] .zrow{border-bottom-color:rgba(252,247,237,.14);}
 section[data-testid="stSidebar"] .zfill{background:rgba(252,247,237,.20);}
 section[data-testid="stSidebar"] .zfill > span{background:var(--lime-sprout);}
+/* Perplexity-style inline citation: a small raised number after the sentence it
+   supports, linking straight to the source so a claim can be checked in one click
+   and the reader can come back. */
+.zcline{margin:0 0 .5rem 0;line-height:1.6;}
+.zcite{
+  display:inline-block;margin-left:3px;padding:0 5px;
+  font-size:.68em;font-weight:600;vertical-align:super;line-height:1.5;
+  color:var(--forest-deep,#0d542b);background:var(--sage-mist,#e7efe8);
+  border:1px solid var(--fog,#e5e7eb);border-radius:2px;text-decoration:none;
+}
+.zcite:hover{background:var(--forest-deep,#0d542b);color:#fff;}
+/* A quiet line often carries a URL or an error string, neither of which has a
+   space to break on. Without this they push the column wider than the page. */
+.zquiet{overflow-wrap:anywhere;word-break:break-word;}
 /* Emphasis numbers in the dark zone: lime as ink. */
 section[data-testid="stSidebar"] .zaccent{color:var(--lime-sprout);font-weight:600;}
 section[data-testid="stSidebar"] .zquiet{color:rgba(252,247,237,.60);}
@@ -684,7 +698,7 @@ def zrow(name, state=None, detail=None, value=None, status=None,
     out = (
         f"<div class='{cls}'>{dot}"
         f"<span class='zr-name'>{e(name)}</span>"
-        f"<span class='zr-state'>{e(state) if state else ''}</span>"
+        f"<span class='zr-state'>{e(str(state).replace('_', ' ')) if state else ''}</span>"
         f"<span class='zr-detail'>{e(detail) if detail else ''}</span>"
         f"<span class='zr-value'>{e(value) if value else ''}</span>"
         f"</div>"

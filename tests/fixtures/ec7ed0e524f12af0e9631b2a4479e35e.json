@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains no invented metrics, customer names, or specific claims about Jon Anderson or Payouts Network that aren't supported by the provided evidence. All statements are either supported by evidence or are generic value proposition/CTA language."
+  },
+  "prompt_tokens": 1813,
+  "completion_tokens": 599
+}

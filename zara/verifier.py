@@ -94,7 +94,20 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict,
     
     # 4. Multi-word proper nouns (Title Case words in sequence)
     proper_nouns = []
-    for match in re.finditer(r'\b([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\b', draft_text):
+    # Two fixes, both from one blocked draft that had invented nothing.
+    #
+    # [ \t]+ and not \s+: \s crosses newlines, so the last words of the subject
+    # were glued to the first word of the greeting into a phantom proper noun,
+    # "Reconciliation Workflows\n\nRiley", which no evidence can ever contain.
+    #
+    # And the subject line is excluded from this heuristic entirely. Subjects are
+    # written in Title Case as a house style, so "Automation for Reconciliation
+    # Workflows" yields "Reconciliation Workflows" as a claim nobody made. The
+    # heuristic assumes sentence case and only sentences give it that. Numbers,
+    # quoted strings and URLs are still checked across the subject, so a
+    # fabricated figure in a subject line is still caught.
+    _nouns_from = draft_text.split("\n\n", 1)[1] if "\n\n" in draft_text else draft_text
+    for match in re.finditer(r'\b([A-Z][a-z]+[ \t]+[A-Z][a-z]+(?:[ \t]+[A-Z][a-z]+)*)\b', _nouns_from):
         pn = match.group(1)
         pn = re.sub(r'^(?:Hi|Hello|Dear|Best|Regards|Thanks|Sincerely|Zamp)\s+', '', pn)
         if ' ' in pn:

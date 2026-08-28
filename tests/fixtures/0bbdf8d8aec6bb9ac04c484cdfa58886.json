@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The email contains only generic pain statements and value proposition language, and a factual observation about Bruce's public accounting background that is supported by the evidence. No invented metrics, customer names, or specific claims about the prospect/company are present."
+  },
+  "prompt_tokens": 2151,
+  "completion_tokens": 259
+}

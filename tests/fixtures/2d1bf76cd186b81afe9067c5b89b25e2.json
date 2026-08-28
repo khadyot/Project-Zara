@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No finance, payment, or volume observable present."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Advice only; no explicit growth or payment observable."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Announces simulation terminal product launch."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Salary data; no relevant observable."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 release announcement, not finance-related."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Launches AI connector; unrelated to pains."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast episode featuring executives; no observable."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Personal profile; lacks observable."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Company description; no specific observable."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue estimate reported; not volume or finance system change."
+      }
+    ]
+  },
+  "prompt_tokens": 1651,
+  "completion_tokens": 1665
+}

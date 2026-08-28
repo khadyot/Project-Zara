@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Automating reconciliation at Midwest 3PL",
+    "draft_text": "Hi Bruce,\nYour background includes public accounting experience and financial reporting. Finance teams spend many hours reconciling spreadsheets, pulling data from multiple systems, and correcting mismatches.\nWe build bots that match transactions, post journal entries, and reconcile balances without manual intervention.\nWould a call next week work for you to explore whether this approach could reduce your reconciliation workload?\nZamp"
+  },
+  "prompt_tokens": 1374,
+  "completion_tokens": 1900
+}
