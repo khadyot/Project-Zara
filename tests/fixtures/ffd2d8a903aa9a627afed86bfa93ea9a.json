@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references information present in the evidence (ShipBob Simulation Terminal, manual reconciliation challenges) and does not introduce any unsupported metrics, customer names, or specific factual claims about the prospect."
+  },
+  "prompt_tokens": 923,
+  "completion_tokens": 308
+}

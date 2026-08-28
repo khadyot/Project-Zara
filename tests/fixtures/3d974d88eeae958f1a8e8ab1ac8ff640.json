@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Fulfillment data reconciliation",
+    "draft_text": "Hi AJ,\nYour catalog of fulfillment options spans core pick-and-pack, temperature-controlled, and multi-brand 3PL services. Companies that cover that breadth juggle order data from several platforms, which creates a constant need to reconcile inventory across channels. That reconciliation work tends to pull teams away from strategic tasks. We feed each transaction into a unified ledger that updates stock in real time, removing the manual stitching step. Is the time spent reconciling inventory a pain point you\u2019re handling manually?"
+  },
+  "prompt_tokens": 2209,
+  "completion_tokens": 1587
+}

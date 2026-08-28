@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Congrats on your recent appointment as Chief Financial Officer of ShipMonk.",
+        "rationale": "As CFO, you oversee financial reporting and cost control, and manual reconciliation processes can drain finance resources.",
+        "bridge": "Our automation platform streamlines reconciliation\u2011heavy workflows, freeing your team to focus on strategic financial initiatives.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipMonk opened its first fulfillment center designed specifically for apparel brands about five months ago.",
+        "rationale": "Launching a new, apparel\u2011focused facility impacts capital allocation and operating expenses, which are key concerns for a CFO.",
+        "bridge": "By automating inventory and financial reconciliations at the new center, our solution can help protect margins and improve ROI.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipMonk launched an apparel\u2011specific fulfillment center to tackle returns and SKU complexity roughly five months ago.",
+        "rationale": "Managing returns and a complex SKU mix drives significant cost and accounting effort, directly affecting the bottom line you manage.",
+        "bridge": "Our platform automates the reconciliation of returns data and SKU accounting, reducing manual effort and error rates.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipMonk reported a 2024 ARR of $225M and $300M raised just 15 days ago.",
+        "rationale": "Rapid revenue growth and recent fundraising increase the pressure on finance to maintain accurate, scalable processes.",
+        "bridge": "Our automation tools ensure financial data stays accurate and up\u2011to\u2011date as transaction volumes expand.",
+        "strength": 0.82
+      }
+    ]
+  },
+  "prompt_tokens": 746,
+  "completion_tokens": 1082
+}

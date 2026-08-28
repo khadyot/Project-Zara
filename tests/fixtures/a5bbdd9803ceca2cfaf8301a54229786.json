@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy payments and reconciliation",
+    "draft_text": "Hi Chermaine,\n\nYour point about legacy rails not fitting fintech's pace suggests the payments layer forces teams into manual reconciliation work. Because many firms patch outdated APIs, data ends up in fragmented silos that require duplicate entry. Those patches fail to keep up as transaction volume climbs, turning a temporary fix into a chronic drain. That gap is what we work on, feeding transaction streams into an automated reconciliation engine. Is manual reconciliation a bottleneck for your team?"
+  },
+  "prompt_tokens": 2188,
+  "completion_tokens": 2600
+}

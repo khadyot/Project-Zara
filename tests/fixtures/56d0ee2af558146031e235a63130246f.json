@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Month-end close manual matching",
+    "draft_text": "Hi Jon,\n\nYou discussed strategic insights in a recent Global FinTech Q&A. Such discussions reveal that month-end close suffers from manual matching across financial systems.\n\nOur platform reads transaction feeds and reconciles entries across your core ledgers.\n\nWould you have 20 minutes next week to see if it fits? Zamp"
+  },
+  "prompt_tokens": 1690,
+  "completion_tokens": 1663
+}

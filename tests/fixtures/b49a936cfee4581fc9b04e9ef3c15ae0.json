@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Simulation terminal now in every sandbox",
+    "draft_text": "Hi Test,\nHaving the Simulation Terminal in every sandbox lets teams test fulfillment without touching live data. It trims manual test cycles and lowers risk before go\u2011live. When teams can validate inventory adjustments in the same UI, they avoid costly back\u2011and\u2011forth with engineering. We automate the reconciliation steps that follow those manual tests, feeding results back into your ERP. Is the current manual testing effort something you\u2019re looking to reduce?"
+  },
+  "prompt_tokens": 1817,
+  "completion_tokens": 2145
+}

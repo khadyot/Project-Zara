@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel returns driving hidden finance work",
+    "draft_text": "Hi Devin,\nShipMonk's new apparel fulfillment center adds a layer of return processing and SKU granularity that forces finance to reconcile many more line items per order. That extra reconciliation load tends to grow in lockstep with transaction volume, creating a hidden cost curve for the CFO. Automating the matching of return receipts to inventory movements turns those manual tallies into a repeatable data feed. Is the manual reconciliation effort manageable for your team, or are you looking for automation?"
+  },
+  "prompt_tokens": 1782,
+  "completion_tokens": 1658
+}

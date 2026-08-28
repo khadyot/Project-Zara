@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable meets criteria."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Snippet lacks explicit observable."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Announcement of new CFO."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue and funding announcement."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.7,
+        "reason": "Opened new fulfillment center (new warehouse)."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.7,
+        "reason": "Launched apparel-specific fulfillment center."
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Highlights returns visual audit trail feature."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Profile; no new leadership or other observable."
+      },
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Promotes data access insights platform."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Comparison video, no specific observable."
+      }
+    ]
+  },
+  "prompt_tokens": 1710,
+  "completion_tokens": 2526
+}

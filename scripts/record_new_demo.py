@@ -19,6 +19,7 @@ from zara.ranker import FIXTURE_CLOCK  # noqa: E402
 
 os.environ["ZARA_NOW"] = FIXTURE_CLOCK
 
+from zara import antitemplate  # noqa: E402
 from zara.models import Prospect  # noqa: E402
 from zara.orchestrator import run_end_to_end_pipeline  # noqa: E402
 
@@ -43,6 +44,14 @@ PAIRS = [
 
 
 async def main():
+    # The repetition check compares each draft against the ones already written
+    # in this run, so PAIRS order is load-bearing: change it and the drafts that
+    # get asked to rewrite change with it, and recorded fixtures stop matching.
+    with antitemplate.batch():
+        await _run_all()
+
+
+async def _run_all():
     for name, company, title, snap in PAIRS:
         print(f"\n{'=' * 78}\n### {name} @ {company}", flush=True)
         try:

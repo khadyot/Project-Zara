@@ -6,6 +6,7 @@ import yaml
 from zara.models import Prospect, SourceResult, DraftResult, RankedCard
 from zara.ranker import rank_prospect
 from zara.drafter import draft_email, compute_claim_strength
+from zara import antitemplate
 from zara.verifier import verify_draft, check_format
 
 def render_decision_card(draft_res: DraftResult, results: list[SourceResult]) -> str:
@@ -148,6 +149,51 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
         if retry and not check_format(retry.draft_text):
             draft_text = retry.draft_text
             subject = retry.subject
+
+    # Cross-draft repetition. No instruction inside the drafter's prompt can
+    # catch this, because each email is written without sight of the others: the
+    # four demo drafts each obeyed "do not reuse a formula you would reuse on the
+    # next prospect" and still came out as one mail merge. The comparison has to
+    # happen where more than one draft exists, so it happens here, and it reuses
+    # the FORMAT path above -- Ruling #6, a style problem gets rewritten, never
+    # blocked and never reported as fabrication.
+    _batch = antitemplate.active()
+    if _batch is not None and draft_text:
+        _batch.register_supplied(
+            vp.get("product", ""), vp.get("cta", ""),
+            *[p.get("statement", "") for p in vp.get("pains", [])],
+        )
+        _evidence = " ".join(filter(None, [
+            getattr(hook, "hook_text", None),
+            ranked_prospect.winning_card.card.snippet if ranked_prospect.winning_card else None,
+        ]))
+        # Two attempts, then keep the best. All-or-nothing was too strict: the
+        # first pass reliably killed the worst repetition without reaching zero,
+        # and discarding it for that put the fully-templated draft back.
+        for _ in range(2):
+            dup = _batch.check(draft_text, _evidence)
+            if not dup:
+                break
+            if on_event:
+                on_event({"type": "stage", "name": "writing draft",
+                          "status": "running", "detail": "rewriting: repeats an earlier draft"})
+            retry = await draft_email(
+                ranked_prospect, vp, strictness=strictness, hook=hook, style=style,
+                feedback_tokens=[f"FORMAT (not a factual error): {n}" for n in dup],
+            )
+            # Compared, not absolute: rejecting any rewrite that fails check_format
+            # meant a draft already outside the word budget could never be rewritten
+            # at all, because its replacement was held to a bar the original had
+            # already missed.
+            if not (retry and retry.draft_text):
+                break
+            if len(check_format(retry.draft_text)) > len(check_format(draft_text)):
+                break  # a rewrite that is further outside the budget is not an improvement
+            if _batch.overlap_size(retry.draft_text, _evidence) >= _batch.overlap_size(draft_text, _evidence):
+                break  # no closer than what we already have
+            draft_text = retry.draft_text
+            subject = retry.subject
+        _batch.record(ranked_prospect.prospect.company, draft_text, _evidence)
 
     if on_event:
         on_event({"type": "stage", "name": "verifying draft", "status": "running"})

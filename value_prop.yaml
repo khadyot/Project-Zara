@@ -92,6 +92,15 @@ never_reference:
     terms: [enforcement action, investigation by, consent order, cease and desist, fined by, regulatory probe, sanctions against]
   - id: forced_departure
     terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
+  # Found on real data, not imagined: the ShipMonk snapshot carries three cards
+  # about a breach exposing 13,689 of their customer Trezor's records, 11 days old
+  # and therefore near the top on recency. Leading outreach with a prospect's
+  # security incident is indefensible, and nothing above mentioned breaches.
+  # Terms are prefix-matched, so "breach" covers breached/breaches. Kept narrow
+  # where a bare word would over-fire: "security incident" not "incident",
+  # "exposed customer" not "exposed".
+  - id: data_breach
+    terms: [data breach, breach impacts, breach puts, breach exposes, security incident, ransomware, hacked, cyberattack, cyber attack, phishing risk, exposed customer, exposed personal, leaked records, credential stuffing]
 
 # DECIDED: omitted by default in strict mode. Permissive mode allows this benchmark.
 proof_point: ""

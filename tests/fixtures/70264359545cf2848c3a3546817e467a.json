@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only general observations and a question about the prospect\u2019s reconciliation effort. It does not assert any specific metrics, customer names, or factual claims about AJ Khanijow or Fulfyld that are not supported by the provided evidence."
+  },
+  "prompt_tokens": 2231,
+  "completion_tokens": 403
+}

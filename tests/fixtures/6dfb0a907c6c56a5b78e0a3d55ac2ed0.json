@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Apparel fulfillment adds reconciliation load",
+    "draft_text": "Hi Devin,\nShipMonk opened an apparel\u2011focused fulfillment center to address returns and SKU complexity. When returns and SKU mix grow, reconciliation workload spikes for finance teams. Our platform extracts transaction data and posts matched entries directly into your accounting system. Would you have 20 minutes early next week to discuss?"
+  },
+  "prompt_tokens": 1534,
+  "completion_tokens": 789
+}

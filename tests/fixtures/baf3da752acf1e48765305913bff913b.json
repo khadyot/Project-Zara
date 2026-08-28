@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Fulfyld fulfillment services and manual handoffs",
+    "draft_text": "Hi AJ,\nFulfyld lists a broad set of fulfillment and 3PL services across multiple channels. Such breadth creates manual handoffs between order intake and carrier booking, increasing error risk. We feed order data into a reconciliation engine that matches shipments to inventory, reducing manual effort. Would you have 20 minutes next week to see if this fits your workflow?"
+  },
+  "prompt_tokens": 1547,
+  "completion_tokens": 2245
+}

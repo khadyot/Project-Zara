@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only general observations and a reference to Chermaine's public comment about legacy payments, which is supported by the evidence. It does not include invented metrics, specific customer names, fabricated quotes, or unsupported factual claims about Episode Six or its team."
+  },
+  "prompt_tokens": 2244,
+  "completion_tokens": 448
+}

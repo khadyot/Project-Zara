@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains no invented metrics, customer names, or specific prospect claims unsupported by the evidence. All statements are either directly supported (e.g., Simulation Terminal in every sandbox) or are generic value\u2011prop language."
+  },
+  "prompt_tokens": 927,
+  "completion_tokens": 367
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains no invented metrics, customer names, or specific claims about the prospect that are unsupported. All statements are either supported by the evidence (e.g., CFO appointment, month\u2011end close manual matching) or are generic value\u2011proposition language."
+  },
+  "prompt_tokens": 1829,
+  "completion_tokens": 441
+}

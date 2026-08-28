@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Legacy rails and reconciliation at Episode Six",
+    "draft_text": "Hi Chermaine,\nLegacy rails can\u2019t keep pace with fintech\u2019s speed, so transaction data often arrives in fragmented batches. That forces finance teams to stitch records together manually, which adds significant hidden latency and error risk. When reconciliation drags, cash visibility suffers and downstream decisions stall, creating critical delays. We route those fragmented feeds into a single ledger and reconcile by design. Is the current manual stitching still limiting Episode Six\u2019s cash flow reporting?"
+  },
+  "prompt_tokens": 1920,
+  "completion_tokens": 1959
+}

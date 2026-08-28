@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Fintech month\u2011end close friction",
+    "draft_text": "Hi Jon,\nYour recent Q&A highlighted how legacy rails stretch month\u2011end close for many fintechs. When matching stays manual, teams spend days untangling data instead of closing books. That friction pushes month\u2011end close beyond the typical five\u2011day window, adding delay. That gap is what we address with an engine that consolidates transaction streams into a single ledger, eliminating the manual step. Is manual reconciliation a current bottleneck for your team?"
+  },
+  "prompt_tokens": 2202,
+  "completion_tokens": 2506
+}

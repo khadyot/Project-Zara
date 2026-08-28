@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references supported facts (apparel\u2011focused fulfillment center, Devin Weil as CFO) and includes only general pain points and value proposition, without any invented metrics, customer names, or specific unsupported claims."
+  },
+  "prompt_tokens": 1623,
+  "completion_tokens": 335
+}

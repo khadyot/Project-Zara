@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Sandbox simulation and automated reconciliation",
+    "draft_text": "Hi Test,\nYour new sandbox includes a Simulation Terminal for testing fulfillment flows. Operators trim manual testing and gain confidence before go\u2011live, when sandbox data mirrors production, which frees staff for significant higher\u2011value analysis.\nWe feed sandbox results into automated reconciliation scripts that eliminate manual entry and reduce error rates.\nDo you have 20 minutes early next week to discuss?"
+  },
+  "prompt_tokens": 1624,
+  "completion_tokens": 2573
+}

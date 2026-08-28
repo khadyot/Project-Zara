@@ -84,7 +84,20 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict,
     # For a simple deterministic pass, we'll extract tokens that look like these.
     
     # 1. Numbers (including $1.2M, 1,000, etc)
-    numbers = re.findall(r'\b\$?\d+(?:[.,]\d+)*(?:[a-zA-Z]+)?\b', draft_text)
+    #
+    # A meeting length is not a claim about the prospect. It belongs to the ask,
+    # it is the writer's to choose, and no evidence can ever contain it, so
+    # grounding it is a category error. This surfaced the moment the drafter was
+    # told to stop closing every email with "a short call next week": it reached
+    # for "15 minutes next week" instead, and Jon Anderson's draft was blocked on
+    # the token "15" while the identical "20 minutes" passed for ShipMonk purely
+    # because that number happened to appear somewhere in its evidence. A
+    # verifier whose verdict turns on that coincidence is not checking anything.
+    _durations = re.compile(
+        r'\b\d{1,3}\s*(?:-|\s)?\s*(?:minute|minutes|min|mins|hour|hours|hr|hrs)\b',
+        re.I,
+    )
+    numbers = re.findall(r'\b\$?\d+(?:[.,]\d+)*(?:[a-zA-Z]+)?\b', _durations.sub(" ", draft_text))
     
     # 2. URLs
     urls = re.findall(r'https?://[^\s]+|[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', draft_text)

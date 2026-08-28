@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Fintech payments and manual reconciliation",
+    "draft_text": "Hi Chermaine,\nLegacy payments don\u2019t match the speed fintech needs. That mismatch forces many fintech teams to stitch together manual reconciliation steps. When data arrives in disparate batches, the effort to align records grows faster than transaction volume. We feed those batches into an automated matcher that surfaces mismatches without manual review. Is manual reconciliation a bottleneck for your team?"
+  },
+  "prompt_tokens": 2219,
+  "completion_tokens": 1040
+}

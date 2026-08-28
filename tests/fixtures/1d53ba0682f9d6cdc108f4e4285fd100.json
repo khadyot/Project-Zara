@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Month\u2011end close and manual matching",
+    "draft_text": "Hi Jon,\nYour appointment as CFO highlights a strategic push on finance operations. In fintech, month\u2011end close drags because reconciliation depends on manual matching across legacy rails. That delay forces finance teams to allocate hours that support analysis. That friction is where we focus.\nOur team creates a feed that consolidates transaction streams into a single ledger for automatic matching.\nIs manual reconciliation a significant bottleneck for your month\u2011end close?"
+  },
+  "prompt_tokens": 2118,
+  "completion_tokens": 2205
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only general statements about apparel returns, SKU complexity, and manual reconciliation, which are supported by the evidence (e.g., ShipMonk's apparel-specific fulfillment center and focus on automating reconciliation-heavy processes). No invented metrics, customer names, or specific unsupported claims about the prospect are present."
+  },
+  "prompt_tokens": 1655,
+  "completion_tokens": 340
+}
