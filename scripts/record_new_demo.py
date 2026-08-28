@@ -6,6 +6,7 @@ recordings were fine, and because a downstream prompt's hash depends on upstream
 output, it invalidates hashes the tests are still asking for.
 """
 import asyncio
+import itertools
 import os
 import sys
 
@@ -62,10 +63,35 @@ async def main():
     with antitemplate.batch():
         await _run_all()
 
+    if "--orderings" in sys.argv:
+        await _record_orderings()
 
-async def _run_all():
-    for name, company, title, snap in PAIRS:
-        print(f"\n{'=' * 78}\n### {name} @ {company}", flush=True)
+
+async def _record_orderings():
+    """Every click order the demo operator could use.
+
+    The app keeps one repetition batch per sitting, so the Nth prospect is
+    compared against the N-1 already drafted. A different click order is a
+    different comparison, so a different rewrite, so a prompt hash that the
+    PAIRS-order recording above never produced -- and under USE_FIXTURES=1 a
+    missing hash is a FileNotFoundError in front of the interviewer, not a
+    degraded draft. Recording every permutation is what makes "click order does
+    not matter" true rather than merely believed.
+
+    Cheap after the first pass: fill replays everything already on disk and only
+    the genuinely new states go live.
+    """
+    for order in itertools.permutations(PAIRS):
+        names = " -> ".join(p[0].split()[0] for p in order)
+        print(f"\n{'#' * 78}\n### ORDERING: {names}", flush=True)
+        with antitemplate.batch():
+            await _run_all(order, quiet=True)
+
+
+async def _run_all(pairs=None, quiet=False):
+    for name, company, title, snap in (pairs or PAIRS):
+        if not quiet:
+            print(f"\n{'=' * 78}\n### {name} @ {company}", flush=True)
         try:
             results, draft = await run_end_to_end_pipeline(
                 Prospect(name, company, title=title),
@@ -98,8 +124,9 @@ async def _run_all():
         if v.reason:
             print(f"REASON: {v.reason[:200]}", flush=True)
         print(f"SUBJECT: {draft.subject}", flush=True)
-        print("-" * 78, flush=True)
-        print(draft.draft_text or "<<< NO EMAIL >>>", flush=True)
+        if not quiet:
+            print("-" * 78, flush=True)
+            print(draft.draft_text or "<<< NO EMAIL >>>", flush=True)
 
 
 asyncio.run(main())

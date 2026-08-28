@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only supported references (Devin Weil as CFO, ShipMonk\u2019s apparel\u2011specific fulfillment center) and generic value\u2011proposition language. It does not include invented metrics, customer names, quotes, or specific prospect claims not found in the evidence."
+  },
+  "prompt_tokens": 1662,
+  "completion_tokens": 626
+}

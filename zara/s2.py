@@ -5,7 +5,7 @@ import yaml
 
 from zara.models import Prospect, SourceResult, DraftResult, RankedCard
 from zara.ranker import rank_prospect
-from zara.drafter import draft_email, compute_claim_strength
+from zara.drafter import draft_email, compute_claim_strength, SCAFFOLD_PHRASES
 from zara import antitemplate
 from zara.verifier import verify_draft, check_format
 
@@ -161,6 +161,13 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if _batch is not None and draft_text:
         _batch.register_supplied(
             vp.get("product", ""), vp.get("cta", ""),
+            # The house voice, dictated by the drafter prompt: the introduction,
+            # the mechanism opening, the two closing sentences. Every draft
+            # repeats these because it was told to, which is exactly what
+            # "supplied" means -- without this the second draft in a batch reads
+            # as a mail merge of the first and gets rewritten out of the voice
+            # the user asked for.
+            *SCAFFOLD_PHRASES,
             *[p.get("statement", "") for p in vp.get("pains", [])],
         )
         _evidence = " ".join(filter(None, [

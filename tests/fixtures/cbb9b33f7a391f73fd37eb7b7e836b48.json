@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about ShipBob's new simulation terminal",
+    "draft_text": "Hi Test,\n\nI'm Zamp from Zamp Technologies. We help operations teams automate manual, reconciliation-heavy processes.\n\nSaw that ShipBob's Simulation Terminal now lets you simulate the full fulfillment lifecycle in sandbox without touching real inventory. I imagine testing end-to-end fulfillment scenarios can become increasingly time-consuming.\n\nWe build bots that reconcile simulated order data with inventory records and flag mismatches, reducing manual validation work.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2294,
+  "completion_tokens": 1068
+}

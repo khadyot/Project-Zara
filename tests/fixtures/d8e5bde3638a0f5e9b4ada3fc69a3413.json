@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only restates the sender's value proposition and generic pain points that are supported by the evidence. It does not introduce any specific metrics, customer names, or factual claims about the prospect that are not present in the evidence."
+  },
+  "prompt_tokens": 641,
+  "completion_tokens": 568
+}

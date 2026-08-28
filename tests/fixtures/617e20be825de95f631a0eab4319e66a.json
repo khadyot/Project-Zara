@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains no invented metrics, customer names, or specific claims about ShipMonk or Devin Weil that are unsupported by the provided evidence. All references (e.g., Devin Weil as CFO, ShipMonk's apparel-specific fulfillment center, Zamp as the sender) are present in the evidence, and the rest are generic value propositions or connective language."
+  },
+  "prompt_tokens": 1659,
+  "completion_tokens": 299
+}

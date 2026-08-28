@@ -17,7 +17,15 @@ prospect, so their repetition is not a tell and is registered as supplied first.
 
 Ordering note: a batch is order-dependent by construction -- the first draft is
 never asked to change, later ones are. Keep the prospect order in
-scripts/record_new_demo.py fixed, or recorded fixtures will not line up.
+scripts/record_new_demo.py fixed, or recorded fixtures will not line up. The
+demo lets its operator click prospects in any order, so every permutation needs
+recording too: scripts/record_new_demo.py --orderings.
+
+Since the house voice was fixed to the hand-written drafts, "We build bots that"
+and the two closing sentences are DICTATED by the drafter prompt and repeat by
+design. They are registered as supplied (drafter.SCAFFOLD_PHRASES), so the
+example above now reads the other way round: those openings repeating is the
+product working, and what this check still catches is everything else.
 """
 import re
 from contextlib import contextmanager
@@ -25,6 +33,20 @@ from contextlib import contextmanager
 NGRAM = 4
 
 _WORD = re.compile(r"[a-z0-9']+")
+
+# A supplied phrase and an NGRAM window do not have the same length, so the
+# windows that STRADDLE the edge of a supplied phrase belong to neither side.
+# "We build bots that" is dictated and exempt; the writer's next word turns
+# ("build","bots","that","automate") into a run that is three-quarters ours and
+# was reported as the writer repeating themselves. Every leak found while
+# fitting the house voice was of this one shape: "aligned can become
+# increasingly", "checks curious if this", "from zamp technologies we".
+#
+# So a window counts as supplied when NGRAM-1 of its words are a contiguous run
+# inside something supplied. Repetition that is genuinely the writer's still
+# lands: a reused sentence puts windows well clear of any dictated boundary, and
+# those are untouched.
+STRADDLE = NGRAM - 1
 
 
 def _norm_words(text: str) -> list[str]:
@@ -58,19 +80,31 @@ class DraftBatch:
 
     def __init__(self) -> None:
         self._supplied: set[tuple[str, ...]] = set()
+        self._supplied_edges: set[tuple[str, ...]] = set()
         self._seen: list[tuple[str, set[tuple[str, ...]]]] = []
 
     def register_supplied(self, *texts: str) -> None:
         """Word runs handed to the drafter, which repeat legitimately."""
         for t in texts:
             self._supplied |= shingles(t)
+            w = _norm_words(t)
+            self._supplied_edges |= {
+                tuple(w[i:i + STRADDLE]) for i in range(len(w) - STRADDLE + 1)
+            }
+
+    def _straddles_supplied(self, gram: tuple[str, ...]) -> bool:
+        """True if this window is mostly a supplied phrase with one word of the
+        writer's stuck to either end."""
+        return (gram[:STRADDLE] in self._supplied_edges
+                or gram[-STRADDLE:] in self._supplied_edges)
 
     def _chosen(self, draft_text: str, evidence: str = "") -> set[tuple[str, ...]]:
         # `evidence` is this prospect's own, so it is excluded here rather than
         # via register_supplied. Registering it would make it permanently
         # supplied for the whole batch, and a later draft that genuinely lifted
         # a phrase from THIS prospect's evidence would then go unreported.
-        return shingles(body_of(draft_text)) - self._supplied - shingles(evidence)
+        mine = shingles(body_of(draft_text)) - self._supplied - shingles(evidence)
+        return {g for g in mine if not self._straddles_supplied(g)}
 
     def check(self, draft_text: str, evidence: str = "") -> list[str]:
         """Feedback notes if this draft repeats an earlier one in the batch."""
