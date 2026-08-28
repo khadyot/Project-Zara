@@ -108,7 +108,19 @@ proof_point: ""
 # DECIDED 2026-08-23 by the human: sign as the company.
 # The drafter must sign exactly as configured and must not invent a human signer.
 sender_name: "Zamp"
-sender_person: ""
+# Who the email says it is. Not a fabricated human -- the company speaking in the
+# first person, which is what the hand-written drafts do: "I'm Zamp from Zamp
+# Technologies." Empty is still honest and degrades to "I'm reaching out from
+# <company>"; it just is not the voice those drafts set.
+sender_person: "Zamp"
+# The entity the email introduces itself as, in "I'm <person> from <company>".
+# It was a literal in drafter.py until 2026-08-29, which meant every email
+# introduced itself as Zamp Technologies whatever the sidebar said -- and, worse,
+# the verifier blocked any OTHER sender's drafts: build_evidence_list grounds
+# against the string values in this file, so a name that lived in code and not
+# here read as an invented proper noun. Empty is allowed and degrades the
+# introduction to sender_name; it never breaks the draft.
+sender_company: "Zamp Technologies"
 # Describes the ask, it is not the sentence. Written as a sentence, it WAS the
 # sentence: four consecutive drafts closed "Worth a 15-minute call next week?"
 # verbatim, which is the clearest mass-mail tell a batch of emails can carry.

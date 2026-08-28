@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only general value proposition and connective language present in the evidence; it does not introduce any unsupported metrics, customer names, or specific factual claims about the prospect."
+  },
+  "prompt_tokens": 630,
+  "completion_tokens": 329
+}

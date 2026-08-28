@@ -82,18 +82,95 @@ _STYLE_RULES = (
     "- Any sentence that would work as a pull quote. You are writing to one person."
 )
 
-# The sender's own introduction. Hardcoded, by the user's call: sender_name is
-# "Zamp" and there is no field carrying the legal entity, so deriving this from
-# config would need a new one. Any other configured sender still introduces
-# itself as Zamp -- known, accepted, noted in the plan.
-IDENTITY_LINE = "I'm Zamp from Zamp Technologies."
-
 # The close, fixed. Two sentences, in this order. The second one negotiates a
 # calendar, which every earlier version of this prompt banned outright; the ban
 # is lifted here deliberately, because the hand-written drafts this voice is
 # copied from both end exactly this way.
+#
+# These stay literals where the introduction became config: they are house voice,
+# they say nothing about who is sending or what they sell, and there is no field
+# in value_prop.yaml that describes them.
 CLOSE_QUESTION = "Curious if this is something"
 CLOSE_OFFER = "Happy to connect for a quick chat."
+
+
+# U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN, U+2012 FIGURE DASH. All three render
+# as an ordinary hyphen and none of them is one, so "time-consuming" arrives
+# looking correct and is not.
+_UNICODE_HYPHENS = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2012": "-"})
+
+
+def ascii_hyphens(text: str | None) -> str | None:
+    """Replace look-alike hyphens with the keyboard one.
+
+    _STYLE_RULES bans these by name and the model still emits them: they came
+    back in a recorded draft three prompt revisions after the ban was written.
+    A ban the model obeys most of the time is not a guarantee, and this one is
+    pure character substitution with nothing to decide, so it stops being a
+    request and becomes a transform.
+
+    Em and en dashes are deliberately NOT handled here. Those need the sentence
+    reworded around a comma or a full stop, which is a writing decision the
+    prompt owns and a substitution would paper over.
+    """
+    return text if text is None else text.translate(_UNICODE_HYPHENS)
+
+
+def identity_line(value_prop: dict) -> str:
+    """The sender's own introduction, composed from config.
+
+    This was the literal "I'm Zamp from Zamp Technologies." until 2026-08-29.
+    Two things were wrong with that, and only the first was obvious: every
+    sender introduced itself as Zamp, and -- because the verifier grounds
+    proper nouns against the string values of value_prop -- a name that lived
+    in code rather than config read as an invention, so any other sender's
+    drafts were BLOCKED for containing the sender's own company name.
+
+    Degrades rather than breaks. Missing person, missing company, or the two
+    set to the same word all have an honest form; none of them produce
+    "I'm Zamp from Zamp".
+    """
+    person = (value_prop.get("sender_person") or "").strip()
+    company = (value_prop.get("sender_company") or "").strip()
+    name = (value_prop.get("sender_name") or "").strip()
+
+    if person and company and person.casefold() != company.casefold():
+        return f"I'm {person} from {company}."
+    # No human signer configured -- signing as the company is the documented
+    # default in value_prop.yaml, so the introduction is the company's too.
+    entity = company or name or person
+    if not entity:
+        return "I'm reaching out."
+    return f"I'm reaching out from {entity}."
+
+
+def function_word(title: str | None) -> str | None:
+    """The function a title owns, for "your <function> team".
+
+    Was `"financ" in title or "cfo" in title`, which gave the team form to
+    finance buyers and the bare "you're" to everybody else -- a rule shaped
+    entirely by the two demo prospects, who were both CFOs. Read off the
+    prospect's own title so it works for any ICP, and returns None rather than
+    guessing when the title names no function or is absent.
+    """
+    t = (title or "").casefold()
+    if not t:
+        return None
+    for function, cues in (
+        ("finance", ("financ", "cfo", "controller", "accounting", "treasur")),
+        # Before operations on purpose: "Director of People Ops" matches the "ops"
+        # cue too, and the more specific function is the right answer.
+        ("people", ("people", "human resources", "chro", " hr", "talent", "recruit")),
+        ("operations", ("operation", "coo", "ops", "supply chain", "logistic", "fulfil")),
+        ("revenue", ("revenue", "cro", "sales", "growth")),
+        ("marketing", ("marketing", "cmo", "brand", "demand gen")),
+        ("engineering", ("engineer", "cto", "infrastructure", "platform", "technical")),
+        ("product", ("product", "cpo")),
+        ("legal", ("legal", "counsel", "compliance", "risk")),
+    ):
+        if any(cue in t for cue in cues):
+            return function
+    return None
 
 # Phrasing this prompt DICTATES, so it repeats across every draft in a batch by
 # construction rather than by the writer running out of ideas. antitemplate's
@@ -112,26 +189,46 @@ CLOSE_OFFER = "Happy to connect for a quick chat."
 # Happy to connect..." produces the 4-gram ("about","right","now","happy"),
 # which belongs to NEITHER phrase on its own and leaked through a version of
 # this list that registered them separately.
-SCAFFOLD_PHRASES = (
-    IDENTITY_LINE,
-    CLOSE_QUESTION,
-    "can become increasingly time-consuming. We build bots that",
-    f"is thinking about right now. {CLOSE_OFFER}",
-    f"you're thinking about right now. {CLOSE_OFFER}",
-    f"{IDENTITY_LINE} We",
-    # The close's middle varies with who owns the problem, so CLOSE_QUESTION
-    # alone leaves "something your finance team is" unregistered -- and every
-    # draft written to a finance owner shares it. Both full sentences, so the
-    # whole close is covered end to end whichever subject it takes.
-    f"{CLOSE_QUESTION} your finance team is thinking about right now. {CLOSE_OFFER}",
-    f"{CLOSE_QUESTION} your team is thinking about right now. {CLOSE_OFFER}",
-    f"{CLOSE_QUESTION} you're thinking about right now. {CLOSE_OFFER}",
-)
+#
+# A function, not a constant, since the introduction is now composed from
+# value_prop. `functions` is the set of team nouns the close may take across the
+# batch: it cannot be known from one prospect, so callers pass what they have and
+# the generic forms always cover the rest.
+def scaffold_phrases(value_prop: dict, functions: tuple[str, ...] = ()) -> tuple[str, ...]:
+    identity = identity_line(value_prop)
+    phrases = [
+        identity,
+        CLOSE_QUESTION,
+        # Was "...time-consuming. We build bots that", bridging into a mechanism
+        # opener this prompt no longer dictates. Paragraph 3 is the writer's
+        # again, so its repetition is a real tell and must be reported; the
+        # straddle rule in antitemplate absorbs the sentence boundary itself.
+        "can become increasingly time-consuming",
+        f"is thinking about right now. {CLOSE_OFFER}",
+        f"you're thinking about right now. {CLOSE_OFFER}",
+        f"{identity} We",
+        # The close's middle varies with who owns the problem, so CLOSE_QUESTION
+        # alone leaves "something your finance team is" unregistered -- and every
+        # draft written to one kind of owner shares it. Full sentences, so the
+        # whole close is covered end to end whichever subject it takes.
+        f"{CLOSE_QUESTION} your team is thinking about right now. {CLOSE_OFFER}",
+        f"{CLOSE_QUESTION} you're thinking about right now. {CLOSE_OFFER}",
+    ]
+    for function in functions:
+        if function:
+            phrases.append(
+                f"{CLOSE_QUESTION} your {function} team is thinking about right now. {CLOSE_OFFER}"
+            )
+    return tuple(phrases)
 
 
 async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictness: str = "strict", feedback_tokens: list[str] = None, hook: object = None, style: str = "auto") -> DraftOutput | None:
     winning_card = ranked_prospect.winning_card
-    sender_name = value_prop.get("sender_person") or value_prop.get("sender_name", "Zamp")
+    # No literal default. A "Zamp" fallback here signed someone else's email with
+    # our name whenever the config was incomplete, which is the loudest possible
+    # way to be wrong; an empty sender is visible and fixable, a wrong one is not.
+    sender_name = value_prop.get("sender_person") or value_prop.get("sender_name") or ""
+    identity = identity_line(value_prop)
     offer = value_prop.get("product", "")
     cta = value_prop.get("cta", "")
 
@@ -193,16 +290,20 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             # opening are stated here because they were the two things it got
             # wrong, and a shape given as prose is a shape it will improvise on.
             + "THREE paragraphs. Not four, not five.\n"
-            + f"  1. Two sentences: \"{IDENTITY_LINE}\" then, plainly, what we do.\n"
+            + f"  1. Two sentences: \"{identity}\" then, plainly, what we do.\n"
               "  2. One or two sentences: you looked and found no specific signal, said\n"
               "     without apology, and the kind of work we help with.\n"
               f"  3. Both closing sentences, IN ONE PARAGRAPH: \"{CLOSE_QUESTION} you're\n"
               f"     thinking about right now?\" then \"{CLOSE_OFFER}\"\n"
               "Ask one thing. Do not name a day, a duration or a meeting length, and do not\n"
               "stack that with \"a short demo\" or \"schedule a call\".\n"
-              "The mechanism sentence opens \"We build bots that ...\", the same as every\n"
-              "other email this writes, and the verb after \"that\" is the actual operation,\n"
-              "not \"automate\". \"Our platform ...\" is banned: it is the seam where\n"
+              # Was: the mechanism sentence opens "We build bots that ...". That
+              # asserted a product. It is true of the sender this was written for
+              # and false of anyone else who configures this file, so the rule now
+              # points at WHAT WE SELL instead of naming the thing sold.
+              "The mechanism sentence starts with \"We\" and describes, concretely, the\n"
+              "operation named in WHAT WE SELL above. Not \"automate\" as the verb: say what\n"
+              "is actually done to what. \"Our platform ...\" is banned: it is the seam where\n"
               "the email stops being about them, and this path already has the least to say.\n"
               "Do not add a paragraph listing what it works with or how little it changes.\n"
               "You have NO evidence about this company, so you have nothing to report about "
@@ -217,7 +318,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                 system_instruction=fallback_system,
                 stage="drafter_no_signal",
             )
-            return resp
+            return DraftOutput(subject=ascii_hyphens(resp.subject),
+                               draft_text=ascii_hyphens(resp.draft_text))
         except ProviderProbeFailedError as e:
             print(f"WARNING: Drafter fallback model failed: {e}", file=sys.stderr)
             return DraftOutput(
@@ -227,7 +329,7 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                 # what we found (nothing), what we do, the two-sentence close.
                 draft_text=(
                     f"Hi {(ranked_prospect.prospect.person_name or '').strip().split(' ')[0]},\n\n"
-                    f"{IDENTITY_LINE} {offer}.\n\n"
+                    f"{identity} {offer}.\n\n"
                     "I looked across the web, your LinkedIn, and news sources to find what "
                     "you're focusing on right now, but couldn't find a strong signal.\n\n"
                     f"{CLOSE_QUESTION} you're thinking about right now? {CLOSE_OFFER}\n\n"
@@ -330,16 +432,22 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     _first_name = (ranked_prospect.prospect.person_name or "").strip().split(" ")[0]
 
     # The shape below is copied from two emails the user wrote by hand, and it
-    # deliberately reverses several rules this prompt used to enforce by name:
-    # the self-introduction, "We build bots that", the two-sentence close that
-    # offers a chat. The earlier rules were aimed at making each email feel
-    # unrepeatable; the user's judgement is that a consistent, plainly-introduced
-    # house voice reads better than a set of individually clever ones. Where a
-    # rule below contradicts an older comment in this file, the rule wins.
+    # deliberately reverses several rules this prompt used to enforce by name: the
+    # self-introduction, and the two-sentence close that offers a chat. The
+    # earlier rules were aimed at making each email feel unrepeatable; the user's
+    # judgement is that a consistent, plainly-introduced house voice reads better
+    # than a set of individually clever ones. Where a rule below contradicts an
+    # older comment in this file, the rule wins.
     #
-    # Consistency is now the point, so the repetition check has to be told which
-    # runs of words are ours rather than the writer's: SCAFFOLD_PHRASES, above,
-    # registered as supplied in s2. Change a fixed phrase here and change it there.
+    # What is fixed is VOICE. Nothing fixed here may assert what the sender sells:
+    # the introduction is composed from value_prop, and paragraph 3 describes
+    # whatever WHAT WE DO names. An earlier version required the literal "We build
+    # bots that", which was true for one sender and a lie for every other.
+    #
+    # Consistency is the point for the voice, so the repetition check has to be
+    # told which runs of words are ours rather than the writer's:
+    # scaffold_phrases(), above, registered as supplied in s2. Change a fixed
+    # phrase here and change it there.
     prompt += ("WRITE THE EMAIL. 70-110 words, four paragraphs, in this exact order. The\n"
                "paragraphs are short: one idea each, none over two sentences.\n"
                # The first recording of this shape dropped the full stop on three
@@ -363,14 +471,19 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                "thoughts, they belong to different paragraphs with a blank line between them.\n\n")
 
     prompt += ("PARAGRAPH 1 -- WHO YOU ARE. Two sentences. The first is fixed, word for word:\n"
-               f"  \"{IDENTITY_LINE}\"\n")
+               f"  \"{identity}\"\n")
     if _is_authored:
+        # The example used to be "the complexity that comes with expanding payment
+        # operations", which is Episode Six's world and nobody else's. Every
+        # example in this prompt is now a shape with the content marked out, so it
+        # teaches the sentence without handing over a vocabulary.
         prompt += ("Then ONE sentence naming the area you think you could help with, hedged and\n"
-                   "general, in this shape: \"I'm reaching out because the complexity that comes\n"
-                   "with expanding payment operations may be an area we could help with.\" It\n"
-                   "names the territory, not a diagnosis of them, and it does not yet mention\n"
-                   "the evidence. That is paragraph 2's job. Name the area THIS prospect works\n"
-                   "in, do not copy the example, and end the sentence with a full stop.\n\n")
+                   "general, in this shape: \"I'm reaching out because <the area of work their\n"
+                   "evidence points at> may be an area we could help with.\" It names the\n"
+                   "territory, not a diagnosis of them, and it does not yet mention the\n"
+                   "evidence. That is paragraph 2's job. Fill the angle brackets from THIS\n"
+                   "prospect and WHAT WE DO, never with the words of the example, and end the\n"
+                   "sentence with a full stop.\n\n")
     else:
         prompt += ("Then ONE sentence saying plainly what we do, drawn from WHAT WE DO above. No\n"
                    "hedge needed here: it is a fact about us, not a claim about them.\n\n")
@@ -378,22 +491,22 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += "PARAGRAPH 2 -- WHAT YOU SAW, AND WHAT YOU MAKE OF IT. Two sentences, in one\nparagraph.\n"
     if _is_authored:
         prompt += ("  First: that you read what they wrote, and the specific idea in it. \"I read\n"
-                   "  your post about legacy payments, especially your point about modern issuer\n"
-                   "  processing.\" Name the actual idea. \"I saw your recent post\" names none and\n"
-                   "  tells them only that something automated found a page. Do not reproduce\n"
-                   "  their sentence: compress it, shorter than the original. They wrote it, they\n"
-                   "  will recognise it, and reading someone their own line back is the tell.\n")
+                   "  your post about <their subject>, especially your point about <the one\n"
+                   "  specific idea in it>.\" Name the actual idea. \"I saw your recent post\"\n"
+                   "  names none and tells them only that something automated found a page. Do\n"
+                   "  not reproduce their sentence: compress it, shorter than the original. They\n"
+                   "  wrote it, they will recognise it, and reading someone their own line back\n"
+                   "  is the tell.\n")
     else:
-        # The blanket ban on "I saw" for non-authored cards is lifted here. The
-        # user's hand-written ShipMonk draft opens "Saw that ShipMonk's new
-        # apparel-specific fulfillment center...", which claims only that the
-        # writer saw a public company fact -- true, and not a claim that Devin
-        # said it. What stays banned is the second person: "you said", "your
-        # point", which the verifier's check_attribution blocks anyway.
+        # The blanket ban on "I saw" for non-authored cards is lifted here. A
+        # hand-written draft opened "Saw that <company>'s new ... center", which
+        # claims only that the writer saw a public company fact -- true, and not a
+        # claim that the recipient said it. What stays banned is the second
+        # person: "you said", "your point", which check_attribution blocks anyway.
         prompt += ("  First: the company fact itself, opened with \"Saw that\", and ONLY what the\n"
-                   "  evidence actually says. \"Saw that ShipMonk opened an apparel-specific\n"
-                   "  fulfillment center.\" You may say you saw it, because you did. You may NOT\n"
-                   "  imply they said or wrote it: no \"you said\", no \"your point\", no second\n"
+                   "  evidence actually says. \"Saw that <company> <did the thing the evidence\n"
+                   "  reports>.\" You may say you saw it, because you did. You may NOT imply\n"
+                   "  they said or wrote it: no \"you said\", no \"your point\", no second\n"
                    "  person about the evidence at all.\n"
                    # A first recording wrote "...brings a broader range of SKUs per order
                    # and higher transaction volumes" here and the verifier blocked the
@@ -405,9 +518,9 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += ("  Second: what you imagine that means for the work, hedged, in this shape:\n"
                "  \"I imagine <gerund naming the actual work> can become increasingly\n"
                "  time-consuming.\" Name the real artifacts, the way the person doing the job\n"
-               "  would: \"keeping payment records aligned across systems\", \"keeping up with\n"
-               "  return data and accounting entries\". \"keeping things aligned\" names nothing\n"
-               "  and is the version every prospect gets.\n"
+               "  would: \"keeping <the actual records> aligned across <the actual systems>\",\n"
+               "  \"keeping up with <the actual work the evidence implies>\". \"keeping things\n"
+               "  aligned\" names nothing and is the version every prospect gets.\n"
                "  The subject is the WORK, never their people:\n"
                "  \"your reconciliation load is growing\" and \"finance teams allocate extra staff\"\n"
                "  are claims about the inside of a company you cannot see, and are blocked.\n"
@@ -416,17 +529,35 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                "  means\", \"This means\" or \"That implies\", and do not use a stock frame like\n"
                "  \"Companies like yours\". Never say how old the evidence is.\n\n")
 
-    prompt += ("PARAGRAPH 3 -- WHAT WE BUILD. ONE sentence, at most 25 words, and it opens\n"
-               "\"We build bots that ...\". That opening is required, not merely allowed.\n"
-               # Every draft in the first recording of this shape read "We build
-               # bots that automate ...". The opening is ours and repeats by
-               # design; the verb after it is the writer's and must not.
-               "The verb straight after \"that\" is NOT \"automate\": name the actual operation\n"
-               "on the actual data, the way someone who built it would describe it. \"reconcile\n"
-               "payment data across systems and flag anomalies\", \"match incoming return data\n"
-               "to inventory records and generate balanced entries\".\n"
+    # This paragraph used to open with a required literal, "We build bots that".
+    # It was true of the sender the voice was fitted to and a lie for anyone else
+    # who edits value_prop.yaml, so the rule now points at WHAT WE DO and lets the
+    # sentence be composed from it. Consequence, accepted deliberately: paragraph
+    # 3 is the writer's again, so it can repeat across a batch -- which is a real
+    # tell, is no longer exempt scaffolding, and antitemplate reports it.
+    prompt += ("PARAGRAPH 3 -- WHAT WE DO ABOUT IT. ONE sentence, at most 25 words. The\n"
+               "subject is \"we\", and the sentence describes the MECHANISM named in WHAT WE DO\n"
+               "above: what is actually done, to what.\n"
+               # Every draft in the first recording of this shape read "...that
+               # automate ...". "Automate" is the category, not the operation, and
+               # it is the word every one of these emails reaches for first.
+               "Do not use \"automate\" as the verb: it names the category, not the operation.\n"
+               "Say the operation on the data, the way someone who built the thing would\n"
+               "describe it, in the vocabulary of WHAT WE DO. If WHAT WE DO does not name a\n"
+               "mechanism, say plainly what it does and stop; do not invent one.\n"
+               # Caught running a sender whose product string is already one
+               # concrete sentence: paragraph 1 said it, and paragraph 3 said it
+               # again, word for word, four lines later.
+               "Do NOT repeat paragraph 1's sentence. If WHAT WE DO is already a single\n"
+               "concrete sentence, paragraph 1 has spent it: here, name the part of that work\n"
+               "which bites for THIS prospect, in different words. Two paragraphs carrying one\n"
+               "sentence twice reads as a form letter that lost its place.\n"
+               "\"Our platform ...\" and \"We provide a tool that ...\" are banned openings: that\n"
+               "is the seam where the email stops being about them. It must be a COMPLETE\n"
+               "SENTENCE with a subject and a main verb -- avoiding a banned opening does not\n"
+               "mean deleting the subject, and a fragment is not a fix.\n"
                "End with a short clause naming what that saves, written for THIS prospect\n"
-               "rather than reaching for \"reducing repetitive manual checks\" every time.\n"
+               "rather than reaching for the same stock phrase every time.\n"
                # "saving your finance team manual reconciliation effort" was really
                # written here. It passed the verifier and should not have: nobody
                # outside the company knows what its finance team does by hand.
@@ -434,16 +565,17 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                "checks\" is fine, \"saving your finance team manual reconciliation effort\" is a\n"
                "claim about the inside of a company you cannot see. No \"your team\", no \"your\n"
                "finance team\", no \"your staff\" anywhere in this sentence.\n"
-               "Concrete mechanism, no benefit\n"
-               "adjectives, no capability list, and never stack time words (instantly / in real\n"
-               "time / daily). The subject is \"we\", never \"I\": you may write \"I\" about reading\n"
-               f"their post, because a person did that, but the product is {sender_name}'s.\n\n")
+               "Concrete mechanism, no benefit adjectives, no capability list, and never stack\n"
+               "time words (instantly / in real time / daily). The subject is \"we\", never\n"
+               "\"I\": you may write \"I\" about reading their post, because a person did that,\n"
+               "but the product is the company's.\n\n")
 
-    # "your finance team" when the function is theirs to own, "you" otherwise.
-    # Both hand-written drafts went to CFOs and only one used the team form, so
-    # this is a suggestion in the prompt, not a string the model must paste.
-    _title = (ranked_prospect.prospect.title or "").lower()
-    _close_subject = "your finance team is" if ("financ" in _title or "cfo" in _title) else "you're"
+    # "your <function> team" when the title says which function owns this, "you"
+    # otherwise. Was a bare test for "financ"/"cfo" -- a rule shaped by the two
+    # demo prospects, who were both CFOs, and one that gave every other ICP the
+    # generic form. A suggestion in the prompt, not a string the model must paste.
+    _function = function_word(ranked_prospect.prospect.title)
+    _close_subject = f"your {_function} team is" if _function else "you're"
 
     prompt += ("PARAGRAPH 4 -- THE CLOSE. Two sentences, in this order, and close to these words:\n"
                f"  \"{CLOSE_QUESTION} {_close_subject} thinking about right now?\"\n"
@@ -492,9 +624,10 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         # obedient fix is to reword it -- which is how a rewrite quietly undoes
         # the house voice it was never complaining about. s2 exempts those runs
         # from the check; this is the second belt.
-        prompt += ("The fixed lines above are not yours to change: the introduction, the\n"
-                   "\"We build bots that\" opening, the two closing sentences and the sign-off\n"
-                   "stay word for word. Fix the sentences around them.\n")
+        prompt += ("The fixed lines above are not yours to change: the introduction, the two\n"
+                   "closing sentences and the sign-off stay word for word. Fix the sentences\n"
+                   "around them. Paragraph 3 is NOT fixed: if the note says it repeats an\n"
+                   "earlier draft, that is the sentence to rewrite.\n")
         prompt += "\n".join(feedback_tokens)
 
     system_instruction = (
@@ -521,7 +654,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             system_instruction=system_instruction,
             stage="drafter_revision" if feedback_tokens else "drafter",
         )
-        return resp
+        return DraftOutput(subject=ascii_hyphens(resp.subject),
+                           draft_text=ascii_hyphens(resp.draft_text))
     except ProviderProbeFailedError as e:
         print(f"WARNING: Drafter model failed: {e}", file=sys.stderr)
         return None

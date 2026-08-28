@@ -120,9 +120,25 @@ def pass1_grounding(draft_text: str, prospect: RankedProspect, value_prop: dict,
     # quoted strings and URLs are still checked across the subject, so a
     # fabricated figure in a subject line is still caught.
     _nouns_from = draft_text.split("\n\n", 1)[1] if "\n\n" in draft_text else draft_text
+    # The sender's own name used to be the literal "Zamp" in this alternation,
+    # which made the gate sender-specific in the worst direction: configure any
+    # other sender and its name in the introduction and sign-off was extracted as
+    # a multi-word proper noun, found nowhere in the evidence, and the draft was
+    # BLOCKED for containing the name of the company sending it. Read the names
+    # off the config the same way everything else here does.
+    _sender_words = [
+        w
+        for key in ("sender_name", "sender_person", "sender_company")
+        for w in str(value_prop.get(key) or "").split()
+    ]
+    _lead = "|".join(
+        ["Hi", "Hello", "Dear", "Best", "Regards", "Thanks", "Sincerely"]
+        + [re.escape(w) for w in _sender_words]
+    )
+    _lead_re = re.compile(rf'^(?:{_lead})\s+')
     for match in re.finditer(r'\b([A-Z][a-z]+[ \t]+[A-Z][a-z]+(?:[ \t]+[A-Z][a-z]+)*)\b', _nouns_from):
         pn = match.group(1)
-        pn = re.sub(r'^(?:Hi|Hello|Dear|Best|Regards|Thanks|Sincerely|Zamp)\s+', '', pn)
+        pn = _lead_re.sub('', pn)
         if ' ' in pn:
             proper_nouns.append(pn)
         
@@ -288,8 +304,14 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
     # We identify it by checking if it's the no_signal note (winning_card is None implies no_signal note was used)
     # However, since verify_draft only takes draft_text, prospect, value_prop, we check winning_card
     if prospect.winning_card is None:
-        sender_name = value_prop.get("sender_name", "Zamp")
-        if sender_name not in draft_text:
+        # No literal default: a "Zamp" fallback here asserted our name over an
+        # incomplete config, and this check then passed or failed on it.
+        sender_name = value_prop.get("sender_name") or ""
+        # `if "" not in text` is always False, so an unconfigured sender silently
+        # skips the check rather than failing every draft. Stated, because reading
+        # it as an oversight and "fixing" it would block every run of a fresh
+        # config that has not filled this in yet.
+        if sender_name and sender_name not in draft_text:
             return VerificationResult(passed=False, status="blocked_hallucination", reason=f"Missing sender_name: {sender_name}")
         # This used to `return passed=True` here, skipping verification entirely.
         # That inverted the whole gate: the draft with the STRONGEST evidence got

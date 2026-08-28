@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about issuer processing",
+    "draft_text": "Hi Chermaine,\n\nI'm Zamp from Zamp Technologies. I'm reaching out because modern issuer processing and cross-border payments may be an area we could help with.\n\nI read your post about building modern issuer processing, especially your point about legacy payments not fitting fintech today. I imagine keeping transaction records aligned across multiple settlement systems can become increasingly time-consuming.\n\nWe pull transaction data from each source, match entries, and surface discrepancies, reducing repetitive manual checks.\n\nCurious if this is something your finance team is thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2822,
+  "completion_tokens": 1389
+}

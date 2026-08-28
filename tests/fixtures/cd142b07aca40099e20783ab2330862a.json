@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains no invented metrics, customer names, or specific claims about ShipBob that aren't supported by the evidence. All statements are either general value propositions, permissible hypotheses, or directly supported by the provided snippets."
+  },
+  "prompt_tokens": 951,
+  "completion_tokens": 602
+}

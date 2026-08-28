@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only generic observations and the sender's value proposition. It does not include any invented metrics, customer names, quotes, or specific claims about Chermaine Hu or Episode Six that are not supported by the provided evidence."
+  },
+  "prompt_tokens": 2274,
+  "completion_tokens": 263
+}

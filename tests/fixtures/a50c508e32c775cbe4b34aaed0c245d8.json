@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only supported statements: references to Devin Weil, ShipMonk's apparel\u2011specific fulfillment center, Zamp Technologies' automation offering, and generic observations. No invented metrics, customer names, or specific prospect claims are present."
+  },
+  "prompt_tokens": 1675,
+  "completion_tokens": 360
+}

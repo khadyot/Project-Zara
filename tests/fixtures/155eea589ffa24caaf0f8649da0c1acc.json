@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only includes supported facts (Devin Weil as CFO, ShipMonk apparel fulfillment center) and generic value\u2011proposition language about automating reconciliation, which is allowed. No invented metrics, customer names, or specific unsupported claims about ShipMonk are present."
+  },
+  "prompt_tokens": 1674,
+  "completion_tokens": 631
+}

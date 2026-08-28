@@ -5,7 +5,7 @@ import yaml
 
 from zara.models import Prospect, SourceResult, DraftResult, RankedCard
 from zara.ranker import rank_prospect
-from zara.drafter import draft_email, compute_claim_strength, SCAFFOLD_PHRASES
+from zara.drafter import draft_email, compute_claim_strength, scaffold_phrases, function_word
 from zara import antitemplate
 from zara.verifier import verify_draft, check_format
 
@@ -159,15 +159,23 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     # blocked and never reported as fabrication.
     _batch = antitemplate.active()
     if _batch is not None and draft_text:
+        # The house voice, dictated by the drafter prompt: the introduction and
+        # the two closing sentences. Every draft repeats these because it was told
+        # to, which is exactly what "supplied" means -- without this the second
+        # draft in a batch reads as a mail merge of the first and gets rewritten
+        # out of the voice the user asked for.
+        #
+        # The mechanism sentence is NOT in here any more. It stopped being a
+        # dictated literal when it stopped asserting what the sender sells, so its
+        # repetition is now the writer's and the check should report it.
+        #
+        # The close's team noun depends on the prospect's title, so it cannot be
+        # known from config alone; pass this prospect's, and the generic forms
+        # inside scaffold_phrases cover everyone else in the batch.
+        _function = function_word(ranked_prospect.prospect.title)
         _batch.register_supplied(
             vp.get("product", ""), vp.get("cta", ""),
-            # The house voice, dictated by the drafter prompt: the introduction,
-            # the mechanism opening, the two closing sentences. Every draft
-            # repeats these because it was told to, which is exactly what
-            # "supplied" means -- without this the second draft in a batch reads
-            # as a mail merge of the first and gets rewritten out of the voice
-            # the user asked for.
-            *SCAFFOLD_PHRASES,
+            *scaffold_phrases(vp, functions=(_function,) if _function else ()),
             *[p.get("statement", "") for p in vp.get("pains", [])],
         )
         _evidence = " ".join(filter(None, [

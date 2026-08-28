@@ -658,9 +658,26 @@ def main():
         st.markdown("---")
         
         st.markdown("<div class='eyebrow-sm'>1. Identity</div>", unsafe_allow_html=True)
-        sender_name = st.text_input("Sender Name (Company)", value="Zamp")
-        product = st.text_area("Product/Offer", value="We help operations teams automate manual, reconciliation-heavy processes", height=80)
-        proof_point = st.text_area("Proof Point (Optional)", value="", height=80)
+        # Defaults come from value_prop.yaml, not from literals pasted in here.
+        # They were literals until 2026-08-29, which made this screen a second,
+        # silently-disagreeing copy of the config: editing the yaml changed what
+        # the ranker scored against and left the sidebar still saying Zamp.
+        from zara.utils.config import load_value_prop as _load_vp
+        try:
+            _vp_defaults = _load_vp()
+        except Exception:
+            _vp_defaults = {}
+        sender_name = st.text_input(
+            "Sender Name (Company)", value=_vp_defaults.get("sender_name", ""))
+        sender_company = st.text_input(
+            "Sender Company (legal entity)",
+            value=_vp_defaults.get("sender_company", ""),
+            help="How the email introduces itself: \"I'm <sender> from <this>.\" "
+                 "Leave empty to introduce as the sender name alone.")
+        product = st.text_area(
+            "Product/Offer", value=_vp_defaults.get("product", ""), height=80)
+        proof_point = st.text_area(
+            "Proof Point (Optional)", value=_vp_defaults.get("proof_point", ""), height=80)
         
         # Strictness, the per-source checkboxes and the developer-mode password box
         # were all removed from the sidebar. Each was a switch from an earlier stage
@@ -730,6 +747,13 @@ def main():
     settings = {
         "identity": {
             "sender_name": sender_name,
+            # sender_company reaches the drafter's introduction and the verifier's
+            # evidence list; without it here the sidebar could not change who the
+            # email says it is from. sender_person stays config-only by design
+            # (value_prop.yaml: "sign as the company"), but it is passed through
+            # so the one screen and the one file cannot disagree about it.
+            "sender_company": sender_company,
+            "sender_person": _vp_defaults.get("sender_person", ""),
             "product": product,
             "proof_point": proof_point if proof_point else None
         },

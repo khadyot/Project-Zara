@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only includes generic value proposition language and references a publicly available LinkedIn post by Chermaine Hu. It does not contain invented metrics, customer names, fabricated quotes, or specific claims about Episode Six that are unsupported by the provided evidence."
+  },
+  "prompt_tokens": 2278,
+  "completion_tokens": 251
+}
