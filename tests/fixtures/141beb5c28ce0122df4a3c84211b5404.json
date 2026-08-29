@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft contains only supported statements: it references ShipBob's Simulation Terminal (evidence provided) and a generic pain point about manual reconciliation, which aligns with the evidence about automating reconciliation-heavy processes. No unsupported metrics, customer names, or specific prospect claims are present."
-  },
-  "prompt_tokens": 1103,
-  "completion_tokens": 657
-}

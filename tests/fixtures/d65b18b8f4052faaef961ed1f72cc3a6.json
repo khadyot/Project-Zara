@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Fulfillment breadth often creates reconciliation work",
-    "draft_text": "Hi AJ,\nWhen a fulfillment provider lists dozens of service options, such as core, 3PL, platform-specific, keeping the underlying order and inventory data aligned can turn into a manual reconciliation marathon. That friction is what we target.\nWe build a workflow that pulls each transaction into a single ledger, letting teams reconcile without manual spreadsheets.\nIs manual reconciliation a bottleneck for your team?"
-  },
-  "prompt_tokens": 2008,
-  "completion_tokens": 1071
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Automation for finance reconciliation",
-    "draft_text": "Hi Bruce,\nYour profile shows a background in public accounting and finance.\nTeams of this size often spend many hours reconciling spreadsheets each month, pulling data manually.\nWe build bots that pull data from systems and post matching entries to your ledger.\nCould we schedule a quick brief call next week to see if this potentially fits your priorities?\nZamp"
-  },
-  "prompt_tokens": 1263,
-  "completion_tokens": 1499
-}

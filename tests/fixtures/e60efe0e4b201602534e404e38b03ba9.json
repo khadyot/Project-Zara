@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft email attributes specific engineering metrics (loading 500 repositories across 27 teams, velocity jumping three\u2011fold, commit\u2011to\u2011push times falling 50%) to ShipBob, but the evidence only contains a funding announcement for ShipBob and a separate unrelated snippet about engineering activity that does not mention ShipBob. These specific claims and the source attribution are not supported by the provided evidence, constituting fabricated facts."
-  },
-  "prompt_tokens": 1230,
-  "completion_tokens": 540
-}

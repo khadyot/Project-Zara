@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft contains only general claims and language supported by the evidence snippets; no unsupported metrics, customer names, or specific factual statements about the prospect are present."
-  },
-  "prompt_tokens": 913,
-  "completion_tokens": 338
-}

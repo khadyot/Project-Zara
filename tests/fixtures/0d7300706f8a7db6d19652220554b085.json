@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references the prospect's service catalog and a general pain point (manual reconciliation) that are both supported by the provided evidence. It does not introduce any specific metrics, customer names, or factual claims not found in the evidence."
-  },
-  "prompt_tokens": 2243,
-  "completion_tokens": 530
-}

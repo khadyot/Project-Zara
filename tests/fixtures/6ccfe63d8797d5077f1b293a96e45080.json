@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only contains statements supported by the provided evidence, including Courson's background, IFS's context, and the general claim about rapid growth causing reconciliation sprawl. No invented metrics, customer names, or specific unsupported facts are present."
-  },
-  "prompt_tokens": 909,
-  "completion_tokens": 323
-}

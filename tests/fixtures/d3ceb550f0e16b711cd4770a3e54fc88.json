@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references AJ's publicly stated view on avoiding the cheapest 3PL and treating the partnership as a long\u2011term investment, which is supported by the evidence. All other statements are generic about manual reconciliation challenges and the solution offered, without introducing specific metrics, customer names, or unsupported factual claims about AJ or Fulfyld."
-  },
-  "prompt_tokens": 2597,
-  "completion_tokens": 502
-}

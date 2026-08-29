@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only includes statements supported by the provided evidence (e.g., references to Test, Zamp, ShipBob's Simulation Terminal, and the generic value proposition). It does not contain any invented metrics, customer names, quotes, or specific claims about the prospect that lack supporting evidence."
-  },
-  "prompt_tokens": 949,
-  "completion_tokens": 386
-}

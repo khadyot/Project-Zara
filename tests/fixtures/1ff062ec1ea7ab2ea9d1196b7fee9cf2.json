@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Automation for Reconciliation Workflows",
-    "draft_text": "Riley,\n\nWe build software that removes the need for manual data matching in freight operations. The platform lets your team define rules and runs the same checks on every transaction. It writes the results to your existing system so staff can focus on exceptions instead of repetitive entry. The code runs on cloud infrastructure you use, so there is no separate hardware to manage. If you want to see how the tool fits into a typical workflow, let me know a time that works for you.\n\nZamp"
-  },
-  "prompt_tokens": 729,
-  "completion_tokens": 1683
-}

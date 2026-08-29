@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month end close timing",
-    "draft_text": "Hi Devin,\nYour announcement says you are now CFO at ShipMonk. Month end close may slow due to manual matching across systems, extending the reporting cycle total. We build a connector that reconciles transactions between your ERP and accounting platform, reducing manual effort. Do you have 15 minutes next week to discuss?\nZamp"
-  },
-  "prompt_tokens": 1020,
-  "completion_tokens": 2133
-}

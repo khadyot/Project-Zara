@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft contains no invented metrics, customer names, or specific prospect claims unsupported by the evidence. All references (Test, ShipBob, Zamp) appear in the snippets, and the rest are permissible value\u2011proposition or connective language."
-  },
-  "prompt_tokens": 918,
-  "completion_tokens": 326
-}

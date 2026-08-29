@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references Chermaine's public statement about legacy payments and general operational pain points that are present in the evidence. It does not introduce any specific metrics, customer names, or fabricated quotes about Episode Six."
-  },
-  "prompt_tokens": 2229,
-  "completion_tokens": 415
-}

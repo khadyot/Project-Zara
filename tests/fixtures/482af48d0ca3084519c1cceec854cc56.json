@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All factual statements in the draft (ShipMonk's $225M ARR and $300M raised) are present in the evidence. No unsupported metrics, customer names, or specific prospect claims are introduced."
-  },
-  "prompt_tokens": 655,
-  "completion_tokens": 235
-}

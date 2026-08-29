@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on month end close",
-    "draft_text": "Hi Jon,\nYour new CFO interview highlighted strategic vision for the future of finance. Teams of this size usually see month end close drag when matching is manual across systems.\nWe build a connector that automatically reconciles core transactions between your ERP and payment platform.\nCould we schedule a brief call next week to explore if this fits your immediate priorities?\nZamp"
-  },
-  "prompt_tokens": 1182,
-  "completion_tokens": 1680
-}

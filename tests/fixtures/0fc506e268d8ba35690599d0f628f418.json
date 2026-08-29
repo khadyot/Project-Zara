@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references generic pain points (month\u2011end close dragging due to manual matching) and the sender\u2019s value proposition, all of which are present in the evidence. It does not introduce any specific metrics, customer names, or factual claims about ShipMonk or Devin Weil that are unsupported."
-  },
-  "prompt_tokens": 1537,
-  "completion_tokens": 613
-}

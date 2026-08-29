@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only contains supported statements about Glen's new role, company momentum, and general pain points/value proposition, without any invented metrics, customer names, or specific claims not found in the evidence."
-  },
-  "prompt_tokens": 887,
-  "completion_tokens": 233
-}

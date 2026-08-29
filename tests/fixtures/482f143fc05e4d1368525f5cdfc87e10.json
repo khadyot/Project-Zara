@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Reconciliation load with new CFO",
-    "draft_text": "Hi Jon,\n\nThe addition of a CFO often coincides with broader intercompany reconciliation activity. That shift surfaces hidden mismatches as the organization scales.\n\nRapid expansion and new leadership tend to generate more reconciliation points across entities. Each new reporting line adds a layer of data that teams align.\n\nWe run bots that cross check payment entries with internal records, reducing manual matching.\n\nDo you see the reconciliation workload becoming a critical bottleneck?\n\nZamp"
-  },
-  "prompt_tokens": 2106,
-  "completion_tokens": 2006
-}

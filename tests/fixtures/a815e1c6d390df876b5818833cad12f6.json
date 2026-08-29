@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only statements supported by the provided evidence or permissible value\u2011proposition language; no invented metrics, customer names, or specific prospect claims are present."
-  },
-  "prompt_tokens": 960,
-  "completion_tokens": 417
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Automation for finance reconciliations",
-    "draft_text": "Hi Bruce,\nYour profile notes a career that began in public accounting. Such a path leads to heavy manual reconciliations in finance teams, consuming time that could be directed toward analysis.\nWe build bots that match and post journal entries, eliminating duplicate data entry.\nCould we schedule a brief call next week to explore whether this approach fits your current priorities?"
-  },
-  "prompt_tokens": 1352,
-  "completion_tokens": 1817
-}

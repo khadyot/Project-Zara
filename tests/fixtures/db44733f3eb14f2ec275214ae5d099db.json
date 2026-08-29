@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references supported facts: Devin Weil's CFO role at ShipMonk and the manual month\u2011end close issue, both present in the evidence. No invented metrics, customer names, or unsupported specific claims are made."
-  },
-  "prompt_tokens": 1538,
-  "completion_tokens": 505
-}

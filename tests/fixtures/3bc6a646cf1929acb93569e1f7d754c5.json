@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only generic value\u2011proposition language and references to Riley Chen and Northwind Freight, which are present in the evidence. No specific metrics, customer names, or factual claims about the prospect are introduced that lack support."
-  },
-  "prompt_tokens": 1139,
-  "completion_tokens": 444
-}

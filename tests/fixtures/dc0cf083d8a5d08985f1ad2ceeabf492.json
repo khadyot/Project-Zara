@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Freight operations automation tool",
-    "draft_text": "Hi Riley,\n\nWe build tools that let operations teams replace manual, reconciliation heavy steps with automated flows.\n\nOur platform connects to the systems you already use, pulling data without requiring custom code.\n\nBecause the logic runs in the cloud, updates happen without downtime for your team.\n\nThe result is less time spent on data entry and fewer errors that can hold up shipments.\n\nDo you have a process for automating reconciliation tasks?\n\nZamp"
-  },
-  "prompt_tokens": 796,
-  "completion_tokens": 2178
-}

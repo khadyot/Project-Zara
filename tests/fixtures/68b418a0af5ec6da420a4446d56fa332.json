@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Financing update and finance ops at ShipMonk",
-    "draft_text": "Hi Devin,\nShipMonk reported $225M ARR and $300M raised. Such capital influx expands reconciliation workloads across finance systems, creating significant manual data matching bottlenecks.\nWe build bots that pull data from ledgers into a single audit table, eliminating manual entry.\nCan we schedule a brief call next week to explore?"
-  },
-  "prompt_tokens": 1388,
-  "completion_tokens": 1555
-}

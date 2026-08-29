@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Episode Six tech stack and automation",
-    "draft_text": "Hi Chermaine,\nYou said Episode Six chooses tech for flexibility, scalability, real problems. That suggests you value automation that adapts as you grow.\nWe build a reconciliation engine that pulls transaction data into a single ledger for your finance team.\nDo you have 15 minutes next week to discuss?\nZamp"
-  },
-  "prompt_tokens": 1078,
-  "completion_tokens": 1522
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The email claims Acme Logistics posted a YouTube interview about Indiana Pacers prospect workouts and that this creates manual data aggregation challenges. The evidence only lists Acme Logistics and a separate YouTube video about Indiana Pacers workouts, but never links the two. Thus the prospect\u2011specific claim is fabricated and unsupported."
-  },
-  "prompt_tokens": 1580,
-  "completion_tokens": 526
-}

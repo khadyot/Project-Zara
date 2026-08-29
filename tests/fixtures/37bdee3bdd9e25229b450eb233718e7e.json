@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Funding round and reconciliation workload",
-    "draft_text": "Hi Alex,\nShipBob raised $200M, valuing the company over $1B. Such financing often expands reconciliation workload across teams, creating significant hidden manual effort and data mismatches today.\nWe automate manual reconciliation workflows for operations teams, linking transaction sources to a single truth ledger.\nWorth a 15-minute call next week?\nZamp"
-  },
-  "prompt_tokens": 834,
-  "completion_tokens": 1526
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft contains only general statements about legacy payments and manual reconciliation, which are supported by the evidence, and includes the sender's value proposition and a call to action. No invented metrics, customer names, or specific unsupported claims about Chermaine or Episode Six are present."
-  },
-  "prompt_tokens": 2217,
-  "completion_tokens": 391
-}

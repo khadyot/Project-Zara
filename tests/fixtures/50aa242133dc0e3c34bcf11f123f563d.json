@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All statements in the draft email are supported by the provided evidence. The $200M funding claim, rapid expansion causing reconciliation sprawl, and the sender/value proposition are all present in the snippets. No invented metrics, customer names, or unsupported specific claims are found."
-  },
-  "prompt_tokens": 1677,
-  "completion_tokens": 371
-}

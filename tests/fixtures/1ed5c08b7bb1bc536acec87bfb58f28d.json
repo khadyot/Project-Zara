@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on your tech approach",
-    "draft_text": "Hi Chermaine,\nYou noted Episode Six values flexibility, scalability, and real\u2011world problem solving. That suggests your finance team spends significant time reconciling data across systems, though I could be mistaken. We run a rule\u2011based engine that reads transaction feeds and posts matched entries to your ledger. I\u2019m curious. Would you have 15 minutes next week to discuss?"
-  },
-  "prompt_tokens": 1067,
-  "completion_tokens": 1762
-}

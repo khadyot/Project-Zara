@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Apparel fulfillment expansion and ops headcount",
-    "draft_text": "Hi Devin,\nShipMonk opened an apparel\u2011specific fulfillment center to reduce returns. Teams at this scale see ops headcount outpace transaction growth, leading to additional ongoing manual reconciliation work. We build bots that reconcile inventory movements without manual entry, feeding accurate data to finance. Could we schedule a brief call next week to explore if this fits your plans and priorities?"
-  },
-  "prompt_tokens": 1136,
-  "completion_tokens": 1862
-}

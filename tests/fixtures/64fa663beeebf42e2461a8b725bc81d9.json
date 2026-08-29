@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on your recent acquisition",
-    "draft_text": "Hi Bruce,\nC.H. Robinson announced acquisition of DeSpir Logistics. That adds layers of intercompany matching, manual adjustments, and reporting delays for the CFO, increasing significant workload.\nWe create a data\u2011pipeline that consolidates ledger entries, validates them, and reconciles without manual effort.\nIf you have 15 minutes next week, I can walk through a prototype and answer any remaining questions you may have."
-  },
-  "prompt_tokens": 1141,
-  "completion_tokens": 2505
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only a general statement about Midwest capital investment, which is supported by the evidence, and generic value proposition and CTA language. It does not introduce any specific metrics, customer names, or factual claims about Bruce Amerman or Midwest 3PL that are unsupported."
-  },
-  "prompt_tokens": 2461,
-  "completion_tokens": 415
-}

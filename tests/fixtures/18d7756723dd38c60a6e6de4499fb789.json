@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only supported statements about Bruce's public accounting background and generic pain points/value proposition. It does not include any invented metrics, customer names, quotes, or specific claims about Midwest 3PL that are not found in the evidence."
-  },
-  "prompt_tokens": 2446,
-  "completion_tokens": 388
-}

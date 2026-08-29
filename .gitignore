@@ -31,8 +31,6 @@ project-zen/
 # Local-only test harness
 test_ui.py
 
-.vercel
-
 # Local service runtime (pids, logs, run store)
 var/
 

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Fintech payments and reconciliation",
-    "draft_text": "Hi Chermaine,\nLegacy payments weren\u2019t built for the world fintech operates in today. Teams of your scale spend many hours each month reconciling critical financial transactions.\nWe build a workflow that matches and posts settlement data to your core ledger across all accounts.\nCould we schedule a short call next week to see if this approach fits your priorities?\nZamp"
-  },
-  "prompt_tokens": 1196,
-  "completion_tokens": 2278
-}

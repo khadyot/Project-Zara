@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month end close automation",
-    "draft_text": "Hi Jon,\nPayouts Network added you as CFO. That may keep month end close dependent on manual matching across systems.\nWe embed a reconciliation engine that pulls data from each system and matches records.\nDo you have 15 minutes next week to discuss?\nZamp"
-  },
-  "prompt_tokens": 999,
-  "completion_tokens": 1096
-}

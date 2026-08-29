@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Automation for fulfillment operations",
-    "draft_text": "Hi AJ,\nFulfyld offers core, 3PL, and platform\u2011specific fulfillment services. Such breadth forces high\u2011volume ops teams to juggle multiple significant complex manual reconciliation steps. Our platform syncs order data across carriers, inventory, and accounting for every order across all channels to eliminate manual matching. Would you have 15 minutes next week to see if this fits for your team?"
-  },
-  "prompt_tokens": 1602,
-  "completion_tokens": 2727
-}

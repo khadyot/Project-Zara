@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references facts present in the evidence (Bruce Amerman's role and location, manual reconciliation challenges) and makes a general inference about his responsibilities, which is allowed. No invented metrics, customer names, or specific unsupported claims are present."
-  },
-  "prompt_tokens": 1389,
-  "completion_tokens": 237
-}

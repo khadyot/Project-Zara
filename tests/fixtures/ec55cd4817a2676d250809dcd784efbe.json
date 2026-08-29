@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick note on ShipBob\u2019s new sandbox tool",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal is now in every sandbox account. That cuts manual testing before go live.\nWe let operations teams automate reconciliation by feeding sandbox results into their workflow.\nDo you have 15 minutes next week to discuss?"
-  },
-  "prompt_tokens": 1066,
-  "completion_tokens": 666
-}

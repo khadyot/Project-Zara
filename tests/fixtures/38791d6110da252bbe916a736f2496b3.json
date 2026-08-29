@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only includes supported statements (VersaPay's portfolio sale) and permissible general claims about reconciliation workload and the sender's value proposition. No invented metrics, customer names, or specific unsupported facts are present."
-  },
-  "prompt_tokens": 831,
-  "completion_tokens": 248
-}

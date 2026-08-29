@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Sandbox simulation cuts manual reconciliation",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal now appears in every sandbox account, letting users simulate fulfillment, receiving and inventory adjustments from the dashboard. That capability removes the need for manual test runs, a friction point for fulfillment focused operations that spend hours reconciling test data.\nWe feed those simulated events into an automated reconciliation script that validates results without human intervention.\nDo you rely on manual checks after each sandbox simulation?"
-  },
-  "prompt_tokens": 2030,
-  "completion_tokens": 1498
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on your tech stack",
-    "draft_text": "Hi Chermaine,\nYour Finance and Accounting Technology Briefing interview highlighted flexibility, scalability, real-world focus. That suggests your team values infrastructure that adapts as transaction volume grows.\nWe build a reconciliation engine that pulls data from multiple sources into a single ledger, reducing manual effort.\nCould we set aside 15 minutes next week to see if it fits your workflow?\nZamp"
-  },
-  "prompt_tokens": 1115,
-  "completion_tokens": 1294
-}

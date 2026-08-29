@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All claims in the draft email are supported by the evidence. The facts about ShipBob's $200 million funding round and unicorn status are directly supported by the Reuters article snippet. The claim that 'Rapid expansion often spawns reconciliation sprawl across teams' is supported by the evidence stating 'Rapid expansion, new leadership, or structural changes inherently create intercompany reconciliation sprawl.' The description of the service aligns with the sender's value proposition mentioned in the evidence. No fabricated metrics, customer names, quotes, or unsupported specific claims about the prospect or company are present."
-  },
-  "prompt_tokens": 1649,
-  "completion_tokens": 1065
-}

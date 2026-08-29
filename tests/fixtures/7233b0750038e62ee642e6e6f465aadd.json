@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on month\u2011end close",
-    "draft_text": "Hi Devin,\nShipMonk officially announced Devin Weil as CFO. Month\u2011end close likely drags because matching remains manual and complex across systems, forcing the team to reconcile line\u2011by\u2011line.\nWe build a reconciliation engine that pulls data from each system, normalizes formats, and matches entries automatically.\nCould we schedule a brief 15\u2011minute call next week to explore whether this approach fits your workflow?"
-  },
-  "prompt_tokens": 1075,
-  "completion_tokens": 1572
-}

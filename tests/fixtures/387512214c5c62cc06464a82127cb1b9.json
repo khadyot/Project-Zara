@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only contains statements supported by the evidence (e.g., ShipBob\u2019s Simulation Terminal in all sandbox accounts, greeting to \"Test\"), and includes only general value propositions and a call to action. No invented metrics, customer names, or specific prospect claims are present."
-  },
-  "prompt_tokens": 911,
-  "completion_tokens": 299
-}

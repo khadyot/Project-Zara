@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Legacy payments and reconciliation",
-    "draft_text": "Hi Chermaine,\nLegacy payments weren\u2019t built for the world fintech operates in today. When payment flows rely on legacy infrastructure, reconciliation often becomes manual and error prone.\nWe let operations teams automate reconciliation with a rule based matching engine.\nCould we schedule a brief call next week to see if this fits your priorities?"
-  },
-  "prompt_tokens": 1230,
-  "completion_tokens": 847
-}

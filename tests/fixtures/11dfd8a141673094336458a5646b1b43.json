@@ -1,7 +1,0 @@
-{
-  "content": {
-    "draft_text": "A colleague at ShipBob said when they tried to scale, they dumped 500 codebases overnight, slashing commit\u2011to\u2011push time by 50% and tripling weighted PR velocity. It sounds like rapid growth is stressing your engineering throughput and manual hand\u2011offs. I'd love to explore how we help operations teams automate reconciliation\u2011heavy processes to keep pace without bottlenecks. Could we set up a quick call next week?\n\nBest,\nZamp"
-  },
-  "prompt_tokens": 832,
-  "completion_tokens": 645
-}

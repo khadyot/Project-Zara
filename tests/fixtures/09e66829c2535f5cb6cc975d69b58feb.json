@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Modern Treasury stablecoin payments",
-    "draft_text": "Hi Jordan,\nModern Treasury is unifying stablecoin payments, according to FinTech Magazine. That often means payment, ledger, and bank reconciliation break silently and surface late.\nWe build a workflow that automatically matches transactions to ledger entries.\nWorth a 15-minute call next week?\nZamp"
-  },
-  "prompt_tokens": 784,
-  "completion_tokens": 863
-}

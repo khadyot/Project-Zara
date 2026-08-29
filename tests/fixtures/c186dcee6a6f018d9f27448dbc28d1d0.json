@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "ShipBob sandbox simulation tool",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal is available in every sandbox account. That lets teams test fulfillment flows without touching live inventory, reducing manual reconciliation effort. We automate reconciliation of fulfillment data with a single integration that maps orders. Do you have 15 minutes next week to see if it fits?\nZamp"
-  },
-  "prompt_tokens": 1370,
-  "completion_tokens": 2083
-}

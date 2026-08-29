@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft email claims that the extra reconciliation load \"tends to grow in lockstep with transaction volume\" for ShipMonk, which is not supported by any evidence snippet. The evidence only mentions ops headcount scaling with volume, not reconciliation effort, so this specific factual claim is invented."
-  },
-  "prompt_tokens": 1658,
-  "completion_tokens": 541
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Apple Pay disbursements and reconciliation",
-    "draft_text": "Hi Matthew,\nMoov now supports Apple Pay and Google Pay for disbursements. That likely shifts acceptance friction onto the recipient, which could increase the number of incomplete payouts and raise support tickets.\nWe provide a reconciliation engine that automatically matches payouts to incoming confirmations.\nWorth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 795,
-  "completion_tokens": 1319
-}

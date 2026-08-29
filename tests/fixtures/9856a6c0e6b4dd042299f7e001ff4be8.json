@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft contains no invented metrics, customer names, or specific claims about the prospect that are unsupported by the evidence. All statements are either supported by the evidence or are generic value propositions allowed by the guidelines."
-  },
-  "prompt_tokens": 943,
-  "completion_tokens": 381
-}

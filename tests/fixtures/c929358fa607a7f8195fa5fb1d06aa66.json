@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on recent acquisition",
-    "draft_text": "Hi Bruce,\nC.H. Robinson announced acquiring DeSpir Logistics last week. That could mean more intercompany reconciliation work for finance teams, though I could be mistaken. Our platform reads transaction feeds, matches entries, and posts adjustments without manual spreadsheet work. I\u2019ve seen similar patterns elsewhere. That may not be the case. Do you have 15 minutes next week to explore whether it helps your team?"
-  },
-  "prompt_tokens": 1130,
-  "completion_tokens": 1508
-}

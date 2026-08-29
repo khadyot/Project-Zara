@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Modern Treasury PSP and reconciliation timing",
-    "draft_text": "Hi Dimitri Dadiomov,\nModern Treasury launches integrated PSP for fiat and stablecoins. That often means payment, ledger, and bank reconciliation break silently and surface late.\nWe connect your payment rails to a workflow that records each transaction directly into your ledger.\nWorth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 651,
-  "completion_tokens": 679
-}

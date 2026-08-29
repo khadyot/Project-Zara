@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Apparel returns and SKU reconciliation",
-    "draft_text": "Hi Devin,\nApparel fulfillment creates a surge of returns and a tangled SKU mix that makes manual reconciliation costly. That pressure grows as volume rises, and it can distort financial reporting. When returns spike, accounting staff must trace each SKU back to its original purchase, a process that taxes resources.\nOur automation scripts close that reconciliation gap by consolidating returns data into a unified ledger.\nIs the manual effort to match returns to SKUs a bottleneck for your finance team?"
-  },
-  "prompt_tokens": 1995,
-  "completion_tokens": 1830
-}

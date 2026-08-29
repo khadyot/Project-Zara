@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Reconciling multi\u2011channel fulfillment data",
-    "draft_text": "Hi AJ,\nYour catalog lists core, 3PL and platform-specific fulfillment services across dozens of channels. Companies that span that many fulfillment modes end up stitching together spreadsheets to keep order and inventory data aligned. That manual stitching can hide errors until shipments are delayed. When those gaps persist, downstream processes like returns and customer notifications suffer. We pull order and shipment logs into a single table that flags mismatches as they appear. What time does your team spend reconciling fulfillment data each week?"
-  },
-  "prompt_tokens": 2093,
-  "completion_tokens": 2184
-}

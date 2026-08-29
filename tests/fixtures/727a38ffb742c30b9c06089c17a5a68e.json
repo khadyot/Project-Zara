@@ -1,7 +1,0 @@
-{
-  "content": {
-    "draft_text": "I heard you recently loaded 500 repositories overnight to test scale, and saw PR velocity triple while commit\u2011to\u2011push time halved. It sounds like that rapid scaling is putting pressure on manual, reconciliation\u2011heavy workflows across your many engineering teams. We help operations teams automate those manual, reconciliation\u2011heavy processes so you can keep velocity high without the hidden overhead. Would you be open to a quick call to explore how we could streamline that for ShipBob?\n\nBest,\nZamp"
-  },
-  "prompt_tokens": 755,
-  "completion_tokens": 729
-}

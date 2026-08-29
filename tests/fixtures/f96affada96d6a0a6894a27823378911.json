@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Apparel fulfillment adds reconciliation work",
-    "draft_text": "Hi Devin,\nYou opened an apparel\u2011specific fulfillment center to handle returns and SKU complexity. That adds manual reconciliation steps for each transaction. Our platform matches incoming data to accounting entries, reducing manual effort. Would you be open to a 15\u2011minute conversation next Tuesday to see if it fits your priorities?"
-  },
-  "prompt_tokens": 1589,
-  "completion_tokens": 1223
-}

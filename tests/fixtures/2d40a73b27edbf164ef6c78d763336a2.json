@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month end close automation",
-    "draft_text": "Hi Devin,\nYou announced Devin Weil as CFO at ShipMonk. That means month end close suffers from manual matching across systems.\nWe build a connector that reconciles transactions between your ERP and accounting platform.\nCould we set up a 15 minute call next week?"
-  },
-  "prompt_tokens": 1002,
-  "completion_tokens": 886
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All statements in the draft are either supported by the provided evidence (e.g., Moov supports Apple Pay and Google Pay, manual reconciliation challenges) or are generic value proposition language and call-to-action, which are allowed. No invented metrics, customer names, or specific prospect claims are present."
-  },
-  "prompt_tokens": 2806,
-  "completion_tokens": 445
-}

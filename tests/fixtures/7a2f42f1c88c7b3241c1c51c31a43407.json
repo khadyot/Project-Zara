@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references facts present in the evidence: Paraglide\u2019s 34% DSO reduction, ten\u2011day implementation, integration list, and the spreadsheet exception handling without audit trail. No unsupported metrics, customer names, or fabricated quotes are introduced."
-  },
-  "prompt_tokens": 1096,
-  "completion_tokens": 315
-}

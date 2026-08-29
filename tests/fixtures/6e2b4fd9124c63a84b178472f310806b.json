@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Manual matching dragging month\u2011end close",
-    "draft_text": "Hi Jon,\nYour Q&A underscored that legacy rails don\u2019t align with modern fintech workflows, especially when they force finance teams to chase data across disconnected platforms. That misalignment tends to stretch month\u2011end close because matching still happens manually across systems, pulling analysts away from higher\u2011impact analysis. We automate the cross\u2011system matching, feeding reconciled data into your ERP so the close can run on schedule without manual intervention. If you\u2019re still reconciling by hand, how many hours does that add to each close, and what impact does that have on reporting cadence?"
-  },
-  "prompt_tokens": 1905,
-  "completion_tokens": 1893
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on month end close",
-    "draft_text": "Hi Jon,\n\nPayouts Network added you as CFO. That often means month end close drags because matching is manual across systems.\nWe build a connector that reconciles transactions between your ledger and payment platforms.\nCould we schedule a 15 minute call next week to discuss?\n\nZamp"
-  },
-  "prompt_tokens": 1017,
-  "completion_tokens": 995
-}

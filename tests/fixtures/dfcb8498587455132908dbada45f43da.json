@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "New sandbox tool cuts manual fulfillment testing",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal is now in every sandbox account. Operators often spend hours manually testing fulfillment flows before launch, juggling spreadsheets and error-prone reconciliations overall.\nWe build bots that reconcile fulfillment data automatically, removing manual entry steps and reducing error rates.\nCould we schedule a quick brief call next week to explore if this fits your workflow?\nZamp"
-  },
-  "prompt_tokens": 1318,
-  "completion_tokens": 2139
-}

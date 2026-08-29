@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month-end close friction",
-    "draft_text": "Hi Jon,\n\nYour recent appointment as CFO signals a focus on strengthening financial operations. The role brings fresh eyes to recurring close challenges.\n\nMonth-end close drags when matching transactions requires manual work across multiple systems. That friction tends to push deadlines and adds pressure on the finance staff.\n\nWe run bots that pull data from disparate financial ledgers and reconcile entries.\n\nIs the manual effort around month-end still manageable for you?\n\nZamp"
-  },
-  "prompt_tokens": 2099,
-  "completion_tokens": 2259
-}

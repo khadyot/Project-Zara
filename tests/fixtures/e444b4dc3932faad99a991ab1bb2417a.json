@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on stablecoin payment reconciliation",
-    "draft_text": "Hi Jordan,\nModern Treasury is unifying stablecoin payments. That often hides ledger mismatches until they surface, causing delayed bank reconciliation and unexpected audit findings for your finance team. We automate reconciliation by linking payments to ledger entries, generating matching records without manual effort and reduces error risk. Worth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 839,
-  "completion_tokens": 1506
-}

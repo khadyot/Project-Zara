@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick note on reconciliation workload",
-    "draft_text": "Hi Devin,\nShipMonk reported $225M ARR and $300M raised. Such capital influx significant expands intercompany reconciliation workloads. Teams handling that growth spend regular weeks reconciling data each month.\nWe build bots that match and post intercompany journal entries, reducing manual effort and error risk.\nIf you have 15 minutes next week, I can walk through a clear demo session.\nZamp"
-  },
-  "prompt_tokens": 1403,
-  "completion_tokens": 3065
-}

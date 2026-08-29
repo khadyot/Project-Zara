@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only includes supported statements: the apparel-specific fulfillment center launch, the linear scaling of ops headcount with transaction volume, and a generic value proposition. No invented metrics, customer names, or unsupported specific claims about ShipMonk are present."
-  },
-  "prompt_tokens": 1783,
-  "completion_tokens": 322
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Fulfyld fulfillment and data sync",
-    "draft_text": "Hi AJ,\nFulfyld lists Core Fulfillment, 2-Day Guaranteed, and multi-brand 3PL services. Coordinating those offerings creates manual financial reconciliation across orders, inventory, and shipping confirmations.\nWe build bots that sync order data to inventory records, reducing manual steps workload.\nCan we schedule a brief call next week to explore details?"
-  },
-  "prompt_tokens": 1350,
-  "completion_tokens": 2535
-}

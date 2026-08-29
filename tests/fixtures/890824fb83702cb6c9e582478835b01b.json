@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references supported evidence (Source Logistics expanding freight network with new tech and locations, streamlining processes) and makes generic value\u2011prop claims about manual reconciliation\u2011heavy tasks, which are allowed. No unsupported metrics, customer names, or fabricated quotes are present."
-  },
-  "prompt_tokens": 1097,
-  "completion_tokens": 520
-}

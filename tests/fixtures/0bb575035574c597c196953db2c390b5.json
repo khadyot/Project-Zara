@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Finance transition at Stord",
-    "draft_text": "Hi Stephanie Fielding,\nNew finance chief, ex\u2011CFO of Butterfly Network, joins Stord. Rapid expansion and new leadership often trigger intercompany reconciliation sprawl across business units.\nWe build scripts that pull transaction data into a shared ledger, normalize fields, and auto\u2011match entries across subsidiaries systematically.\nWorth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 684,
-  "completion_tokens": 1468
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email does not invent any unsupported facts about the prospect or their company. The claim about ShipBob raising $200 million in a Bain-led round is directly supported by the Reuters article snippet. The statement about funding triggering intercompany reconciliation sprawl is presented as a general tendency ('Such funding often triggers...'), which falls under the allowed value proposition category. The description of Zamp's services aligns with the evidence snippet about helping operations teams automate manual processes. 'Zamp' is mentioned in the evidence list as the sender. There are no fabricated metrics, customer names, or specific claims about the prospect that aren't supported by the evidence."
-  },
-  "prompt_tokens": 1663,
-  "completion_tokens": 764
-}

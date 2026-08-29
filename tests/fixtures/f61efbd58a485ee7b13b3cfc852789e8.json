@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Sandbox fulfillment testing at ShipBob",
-    "draft_text": "Hi Test,\n\nShipBob\u2019s new Simulation Terminal lets you run a full fulfillment lifecycle in a sandbox, keeping real inventory untouched.\nThe sandbox mirrors every pick, pack, and ship event.\n\nWhen fulfillment steps can be rehearsed, teams avoid the manual reconciliation that follows trial runs.\nThat eliminates the guesswork before a live rollout.\n\nWe feed sandbox results into automated reconciliation scripts that update your operational dashboards.\nErrors surface before they affect customers.\n\nIs the time spent on manual reconciliation acceptable for your team?\n\nZamp"
-  },
-  "prompt_tokens": 1760,
-  "completion_tokens": 2288
-}

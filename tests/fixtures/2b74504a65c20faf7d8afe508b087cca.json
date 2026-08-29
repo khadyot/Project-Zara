@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references ShipMonk's apparel-specific fulfillment center, which is present in the evidence, and makes general statements about operational challenges that are permissible as value proposition language. No invented metrics, customer names, or specific unsupported claims about the prospect are present."
-  },
-  "prompt_tokens": 1778,
-  "completion_tokens": 322
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month\u2011end close and reconciliation",
-    "draft_text": "Hi Jon,\n\nyou discussed strategic insights and vision in a Global FinTech Q&A.\nMonth\u2011end close stalls when reconciliation relies on manual matching across systems.\nOur platform reads transaction feeds and matches entries to close the books.\nCould we find 15 minutes next week to see if this approach fits your process?\n\nZamp"
-  },
-  "prompt_tokens": 1692,
-  "completion_tokens": 1058
-}

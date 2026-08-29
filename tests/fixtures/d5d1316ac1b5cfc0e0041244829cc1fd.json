@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on your tech approach",
-    "draft_text": "Hi Chermaine,\n\nYou noted Episode Six treats tech decisions like payments: flexible, scalable.\n\nI appreciate your insight.\n\nThat could perhaps imply your finance team still reconciles many transactions manually, though I could be mistaken.\n\nWe run a rule\u2011based engine that matches incoming payment data to ledger entries without manual input.\n\nDo you have 15 minutes next week to see if it fits?\n\nZamp"
-  },
-  "prompt_tokens": 1122,
-  "completion_tokens": 1048
-}

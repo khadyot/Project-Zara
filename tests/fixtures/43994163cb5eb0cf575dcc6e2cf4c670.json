@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on your new apparel fulfillment",
-    "draft_text": "Hi Devin,\n\nI'm Zamp from Zamp Technologies. We help operations teams automate manual, reconciliation-heavy processes.\n\nSaw that ShipMonk opened an apparel-specific fulfillment center. I imagine keeping return data and accounting entries aligned can become increasingly time-consuming.\n\nWe build bots that match incoming return data to inventory records and generate balanced accounting entries, reducing repetitive manual checks.\n\nCurious if this is something your finance team is thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
-  },
-  "prompt_tokens": 2279,
-  "completion_tokens": 861
-}

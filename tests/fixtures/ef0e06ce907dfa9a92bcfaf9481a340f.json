@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references supported evidence (Jon Anderson's CFO role and IPO experience, manual month\u2011end close issues) and contains no invented metrics, customer names, or unsupported factual claims."
-  },
-  "prompt_tokens": 684,
-  "completion_tokens": 293
-}

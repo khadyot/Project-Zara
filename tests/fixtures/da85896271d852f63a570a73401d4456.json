@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on finance automation",
-    "draft_text": "Hi Chermaine,\nYou noted Episode Six treats tech decisions like payments: flexible, scalable, problem\u2011focused. That suggests your finance ops likely encounter repetitive reconciliation work that consumes analyst time.\nWe build a connector that automatically matches transaction records to ledger entries, removing manual reconciliation steps.\nDo you have 15 minutes next week to see if it could help your team quickly?"
-  },
-  "prompt_tokens": 1133,
-  "completion_tokens": 1435
-}

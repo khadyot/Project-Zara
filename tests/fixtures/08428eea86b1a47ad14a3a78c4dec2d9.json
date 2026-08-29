@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "ShipBob funding and reconciliation",
-    "draft_text": "Hi Test,\nShipBob raised $200M at a $1B+ valuation. That likely expands reconciliation workload across teams, increasing manual effort, error risk, and reporting delays.\nWe automate intercompany reconciliation via a unified ledger engine in real time for finance and ops teams and compliance.\nWorth a 15-minute call next week?\nZamp"
-  },
-  "prompt_tokens": 754,
-  "completion_tokens": 1888
-}

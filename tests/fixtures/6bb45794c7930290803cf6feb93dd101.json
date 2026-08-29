@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft email includes the specific claim that \u201cpayment, ledger, and reconciliation failures surface late, especially when new methods like FedNow and RTP are added,\u201d which is not supported by any of the provided evidence snippets. While failures surfacing late are mentioned, there is no evidence linking FedNow or RTP to those failures."
-  },
-  "prompt_tokens": 4313,
-  "completion_tokens": 709
-}

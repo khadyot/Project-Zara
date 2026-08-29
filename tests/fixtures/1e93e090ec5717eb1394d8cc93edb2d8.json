@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on fulfillment partner choices",
-    "draft_text": "Hi AJ,\n\nI read your post about avoiding the cheapest first trap when picking a 3PL and it stuck with me. Your point about long term partnership resonated, especially the need for proactive communication.\n\nA misaligned fulfillment partner often forces the ops team to spend hours reconciling mismatched orders and shipments.\n\nWe build a service that matches shipment data to order records, eliminating manual reconciliation. The bot runs each night, posting any discrepancies to Slack for quick resolution.\n\nIs the time spent fixing shipment mismatches still acceptable for your team?\n\nZamp"
-  },
-  "prompt_tokens": 2082,
-  "completion_tokens": 2618
-}

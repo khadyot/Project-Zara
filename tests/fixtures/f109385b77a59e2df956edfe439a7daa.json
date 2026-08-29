@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on fulfillment partnerships",
-    "draft_text": "Hi AJ,\n\nI read your post about avoiding the cheapest\u2011first trap and it reminded me how early partnership choices shape fulfillment reliability.\n\nWhen a 3PL slips on communication, the resulting delays force ops teams into regular data clean\u2011ups and can cascade into customer dissatisfaction.\n\nWe operate a service that cross\u2011checks incoming shipment records against order data, flagging mismatches for prompt review.\n\nIs the manual effort spent reconciling those mismatches still manageable for you?\n\nZamp"
-  },
-  "prompt_tokens": 2172,
-  "completion_tokens": 2055
-}

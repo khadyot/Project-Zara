@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft email asserts that \"transaction data often arrives in fragmented batches\" and that finance teams must \"stitch records together manually\" at Episode Six. No evidence snippet mentions fragmented batches or manual stitching; the evidence only references manual matching/reconciliation and month\u2011end close delays. This specific claim about how Episode Six\u2019s data arrives is unsupported and therefore constitutes an invented fact."
-  },
-  "prompt_tokens": 2244,
-  "completion_tokens": 528
-}

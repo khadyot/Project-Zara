@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Finance integration at Stord",
-    "draft_text": "Hi Stephanie,\nYou were CFO at Butterfly Network and led finance at Amazon. That often expands intercompany reconciliation workload, creating manual effort across finance and operations teams. We build scripts that pull transaction data from ERP, match it against subsidiary ledgers, generate adjustment entries, and reconcile line\u2011item balances automatically, feeding results back into reporting tools. Worth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 787,
-  "completion_tokens": 1526
-}

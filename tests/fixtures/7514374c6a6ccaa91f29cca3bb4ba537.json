@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month\u2011end reconciliation load",
-    "draft_text": "Hi Jon,\n\nThe CFO appointment highlights the importance of precise month\u2011end reconciliation. A tighter close can free capacity for strategic initiatives.\n\nWhen month\u2011end close relies on manual matching across systems, the process often spills into the next day. Teams spend evenings reconciling duplicate entries that should line up.\n\nWe run a service that matches payment records across ledgers. The service writes the matched results back into your ERP, eliminating a manual step.\n\nDoes the manual matching cost you real hours each close?\n\nZamp"
-  },
-  "prompt_tokens": 1986,
-  "completion_tokens": 2299
-}

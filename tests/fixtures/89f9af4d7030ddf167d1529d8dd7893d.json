@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All claims in the draft email are supported by the provided evidence snippets."
-  },
-  "prompt_tokens": 819,
-  "completion_tokens": 807
-}

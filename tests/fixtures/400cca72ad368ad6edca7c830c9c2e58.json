@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Legacy payments and reconciliation at Episode Six",
-    "draft_text": "Hi Chermaine,\nLegacy payments don\u2019t match today\u2019s fintech world, which pushes finance ops into manual reconciliation loops. That friction often forces teams to stitch data from disparate sources.\nWe automate the ledger feed so the data lands ready for reporting.\nIs that still a manual step for Episode Six?"
-  },
-  "prompt_tokens": 2133,
-  "completion_tokens": 622
-}

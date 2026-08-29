@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month-end close and manual reconciliation",
-    "draft_text": "Hi Jon,\n\nExcited to see Jon Anderson, CFO, sharing insights in Global FinTech Series. Month-end close stalls when reconciliation requires manual matching across systems, forcing staff to chase missing entries.\n\nWe build a bot that pulls transaction data and posts matched entries to your ledger.\n\nCan we schedule a brief call next week to explore if this fits your priorities?\n\nZamp"
-  },
-  "prompt_tokens": 1271,
-  "completion_tokens": 2246
-}

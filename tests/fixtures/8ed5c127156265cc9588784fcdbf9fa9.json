@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month end close and reconciliation",
-    "draft_text": "Hi Jon,\n\nGuiding companies through IPOs often reveals how month end close can become a bottleneck. Your recent appointment underscores the focus on financial rigor.\n\nWhen payment data lands in multiple ledgers, manual matching drags the close. Each manual match consumes hours that could support growth initiatives.\n\nWe run bots that cross check incoming payments against ledger entries, flag mismatches, and post adjustments without human intervention.\n\nIs the manual reconciliation manageable for your team, or does it start to erode focus on strategic work?\n\nZamp"
-  },
-  "prompt_tokens": 1843,
-  "completion_tokens": 2158
-}

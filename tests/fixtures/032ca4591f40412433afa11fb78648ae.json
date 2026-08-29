@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Sandbox simulation could cut manual testing",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal now appears in every sandbox account. That could let operations test fulfillment flows without manual data entry, reducing reconciliation effort before go\u2011live.\nWe connect your ERP to the sandbox so every inventory adjustment reconciles without manual steps, eliminating checks and saving time.\nWould a brief 15\u2011minute call next week fit your schedule to explore this?\nZamp"
-  },
-  "prompt_tokens": 1121,
-  "completion_tokens": 1882
-}

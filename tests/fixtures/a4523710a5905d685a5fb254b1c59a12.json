@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Sandbox testing reduces manual reconciliation work",
-    "draft_text": "Hi Test,\nYour sandbox now includes a Simulation Terminal for end to end testing.\nOps groups replace manual test cycles with sandbox runs, cutting reconciliation work.\nWe feed sandbox results into automated scripts that update inventory records.\nDo you have 20 minutes Tuesday to see if this aligns with your process?\nZamp"
-  },
-  "prompt_tokens": 1569,
-  "completion_tokens": 1349
-}

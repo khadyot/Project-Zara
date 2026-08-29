@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only supported statements: Stephanie Fielding is Stord's finance chief, Stord raised $250M, rapid expansion can cause reconciliation sprawl, and the value proposition aligns with provided evidence. No invented metrics, customer names, or unsupported claims are present."
-  },
-  "prompt_tokens": 1433,
-  "completion_tokens": 375
-}

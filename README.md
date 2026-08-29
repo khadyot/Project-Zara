@@ -97,13 +97,14 @@ drafting and verification all execute for real against replayed inputs.
 Fixtures are keyed on a hash of the prompt, and the prompt contains the prospect's **name** — so
 demo mode only replays for a pair that was recorded. The recorded pairs are:
 
-| Name | Company | What it shows |
-|---|---|---|
-| Alex Rivera | ShipBob | a normal run, `company_action`, verifier clean |
-| Sam Okafor | Versapay | a normal run |
-| Jordan Ellis | Modern Treasury | a normal run |
-| Riley Chen | Northwind Freight | the `no_signal` path |
-| Dana Lee | Acme Logistics | `blocked_hallucination` — the verifier refusing its own draft |
+| Name | Company | Title | What it shows |
+|---|---|---|---|
+| Devin Weil | ShipMonk | Chief Financial Officer | `company_action`. Three data-breach cards vetoed before scoring; an undated card that led on score loses to a dated one |
+| Chermaine Hu | Episode Six | Co-Founder & Chief Financial Officer | `person_authored` — the strongest claim the product can make |
+| Riley Chen | Northwind Freight | *leave empty* | the `no_signal` path: nothing found, and the source table saying why |
+
+Type the title exactly as written, or leave it empty for Riley. The title is part of
+the prompt, so it is part of the hash the fixture is keyed on.
 
 ### Tests
 
@@ -111,7 +112,7 @@ demo mode only replays for a pair that was recorded. The recorded pairs are:
 env -i PATH=/usr/bin:/bin HOME=$HOME PYTHONPATH=. ./venv/bin/pytest tests/ -q
 ```
 
-128 tests, no live calls (fixtures replay). They must pass **twice consecutively** — the suite
+126 tests, no live calls (fixtures replay). They must pass **twice consecutively** — the suite
 has caught real non-determinism that a single green run hid.
 
 ## Configuration
@@ -119,6 +120,22 @@ has caught real non-determinism that a single green run hid.
 `value_prop.yaml` is the brain: the pains signals are scored against, each with the observables
 that would evidence it; the ICP rubric; the proximity weights; and the `never_reference`
 guardrails. The Settings UI edits it visually behind a developer-mode password.
+
+**Who the email is from** is configuration, not code:
+
+| Field | Used for |
+|---|---|
+| `sender_name` | the sign-off, and the fallback identity |
+| `sender_person` | the "I" in the opening line — the company speaking in the first person, not an invented human |
+| `sender_company` | the entity the email introduces itself as: *"I'm \<person\> from \<company\>."* |
+
+All three are editable from the sidebar and default to the file. Any of them may be
+empty; the introduction degrades to a shorter honest form rather than breaking.
+
+These live in config rather than in the prompt for a reason that is easy to get wrong:
+the verifier grounds proper nouns against the string values of `value_prop.yaml`, so a
+sender name that lives in code is a name no evidence contains, and the draft gets
+blocked for saying who sent it.
 
 The Settings UI sits behind developer mode, which opens only against
 `ZARA_ADMIN_PASSWORD`. There is no default: unset means it never opens.
@@ -169,7 +186,7 @@ These score *highest* on naive relevance and are unusable. Relevance is not perm
 
 ## Design constraints
 
-Ten of them shaped this build. The load-bearing ones:
+Ten of them shaped this build. The load-bearing ones, keeping their original numbers (4 and 6 are real, just less interesting to read cold):
 
 1. Degrade, never refuse — but never silently.
 2. The costly signal is judgment, not composition.

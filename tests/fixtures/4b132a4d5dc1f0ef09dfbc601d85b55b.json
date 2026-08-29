@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Simulation terminal now in every sandbox account",
-    "draft_text": "Hi Test,\nShipBob\u2019s Simulation Terminal is now in every sandbox account. Testing workflows without live data usually cuts manual reconciliation steps and speeds up release cycles.\nWe build bots that automatically reconcile inventory changes across systems, reducing manual entry errors.\nCan we schedule a brief call next week to explore if this fits your current testing process and overall workflow?"
-  },
-  "prompt_tokens": 1425,
-  "completion_tokens": 1714
-}

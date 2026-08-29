@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month-end close automation",
-    "draft_text": "Hi Jon,\nThe board announced your appointment as CFO. That suggests the close continues to involve manual reconciliation across multiple systems, adding friction.\nWe embed a rule\u2011based engine that matches transactions between your ledgers, eliminating manual entry.\nCould we schedule a brief 15\u2011minute call next week to explore whether this fits your workflow?\nZamp"
-  },
-  "prompt_tokens": 1063,
-  "completion_tokens": 2126
-}

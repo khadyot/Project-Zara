@@ -1,7 +1,0 @@
-{
-  "content": {
-    "draft_text": "Hi Sam,\n\nI saw the Paraglide announcement \u2013 customers are cutting DSO by roughly 34% thanks to faster billing\u2011query resolution, ten\u2011day implementations and native integrations with SAP, Oracle, Dynamics\u202f365, NetSuite and QuickBooks.\n\nI imagine Versapay\u2019s ops team still wrestles with exception handling in spreadsheets, without any audit trail.\n\nOur solution lets operations automate those manual, reconciliation\u2011heavy steps, giving you a clear, auditable workflow.\n\nWould you be open to a quick call to explore?\n\nBest,\nZamp"
-  },
-  "prompt_tokens": 692,
-  "completion_tokens": 1333
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Automation for operations teams",
-    "draft_text": "Hi Riley,\n\nOur software lets operations teams replace manual reconciliation steps with automated workflows. It connects the data sources you use and runs the matching logic without human intervention.\n\nThe result is a process that runs the same way each time, freeing your team to focus on exceptions that need judgment.\n\nWould you be willing to discuss whether this approach could fit into your current operations?\n\nZamp"
-  },
-  "prompt_tokens": 923,
-  "completion_tokens": 1222
-}

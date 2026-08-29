@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Month end close and manual matching",
-    "draft_text": "Hi Jon,\nYour experience guiding companies through IPOs and complex finance is noted.\nI suspect that often means month end close gets delayed because matching stays manual across systems.\nMaybe I'm off.\nWe apply rule based data pipelines that pull transaction feeds into a single ledger for automatic reconciliation.\nCould we schedule a brief 15 minute conversation next week to explore?"
-  },
-  "prompt_tokens": 1006,
-  "completion_tokens": 1439
-}

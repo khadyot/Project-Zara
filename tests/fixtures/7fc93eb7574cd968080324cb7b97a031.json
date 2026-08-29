@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All statements in the draft email are supported by the provided evidence. The email correctly references Glen Braganza's appointment as CFO of Versapay, his 20+ years experience, and his role at EasyPark supporting rapid growth and a European acquisition, which are all present in the snippets. The claim about automating manual, reconciliation\u2011heavy processes aligns with the snippet about helping operations teams automate such tasks. No unsupported metrics, customer names, or factual claims are introduced."
-  },
-  "prompt_tokens": 709,
-  "completion_tokens": 531
-}

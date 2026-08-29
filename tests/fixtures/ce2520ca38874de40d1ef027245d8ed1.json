@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on payment reconciliation",
-    "draft_text": "Hi Chermaine,\nLegacy payments weren\u2019t built for the world fintech operates in today. Teams handling high volume payouts spend hours reconciling each batch.\nWe build bots that match incoming and outgoing transactions to eliminate manual reconciliation.\nDo you have 20 minutes next week to see if this fits your roadmap?\nZamp"
-  },
-  "prompt_tokens": 1141,
-  "completion_tokens": 1414
-}

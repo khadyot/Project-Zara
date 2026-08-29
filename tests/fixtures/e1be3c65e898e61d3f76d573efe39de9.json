@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email contains only generic value proposition statements and a greeting to Riley, all of which are supported by the provided evidence. No specific metrics, customer names, or factual claims about the prospect/company are introduced that lack evidence."
-  },
-  "prompt_tokens": 640,
-  "completion_tokens": 561
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft states that \"ops headcount outpace transaction growth,\" a specific claim about ShipMonk that is not supported by the evidence (which only says ops headcount scales linearly with transaction volume)."
-  },
-  "prompt_tokens": 1781,
-  "completion_tokens": 458
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The email contains only supported statements (Devin Weil is CFO at ShipMonk, month\u2011end close drags due to manual matching) and permissible value proposition/CTA language. No invented metrics, customer names, or unsupported factual claims are present."
-  },
-  "prompt_tokens": 1536,
-  "completion_tokens": 347
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Sandbox testing for fulfillment",
-    "draft_text": "Hi Test,\n\nShipBob\u2019s new Simulation Terminal lets you run a full fulfillment lifecycle in a sandbox, no real inventory needed. That capability lets teams experiment without risking stock.\n\nA sandbox that mimics end\u2011to\u2011end fulfillment removes the need for manual, reconciliation\u2011heavy trial runs. It provides a repeatable environment for testing process changes before they go live.\n\nWe build bots that reconcile data between simulated and live systems as they run. The bots compare each step\u2019s output to expected results and flag mismatches by design.\n\nIs exploring a sandbox\u2011based test flow something you\u2019d consider?\n\nZamp"
-  },
-  "prompt_tokens": 2016,
-  "completion_tokens": 2802
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only includes general inferences about finance reconciliation pain and references Chermaine's own statements about flexibility and scalability, which are supported by the evidence. No invented metrics, customer names, or specific unsupported claims are present."
-  },
-  "prompt_tokens": 2115,
-  "completion_tokens": 443
-}

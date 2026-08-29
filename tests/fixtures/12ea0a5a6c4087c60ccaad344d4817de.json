@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Stord funding and reconciliation",
-    "draft_text": "Hi Stephanie,\nStord raised $250M funding round. Rapid expansion often creates reconciliation sprawl.\nWe build scripts that pull transaction data from your TMS, WMS, and ERP, match line items, reconcile entries automatically, generate audit\u2011ready reports, and flag mismatches for manual follow\u2011up, logging exceptions for review.\nWorth a 15\u2011minute call next week?"
-  },
-  "prompt_tokens": 736,
-  "completion_tokens": 1963
-}

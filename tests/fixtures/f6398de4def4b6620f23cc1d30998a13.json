@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "ShipBob funding round",
-    "draft_text": "Hi Test,\nShipBob raised $200M at a $1B+ valuation. That often expands reconciliation workload across teams.\nWe automate intercompany reconciliation data flows with a centralized matching engine.\nWorth a 15-minute call next week?\nZamp"
-  },
-  "prompt_tokens": 830,
-  "completion_tokens": 624
-}

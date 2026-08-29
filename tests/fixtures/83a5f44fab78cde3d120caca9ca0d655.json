@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Quick thought on month\u2011end reconciliation",
-    "draft_text": "Hi Jon,\nJon Anderson shared strategic insights in the Global FinTech Series Q&A.\nMonth\u2011end close often stalls when reconciliation relies on manual matching across multiple systems and spreadsheets.\nWe build bots that pull transaction data from each ledger and reconcile entries across your platforms.\nCould we schedule a brief call next week to see if this approach fits your priorities?"
-  },
-  "prompt_tokens": 1348,
-  "completion_tokens": 2061
-}

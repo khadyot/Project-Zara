@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "All statements in the draft are supported by the provided evidence snippets; no unsupported metrics, customer names, or specific prospect claims are present."
-  },
-  "prompt_tokens": 915,
-  "completion_tokens": 353
-}

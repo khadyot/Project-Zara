@@ -1,8 +1,0 @@
-{
-  "content": {
-    "subject": "Reconciliation across your fulfillment services",
-    "draft_text": "Hi AJ,\nYour catalog lists Core Fulfillment, 2\u2011Day Guaranteed, Pick and Pack, E\u2011Fulfillment, D2C, B2B, Enterprise, Inventory, Custom, Premium, Temperature Controlled, plus boutique 3PL, white\u2011label, multi\u2011brand, Shopify and Amazon SFP & FBA prep. That breadth forces ops to stitch together multiple spreadsheets to reconcile inventory and billing. We put that on rails with an automated reconciliation engine that pulls data from each service feed. Is manual reconciliation a regular pain point for your team?"
-  },
-  "prompt_tokens": 1795,
-  "completion_tokens": 1634
-}

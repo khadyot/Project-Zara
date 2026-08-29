@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only contains generic value\u2011proposition statements about automating manual reconciliation, which are supported by the evidence. It does not include any invented metrics, customer names, quotes, or specific claims about the prospect or their company."
-  },
-  "prompt_tokens": 629,
-  "completion_tokens": 413
-}

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft states \"Teams of your scale spend many hours each month reconciling critical financial transactions,\" which is a specific claim about Episode Six's team that is not supported by any provided evidence."
-  },
-  "prompt_tokens": 2225,
-  "completion_tokens": 509
-}

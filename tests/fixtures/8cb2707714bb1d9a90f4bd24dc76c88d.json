@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": false,
-    "reason": "The draft states \"The board announced your appointment as CFO,\" which is a specific factual claim about the prospect not supported by any of the provided evidence snippets."
-  },
-  "prompt_tokens": 669,
-  "completion_tokens": 278
-}

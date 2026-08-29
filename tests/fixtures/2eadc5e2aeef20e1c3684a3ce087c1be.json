@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only makes a general claim that M&A can increase reconciliation workload, which is supported by the evidence that structural changes create intercompany reconciliation sprawl. It does not introduce invented metrics, customer names, quotes, or specific facts about Bruce Amerman or Midwest 3PL that are not present in the evidence."
-  },
-  "prompt_tokens": 1044,
-  "completion_tokens": 439
-}

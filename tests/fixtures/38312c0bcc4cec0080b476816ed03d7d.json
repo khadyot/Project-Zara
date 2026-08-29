@@ -1,8 +1,0 @@
-{
-  "content": {
-    "passed": true,
-    "reason": "The draft email only references Modern Treasury's eighth birthday and the general challenge of manual, reconciliation\u2011heavy processes, both of which are present in the evidence. It contains no invented metrics, customer names, or specific claims unsupported by the provided snippets."
-  },
-  "prompt_tokens": 1016,
-  "completion_tokens": 353
-}
