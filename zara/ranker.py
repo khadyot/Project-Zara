@@ -379,7 +379,27 @@ def _company_is_mentioned(card, prospect) -> bool:
     # match means the card is titled about them rather than merely adjacent.
     if len(tokens) == 1:
         return tokens[0] in card.claim.lower()
-    return any(t in hay for t in tokens)
+
+    # Every token, not any of them. The single-token path above was hardened after
+    # the C.H. Robinson incident and this branch was left as `any`, which fails for
+    # exactly the same reason one word ahead: a two-word company whose second word
+    # names its industry matches every page in that industry. "Northwind Freight"
+    # reduces to ('northwind', 'freight'), so "Freight invoice reconciliation in
+    # SAP" and "3PL freight reconciliation" both identified it.
+    #
+    # Measured 2026-09-02 on live retrieval for a company that does not exist:
+    # 20 of 21 cards passed under `any`, 1 under `all` -- and that one is a real
+    # Northwind Freight Systems in Ontario, which is a genuine namesake rather
+    # than noise and is precisely what the flag is for. Cost on real prospects is
+    # one card each on Modern Treasury and Payouts Network, none on the
+    # single-token names.
+    #
+    # Known limit: a long corporate name is harder to satisfy, so a card naming
+    # "Merrill Lynch" would not identify a prospect entered as "Bank of America
+    # Merrill Lynch". The exact phrase and its squashed form are both checked
+    # above, this only downweights rather than excluding outside strict mode, and
+    # no such prospect has been run. Revisit with data, not in anticipation.
+    return all(t in hay for t in tokens)
 
 
 def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict,
@@ -614,7 +634,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # sentence is true. It is simply true about somebody else.
         if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
-                guardrail_hit = "possible namesake: company never mentioned in the evidence"
+                guardrail_hit = "possible namesake: the evidence does not fully name the company"
 
         if not excluded:
             to_score.append((i, card))

@@ -249,3 +249,50 @@ def test_the_same_hook_text_is_never_offered_twice():
     _, _, surviving, _ = _select_winner([a, b], [a, b], hooks)
     texts = {h.hook_text.lower().rstrip(".") for h in surviving}
     assert len(texts) == len(surviving), f"duplicate hook offered: {[h.hook_text for h in surviving]}"
+
+
+def test_industry_word_in_a_two_word_company_is_not_an_identification():
+    """"Northwind Freight" must not be identified by the word "freight" alone.
+
+    The single-token path was hardened after a CFO at Midwest 3PL was drafted an
+    email about C.H. Robinson acquiring DeSpir Logistics. The multi-token path was
+    left as `any`, which fails one word later: a two-word company whose second
+    word names its industry matches every page in that industry.
+
+    Found by running live retrieval against a company that does not exist. Brave
+    and Parallel between them returned 21 cards for "Northwind Freight"; 20 passed
+    this check, all of them generic freight-industry marketing. That would have
+    taken the no-signal path -- the one place the product tells the truth about
+    having nothing -- and replaced it with an email built from SEO copy.
+    """
+    from zara.models import Prospect, SignalCard
+    from zara.ranker import _company_is_mentioned
+
+    def card(claim, snippet, url="https://example.com/x"):
+        return SignalCard(claim=claim, signal_type="news", source_url=url,
+                          published_date=None, snippet=snippet, tier="company",
+                          source="test")
+
+    p = Prospect("Riley Chen", "Northwind Freight")
+
+    noise = card("Freight invoice reconciliation in SAP",
+                 "How 3PLs automate freight invoice reconciliation across carriers.")
+    assert not _company_is_mentioned(noise, p), \
+        "an industry word alone must not identify a two-word company"
+
+    # The real thing still identifies, by phrase and by scattered tokens alike.
+    assert _company_is_mentioned(
+        card("Northwind Freight opens Ohio hub", "Northwind Freight announced..."), p)
+    assert _company_is_mentioned(
+        card("Northwind expands", "The freight carrier Northwind added two lanes."), p)
+
+    # And the single-token behaviour it was modelled on is untouched. "Midwest 3PL"
+    # keeps only "midwest" ("3pl" is under the length floor), so a release that
+    # says "midwest" somewhere is not about them -- the C.H. Robinson case.
+    midwest = Prospect("S F", "Midwest 3PL")
+    assert not _company_is_mentioned(
+        card("C.H. Robinson acquires DeSpir Logistics",
+             "The midwest region gains capacity from the acquisition."), midwest), \
+        "a lone common token in the body must not identify a single-token company"
+    assert _company_is_mentioned(
+        card("Midwest 3PL adds capacity", "Midwest 3PL announced a new facility."), midwest)
