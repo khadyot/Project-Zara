@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipMonk recently opened its first fulfillment center designed specifically for apparel brands.",
+        "rationale": "As CFO, you oversee the financial health of new fulfillment sites, and a dedicated apparel center introduces unique cost and inventory challenges that require tight financial controls.",
+        "bridge": "Our automation platform can eliminate manual, reconciliation\u2011heavy processes in that new center, giving you real\u2011time visibility and reducing overhead.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipMonk launched an apparel\u2011specific fulfillment center to tackle returns and SKU complexity.",
+        "rationale": "Managing returns and a high SKU count drives reconciliation workload and expense variance\u2014key concerns for a CFO responsible for operational finance.",
+        "bridge": "By automating the reconciliation of returns and SKU data, our solution helps you keep costs predictable and improves margin tracking.",
+        "strength": 0.88
+      },
+      {
+        "card_index": 2,
+        "hook_text": "In a recent CFO Weekly episode you explained how modern CFOs become true partners to warehouse and logistics operations through data\u2011driven KPIs.",
+        "rationale": "Your focus on building a field finance organization that sits alongside operators aligns directly with the need for accurate, automated financial data.",
+        "bridge": "Our technology streamlines the collection and reconciliation of operational data, enabling the KPIs you champion without the manual effort.",
+        "strength": 0.92
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your June 23 \u2018Greatest Hits\u2019 episode recapped your insights on operational finance and performance leadership.",
+        "rationale": "Highlighting your thought leadership underscores your commitment to improving finance\u2011operations alignment, a priority for a CFO overseeing a fast\u2011growing fulfillment platform.",
+        "bridge": "Automation of reconciliation processes frees your finance team to focus on the strategic performance metrics you discuss.",
+        "strength": 0.8
+      }
+    ]
+  },
+  "prompt_tokens": 922,
+  "completion_tokens": 927
+}

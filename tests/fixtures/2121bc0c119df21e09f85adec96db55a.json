@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Music concert review unrelated to finance"
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Singer interview, no finance observable"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Mentions crypto payments and new integration methods"
+      },
+      {
+        "index": 19,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "CFO appointment announced"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Bio mentions systems, no specific observable"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "CFO appointment announced"
+      },
+      {
+        "index": 20,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Team page, no new finance leadership announcement"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CRO appointment, not finance leadership"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.6,
+        "reason": "Acquisition adds new payment capabilities and PSPs"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article on loyalty, no observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1693,
+  "completion_tokens": 1752
+}

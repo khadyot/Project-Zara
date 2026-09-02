@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 14,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product launch announcement, no pain observable."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "PR release about new features, no pain observable."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "PR announcement of AI connector, no pain observable."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable related to defined pains."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue and valuation data, not a specific pain."
+      }
+    ]
+  },
+  "prompt_tokens": 1752,
+  "completion_tokens": 1670
+}

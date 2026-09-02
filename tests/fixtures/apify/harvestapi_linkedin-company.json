@@ -274,20 +274,20 @@
         "height": 100
       }
     ],
-    "backgroundCover": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_10000/B4DZWlFbebG8AY-/0/1742231419116/shipmonk_cover?e=1788922800&v=beta&t=O0uIkWGRVs51iP64Afi68Jht2C5-DY9q7kdE2zYCkLs",
+    "backgroundCover": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_10000/B4DZWlFbebG8AY-/0/1742231419116/shipmonk_cover?e=1788926400&v=beta&t=3kvOclD8IcJVAtyUyIpoETL1ij51DS6HP9gvebqbSyM",
     "backgroundCovers": [
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_10000/B4DZWlFbebG8AY-/0/1742231419116/shipmonk_cover?e=1788922800&v=beta&t=O0uIkWGRVs51iP64Afi68Jht2C5-DY9q7kdE2zYCkLs",
+        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_10000/B4DZWlFbebG8AY-/0/1742231419116/shipmonk_cover?e=1788926400&v=beta&t=3kvOclD8IcJVAtyUyIpoETL1ij51DS6HP9gvebqbSyM",
         "width": 1128,
         "height": 191
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_400/B4DZWlFbebG8Ac-/0/1742231419116/shipmonk_cover?e=1788922800&v=beta&t=MeCKkF6cKCD1EB0V2RPhl0vHxmGwq2tGmEM59-v3wbE",
+        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_400/B4DZWlFbebG8Ac-/0/1742231419116/shipmonk_cover?e=1788926400&v=beta&t=A2wWFAHHdlfHkDFVmEZqm7DTaAcQYtesZsuaYXo-HQM",
         "width": 400,
         "height": 67
       },
       {
-        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_200/B4DZWlFbebG8Ag-/0/1742231419116/shipmonk_cover?e=1788922800&v=beta&t=S0b025DlikuDYlg3jab_QDCw0fAz3-ClRZTpN55wwGQ",
+        "url": "https://media.licdn.com/dms/image/v2/D4D1BAQGY85xjCFiFPQ/company-background_200/B4DZWlFbebG8Ag-/0/1742231419116/shipmonk_cover?e=1788926400&v=beta&t=9Lmt_6VSIE5Tsfdebp3FAN2bZhh5yY26XBi_bEDFpEs",
         "width": 200,
         "height": 33
       }
@@ -323,7 +323,33 @@
             "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQHqd4XBOLOMbA/company-background_10000/company-background_10000/0/1707442153453/bajafulfillment_cover?e=1788922800&v=beta&t=fKwCZjvCeYZxmZIk8GQo--6BUe8e3g5phZjJsEd3QRA",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQHqd4XBOLOMbA/company-background_10000/company-background_10000/0/1707442153453/bajafulfillment_cover?e=1788926400&v=beta&t=rG6zF7PzGEjTuShf3okVop2-DtF9tXjmbsBLGpy_2ak",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "80941239",
+        "universalName": "psgarx",
+        "linkedinUrl": "https://www.linkedin.com/company/psgarx/",
+        "name": "RxConnexion",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQEltCAxD7lJWg/company-logo_400_400/B4EZoSLUtCIMAY-/0/1761241549954/psgarx_logo?e=1790208000&v=beta&t=rDZCW9-MDplxzh9rAGVh79kkAo-gcx-DnnobPWKbczs",
+        "employeeCountRange": {
+          "start": 2,
+          "end": 10
+        },
+        "followerCount": 862,
+        "description": "We are a health care performance improvement company that helps Community Pharmacies incorporate some of the latest and greatest gadgets and software programs to streamline operational revenue, improve customer service, cut costs, and help patients.",
+        "industries": [
+          {
+            "id": "1594",
+            "name": "Technology, Information and Media",
+            "urn": "urn:li:fsd_industryV2:1594",
+            "title": "Technology, Information and Media",
+            "hierarchy": "Technology, Information and Media"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQH9eVty3Biq5w/company-background_10000/B4EZoSLL3HJgAU-/0/1761241514397/psgarx_cover?e=1788926400&v=beta&t=SvpcQ1NQZDbrjIRdIAbMEhWEAMnj72H2VT3y5vW-5nw",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
@@ -349,7 +375,7 @@
             "hierarchy": "Manufacturing"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFyu_bdMCZHmQ/company-background_10000/B56Z_xNf6tJoAI-/0/1786458275757/fabini_cookware_cover?e=1788922800&v=beta&t=nScXInYOD-SuCah4Kp7biNHHCEbJu1ZDL9WqbpMDSnM",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFyu_bdMCZHmQ/company-background_10000/B56Z_xNf6tJoAI-/0/1786458275757/fabini_cookware_cover?e=1788926400&v=beta&t=D9KZI9KioVnQJ4ZL8k0vDN2Zz5YDxRLGt2zP3BOXsH8",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
@@ -364,7 +390,7 @@
           "start": 1001,
           "end": 5000
         },
-        "followerCount": 3349141,
+        "followerCount": 3349848,
         "description": "Claude is an AI assistant built by Anthropic to be safe, accurate, and secure. Talk to Claude on http://claude.ai or download the app on desktop and mobile.",
         "industries": [
           {
@@ -375,212 +401,7 @@
             "hierarchy": "Technology, Information and Media > Technology, Information and Internet"
           }
         ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQH8_-JqKaLlHA/company-background_10000/B56ZxEZAaKJIAU-/0/1770673932218/claude_cover?e=1788922800&v=beta&t=-kClLGGz2NgS00aZp4DUx_oy3FYdtlm7Ykzz68FckjY",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "76227872",
-        "universalName": "torchlightcyber",
-        "linkedinUrl": "https://www.linkedin.com/company/torchlightcyber/",
-        "name": "TorchLight",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C560BAQHXgMJZKK6B4A/company-logo_400_400/company-logo_400_400/0/1633623155372/torchlightcyber_logo?e=1790208000&v=beta&t=tnKtqsBgs0XmU7P60rtSUpvVhxipxv-YvGAQJrPO0fQ",
-        "employeeCountRange": {
-          "start": 51,
-          "end": 200
-        },
-        "followerCount": 1939,
-        "description": "We don't manage systems. We protect trust.\n\nTorchLight sets the cybersecurity standard for regulated industries, where one breach destroys decades of trust, one compliance failure ends careers, and one system failure costs millions.\n \nOur track record:\n\u2022 100% exam pass rate\n\u2022 100% attack prevention under comprehensive management\n\u2022 20-45% cyber insurance cost reductions\n\u2022 $200K+ annual CEO time liberation for strategic growth\n \nWhy regulated industries choose us:\nWe understand GLBA, HIPAA safeguards, and NCUA expectations - not just technically, but operationally. We speak your regulators' language and deliver audit-ready compliance.\n \nWhat we deliver:\nManaged IT & Cybersecurity | Penetration Testing | Compliance Expertise | 24/7 Threat Detection | Virtual CISO/CIO | Ransomware Prevention | Cyber Warranty | Microsoft 365 & Azure\n \nWho we serve:\nCredit Unions | Banks | Healthcare | Capital Management | Professional Services | Manufacturing | Government\n\nMany of our client relationships span 20+ years. That kind of trust is earned through consistent results, not promises.\n \nReady to transform your compliance from risk to competitive advantage? Let's talk.",
-        "industries": [
-          {
-            "id": "118",
-            "name": "Computer and Network Security",
-            "urn": "urn:li:fsd_industryV2:118",
-            "title": "Computer and Network Security",
-            "hierarchy": "Professional Services > IT Services and IT Consulting > Computer and Network Security"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQER-MyDBliDGg/company-background_10000/B56Z6EfuI2IoAM-/0/1780339368774/torchlightcyber_cover?e=1788922800&v=beta&t=zxgmKcnQQQZB5aUJE6iJ8eigoQP24XqUheECiVD7Y38",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "104825671",
-        "universalName": "chatgpt",
-        "linkedinUrl": "https://www.linkedin.com/showcase/chatgpt/",
-        "name": "ChatGPT",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQHanColRaBS2w/company-logo_400_400/B4DZUaBg.nHkAY-/0/1739898360056/chatgpt_logo?e=1790208000&v=beta&t=674MeHYWHLZ7rygDtrY1CVhocef80_e0XycrwbsS9K4",
-        "employeeCountRange": null,
-        "followerCount": 1667632,
-        "description": null,
-        "industries": [
-          {
-            "id": "6",
-            "name": "Technology, Information and Internet",
-            "urn": "urn:li:fsd_industryV2:6",
-            "title": "Technology, Information and Internet",
-            "hierarchy": "Technology, Information and Media > Technology, Information and Internet"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGzQwLJJ0mXzg/company-background_10000/company-background_10000/0/1738599710162/chatgpt_cover?e=1788922800&v=beta&t=xAaNNYsjUi0aTMvNnZygWuveNFElq_JxjlH8ys_I7YA",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "10024825",
-        "universalName": "boxzooka",
-        "linkedinUrl": "https://www.linkedin.com/company/boxzooka/",
-        "name": "Boxzooka",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D560BAQGpkm2rPTycZg/company-logo_400_400/B56ZyhfwPeKgAY-/0/1772235982147/boxzooka_logo?e=1790208000&v=beta&t=dP6CFKuATsSB4pL3aJGH5bWhpNsY7PD5KQkMUnvSsmE",
-        "employeeCountRange": {
-          "start": 201,
-          "end": 500
-        },
-        "followerCount": 2013,
-        "description": "Recognized by Inc. Magazine as one of the Fastest Growing Companies in America, Boxzooka is a technology-driven 3PL built for scaling e-commerce brands that demand accuracy, speed, and a fulfillment partner that actually picks up the phone.\n\nWe work with high-growth DTC, B2B, wholesale, and subscription brands shipping 100+ orders per week and preparing for their next stage of expansion \u2014 brands that have outgrown their current solution and need a partner that can scale with them without sacrificing brand experience.\n\nFounded in 2014 as a technology company first, Boxzooka built its own proprietary Warehouse Management System from the ground up. That means your team gets real-time inventory visibility, seamless integrations with Shopify, Amazon, NetSuite, and 100+ platforms, and data-driven control over every order \u2014 without being dependent on a third-party system we don't control.\n\nOur fulfillment centers in New Jersey, Pennsylvania, and Las Vegas give clients efficient nationwide coverage and a clear path to global expansion.\n\nWhat sets us apart isn't just the technology. It's the way we operate: onsite, expert client success managers, elevated unboxing experiences, custom kitting and value-added services, and a relentless focus on accuracy. We function as an extension of your team \u2014 protecting your brand while powering your growth.\n\n\ud83d\udce6 Interested in learning how Boxzooka can support your next stage of growth? Visit boxzooka.com or reach out directly.\n",
-        "industries": [
-          {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFoHMELpeygCQ/company-background_10000/B56Z4DVlZnIsAI-/0/1778172450602/boxzooka_cover?e=1788922800&v=beta&t=B9sWB4cQsoP2yaDfVggqEZld6gtj2KHhYpv4mhSi2cw",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "74126343",
-        "universalName": "anthropicresearch",
-        "linkedinUrl": "https://www.linkedin.com/company/anthropicresearch/",
-        "name": "Anthropic",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQFMhKgeR7EYAg/company-logo_400_400/company-logo_400_400/0/1719256729905/anthropicresearch_logo?e=1790208000&v=beta&t=O_RYca4qR6IuppaI06FHVLZ8EakKA2Vvt0HSpvgMP28",
-        "employeeCountRange": {
-          "start": 501,
-          "end": 1000
-        },
-        "followerCount": 4699074,
-        "description": "We're an AI research company that builds reliable, interpretable, and steerable AI systems. Our first product is Claude, an AI assistant for tasks at any scale.\n\nOur research interests span multiple areas including natural language, human feedback, scaling laws, reinforcement learning, code generation, and interpretability. ",
-        "industries": [
-          {
-            "id": "70",
-            "name": "Research Services",
-            "urn": "urn:li:fsd_industryV2:70",
-            "title": "Research Services",
-            "hierarchy": "Professional Services > Research Services"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQFZw3MXQWcNDg/company-background_10000/company-background_10000/0/1719271334911/anthropicresearch_cover?e=1788922800&v=beta&t=2Kh6_Es5K2agH14DupgCvhZ8Ttt7f8U8ncB_vRttKL0",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "2783635",
-        "universalName": "interfulfillment",
-        "linkedinUrl": "https://www.linkedin.com/company/interfulfillment/",
-        "name": "InterFulfillment Inc.",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQHud5RliT-aPA/company-logo_400_400/company-logo_400_400/0/1632163020446/interfulfillment_logo?e=1790208000&v=beta&t=Egy3fri-YSfyxfZ_jKm3kl0xlj_IvNZli3QL8qS35RA",
-        "employeeCountRange": {
-          "start": 51,
-          "end": 200
-        },
-        "followerCount": 781,
-        "description": "Canadian-owned and operated, InterFulfillment has been providing top-quality order fulfillment services since 2010 to businesses of all sizes across North America and beyond. Our comprehensive services include warehousing, order processing, pick and pack, shipping, and returns management, all fully customizable to meet your unique business needs.\n\nWe offer omnichannel order fulfillment solutions for D2C/DTC/B2C, B2B, and projects. With advanced technology and strategic warehouse locations in Toronto and Vancouver, we ensure timely delivery of goods, competitive pricing, high-quality service, and a reliable and adaptable service strategy.\n____________________________________________________________________________________\nOur services: \n- Omnichannel pick, pack, and ship (DTC and B2B)\n- B2B retail marketplace fulfillment (for Costco, Sephora, Amazon, Walmart, Home Depot, Canadian Tire, and more)\n- Amazon FBA Prep \n- Business orders or bulk orders \n- Projects/ events fulfillment\n- Custom kitting and assembly services\n- Dangerous Goods/Hazmat Fulfillment\n- Tailored fulfillment services\n",
-        "industries": [
-          {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQEq2q6ej7kgxQ/company-background_10000/B56Zmlk03XHQAU-/0/1759419518853/interfulfillment_cover?e=1788922800&v=beta&t=KcCX0byWiTNRVQkVciC-ps9eL2vqvGT1oJoseufmVus",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "79622793",
-        "universalName": "manifest-eco",
-        "linkedinUrl": "https://www.linkedin.com/company/manifest-eco/",
-        "name": "Manifest.eco",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEWP84McJKLIA/company-logo_400_400/B56ZigpYqxHMAY-/0/1755041861287/manifest_eco_logo?e=1790208000&v=beta&t=Ek1VUWasolPoNKUU10as7KFjFToxzw-9MSis8E9jmgI",
-        "employeeCountRange": {
-          "start": 51,
-          "end": 200
-        },
-        "followerCount": 2525,
-        "description": "Manifest.eco offers a sustainable 3PL experience tailored to exceed all your shipping needs. Located in Austin, TX, we provide D2C and B2B services, personalized account management, and innovative logistics solutions without the premium price.",
-        "industries": [
-          {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGiWcowfIxBsw/company-background_10000/B56ZibgrHkHkAc-/0/1754955691605/manifest_eco_cover?e=1788922800&v=beta&t=wV05KP8th2SjJm0I7MMpSXmW6aC0dbs2OCmoiOBT1Kc",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "98327982",
-        "universalName": "fulfillyn",
-        "linkedinUrl": "https://www.linkedin.com/company/fulfillyn/",
-        "name": "FulfillYN",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEt2UlyBFu_RA/company-logo_400_400/company-logo_400_400/0/1693508704629/fulfillyn_logo?e=1790208000&v=beta&t=MjWJP-KaJ0G8WDMlZ1ixskl11HyaIABDw0v1ghlVgDw",
-        "employeeCountRange": {
-          "start": 2,
-          "end": 10
-        },
-        "followerCount": 1954,
-        "description": "FulfillYN connects companies with the perfect 3PL partner anywhere in the world. \n\nWe simplify your fulfillment journey by:\n\nMatching you with top-tier 3PL providers: Our extensive network of over 500 3PLs and 2000 locations ensures you find the right fit for your needs.\n\nStreamlining the quote process: Let us handle the legwork. We contact potential partners on your behalf and send you the best offers.\n\nFacilitating seamless onboarding: We help schedule calls between you and your chosen 3PL, ensuring a smooth transition.\n\nFulfillYN takes the stress out of fulfillment. Get matched. Get quoted. Get fulfilled.",
-        "industries": [
-          {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHZLCywL4CGFw/company-background_10000/company-background_10000/0/1703016992580/fulfillyn_cover?e=1788922800&v=beta&t=AYVipb9rrRuBowu-O-jdu5MwG9IMiUAtOal1md-u_iI",
-        "callToActionUrl": null,
-        "affiliatedPages": []
-      },
-      {
-        "id": "105327082",
-        "universalName": "stockitbetter",
-        "linkedinUrl": "https://www.linkedin.com/company/stockitbetter/",
-        "name": "Stock: The Logistics of Inventory Donation",
-        "website": null,
-        "logo": "https://media.licdn.com/dms/image/v2/D560BAQE_WjM7HrOonA/company-logo_400_400/B56Znlpo5QJoAY-/0/1760494522297/stockitbetter_logo?e=1790208000&v=beta&t=9baAHYCBoGAHgG83E1fi4hKaN9euXP1uRfBn1TF0UvQ",
-        "employeeCountRange": {
-          "start": 0,
-          "end": 1
-        },
-        "followerCount": 1022,
-        "description": "Stock: the private marketplace that connects 3pls and Brands with excess and obsolete inventory to non profits in need. The US sends $163B worth of perfectly good inventory into the landfill each year. Stock is on a mission to connect that inventory to non profits who can utilize it for good. Brands and 3PLs receive the tax benefit of donated items as well as free up space in their warehouses. Underserved communities receive the much needed inventory to support their missions. The planet stops bearing the weight of our overproduction and consumerism. ",
-        "industries": [
-          {
-            "id": "116",
-            "name": "Transportation, Logistics, Supply Chain and Storage",
-            "urn": "urn:li:fsd_industryV2:116",
-            "title": "Transportation, Logistics, Supply Chain and Storage",
-            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
-          }
-        ],
-        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGgLJ8JMu1yAA/company-background_10000/B56Znlny7NJ8A4-/0/1760494039729/stockitbetter_cover?e=1788922800&v=beta&t=ySayZugu90vKkGnHj5Th_pXEA9XsEk5F7marmAcYasw",
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQH8_-JqKaLlHA/company-background_10000/B56ZxEZAaKJIAU-/0/1770673932218/claude_cover?e=1788926400&v=beta&t=-WT6SwuEKQjw9RvfEHRCQTeRKmqlgJu-8bj-w3Q47PA",
         "callToActionUrl": null,
         "affiliatedPages": []
       },
@@ -606,6 +427,185 @@
             "hierarchy": "Education > Professional Training and Coaching"
           }
         ],
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "2783635",
+        "universalName": "interfulfillment",
+        "linkedinUrl": "https://www.linkedin.com/company/interfulfillment/",
+        "name": "InterFulfillment Inc.",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQHud5RliT-aPA/company-logo_400_400/company-logo_400_400/0/1632163020446/interfulfillment_logo?e=1790208000&v=beta&t=Egy3fri-YSfyxfZ_jKm3kl0xlj_IvNZli3QL8qS35RA",
+        "employeeCountRange": {
+          "start": 51,
+          "end": 200
+        },
+        "followerCount": 781,
+        "description": "Canadian-owned and operated, InterFulfillment has been providing top-quality order fulfillment services since 2010 to businesses of all sizes across North America and beyond. Our comprehensive services include warehousing, order processing, pick and pack, shipping, and returns management, all fully customizable to meet your unique business needs.\n\nWe offer omnichannel order fulfillment solutions for D2C/DTC/B2C, B2B, and projects. With advanced technology and strategic warehouse locations in Toronto and Vancouver, we ensure timely delivery of goods, competitive pricing, high-quality service, and a reliable and adaptable service strategy.\n____________________________________________________________________________________\nOur services: \n- Omnichannel pick, pack, and ship (DTC and B2B)\n- B2B retail marketplace fulfillment (for Costco, Sephora, Amazon, Walmart, Home Depot, Canadian Tire, and more)\n- Amazon FBA Prep \n- Business orders or bulk orders \n- Projects/ events fulfillment\n- Custom kitting and assembly services\n- Dangerous Goods/Hazmat Fulfillment\n- Tailored fulfillment services\n",
+        "industries": [
+          {
+            "id": "116",
+            "name": "Transportation, Logistics, Supply Chain and Storage",
+            "urn": "urn:li:fsd_industryV2:116",
+            "title": "Transportation, Logistics, Supply Chain and Storage",
+            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQEq2q6ej7kgxQ/company-background_10000/B56Zmlk03XHQAU-/0/1759419518853/interfulfillment_cover?e=1788926400&v=beta&t=F68y-U-k1uenMo_SmIYb5CwMPTnnoDYnpCNthIDX6bA",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "10024825",
+        "universalName": "boxzooka",
+        "linkedinUrl": "https://www.linkedin.com/company/boxzooka/",
+        "name": "Boxzooka",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQGpkm2rPTycZg/company-logo_400_400/B56ZyhfwPeKgAY-/0/1772235982147/boxzooka_logo?e=1790208000&v=beta&t=dP6CFKuATsSB4pL3aJGH5bWhpNsY7PD5KQkMUnvSsmE",
+        "employeeCountRange": {
+          "start": 201,
+          "end": 500
+        },
+        "followerCount": 2013,
+        "description": "Recognized by Inc. Magazine as one of the Fastest Growing Companies in America, Boxzooka is a technology-driven 3PL built for scaling e-commerce brands that demand accuracy, speed, and a fulfillment partner that actually picks up the phone.\n\nWe work with high-growth DTC, B2B, wholesale, and subscription brands shipping 100+ orders per week and preparing for their next stage of expansion \u2014 brands that have outgrown their current solution and need a partner that can scale with them without sacrificing brand experience.\n\nFounded in 2014 as a technology company first, Boxzooka built its own proprietary Warehouse Management System from the ground up. That means your team gets real-time inventory visibility, seamless integrations with Shopify, Amazon, NetSuite, and 100+ platforms, and data-driven control over every order \u2014 without being dependent on a third-party system we don't control.\n\nOur fulfillment centers in New Jersey, Pennsylvania, and Las Vegas give clients efficient nationwide coverage and a clear path to global expansion.\n\nWhat sets us apart isn't just the technology. It's the way we operate: onsite, expert client success managers, elevated unboxing experiences, custom kitting and value-added services, and a relentless focus on accuracy. We function as an extension of your team \u2014 protecting your brand while powering your growth.\n\n\ud83d\udce6 Interested in learning how Boxzooka can support your next stage of growth? Visit boxzooka.com or reach out directly.\n",
+        "industries": [
+          {
+            "id": "116",
+            "name": "Transportation, Logistics, Supply Chain and Storage",
+            "urn": "urn:li:fsd_industryV2:116",
+            "title": "Transportation, Logistics, Supply Chain and Storage",
+            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFoHMELpeygCQ/company-background_10000/B56Z4DVlZnIsAI-/0/1778172450602/boxzooka_cover?e=1788926400&v=beta&t=_yfexulmFgpzaK269rpSpMnhzAnxq2cxYGQQugagQ-A",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "79622793",
+        "universalName": "manifest-eco",
+        "linkedinUrl": "https://www.linkedin.com/company/manifest-eco/",
+        "name": "Manifest.eco",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEWP84McJKLIA/company-logo_400_400/B56ZigpYqxHMAY-/0/1755041861287/manifest_eco_logo?e=1790208000&v=beta&t=Ek1VUWasolPoNKUU10as7KFjFToxzw-9MSis8E9jmgI",
+        "employeeCountRange": {
+          "start": 51,
+          "end": 200
+        },
+        "followerCount": 2526,
+        "description": "Manifest.eco offers a sustainable 3PL experience tailored to exceed all your shipping needs. Located in Austin, TX, we provide D2C and B2B services, personalized account management, and innovative logistics solutions without the premium price.",
+        "industries": [
+          {
+            "id": "116",
+            "name": "Transportation, Logistics, Supply Chain and Storage",
+            "urn": "urn:li:fsd_industryV2:116",
+            "title": "Transportation, Logistics, Supply Chain and Storage",
+            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGiWcowfIxBsw/company-background_10000/B56ZibgrHkHkAc-/0/1754955691605/manifest_eco_cover?e=1788926400&v=beta&t=Ii97uRqDTLGtCP6vJ_P48J53Shhyb3VaoWFUtbygQV8",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "104825671",
+        "universalName": "chatgpt",
+        "linkedinUrl": "https://www.linkedin.com/showcase/chatgpt/",
+        "name": "ChatGPT",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D4D0BAQHanColRaBS2w/company-logo_400_400/B4DZUaBg.nHkAY-/0/1739898360056/chatgpt_logo?e=1790208000&v=beta&t=674MeHYWHLZ7rygDtrY1CVhocef80_e0XycrwbsS9K4",
+        "employeeCountRange": null,
+        "followerCount": 1668015,
+        "description": null,
+        "industries": [
+          {
+            "id": "6",
+            "name": "Technology, Information and Internet",
+            "urn": "urn:li:fsd_industryV2:6",
+            "title": "Technology, Information and Internet",
+            "hierarchy": "Technology, Information and Media > Technology, Information and Internet"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQGzQwLJJ0mXzg/company-background_10000/company-background_10000/0/1738599710162/chatgpt_cover?e=1788926400&v=beta&t=VRFvdMJbnnfKzsm2qd8ITHEVB5xjptqjYVWFm7Mwhn0",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "98327982",
+        "universalName": "fulfillyn",
+        "linkedinUrl": "https://www.linkedin.com/company/fulfillyn/",
+        "name": "FulfillYN",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEt2UlyBFu_RA/company-logo_400_400/company-logo_400_400/0/1693508704629/fulfillyn_logo?e=1790208000&v=beta&t=MjWJP-KaJ0G8WDMlZ1ixskl11HyaIABDw0v1ghlVgDw",
+        "employeeCountRange": {
+          "start": 2,
+          "end": 10
+        },
+        "followerCount": 1954,
+        "description": "FulfillYN connects companies with the perfect 3PL partner anywhere in the world. \n\nWe simplify your fulfillment journey by:\n\nMatching you with top-tier 3PL providers: Our extensive network of over 500 3PLs and 2000 locations ensures you find the right fit for your needs.\n\nStreamlining the quote process: Let us handle the legwork. We contact potential partners on your behalf and send you the best offers.\n\nFacilitating seamless onboarding: We help schedule calls between you and your chosen 3PL, ensuring a smooth transition.\n\nFulfillYN takes the stress out of fulfillment. Get matched. Get quoted. Get fulfilled.",
+        "industries": [
+          {
+            "id": "116",
+            "name": "Transportation, Logistics, Supply Chain and Storage",
+            "urn": "urn:li:fsd_industryV2:116",
+            "title": "Transportation, Logistics, Supply Chain and Storage",
+            "hierarchy": "Transportation, Logistics, Supply Chain and Storage"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4E1BAQHZLCywL4CGFw/company-background_10000/company-background_10000/0/1703016992580/fulfillyn_cover?e=1788926400&v=beta&t=paMYab3CNi9yPwUiddDULMOyXBYBWz2um9__rOqQazI",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "6407097",
+        "universalName": "tao-clean",
+        "linkedinUrl": "https://www.linkedin.com/company/tao-clean/",
+        "name": "TAO Clean",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/D560BAQEww0wgALGtXw/company-logo_400_400/B56aBZ3A0BI0AY-/0/1788213989646/tao_clean_logo?e=1790208000&v=beta&t=ABVUFUoI1Ds4d3zWDmBnaSOBgtO24lb-z-csGOI8gcQ",
+        "employeeCountRange": {
+          "start": 11,
+          "end": 50
+        },
+        "followerCount": 2731,
+        "description": "At TAO Clean, we\u2019re redefining what clean means, through innovative, beautifully designed products that make everyday rituals feel effortless and elevated. With relaxed confidence and fearless curiosity, we\u2019re trailblazing a new standard in oral care and beyond. Our mission is to create smart, meaningful solutions that reflect integrity, simplicity, and the kind of innovation you can feel.\n\nWe\u2019re the team behind the award-winning Sonic Toothbrush that\u2019s turning heads and shaking up the oral care industry. Seen over 15 times on the Today Show and going viral for nearly a decade, our flagship product has sparked a movement, and we\u2019re just getting started.\n\nAt TAO Clean, innovation isn\u2019t just a buzzword. It\u2019s our daily mindset. We\u2019re designing, creating, and manufacturing cutting-edge personal care products that solve real cleanliness needs with elegance and simplicity.\n\nBut what truly sets us apart is our people. We\u2019re a tight-knit, values-driven team of thoughtful risk-takers, careful implementers, and approachable leaders. We believe bold ideas come to life through collaboration, relaxed confidence, and a shared commitment to doing what\u2019s right, for our customers, our coworkers, and our future.\n\nIf you\u2019re looking to join a company where care and innovation go hand in hand, where your voice matters and your work makes an impact, you\u2019ll fit right in.",
+        "industries": [
+          {
+            "id": "25",
+            "name": "Manufacturing",
+            "urn": "urn:li:fsd_industryV2:25",
+            "title": "Manufacturing",
+            "hierarchy": "Manufacturing"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D561BAQFlGGCC74MCMw/company-background_10000/B56Z7dz1_FIoAQ-/0/1781837816019/tao_clean_cover?e=1788926400&v=beta&t=k3bscR3WRe4eWmI3CBhf4MorghhFUfz8ihMBwIK-tVA",
+        "callToActionUrl": null,
+        "affiliatedPages": []
+      },
+      {
+        "id": "18404792",
+        "universalName": "revolt-bi",
+        "linkedinUrl": "https://www.linkedin.com/company/revolt-bi/",
+        "name": "Revolt BI",
+        "website": null,
+        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQGigGCp68djOQ/company-logo_400_400/company-logo_400_400/0/1630644423452/revolt_bi_logo?e=1790208000&v=beta&t=3R1DtX9-eE_nlhT6dS14ow4HdgAMSxuXhr_3zzDkt0c",
+        "employeeCountRange": {
+          "start": 51,
+          "end": 200
+        },
+        "followerCount": 2384,
+        "description": "Revolt BI is a consulting and implementation agency that analyzes data and uses it to improve the functioning of companies and organizations. It provides services and analytical solutions that show key people what needs to be done to make a company function better, reduce costs, and increase profits. Our vision is to help companies find specific value in data so that they can transform themselves into modern companies. Our mission is to bring about a positive impact through the use of data, regardless of whether the project is a small report or our flagship analytical transformation service.\n\nRevolt BI was founded in 2017. Since then, it has acquired around 100 satisfied clients and a team of more than 50 experts in data, analytics, and business consulting.",
+        "industries": [
+          {
+            "id": "2458",
+            "name": "Data Infrastructure and Analytics",
+            "urn": "urn:li:fsd_industryV2:2458",
+            "title": "Data Infrastructure and Analytics",
+            "hierarchy": "Technology, Information and Media > Technology, Information and Internet > Data Infrastructure and Analytics"
+          }
+        ],
+        "backgroundCover": "https://media.licdn.com/dms/image/v2/D4D1BAQGbrk4CDSOBiQ/company-background_10000/B4DaA34rlAKMAI-/0/1787644000808/revolt_bi_cover?e=1788926400&v=beta&t=dzmZ0AASi__gntIvNkeydaarJra4O5uB5ujZNLEpYzE",
         "callToActionUrl": null,
         "affiliatedPages": []
       }
@@ -657,15 +657,15 @@
           },
           {
             "title": "Pennsylvania, United States",
-            "count": 188
+            "count": 189
           },
           {
             "title": "Nevada, United States",
-            "count": 164
+            "count": 163
           },
           {
             "title": "Las Vegas Metropolitan Area",
-            "count": 164
+            "count": 163
           },
           {
             "title": "Fort Lauderdale, FL",
@@ -673,7 +673,7 @@
           },
           {
             "title": "Greater Scranton Area",
-            "count": 149
+            "count": 150
           },
           {
             "title": "Texas, United States",
@@ -681,7 +681,7 @@
           },
           {
             "title": "Las Vegas, NV",
-            "count": 125
+            "count": 124
           },
           {
             "title": "Dallas-Fort Worth Metroplex",
@@ -836,19 +836,19 @@
           },
           {
             "title": "Leadership",
-            "count": 138
+            "count": 139
           },
           {
             "title": "Communication",
-            "count": 136
+            "count": 137
           },
           {
             "title": "Microsoft Office",
-            "count": 135
+            "count": 136
           },
           {
             "title": "Microsoft Excel",
-            "count": 126
+            "count": 127
           },
           {
             "title": "Management",
@@ -856,7 +856,7 @@
           },
           {
             "title": "Project Management",
-            "count": 118
+            "count": 119
           },
           {
             "title": "Team Leadership",
@@ -864,11 +864,11 @@
           },
           {
             "title": "Teamwork",
-            "count": 95
+            "count": 96
           },
           {
             "title": "Problem Solving",
-            "count": 88
+            "count": 89
           },
           {
             "title": "Warehouse Operations",
@@ -884,7 +884,7 @@
           },
           {
             "title": "Analytical Skills",
-            "count": 77
+            "count": 78
           },
           {
             "title": "Inventory Management",
@@ -966,7 +966,7 @@
           },
           {
             "title": "Information Technology",
-            "count": 22
+            "count": 23
           },
           {
             "title": "Computer Science",
@@ -978,7 +978,7 @@
           },
           {
             "title": "Marketing",
-            "count": 14
+            "count": 15
           },
           {
             "title": "Logistics, Materials, and Supply Chain Management",
@@ -1027,6 +1027,6 @@
       "search": "ShipMonk",
       "location": ""
     },
-    "requestId": "4a5d9f16-eb30-4980-a780-c7c18684ec8f"
+    "requestId": "68f91cc4-f386-4657-ac5c-a0813889b68b"
   }
 ]

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "New CFO appointment announced"
+      },
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast promo, no specific observable"
+      },
+      {
+        "index": 29,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "New CFO hire announcement"
+      },
+      {
+        "index": 35,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "New CFO hire announcement"
+      },
+      {
+        "index": 37,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview, no appointment mention"
+      },
+      {
+        "index": 38,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO feature, no specific observable"
+      },
+      {
+        "index": 28,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast intro, no appointment or growth mention"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile, not a new hire announcement"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Launch of new fulfillment center expands warehouse footprint"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Opening first apparel-focused fulfillment center adds warehouse"
+      }
+    ]
+  },
+  "prompt_tokens": 1856,
+  "completion_tokens": 1623
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not contain any invented metrics, customer names, or specific claims about ShipMonk that are unsupported by the provided evidence. All prospect-related statements are either supported (e.g., the apparel-specific fulfillment center) or are permissible hypotheses/connective language."
+  },
+  "prompt_tokens": 2686,
+  "completion_tokens": 366
+}
