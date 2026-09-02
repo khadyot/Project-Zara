@@ -355,7 +355,7 @@ def _company_is_mentioned(card, prospect) -> bool:
     raw = (prospect.company or "").lower().strip()
     if not raw:
         return True
-    hay = f"{card.claim} {card.snippet[:500]} {card.source_url or ''}".lower()
+    hay = f"{card.claim} {clean_snippet(card.snippet)[:500]} {card.source_url or ''}".lower()
 
     # The whole name, as a phrase, always counts.
     if raw and raw in hay:
@@ -431,10 +431,15 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
 
 
 def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
-                   hooks: list) -> tuple[RankedCard | None, float | None, list]:
+                   hooks: list) -> tuple[RankedCard | None, float | None, list, object | None]:
     """Pick the winner from the shortlist, after the hooks have been articulated.
 
-    Returns `(winning_card, winning_score, surviving_hooks)`.
+    Returns `(winning_card, winning_score, surviving_hooks, winning_hook)`.
+
+    The fourth element exists because this is the ONLY scope that can bind a hook
+    to a card correctly -- `shortlist` is in scope here and `hook_for` keys on
+    identity. Callers that tried to recover it downstream had nothing but
+    `card_index` and the wrong list to apply it to; see the warning below.
 
     TWO INDEX SPACES, and conflating them is a live bug this signature exists to
     prevent. `HookProposal.card_index` indexes into `shortlist` -- the relevance-
@@ -449,7 +454,7 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     relevance -- the run loses its options, not its winner.
     """
     if not shortlist:
-        return None, None, []
+        return None, None, [], None
 
     hook_for = {}
     for h in hooks:
@@ -519,7 +524,7 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     #
     # This is a preference, not a veto: an undated card that leads by a clear
     # margin still wins, because sometimes it really is the best thing we have.
-    win_final, win_card, _ = survivors[0]
+    win_final, win_card, win_hook = survivors[0]
     if win_card.recency_days is None:
         from zara.utils.config import load_value_prop
         try:
@@ -528,10 +533,10 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
             margin = 0.15
         dated = [(f, c, h) for f, c, h in survivors if c.recency_days is not None]
         if dated and dated[0][0] >= win_final - margin:
-            win_final, win_card, _ = dated[0]
+            win_final, win_card, win_hook = dated[0]
             survivors = [dated[0]] + [x for x in survivors if x is not dated[0]]
     surviving_hooks = [h for _, _, h in survivors if h is not None]
-    return win_card, win_final, surviving_hooks
+    return win_card, win_final, surviving_hooks, win_hook
 
 
 class CardScoreOutput(BaseModel):
@@ -571,13 +576,16 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             excluded = f"eligibility: {card.eligibility}"
 
         if not excluded:
-            # Only the first 500 chars of the snippet are ever shown to the pain
-            # scorer, the hook prompt or the drafter, so the guardrail scopes to
-            # exactly what can reach a draft. Matching the full page body made a
-            # $250M funding story fire `never_reference: litigation` on boilerplate
+            # Scoped to the window the pain scorer sees, so the guardrail covers
+            # what can realistically reach a draft. Matching the full page body made
+            # a $250M funding story fire `never_reference: litigation` on boilerplate
             # buried far below the evidence -- the guardrail eating the signal it
-            # was never aimed at.
-            lower_text = f"{card.claim} {card.snippet[:500]}".lower()
+            # was never aimed at, so the bound stays.
+            #
+            # Cleaned first, same as the scorer: 500 raw characters of a LinkedIn
+            # card are mostly header and author bio, so the guardrail was reading
+            # furniture instead of the post it is meant to police.
+            lower_text = f"{card.claim} {clean_snippet(card.snippet)[:500]}".lower()
             for nr in never_reference:
                 nr_id = nr["id"]
                 terms = nr["terms"]
@@ -705,8 +713,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                     prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
                     
                 prompt += "\nCards:\n"
+                # clean_snippet, not the raw text. The drafter and the hook prompt
+                # were fixed in 4f8bc46; this call -- the one that decides which
+                # cards survive at all -- was left reading Exa's generated header
+                # and the author's bio block, roughly 290 of the 500 characters on
+                # a LinkedIn card. Cards were being scored on furniture.
                 for i, card in chunk:
-                    prompt += f"[{i}] {card.snippet[:500]}\n\n"
+                    prompt += f"[{i}] {clean_snippet(card.snippet)[:500]}\n\n"
                     
                 resp = await generate_content_with_retry(
                     prompt=prompt,
@@ -820,7 +833,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
 
     hooks = await _articulate_hooks(prospect, shortlist, vp)
 
-    winning_card, winning_score, final_hooks = _select_winner(final_cards, shortlist, hooks)
+    winning_card, winning_score, final_hooks, winning_hook = _select_winner(final_cards, shortlist, hooks)
 
     # Compass I: degrade, but never silently. Both repaired seed runs land at ~0.30
     # -- the pick is right and the evidence is still thin, and the reviewer is told
@@ -830,7 +843,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     return RankedProspect(
         prospect=prospect, cards=final_cards, icp_fit=icp_fit,
         winning_card=winning_card, winning_score=winning_score, signal_quality=signal_quality,
-        hooks=final_hooks, icp_notes=icp_notes
+        hooks=final_hooks, winning_hook=winning_hook, icp_notes=icp_notes
     )
 
 

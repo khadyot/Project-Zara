@@ -77,7 +77,7 @@ def test_tiebreak_makes_a_tied_sort_independent_of_input_order():
         rcs = []
         for c in seq:
             rcs.append(RankedCard(card=c, pain_match=None, proximity="company_action", recency_days=None, score=0.5, excluded=None))
-        win, _, _ = _select_winner(rcs, rcs, [])
+        win, _, _, _ = _select_winner(rcs, rcs, [])
         return win.card.source
 
     assert winner(cards) == winner(list(reversed(cards))) == winner([cards[1], cards[2], cards[0]])
@@ -92,7 +92,7 @@ def test_empty_hooks_does_not_break_winner_selection():
     """
     c = _card("apify", "https://a.example/1")
     rc = RankedCard(card=c, pain_match=None, proximity="company_action", recency_days=None, score=0.5, excluded=None)
-    win, final, final_hooks = _select_winner([rc], [rc], [])
+    win, final, final_hooks, _ = _select_winner([rc], [rc], [])
     assert win is not None
     assert win.card.source == "apify"
     assert final == 0.5, "with no hooks, final must fall back to raw relevance"
@@ -121,9 +121,52 @@ def test_hook_index_maps_through_the_shortlist_not_the_card_list():
     # card_index 0 refers to `high` -- the first shortlist entry.
     hooks = [HookProposal(card_index=0, hook_text="h", rationale="r", bridge="b", strength=1.0)]
 
-    win, final, _ = _select_winner(final_cards, shortlist, hooks)
+    win, final, _, win_hook = _select_winner(final_cards, shortlist, hooks)
     assert win is high, "hook 0 must map to shortlist[0], not final_cards[0]"
     assert final == pytest.approx(0.90), "full-strength hook must not discount its own card"
+
+    # The same trap, one layer down. s2 used to recover the winner's hook itself by
+    # matching card_index against a position in `cards` -- here that is
+    # final_cards.index(high) == 1, which matches no hook, so the drafter got None
+    # and silently lost both the chosen fact and its rationale. _select_winner is
+    # the only scope holding the shortlist, so it hands the hook back bound.
+    assert win_hook is hooks[0], "the winner's hook must come back with the winner"
+
+
+def test_winning_hook_follows_the_dated_preference_swap():
+    """The undated-to-dated promotion moves the winner; the hook must move with it.
+
+    Returning `survivors[0]`'s hook before the swap would attach the undated
+    card's hook to the dated card that actually won -- the same class of
+    mis-binding, reintroduced by a reordering rather than an index.
+    """
+    from zara.models import HookProposal
+
+    # Distinct tiers, or the Compass VI swap test culls the second card before the
+    # dated-preference check ever sees it.
+    def _tiered(source, url, tier):
+        return SignalCard(claim=f"claim from {source}", signal_type="news",
+                          source_url=url, published_date=None,
+                          snippet=f"snippet from {source}", tier=tier, source=source)
+
+    undated = RankedCard(card=_tiered("exa", "https://u.example/1", "company"),
+                         pain_match=None, proximity="company_action",
+                         recency_days=None, score=0.50, excluded=None)
+    dated = RankedCard(card=_tiered("news", "https://d.example/1", "person"),
+                       pain_match=None, proximity="company_action",
+                       recency_days=30, score=0.45, excluded=None)
+
+    # Equal strength, so relevance order is preserved and `undated` leads by 0.05 --
+    # inside the 0.15 dated_preference_margin, so `dated` is promoted.
+    hooks = [
+        HookProposal(card_index=0, hook_text="undated hook", rationale="r", bridge="b", strength=1.0),
+        HookProposal(card_index=1, hook_text="dated hook", rationale="r", bridge="b", strength=1.0),
+    ]
+    win, _, _, win_hook = _select_winner([undated, dated], [undated, dated], hooks)
+
+    assert win is dated
+    assert win_hook is not None and win_hook.hook_text == "dated hook", \
+        "the promoted card must carry its own hook, not the one it displaced"
 
 def test_tiebreak_is_total_for_distinct_cards():
     """A tiebreak that collides still leaves arrival order deciding."""

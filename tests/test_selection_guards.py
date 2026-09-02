@@ -199,7 +199,7 @@ def test_dated_card_wins_a_near_tie_against_an_undated_one():
 
     undated = _ranked(0.54, None, "person", "New CFO appointment at Stord")
     dated = _ranked(0.42, 92, "company", "Stord raised $250M funding round")
-    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    win, _, _, _ = _select_winner([undated, dated], [undated, dated], [])
     assert win is dated, "a dateless hook won a near-tie over dated evidence"
 
 
@@ -209,7 +209,7 @@ def test_undated_card_still_wins_when_it_leads_by_a_clear_margin():
 
     undated = _ranked(0.80, None, "person", "CEO describes reconciliation pain")
     dated = _ranked(0.20, 92, "company", "Company opens a new office")
-    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    win, _, _, _ = _select_winner([undated, dated], [undated, dated], [])
     assert win is undated
 
 
@@ -246,6 +246,6 @@ def test_the_same_hook_text_is_never_offered_twice():
     a = _ranked(0.50, 104, "company", "Finix launches terminal")
     b = _ranked(0.48, 104, "person", "Finix launches terminal (syndicated)")
     hooks = [_Hook(0, same), _Hook(1, same + ".")]
-    _, _, surviving = _select_winner([a, b], [a, b], hooks)
+    _, _, surviving, _ = _select_winner([a, b], [a, b], hooks)
     texts = {h.hook_text.lower().rstrip(".") for h in surviving}
     assert len(texts) == len(surviving), f"duplicate hook offered: {[h.hook_text for h in surviving]}"
