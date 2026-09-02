@@ -204,3 +204,54 @@ def test_retrieval_vocabulary_comes_from_config_not_code():
     # And an unconfigured value_prop still searches for something (Compass I).
     _, fallback = build_query_plan(p, {})
     assert fallback and all(q.strip() for q in fallback)
+
+
+@pytest.mark.asyncio
+async def test_domain_lookup_fires_for_a_company_with_no_corporate_suffix(monkeypatch):
+    """Both halves of 12.3, which took two passes to find.
+
+    First: the lookup was gated on `normalized != raw_company.strip()`, true only
+    when normalize_company had stripped an Inc/LLC/Ltd. "Episode Six" normalizes to
+    itself, so the call never fired and every such company got domain=None --
+    disabling ExaBlogFetcher and dropping Jina to guessing four spellings.
+
+    Second, and only visible once the gate was gone: `max_results: 3` returned
+    three aggregator profiles (preqin.com, builtin.com, linkedin.com for Episode
+    Six), none of which contain the company token, so resolution still failed. The
+    real homepage sits below them.
+    """
+    import httpx
+    from zara.utils.resolve import resolve_company_entity
+
+    seen = {}
+
+    class _Resp:
+        status_code = 200
+        def raise_for_status(self): pass
+        def json(self):
+            return {"results": [
+                {"url": "https://www.preqin.com/data/profile/asset/episode-six"},
+                {"url": "https://builtin.com/company/episode-six"},
+                {"url": "https://www.linkedin.com/company/episode-six"},
+                {"url": "https://www.episodesix.com/"},
+            ]}
+
+    class _Client:
+        def __init__(self, *a, **k): pass
+        async def __aenter__(self): return self
+        async def __aexit__(self, *a): return False
+        async def post(self, url, headers=None, json=None):
+            seen.update(json or {})
+            return _Resp()
+
+    monkeypatch.setenv("TAVILY_API_KEY", "test-key")
+    monkeypatch.setattr(httpx, "AsyncClient", _Client)
+
+    res = await resolve_company_entity("Episode Six")
+
+    assert seen, "the domain lookup never fired for a suffix-less company name"
+    assert seen.get("max_results", 0) >= 8, (
+        "three results are aggregator profiles; the real homepage sits below them"
+    )
+    assert res.domain == "episodesix.com"
+    assert res.method == "search_resolved"

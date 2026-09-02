@@ -65,13 +65,24 @@ async def resolve_company_entity(raw_company: str) -> ResolutionInfo:
 
     import os
     tavily_key = os.environ.get("TAVILY_API_KEY")
-    if tavily_key and normalized != raw_company.strip():
+    # The suffix condition that used to sit here (`normalized != raw_company.strip()`)
+    # meant the lookup only ran when normalize_company had actually stripped
+    # something, so every company typed without an Inc/LLC/Ltd never got a domain
+    # at all -- which is most of them.
+    if tavily_key:
         try:
             async with httpx.AsyncClient(timeout=15.0) as client:
                 r = await client.post(
                     "https://api.tavily.com/search",
                     headers={"Authorization": f"Bearer {tavily_key}"},
-                    json={"query": f"{normalized} company official website", "max_results": 3},
+                    # Eight, not three. Removing the suffix gate above let this
+                    # code run at last and it still returned domain=None, because
+                    # the top three hits for a company name are aggregator profiles
+                    # -- Episode Six resolved to preqin.com, builtin.com and
+                    # linkedin.com, none of which contain "episodesix". The real
+                    # homepage sits below them. Measured 2026-09-02: at n=3 both
+                    # Episode Six and ShipMonk fail, at n=8 both resolve.
+                    json={"query": f"{normalized} company official website", "max_results": 8},
                 )
                 r.raise_for_status()
                 for res in r.json().get("results", []):

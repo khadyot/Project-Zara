@@ -1,6 +1,7 @@
 import time
 import os
 import asyncio
+import dataclasses
 import urllib.parse as urlparse
 from exa_py import Exa
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -119,19 +120,27 @@ class ExaYouTubeFetcher(ExaBaseFetcher):
         query = f"{prospect.person_name} {prospect.company} talk OR interview"
         res = await self._search_exa(query, "ExaYouTube", 1, "social", "person")
         
-        # Now supplement the cards with transcripts if possible
-        if res.status == "ok":
+        # Transcript enrichment was dead in two ways at once. SignalCard is
+        # frozen, so `card.snippet = ...` raised FrozenInstanceError into the bare
+        # except below; and YouTubeTranscriptApi.get_transcript was removed in
+        # v1.x, so the call could never have run either. Rebuild the card instead
+        # of mutating it, and use the instance API.
+        if res.status == "ok" and res.cards:
+            enriched = []
             for card in res.cards:
+                text = ""
                 try:
-                    # extract video ID
                     parsed = urlparse.urlparse(card.source_url)
                     video_id = urlparse.parse_qs(parsed.query).get("v")
                     if video_id:
-                        transcript_list = await asyncio.to_thread(YouTubeTranscriptApi.get_transcript, video_id[0])
-                        # concatenate text
-                        text = " ".join([t['text'] for t in transcript_list])
-                        if text:
-                            card.snippet = text[:1500]
+                        fetched = await asyncio.to_thread(
+                            YouTubeTranscriptApi().fetch, video_id[0]
+                        )
+                        text = " ".join(s.text for s in fetched if getattr(s, "text", ""))
                 except Exception:
-                    pass
+                    text = ""
+                enriched.append(
+                    dataclasses.replace(card, snippet=text[:1500]) if text else card
+                )
+            res = dataclasses.replace(res, cards=enriched)
         return res

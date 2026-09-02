@@ -51,7 +51,7 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
 - **macOS Python SSL failures with urllib** — use `httpx` or `curl`.
 - **Gemini `gemini-flash-latest` 503s intermittently** — retry with backoff, never fatal. Free tier is 20 req/day per model.
 - **SmartRecruiters returns HTTP 200 with `totalFound=0` for gibberish** — validate on payload, never status. Greenhouse `?content=true` returns JSON with HTML-entity-encoded content (`html.unescape` before BeautifulSoup).
-- **Gemini models that appear in `models.list()` may 404 on generate** — listing ≠ callable. `gemini-2.5-pro`/`gemini-2.5-flash` are retired for new users.
+- **Gemini models that appear in `models.list()` may 404 on generate** — listing ≠ callable, so verify the exact model against the exact endpoint before believing either. Re-checked 2026-09-02: `gemini-2.5-flash` and `gemini-flash-latest` both return 200 on `/v1beta/openai/chat/completions` with `Authorization: Bearer`. An earlier note here called `gemini-2.5-flash` retired; that was wrong, and `provider.py` was right to keep it.
 - **`.streamlit/secrets.toml` beats the shell environment.** Streamlit exports secrets.toml into
   `os.environ`, so `FOO=x streamlit run app.py` is silently ignored for any key the file also
   defines. Cost a debugging cycle on `ZARA_ADMIN_PASSWORD`: the sidebar box appeared (key was

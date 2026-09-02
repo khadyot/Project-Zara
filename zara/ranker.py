@@ -827,7 +827,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 )
                 
                 scores = resp.scores
-                found_strong_hook = False
                 for s in scores:
                     if s.index in ranked_cards_map:
                         rc = ranked_cards_map[s.index]
@@ -854,8 +853,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                                 recency_days=rc.recency_days, score=relevance, excluded=None,
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
-                            if final_score >= 0.8:
-                                found_strong_hook = True
                         else:
                             # B2: pain_match is None must contribute pain_score 0.0, as it already does.
                             relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
@@ -865,16 +862,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                 
-                if found_strong_hook:
-                    for remain_idx in range(chunk_idx + chunk_size, len(to_score)):
-                        i, _ = to_score[remain_idx]
-                        rc = ranked_cards_map[i]
-                        ranked_cards_map[i] = RankedCard(
-                            card=rc.card, pain_match=None, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=0.0, excluded="skipped due to early exit (strong hook found)",
-                            guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
-                        )
-                    break
         except ProviderProbeFailedError as e:
             for i, card in to_score:
                 rc = ranked_cards_map[i]
