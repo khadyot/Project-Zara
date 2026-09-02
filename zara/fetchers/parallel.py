@@ -26,9 +26,12 @@ COST_PER_REQUEST = {"turbo": 0.001, "fast": 0.001, "base": 0.005, "advanced": 0.
 class ParallelSearchFetcher:
     """One request carrying the whole query plan."""
 
-    def __init__(self, objective: str, queries: list[str],
+    def __init__(self, objective: str | None = None, queries: list[str] | None = None,
                  source_name: str = "ParallelSearch", rung: int = 1,
                  mode: str = "fast"):
+        # Both default to None so the product path derives its plan from
+        # value_prop at fetch time, while the bake-off can pin an explicit plan and
+        # compare engines rather than prompts.
         self.objective = objective
         self.queries = queries
         self.source_name = source_name
@@ -49,12 +52,26 @@ class ParallelSearchFetcher:
         if not api_key:
             return done("skipped", "no PARALLEL_API_KEY", [])
 
+        objective, queries = self.objective, self.queries
+        if objective is None or queries is None:
+            from zara.utils.config import load_value_prop
+            from zara.fetchers.queries import build_query_plan
+            try:
+                vp = load_value_prop()
+            except Exception:
+                vp = {}
+            built_objective, built_queries = build_query_plan(prospect, vp)
+            objective = objective if objective is not None else built_objective
+            queries = queries if queries is not None else built_queries
+        if not queries:
+            return done("skipped", "no query could be built for this prospect", [])
+
         # Result count is not settable on /v1/search: sending `max_results` is
         # rejected outright with `extra_forbidden`, not ignored. Ten is the default
         # and the whole allowance.
         payload = {
-            "objective": self.objective,
-            "search_queries": self.queries,
+            "objective": objective,
+            "search_queries": queries,
             "mode": self.mode,
         }
         try:

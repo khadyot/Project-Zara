@@ -142,6 +142,25 @@ proximity_weights:
 # scale with this number, so it is the main cost dial. Raising it costs tokens
 # against Groq's 8K/min bucket; lowering it risks dropping a hook. Measured safe
 # at 10: positions 5+ are uniformly company_action across all four snapshots.
+# Retrieval vocabulary — what we ask the web about, as opposed to what we score
+# against once it comes back.
+#
+# This is here rather than in a fetcher because it is policy: it decides what
+# retrieval can possibly find, and it has to be arguable without editing Python.
+# The old Exa fetchers hardcoded strings like "{company} news OR launch OR funding",
+# so changing a pain above changed scoring and left retrieval searching for the
+# same thing it always had.
+#
+# Drawn from the observable_via lines of the pains above. Keep it short — these
+# are appended to a company-scoped query, and a long tail of weak terms dilutes it.
+retrieval:
+  search_terms:
+    - reconciliation
+    - month-end close
+    - ERP migration
+    - payment operations
+    - billing
+
 ranker:
   card_cap: 10
 

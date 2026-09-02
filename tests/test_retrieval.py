@@ -154,3 +154,53 @@ def test_no_gmail_sends_in_codebase():
     )
     # The return code of grep is 1 if no lines were selected, 0 if selected.
     assert result.returncode == 1, "Found forbidden Gmail send methods in codebase!"
+
+
+@pytest.mark.asyncio
+async def test_parallel_search_is_wired_into_rung_one():
+    """The primary search source must actually be in the ladder, at rung 1.
+
+    Rung 0 is what the gap-filler gate counts, so a paid source there commits
+    spend before the gate can decide anything.
+    """
+    import inspect
+    from zara import orchestrator
+
+    src = inspect.getsource(orchestrator._run_end_to_end)
+    rung1 = src.split("rung1 = [", 1)[1].split("]", 1)[0]
+    assert "ParallelSearchFetcher()" in rung1, "ParallelSearch must sit in rung 1"
+
+    rung0 = src.split("rung0 = [", 1)[1].split("]", 1)[0]
+    assert "Parallel" not in rung0, "a paid source must not sit in rung 0"
+
+
+@pytest.mark.asyncio
+async def test_parallel_search_degrades_without_a_key(monkeypatch):
+    """No key is `skipped` with a reason, never a crash and never a bare `empty`."""
+    from zara.fetchers.parallel import ParallelSearchFetcher
+    from zara.models import Prospect
+
+    monkeypatch.delenv("PARALLEL_API_KEY", raising=False)
+    res = await ParallelSearchFetcher().fetch(Prospect("A B", "Acme"))
+    assert res.status == "skipped"
+    assert res.reason and "PARALLEL_API_KEY" in res.reason
+    assert res.cards == [] and res.cost_usd == 0.0
+
+
+def test_retrieval_vocabulary_comes_from_config_not_code():
+    """Editing a pain's vocabulary in value_prop must change what we search for.
+
+    The Exa fetchers hardcode their queries, so the Settings UI could rewrite the
+    pains and retrieval would go on asking for the same thing.
+    """
+    from zara.fetchers.queries import build_query_plan
+    from zara.models import Prospect
+
+    p = Prospect("Dana Lee", "Northwind", title="CFO")
+    _, queries = build_query_plan(p, {"retrieval": {"search_terms": ["zebra husbandry"]}})
+    assert any("zebra husbandry" in q for q in queries), \
+        "search_terms from value_prop must reach the query"
+
+    # And an unconfigured value_prop still searches for something (Compass I).
+    _, fallback = build_query_plan(p, {})
+    assert fallback and all(q.strip() for q in fallback)

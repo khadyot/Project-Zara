@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Congrats on your 2024 appointment as CFO, where you highlighted driving ShipMonk\u2019s growth and scaling in logistics and ecommerce.",
+        "rationale": "As CFO, overseeing rapid growth and scaling means you\u2019re responsible for ensuring financial controls keep pace with expanding fulfillment operations, which often involve heavy manual reconciliation.",
+        "bridge": "Our automation platform can eliminate those manual, reconciliation\u2011heavy processes, giving you clearer visibility and freeing your finance team to focus on strategic growth initiatives.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your announcement about stepping in as ShipMonk\u2019s CFO emphasized a commitment to scaling the fulfillment experience for merchants.",
+        "rationale": "In the CFO role, scaling the business while maintaining financial accuracy is a core challenge, especially when fulfillment operations generate large volumes of transaction data.",
+        "bridge": "By automating reconciliation, our solution helps you maintain accuracy at scale, reducing manual effort and supporting the growth you\u2019re driving.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Peers are already praising your accountable leadership as the new CFO of ShipMonk.",
+        "rationale": "Accountability and strong financial governance are critical for a CFO managing complex fulfillment operations, where manual processes can obscure true performance.",
+        "bridge": "Our automation technology provides real\u2011time, auditable reconciliation, reinforcing the accountability you\u2019re known for and streamlining finance operations.",
+        "strength": 0.73
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your recent launch of ShipMonk\u2019s first fulfillment center designed specifically for apparel brands marks a strategic expansion into a new vertical.",
+        "rationale": "As CFO, introducing a new fulfillment vertical adds layers of inventory, cost tracking, and reconciliation complexity that can strain manual finance processes.",
+        "bridge": "Our solution automates those reconciliation tasks across multiple centers, ensuring accurate financial reporting as you scale the apparel offering.",
+        "strength": 0.82
+      }
+    ]
+  },
+  "prompt_tokens": 1334,
+  "completion_tokens": 1209
+}

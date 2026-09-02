@@ -320,6 +320,7 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
     from zara.fetchers.news import GoogleNewsFetcher
     from zara.fetchers.jina import JinaCompanySiteFetcher
     from zara.fetchers.tavily import TavilyFetcher
+    from zara.fetchers.parallel import ParallelSearchFetcher
     from zara.fetchers.exa import ExaLinkedInFetcher, ExaNewsFetcher, ExaBlogFetcher, ExaEdgarFetcher, ExaYouTubeFetcher
     from zara.fetchers.apify import (
         ApifyLinkedInCompanyFetcher, ApifyLinkedInProfileFetcher,
@@ -377,7 +378,22 @@ async def _run_end_to_end(prospect: Prospect, profile: str, settings: dict, on_e
         JinaCompanySiteFetcher()
     ]
 
+    # ParallelSearch leads rung 1. Measured against the incumbent across the three
+    # demo prospects on 2026-09-02: 25 cards to Exa-and-news's 58, but 14 of them
+    # person-tier against 12, and 1 directory row against 9 -- 56% person-tier
+    # density against 21%. It found the CFO Weekly episode for Devin Weil and
+    # Chermaine Hu's own authored posts, neither of which this pipeline had ever
+    # retrieved. One request carries the whole three-angle plan, so it bills once
+    # ($0.001 on fast) where Brave bills per query ($0.015 for the same plan).
+    #
+    # Rung 1, not rung 0, and deliberately: rung 0 is what the gap-filler gate
+    # counts, so a paid source there is spend committed before the gate can decide
+    # anything. Rung 1 always fires, which is where this belongs.
+    #
+    # The Exa fetchers stay for now. Replacing them is a separate decision with its
+    # own evidence, and adding the strong source is what this change is for.
     rung1 = [
+        ParallelSearchFetcher(),
         ExaLinkedInFetcher(), ExaNewsFetcher(), ExaBlogFetcher(),
         ExaEdgarFetcher(), ExaYouTubeFetcher(), TavilyFetcher()
     ]
