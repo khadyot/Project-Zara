@@ -8,19 +8,20 @@ Project Zara is a **personalized-outreach agent** (Zamp "AI Solutions Associate"
 
 Core thesis: personalization worked because it was a costly signal. AI made it cheap, so the cost relocated to **judgment** — honest self-assessment of evidence quality, including when it is thin. "Pipelines > prompts."
 
-Status: **working local prototype.** Slices 1–2 built (retrieval → rank → draft → verify), Zen integration in progress (gap-filler economics, collaboration loop).
+Status: **working local prototype.** Retrieval → rank → draft → verify all built and measured. Parallel Search leads rung 1 as of 2026-09-02; Brave is evaluated and registered but unwired. **Next constraint is reading page bodies** — nothing follows a link, so a podcast reaches the ranker as 138 characters of show description. See `reference/product-audit.md` §14.
 
 ## Stack (decided, built)
 
 - **Python 3.13 + asyncio**, venv at `./venv` (use `./venv/bin/python`)
 - **Streamlit UI** (`app.py`, port 8501) with Visual Settings Engine (Developer Mode password gate, tabs: ICP & Targeting / Weights / Pains Engine / Guardrails) serializing into `value_prop.yaml`
-- **Providers:** Groq `openai/gpt-oss-120b` (primary) → Gemini `gemini-flash-latest` → Z.ai GLM (fallback chain in `zara/utils/provider.py`)
+- **Providers:** Groq `openai/gpt-oss-120b` (primary) → Gemini `gemini-2.5-flash` → Z.ai GLM (fallback chain in `zara/utils/provider.py`). Groq keys pool round-robin (`GROQ_API_KEY`, `_2..10`).
+- **Search:** `PARALLEL_API_KEY` (rung 1 primary), `EXA_API_KEY`, `TAVILY_API_KEY`; `BRAVE_SEARCH_API_KEY` present but not wired into the ladder
 - **Orchestration target:** n8n Cloud (planned, Slice 3); CLI `python -m zara.probe`; FastAPI `POST /pipeline/run`
 - **Design reference:** `brief/ZAMP_DESIGN_SYSTEM.md` (sharp corners, Geist Mono for data, `#005EFF`)
 
 ## Architecture
 
-`zara/` package: `fetchers/` (ATS ×5, Exa scoped, Google News RSS, compound search, Apify actors ×16, Tavily, Jina) → `ranker.py` (pain-matching + tier system, strict/permissive modes) → `drafter.py` → `verifier.py` (deterministic grounding pass + LLM judge; retries hallucinations, never kills the run) → `orchestrator.py` (`run_end_to_end_pipeline`, gap-filler gate: paid rungs fire only if free rungs yield <2 person-tier cards). `value_prop.yaml` is the brain config (pains with `observable_via`, computable ICP with vetoes, weights, guardrails). `sources.yaml` is the source registry.
+`zara/` package: `fetchers/` (Parallel Search, Exa scoped ×5, Google News RSS, Tavily, Jina, Apify actors ×16, Brave unwired, ATS ×5 retired) → `ranker.py` (pain-matching + tier system, strict/permissive modes) → `drafter.py` → `verifier.py` (deterministic grounding pass + LLM judge; retries hallucinations, never kills the run) → `orchestrator.py` (`run_end_to_end_pipeline`, gap-filler gate: paid rungs fire only if free rungs yield <2 person-tier cards). `value_prop.yaml` is the brain config (pains with `observable_via`, `retrieval.search_terms` for what we ask the web, computable ICP, weights, guardrails). Every pain carries a person-tier observable accepting a CATEGORY argument — executives argue about their category, they do not confess their own pain, and measurement showed the press-release-only observables left 77% of evidence matching nothing. `sources.yaml` is the source registry.
 
 ## The 10 Compasses (design constraints)
 
@@ -57,12 +58,20 @@ Status: **working local prototype.** Slices 1–2 built (retrieval → rank → 
   defines. Cost a debugging cycle on `ZARA_ADMIN_PASSWORD`: the sidebar box appeared (key was
   truthy) but every entered value failed, because the expected value came from secrets.toml.
   Check that file first, not the shell.
+- **A live run silently rewrites recorded Apify fixtures.** `apify.py` writes
+  `tests/fixtures/apify/<actor>.json` after every successful actor call,
+  unconditionally. Same family as the fixtures-off footgun: the test corpus mutates
+  without anyone asking. Check `git status` after any live run.
+- **The snapshot corpus cannot test the person tier.** `tests/fixtures/*_snapshot.json`
+  is 4.4% `authored` (8 cards of 181), recorded against a placeholder person name
+  before the retrieval work. Any claim about person-tier behaviour must be measured
+  on a live run; a snapshot A/B will look flat and mean nothing.
 - Two files in `reference/research_results/` start with `#` and contain spaces/em-dashes — quote in shell.
 - Fixture-expiry defect: never write absolute dates in fixtures — pin ages (`event_date: daysAgo(6)`).
 
 ## Testing
 
-`env -i PATH=/usr/bin:/bin HOME=$HOME PYTHONPATH=. ./venv/bin/pytest tests/ -q` — 15 tests, all must pass twice consecutively (fixtures replay; zero live calls under fixtures). Fixtures are prompt-hash-keyed; if you change a prompt in ranker/drafter/verifier/classifier, re-record the missing fixture hash (see `scripts/record_mock.py`). Verify hashes are stable across two runs before recording.
+`env -i PATH=/usr/bin:/bin HOME=$HOME PYTHONPATH=. ./venv/bin/pytest tests/ -q` — 134 tests, all must pass twice consecutively (fixtures replay; zero live calls under fixtures). Fixtures are prompt-hash-keyed; if you change a prompt in ranker/drafter/verifier/classifier, re-record the missing fixture hash (see `scripts/record_mock.py`). Verify hashes are stable across two runs before recording.
 
 **Always re-record with `USE_FIXTURES=fill`, never with fixtures off.** `fill` replays every fixture that exists and goes live only for the missing ones. Recording with fixtures *off* re-answers prompts whose fixtures were fine, overwriting good recordings with fresh non-deterministic output — and, worse, **a downstream prompt's hash depends on upstream output**: score the cards live and the shortlist shifts, so the hook prompt text changes, so its hash never matches the one the test is asking for. That failure presents as an inexplicable "hash mismatch" and cost two sessions ~50 wasted live calls plus a full day's Groq budget before it was understood.
 
