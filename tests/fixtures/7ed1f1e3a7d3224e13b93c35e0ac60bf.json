@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New CFO announced, no specific pain observable"
+      },
+      {
+        "index": 23,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Finance podcast promo, lacks observable details"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview, no new leadership or other observable"
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Business analogy, no finance\u2011related observable"
+      },
+      {
+        "index": 33,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New CFO announcement, no pain\u2011specific detail"
+      },
+      {
+        "index": 34,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New CFO announcement, no pain\u2011specific detail"
+      },
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview, lacks observable triggers"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn CFO profile, no explicit pain observable"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New fulfillment center launch, no finance observable"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Fulfillment center opening, no finance observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1765,
+  "completion_tokens": 1680
+}

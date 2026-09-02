@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "You highlighted on CFO Weekly how modern CFOs are embedding themselves directly in warehouse and logistics operations.",
+        "rationale": "As ShipMonk\u2019s CFO, that hands\u2011on role creates a lot of manual data reconciliation across the warehouse, which can drain time from strategic decisions.",
+        "bridge": "Our platform automates those reconciliation\u2011heavy processes, giving you real\u2011time, accurate data to act on while you stay embedded in operations.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 1,
+        "hook_text": "You compared business targets to a weight\u2011loss plan, stressing the need for daily KPI tracking and capital\u2011allocation decisions.",
+        "rationale": "That focus on granular KPIs means finance must constantly reconcile operational data\u2014a time\u2011consuming task for a CFO.",
+        "bridge": "By automating the reconciliation layer, our solution lets you monitor those KPIs without the manual grind.",
+        "strength": 0.71
+      },
+      {
+        "card_index": 2,
+        "hook_text": "You noted your experience building field\u2011finance organizations at XPO and scaling finance for a 1,600\u2011employee, 12\u2011location fulfillment platform.",
+        "rationale": "Scaling finance across dozens of sites generates massive manual reconciliation work, a pain point for a CFO overseeing global ops.",
+        "bridge": "Our automation handles cross\u2011site reconciliation, delivering consistent data across all 12 locations.",
+        "strength": 0.86
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipMonk recently opened its first fulfillment center built specifically for apparel brands.",
+        "rationale": "Launching a new center adds new inventory and order flows that need precise, fast reconciliation\u2014critical for the CFO\u2019s cost and accuracy goals.",
+        "bridge": "Our tool can instantly reconcile the new apparel data streams, keeping costs low and accuracy high.",
+        "strength": 0.74
+      }
+    ]
+  },
+  "prompt_tokens": 1131,
+  "completion_tokens": 1336
+}

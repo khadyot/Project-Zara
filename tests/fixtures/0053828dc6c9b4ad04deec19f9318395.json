@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 19,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 20,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Acquisition of Payoneer (M&A activity)"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches."
+      }
+    ]
+  },
+  "prompt_tokens": 1592,
+  "completion_tokens": 1387
+}

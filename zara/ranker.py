@@ -162,6 +162,77 @@ def quotes_prospect(card: SignalCard, person_name: str) -> bool:
                for m in _QUOTED.finditer(hay))
 
 
+# Compass X: relevance is not permission. An announcement of the PROSPECT'S OWN
+# appointment scores well on every axis this ranker measures -- person-tier,
+# recent, and it genuinely evidences structural_complexity -- and it is unusable,
+# because the resulting email explains to a CFO that hiring a CFO creates
+# reconciliation work. It is what cut Jon Anderson from the demo set, and a live
+# run on 2026-09-02 produced it again for Devin Weil at person_authored with a
+# clean verification: the strongest claim tier the product has, on its weakest
+# possible reason to write.
+#
+# This cannot live in never_reference. That list matches topics, and appointments
+# are not an off-limits topic -- structural_complexity names "recent appointments
+# of new finance leadership" as an observable, so a colleague's appointment is
+# real evidence we want. What makes it unusable is RELATIONAL: the appointee is
+# the recipient. So it is computed here, against the prospect, like the namesake
+# check.
+_APPOINT_ROLE = (r"chief\s+[\w\s]{0,24}?officer|c[efotmr]o|president|founder|co-?founder"
+                 r"|controller|vice\s+president|vp|head\s+of\s+[\w\s]{2,24}"
+                 r"|director\s+of\s+[\w\s]{2,24}")
+
+_APPOINT = re.compile(
+    r"\b(?:appoint(?:s|ed|ing|ment)?|names?\s+(?!a\b)|named\s+(?:as\s+)?"
+    r"|welcom(?:e|es|ed)|hir(?:e|es|ed)\s+|promot(?:e|es|ed)\s+"
+    r"|join(?:s|ed|ing)?\s+(?:\w+\s+){0,3}?as\b|steps?\s+into\s+the\s+role"
+    r"|takes?\s+over\s+as|expands?\s+[\w\s]{0,24}team\s+with)\b", re.I)
+
+_FIRST_PERSON_JOIN = re.compile(
+    r"\b(?:i\s+(?:am|'m|have|'ve)?\s*(?:absolutely\s+|so\s+|very\s+)?"
+    r"(?:thrilled|excited|delighted|pleased|happy|proud)?[\s\w]{0,24}?"
+    r"(?:to\s+)?(?:have\s+)?join(?:ed|ing)?\b"
+    r"|i\s+(?:have\s+)?join(?:ed|ing)?\b"
+    r"|(?:thrilled|excited|delighted|pleased|proud)\s+to\s+(?:have\s+)?"
+    r"(?:join(?:ed|ing)?|be\s+join(?:ing)?)\b)", re.I)
+
+# A role named shortly after the join is what makes it employment rather than an
+# appearance on somebody's show. Without this the demo's hero card is flagged:
+# Chermaine Hu's post opens "I recently joined @Venture:F to talk about what
+# building modern issuer processing actually looks like", which is a podcast.
+_ROLE_NEAR = re.compile(r"\b(?:" + _APPOINT_ROLE + r"|team)\b", re.I)
+
+_APPOINTEE_NAME = re.compile(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]*\.?){1,2})\b")
+
+
+def is_own_appointment(card: SignalCard, person_name: str, proximity: str) -> bool:
+    """Is this card the announcement of the prospect's own hire?
+
+    Measured across all 181 recorded cards: 3 flagged, all of them genuine --
+    two Payouts Network releases naming Jon Anderson and one "DEVIN WEIL NEW
+    CHIEF FINANCIAL OFFICER". Zero false positives, including on the three
+    appointment cards about OTHER people at Payouts Network, which must survive.
+    """
+    if not person_name:
+        return False
+    text = f"{card.claim}\n{card.snippet or ''}"
+
+    # Their own post about the move. Requires a role, per _ROLE_NEAR above.
+    if proximity == "authored":
+        for m in _FIRST_PERSON_JOIN.finditer(text):
+            if _ROLE_NEAR.search(text[m.end(): m.end() + 130]):
+                return True
+
+    # A third party placing a NAMED person into a role. Whose hire it is decides
+    # everything: Payouts Network appointing Jon Anderson is unusable to Jon,
+    # while Payouts Network appointing a VP of Sales is evidence we want.
+    for m in _APPOINT.finditer(text):
+        window = text[max(0, m.start() - 90): m.end() + 90]
+        for cand in _APPOINTEE_NAME.findall(window):
+            if _same_person(cand, person_name):
+                return True
+    return False
+
+
 _ROLE_RE = re.compile(
     r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[,\-—|]\s*"
     r"((?:Chief[\w\s]*Officer|C[EFTOM]O|President|Founder|Co-?founder|"
@@ -632,6 +703,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # run drafted "C.H. Robinson announced acquisition of DeSpir Logistics"
         # to a CFO at Midwest 3PL, and the verifier passed it clean because the
         # sentence is true. It is simply true about somebody else.
+        # Checked before the namesake guard so the more specific reason is the one
+        # rendered on the decision card.
+        if not excluded and not guardrail_hit:
+            if is_own_appointment(card, prospect.person_name if prospect else "", proximity):
+                guardrail_hit = ("own appointment: this announces the recipient's own hire — "
+                                 "relevant, and not a reason to write to them")
+
         if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
                 guardrail_hit = "possible namesake: the evidence does not fully name the company"
@@ -842,6 +920,14 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # event, no reason to write today. When a company genuinely has nothing,
         # the honest output is the no-signal path and the banner that comes with
         # it, not a hook manufactured from a contact record.
+        # An announcement of the recipient's own hire cannot be the hook. Unlike the
+        # two filters around it this one drops to the honest empty set rather than
+        # keeping its cards: if the only thing we found about someone is that they
+        # got the job, we have no reason to write, and the no-signal path says so.
+        not_own = [c for c in eligible
+                   if not (c.guardrail_hit or "").startswith("own appointment")]
+        eligible = not_own
+
         real = [c for c in eligible if c.proximity != "database"]
         if real:
             eligible = real

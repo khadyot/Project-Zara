@@ -296,3 +296,82 @@ def test_industry_word_in_a_two_word_company_is_not_an_identification():
         "a lone common token in the body must not identify a single-token company"
     assert _company_is_mentioned(
         card("Midwest 3PL adds capacity", "Midwest 3PL announced a new facility."), midwest)
+
+
+def test_own_appointment_is_detected_but_a_colleagues_is_not():
+    """The recipient's own hire is unusable; somebody else's is a pain observable.
+
+    This distinction is the whole reason the rule lives in the ranker rather than
+    in never_reference. That list matches topics, and appointments are not an
+    off-limits topic -- structural_complexity names "recent appointments of new
+    finance leadership" as an observable. What makes a card unusable is
+    relational: the appointee is the person we are writing to.
+    """
+    from zara.models import SignalCard
+    from zara.ranker import is_own_appointment
+
+    def card(claim, snippet):
+        return SignalCard(claim=claim, signal_type="news", source_url="https://e.com/x",
+                          published_date=None, snippet=snippet, tier="company", source="t")
+
+    # Real text from the Payouts Network snapshot: the card that cut Jon Anderson
+    # from the demo set.
+    assert is_own_appointment(
+        card("Payouts Network Expands Executive Team with CFO Jon ...",
+             "Payouts Network has appointed Jon Anderson as Chief Financial Officer."),
+        "Jon Anderson", "company_action")
+
+    # Also from that snapshot, and it must SURVIVE -- a colleague's appointment is
+    # evidence about how the org is changing.
+    assert not is_own_appointment(
+        card("News and Updates | Payouts Network",
+             "Payouts Network welcomes Chris Razaki as Vice President of Sales."),
+        "Jon Anderson", "company_action")
+
+    # The prospect's own post about the move, which is how it reached
+    # person_authored on a live run.
+    assert is_own_appointment(
+        card("Mentioned on: I am absolutely thrilled to have joined",
+             "I am absolutely thrilled to have joined this phenomenal team at ShipMonk as CFO."),
+        "Devin Weil", "authored")
+
+    # And the trap that a naive first-person "joined" walks into. This is the
+    # demo's hero card: she joined a PODCAST, not a company.
+    assert not is_own_appointment(
+        card("Legacy payments weren't built for how fintech operates now",
+             "I recently joined @Venture:F to talk about what building modern "
+             "issuer processing actually looks like."),
+        "Chermaine Hu", "authored")
+
+    # "join" an event is not a hire either.
+    assert not is_own_appointment(
+        card("Payouts Network", "We're excited to join #FTEGlobal 2026 in Dallas!"),
+        "Jon Anderson", "company_action")
+
+
+@pytest.fixture
+def use_fixtures(monkeypatch):
+    # Honours an outer USE_FIXTURES=fill so the documented re-record works here too.
+    import os
+    monkeypatch.setenv("USE_FIXTURES", os.environ.get("USE_FIXTURES") or "1")
+    yield
+
+
+@pytest.mark.asyncio
+async def test_own_appointment_cannot_win_in_strict_mode(use_fixtures, monkeypatch):
+    """Flagged, visible on the decision card, and never the hook."""
+    from scripts.record_mock import load_snapshot
+    from zara.models import Prospect
+    from zara.ranker import rank_prospect
+
+    rp = await rank_prospect(Prospect("Jon Anderson", "Payouts Network"),
+                             load_snapshot("tests/fixtures/payoutsnetwork_snapshot.json"),
+                             strictness="strict")
+
+    flagged = [c for c in rp.cards if (c.guardrail_hit or "").startswith("own appointment")]
+    assert flagged, "Jon Anderson's own appointment must be flagged"
+    # Still rendered under "What it rejected" -- set aside, not hidden.
+    assert all(c in rp.cards for c in flagged)
+    if rp.winning_card is not None:
+        assert not (rp.winning_card.guardrail_hit or "").startswith("own appointment"), \
+            "an own-appointment card must never become the hook"

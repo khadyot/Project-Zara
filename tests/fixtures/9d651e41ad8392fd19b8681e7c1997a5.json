@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only generic value proposition language and references supported by the evidence. No specific metrics, customer names, or factual claims about ShipMonk are invented."
+  },
+  "prompt_tokens": 2273,
+  "completion_tokens": 429
+}
