@@ -14,7 +14,11 @@ from zara.utils.provider import generate_content_with_retry, ProviderProbeFailed
 
 @pytest.fixture
 def use_fixtures(monkeypatch):
-    monkeypatch.setenv("USE_FIXTURES", "1")
+    # Preserve an outer USE_FIXTURES=fill. Hardcoding "1" here made the documented
+    # re-record workflow silently impossible: `fill` was clobbered on the way in, so
+    # a missing hash raised instead of recording, and the only way through was to
+    # turn fixtures off -- the exact footgun CLAUDE.md warns costs a day of budget.
+    monkeypatch.setenv("USE_FIXTURES", os.environ.get("USE_FIXTURES") or "1")
     yield
 
 def write_fixture(prompt: str, instruction: str, response: dict):

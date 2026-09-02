@@ -1,0 +1,14 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Hiring announcement, no relevant observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1020,
+  "completion_tokens": 390
+}

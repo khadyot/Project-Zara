@@ -55,6 +55,23 @@ sources:
     free_tier_credits_per_month: 1000
     queries_per_prospect_cap: 3
 
+  - id: "parallel_search"
+    type: "paid_api" # primary rung-1 search; one request carries the whole query plan
+    pricing_model: "per_request"
+    cost_per_request_usd: 0.001   # fast/turbo tier; basic/advanced is 0.005
+    tier: "person"                # tier is inferred per card, not asserted by the source
+    signal_type: "person_mention"
+
+  - id: "brave_llm_context"
+    type: "paid_api" # evaluated 2026-09-02, not wired: bills per QUERY, so a
+                     # three-angle plan is 0.015 against parallel's 0.001. Held in
+                     # reserve for dated news -- 87% of its cards carried a date
+                     # against parallel's 60%.
+    pricing_model: "per_request"
+    cost_per_request_usd: 0.005
+    tier: "company"
+    signal_type: "news"
+
   - id: "jina_reader"
     type: "free_api" # keyless clean-markdown extraction of company homepage
     pricing_model: "free"

@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I noticed Nuvei\u2019s recent acquisition of Payoneer, a move set to reshape global payments.",
+        "rationale": "Since we don\u2019t have a specific title for you at Payouts Network, this company\u2011level development is relevant because such M&A activity often creates integration and reconciliation challenges for operations teams.",
+        "bridge": "Our platform automates the manual, reconciliation\u2011heavy processes that typically arise during post\u2011acquisition system integrations, helping teams stay accurate and efficient.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 644,
+  "completion_tokens": 479
+}

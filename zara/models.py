@@ -92,6 +92,12 @@ class RankedProspect:
     winning_score: float | None = None
     signal_quality: Literal["ok", "thin"] = "ok"
     hooks: list[HookProposal] = field(default_factory=list)
+    # The hook belonging to `winning_card`, resolved by IDENTITY inside
+    # _select_winner where the shortlist is still in scope. s2 used to recover it
+    # by matching HookProposal.card_index against a position in `cards` -- two
+    # different index spaces (card_index indexes the SHORTLIST), so the drafter
+    # was handed None on most runs and a stranger's hook on the rest.
+    winning_hook: HookProposal | None = None
     resolution: ResolutionInfo | None = None
     icp_notes: list[str] = field(default_factory=list)
 

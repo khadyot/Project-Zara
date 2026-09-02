@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "ShipBob AI connector and reconciliation workflow",
+    "draft_text": "Hi Test,\n\nI'm Zamp from Zamp Technologies. We help operations teams automate manual, reconciliation-heavy processes.\n\nSaw that ShipBob launched its first Anthropic-verified fulfillment connector, anchoring a new AI suite. I imagine keeping reconciliation records aligned across fulfillment systems can become increasingly time-consuming.\n\nWe extract data from fulfillment logs and match it to inventory records, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2450,
+  "completion_tokens": 915
+}

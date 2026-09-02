@@ -36,7 +36,7 @@ class GoogleNewsFetcher:
         url = f"https://news.google.com/rss/search?q={encoded_query}&hl=en-US&gl=US&ceid=US:en"
 
         try:
-            async with httpx.AsyncClient(verify=False) as client:
+            async with httpx.AsyncClient() as client:
                 resp = await client.get(url, timeout=10.0)
 
             feed = feedparser.parse(resp.text)

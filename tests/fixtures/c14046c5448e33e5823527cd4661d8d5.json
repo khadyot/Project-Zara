@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Announcement of new CFO Devin Weil"
+      },
+      {
+        "index": 23,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast about finance efficiency, no specific observable"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast listing, no explicit finance leadership change"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview, lacks new appointment or system change"
+      },
+      {
+        "index": 36,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Weight analogy unrelated to finance observables"
+      },
+      {
+        "index": 33,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "New CFO Devin Weil announced via social post"
+      },
+      {
+        "index": 34,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Duplicate announcement of new CFO appointment"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.85,
+        "reason": "LinkedIn profile shows CFO start Oct 2024"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "New apparel fulfillment center signals operational scaling"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Opening apparel\u2011specific fulfillment center indicates growth"
+      }
+    ]
+  },
+  "prompt_tokens": 1787,
+  "completion_tokens": 2084
+}

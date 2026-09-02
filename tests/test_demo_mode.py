@@ -46,7 +46,9 @@ def test_replay_rewrites_retired_sources_rather_than_duplicating_them(no_network
 @pytest.mark.asyncio
 async def test_full_pipeline_makes_zero_network_calls_in_demo_mode(no_network, monkeypatch):
     """The whole path: entity resolution, retrieval, rank, draft, verify."""
-    monkeypatch.setenv("USE_FIXTURES", "1")
+    import os
+    # Preserve an outer USE_FIXTURES=fill; see the note in test_telemetry.
+    monkeypatch.setenv("USE_FIXTURES", os.environ.get("USE_FIXTURES") or "1")
     from zara.orchestrator import run_end_to_end_pipeline
 
     results, draft = await run_end_to_end_pipeline(

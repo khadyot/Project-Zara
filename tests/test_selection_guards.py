@@ -199,7 +199,7 @@ def test_dated_card_wins_a_near_tie_against_an_undated_one():
 
     undated = _ranked(0.54, None, "person", "New CFO appointment at Stord")
     dated = _ranked(0.42, 92, "company", "Stord raised $250M funding round")
-    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    win, _, _, _ = _select_winner([undated, dated], [undated, dated], [])
     assert win is dated, "a dateless hook won a near-tie over dated evidence"
 
 
@@ -209,7 +209,7 @@ def test_undated_card_still_wins_when_it_leads_by_a_clear_margin():
 
     undated = _ranked(0.80, None, "person", "CEO describes reconciliation pain")
     dated = _ranked(0.20, 92, "company", "Company opens a new office")
-    win, _, _ = _select_winner([undated, dated], [undated, dated], [])
+    win, _, _, _ = _select_winner([undated, dated], [undated, dated], [])
     assert win is undated
 
 
@@ -246,6 +246,132 @@ def test_the_same_hook_text_is_never_offered_twice():
     a = _ranked(0.50, 104, "company", "Finix launches terminal")
     b = _ranked(0.48, 104, "person", "Finix launches terminal (syndicated)")
     hooks = [_Hook(0, same), _Hook(1, same + ".")]
-    _, _, surviving = _select_winner([a, b], [a, b], hooks)
+    _, _, surviving, _ = _select_winner([a, b], [a, b], hooks)
     texts = {h.hook_text.lower().rstrip(".") for h in surviving}
     assert len(texts) == len(surviving), f"duplicate hook offered: {[h.hook_text for h in surviving]}"
+
+
+def test_industry_word_in_a_two_word_company_is_not_an_identification():
+    """"Northwind Freight" must not be identified by the word "freight" alone.
+
+    The single-token path was hardened after a CFO at Midwest 3PL was drafted an
+    email about C.H. Robinson acquiring DeSpir Logistics. The multi-token path was
+    left as `any`, which fails one word later: a two-word company whose second
+    word names its industry matches every page in that industry.
+
+    Found by running live retrieval against a company that does not exist. Brave
+    and Parallel between them returned 21 cards for "Northwind Freight"; 20 passed
+    this check, all of them generic freight-industry marketing. That would have
+    taken the no-signal path -- the one place the product tells the truth about
+    having nothing -- and replaced it with an email built from SEO copy.
+    """
+    from zara.models import Prospect, SignalCard
+    from zara.ranker import _company_is_mentioned
+
+    def card(claim, snippet, url="https://example.com/x"):
+        return SignalCard(claim=claim, signal_type="news", source_url=url,
+                          published_date=None, snippet=snippet, tier="company",
+                          source="test")
+
+    p = Prospect("Riley Chen", "Northwind Freight")
+
+    noise = card("Freight invoice reconciliation in SAP",
+                 "How 3PLs automate freight invoice reconciliation across carriers.")
+    assert not _company_is_mentioned(noise, p), \
+        "an industry word alone must not identify a two-word company"
+
+    # The real thing still identifies, by phrase and by scattered tokens alike.
+    assert _company_is_mentioned(
+        card("Northwind Freight opens Ohio hub", "Northwind Freight announced..."), p)
+    assert _company_is_mentioned(
+        card("Northwind expands", "The freight carrier Northwind added two lanes."), p)
+
+    # And the single-token behaviour it was modelled on is untouched. "Midwest 3PL"
+    # keeps only "midwest" ("3pl" is under the length floor), so a release that
+    # says "midwest" somewhere is not about them -- the C.H. Robinson case.
+    midwest = Prospect("S F", "Midwest 3PL")
+    assert not _company_is_mentioned(
+        card("C.H. Robinson acquires DeSpir Logistics",
+             "The midwest region gains capacity from the acquisition."), midwest), \
+        "a lone common token in the body must not identify a single-token company"
+    assert _company_is_mentioned(
+        card("Midwest 3PL adds capacity", "Midwest 3PL announced a new facility."), midwest)
+
+
+def test_own_appointment_is_detected_but_a_colleagues_is_not():
+    """The recipient's own hire is unusable; somebody else's is a pain observable.
+
+    This distinction is the whole reason the rule lives in the ranker rather than
+    in never_reference. That list matches topics, and appointments are not an
+    off-limits topic -- structural_complexity names "recent appointments of new
+    finance leadership" as an observable. What makes a card unusable is
+    relational: the appointee is the person we are writing to.
+    """
+    from zara.models import SignalCard
+    from zara.ranker import is_own_appointment
+
+    def card(claim, snippet):
+        return SignalCard(claim=claim, signal_type="news", source_url="https://e.com/x",
+                          published_date=None, snippet=snippet, tier="company", source="t")
+
+    # Real text from the Payouts Network snapshot: the card that cut Jon Anderson
+    # from the demo set.
+    assert is_own_appointment(
+        card("Payouts Network Expands Executive Team with CFO Jon ...",
+             "Payouts Network has appointed Jon Anderson as Chief Financial Officer."),
+        "Jon Anderson", "company_action")
+
+    # Also from that snapshot, and it must SURVIVE -- a colleague's appointment is
+    # evidence about how the org is changing.
+    assert not is_own_appointment(
+        card("News and Updates | Payouts Network",
+             "Payouts Network welcomes Chris Razaki as Vice President of Sales."),
+        "Jon Anderson", "company_action")
+
+    # The prospect's own post about the move, which is how it reached
+    # person_authored on a live run.
+    assert is_own_appointment(
+        card("Mentioned on: I am absolutely thrilled to have joined",
+             "I am absolutely thrilled to have joined this phenomenal team at ShipMonk as CFO."),
+        "Devin Weil", "authored")
+
+    # And the trap that a naive first-person "joined" walks into. This is the
+    # demo's hero card: she joined a PODCAST, not a company.
+    assert not is_own_appointment(
+        card("Legacy payments weren't built for how fintech operates now",
+             "I recently joined @Venture:F to talk about what building modern "
+             "issuer processing actually looks like."),
+        "Chermaine Hu", "authored")
+
+    # "join" an event is not a hire either.
+    assert not is_own_appointment(
+        card("Payouts Network", "We're excited to join #FTEGlobal 2026 in Dallas!"),
+        "Jon Anderson", "company_action")
+
+
+@pytest.fixture
+def use_fixtures(monkeypatch):
+    # Honours an outer USE_FIXTURES=fill so the documented re-record works here too.
+    import os
+    monkeypatch.setenv("USE_FIXTURES", os.environ.get("USE_FIXTURES") or "1")
+    yield
+
+
+@pytest.mark.asyncio
+async def test_own_appointment_cannot_win_in_strict_mode(use_fixtures, monkeypatch):
+    """Flagged, visible on the decision card, and never the hook."""
+    from scripts.record_mock import load_snapshot
+    from zara.models import Prospect
+    from zara.ranker import rank_prospect
+
+    rp = await rank_prospect(Prospect("Jon Anderson", "Payouts Network"),
+                             load_snapshot("tests/fixtures/payoutsnetwork_snapshot.json"),
+                             strictness="strict")
+
+    flagged = [c for c in rp.cards if (c.guardrail_hit or "").startswith("own appointment")]
+    assert flagged, "Jon Anderson's own appointment must be flagged"
+    # Still rendered under "What it rejected" -- set aside, not hidden.
+    assert all(c in rp.cards for c in flagged)
+    if rp.winning_card is not None:
+        assert not (rp.winning_card.guardrail_hit or "").startswith("own appointment"), \
+            "an own-appointment card must never become the hook"

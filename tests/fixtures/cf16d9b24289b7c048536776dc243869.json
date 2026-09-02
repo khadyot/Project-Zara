@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references reconciliation challenges and the prospect's role, which are supported by the evidence. No invented metrics, customer names, or specific unsupported claims are present."
+  },
+  "prompt_tokens": 2571,
+  "completion_tokens": 517
+}

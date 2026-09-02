@@ -1,0 +1,212 @@
+[
+ {
+  "claim": "Riley Chen - Mathematics BS",
+  "signal_type": "person_mention",
+  "source_url": "https://www.linkedin.com/in/riley-chen--/",
+  "published_date": "2023-09-13T14:59:48Z",
+  "snippet": "Hello all! I\u2019m a third-year math major at the University at Buffalo, focusing on\u2026 \u00b7 Experience: Taichi Bubble Tea \u00b7 Education: University at Buffalo \u00b7 Location: Buffalo \u00b7 500+ connections on LinkedIn.\n\n## Activity\n### 1K followers\nDon't forget to follow Hasan Toor \u272a #jobpreparation #remotejobs #websites public\\_profile\\_\\_posts 2,204 76 Comments\n- Riley Chen reposted this Riley Chen reposted this Apple Apple Apple 2y Riley Chen reposted this Announcing the Swift Student Challenge 2024!\n\n## View Riley\u2019s full profile\nRiley can introduce you to 2 people at Taichi Bubble Tea\nPassword\nor\n\nLinkedIn",
+  "tier": "person",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "NorthWind freight systems-BARRIE ONT-",
+  "signal_type": "news",
+  "source_url": "https://insidetransport.com/threads/northwind-freight-systems-barrie-ont.5887/",
+  "published_date": "2011-01-24T19:15:42Z",
+  "snippet": "# NorthWind freight systems-BARRIE ONT-\n#### iceroad\n##### New Member\nJan 14, 2010\n\n4\n\n0\n\n1\n\n1\n\n- Mar 10, 2010\n\n- #1\n\nYou need to know that there is two North Wind!! One is run by BlairTeeter (NORTHWIND FRIEGHT SYSTEMS INC.) The other by LeeTeerter (NORTHWIND TRANSPORT.)\n\nG\n\n#### tbfv\n##### New Member\nJan 20, 2011\n\n7\n\n0\n\n1\n\n1\n\n- Jan 20, 2011\n\n- #7\n\nNorth Wind Logistics Inc. Shelburne is still in business. North Wind Freight Systems Inc., is not but still apparently working on trying to pay people.\n\nT\n\n7\n0\n1\n1\n\nNorth Wind Logistics is reefers North Wind Freight was dry vans\n\nS",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Reconcile freight in transportation management - Supply Chain ...",
+  "signal_type": "news",
+  "source_url": "https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/reconcile-freight-transportation-management",
+  "published_date": "2026-06-22T00:00:00Z",
+  "snippet": "# Reconcile freight in transportation management\nThis article describes the freight reconciliation process, which is also known as the matching process. During this process, system-generated freight bills that contain estimated freight costs are matched to actual invoices that are received from carriers. Any differences (variances) are reconciled\n\n## The freight reconciliation process\nFreight rates are calculated by the rate engine that is associated with the relevant shipping carrier. When a load is confirmed, a freight bill is generated, and the freight rates are transferred to it. The freight rates are apportioned as miscellaneous charges to the relevant source document (purchase order, sales order, or transfer order), depending on the setup that is used for the regular billing process\n\nFreight bills and invoices must then be matched. In other words, the freight bills that correspond to each freight invoice must be found. You can match the invoice lines one by one (manual matching), or you can match all available invoices at once (auto matching). To handle any variances that occur between the freight bill and the invoice, use the reconciliation reason codes that are set up for both manual and automatic reconciliation.\n\n## Set up reconciliation reasons\nReconciliation reasons (or reason codes) specify accounts that are debited and credited with any variances that occur between the freight bills and invoices as a result of manual or automatic reconciliation. They're set up on the **Reconciliation reasons** page (**Transportation management** > **Setup** > **Reconciliation reasons**)\n\nFor some reason codes, you might not want to credit a specific account. Instead, you want any credit to be paid to the vendor. In this case, select the **Pay freight vendor** checkbox. Be sure that you also specify a vendor account for the carrier on the **Shipping carriers** page (**Transportation management** > **Carriers** > **Shipping carriers**)\n\nWhen the ship confirm action occurs, the freight bill is generated, and freight charges are apportioned back to the original source document as miscellaneous charges. Alternatively, you might want to charge the debit and credit accounts that are specified on the **Reconciliation reasons** page. In this case, select the **Override accounts** checkbox\n\nIf the amount on the invoice line doesn't match the freight bill amount, select a reconciliation reason for the difference. If multiple reconciliations reasons apply, split the unmatched amount across them. Reconciliation reasons determine how the difference amounts are posted in the general ledger.\n\nAfter the reconciliation of the whole invoice amount is accounted for, it's submitted for approval. Then the journal is posted\n\n## Reconcile freight manually\n### Create a carrier invoice\nIf you reconcile freight manually and don't automatically receive carrier invoices, you can create an invoice based on the freight bill.\n\n1. Select **Related information**.\n2. Select **Freight bill details**.\n3. Select **Generate freight bill invoice**.\n4. In the **Invoice** field, enter a value.\n5. Select **OK**\n\n### Reconcile the invoice\nWhen you reconcile a carrier invoice and a freight bill, the reconciliation is done line by line\n\n1. Select **Match freight bills and invoices**.\n2. In the **Invoice details** section, expand the **Unmatched freight bill details** section.\n3. In the list, mark the selected row.\n4. Select **Match**.\n5. Expand the **Matched freight bill details** section\n\nAll freight bills that have positive amounts are available for matching. As in auto matching, you can only match freight invoices that have negative amounts to freight bills that aren't fully matched\n\n## Automatic reconciliation\nIf you choose to run automatic reconciliation, you must handle any invoices that the system can't match. You must then process those invoices manually before you can post all the invoices for payment.\n\nTo use automatic reconciliation, you must specify the schedule f",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Freight invoice reconciliation in D365 F&O",
+  "signal_type": "news",
+  "source_url": "https://www.axazure.com/en/freight-invoice-reconciliation-in-d365-fo",
+  "published_date": "2024-10-02T07:46:33Z",
+  "snippet": "# Freight invoice reconciliation in D365 F&O\nOctober 31, 2023\n\nFreight invoice reconciliation in D365 F&O is one of the pending processes to improve in many companies. With Microsoft **Dynamics 365 Finance and Operations** we can perform it in an easy and simple way.\n\nThe **Transportation Management** module can be used to manage Sales Orders, Transfer Orders and Purchase Orders. And in this article we are going to see the different ways we have to reconcile the freight invoices that our transport providers send us\n\nThe invoices can arrive automatically, with a development, through an EDI transaction. And with the standard we can load them by DMF, we can create them manually and we can also generate them from the estimate of the freight delivery note that the system makes\n\nTo generate them with this last method, from the Transportation Management module, you have to go to the Inbound load planning workbench or Outbound load planning workbench (the one that corresponds in each case), we must select the load to which we have assigned a carrier and that we already have in \u201cShipped\u201d status, access Related Information and select Freight Bill Details\n\nWhen opening the Freight Bill Details page we will see the freight bill, which represents the estimated cost that D365F&O has calculated for shipping this load with the carrier we have chosen. We have to click on the button at the top Generate freight bill invoice, and in the process that opens, assign an invoice number and Accept.\n\nIn this way, the invoice is generated using the freight bill as a base. If the amounts that the transport provider has sent us do not match the estimates, we can modify them in the form at the bottom of the screen, by clicking on the edit button, and entering the amounts that appear on the supplier\u2019s invoice. If we are going to perform the freight reconciliation automatically, we have to click on the edit button, and place the check \u00fc in the checkbox *The invoice is ready for automatic reconciliation*\n\n## MANUAL RECONCILIATION.\nHere we have to reconcile the lines of the invoice with the lines of the freight bill. We select the first line of the form above \u201cInvoice details\u201d, we select the corresponding line in the form below \u201cUnreconciled freight bill details\u201d and click on the Match button, located at the top left of this form.\n\nNow, if in the form above \u201cInvoice details\u201d we select the line that we just reconciled, we can see how a new line has been created in the form in the middle \u201cMatched freight bill details\u201d.\n\nFreight invoice reconciliation in D365 F&O Axazure\n\nWe have to repeat the same process with the rest of the invoice lines, usually they will be additional charges such as fuel, special transport, refrigerated truck etc\n\nIf the amount of any invoice line does not match, you have to select the \u201cReconciliation reason code\u201d to justify the difference between the freight bill and the supplier\u2019s invoice.\n\nFreight invoice reconciliation in D365 F&O Axazure\n\n*Note. We configure the reconciliation reasons beforehand in the Transportation Management module. Only the lines that have a reconciliation reason selected with the column \u201cPay the freight vendor\u201d configured in YES will be paid.*\n\n## AUTOMATIC RECONCILIATION.\n*Note. In the Audit Masters we can configure the minimum and maximum tolerance level that we want to assign to each carrier when performing the automatic reconciliation. For example: if the invoice is up to 10% more expensive than our estimate in the freight bill, it will be reconciled automatically, and if the price increases by more than 10% of the estimate, it will not (it will have to be reviewed manually and approved or not).*\n\nOnce the Automatic Reconciliation process is finished, we go to Transportation Management > Inquiries and reports > Freight invoice details. The invoices that meet the criteria that we have parameterized go to the \u201cReady to Process\u201d status, and those that do not meet the criteria go to the \u201cPending Review\u201d status.\n\nFr",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Transportation Finance: From Freight Invoice to General Ledger",
+  "signal_type": "news",
+  "source_url": "https://corporate.nvisionglobal.com/the-last-mile-of-transportation-finance-is-the-general-ledger/",
+  "published_date": "2026-08-19T12:53:22Z",
+  "snippet": "Discover how transportation finance connects GL allocation, accruals, ERP posting, and reconciliation to ensure accurate, complete, and explainable transportation spend.\n\n# The Last Mile of Transportation Finance Is the General Ledger\n## Why GL Allocation, Accruals, ERP Posting, and Reconciliation Determine Whether Transportation Spend Is Financially Complete\nThe process reaches its financial destination only when the correct expense is assigned to the correct general ledger account, cost center, legal entity, and accounting period; accepted by the enterprise resource planning system; and reconciled to the transaction that created it.\n\nThat is the last mile of transportation finance\n\n## The Financial Dimensions Behind One Transportation Cost\n### 7. Reconciliation Proves That the Ledger Reflects the Transaction\nPosting is an event. Reconciliation is the proof that the event produced the intended financial outcome.\n\nTransportation reconciliation should connect the source invoice, validated amount, approved amount, payment event, accrual history, ERP document, and ledger impact. It should explain legitimate differences rather than assume all values will always be identical\n\n- A validated or approved invoice with no corresponding ERP document\n\nReconciliation should operate at both transaction and population levels. Transaction-level matching proves individual outcomes. Population-level controls help Finance identify missing batches, unexpected totals, aging exceptions, and trends that indicate a systematic mapping or process problem.\n\nControl test: Can Finance reconcile the transportation transaction to the ERP and general ledger without rebuilding the history from separate reports, emails, and spreadsheets?\n\n## An Illustrative Transportation-to-GL Example\n- How the prior accrual was reversed, cleared, or adjusted\n- Which ERP documents were created and whether every line was accepted\n\n## Metrics That Reveal Whether the Last Mile Is Working\n- Posted amounts not reconciled to approved invoices or payment events\n- Corrections made in the ERP but not synchronized with transportation reporting\n- Time from operational completion to financially reconciled transaction\n\n## The Last Mile Determines Whether the Business Can Trust the Cost\nThat final stage requires more than inserting a GL code into an invoice record. It requires governed allocation, accurate cost-center and entity assignment, explicit branching logic, period-aware accruals, closed-loop ERP posting, reconciliation, and an audit trail that connects the financial result to the transportation event.\n\nWhen those controls work together, Finance can trust that transportation costs are not only accurate in total, but correctly owned, classified, timed, posted, and explainable\n\n## Frequently Asked Questions\n### Does a successful ERP transmission mean the invoice posted?\nNot necessarily. Transmission establishes that information left the source system. Record-level confirmation is needed to establish that the ERP accepted the transaction and created the intended accounting document and lines\n\n### What is the difference between ERP posting and reconciliation?\nERP posting creates or updates the accounting record. Reconciliation confirms that the posted result agrees with the approved invoice, allocation, accrual, payment, source information, and any later correction or reversal\n\n### How does GL integrity support Transportation Financial Intelligence?\nGL integrity connects transportation detail with the organization\u2019s official financial dimensions and outcomes. That allows leaders to move from ledger variances to the operational events, providers, facilities, charges, and decisions that produced them, using information that is governed and reconcilable",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Billing & Reporting for Freight Operations",
+  "signal_type": "news",
+  "source_url": "https://ftm.cloud/billing-reporting/",
+  "published_date": "2026-06-24T12:26:24Z",
+  "snippet": "# Where every load closes its books.\n## Most billing happens after operations are done caring about the load.\n3\n\nInvoice built in a separate system\n\n4\n\nMargin discovered after the fact\n\n\u2192\n\nAfter: Billing from the Load Record\n\n1\n\nLoad delivered, POD triggers billing workflow\n\n2\n\nInvoice generated from the tariff or agreed rate\n\n3\n\nCarrier settlement created in the same record\n\n4\n\nFinancials pushed to accounting, margin known\n\n## Billing confirms the rate. It does not create it.\nFuel surcharges, detention, liftgate, and other accessorials captured during execution are applied to the invoice from the load record.\n\nMargin confirmed, not estimated\n\nBecause the customer rate and carrier cost both live on the same record, actual margin is known at invoice time, not discovered later during a reporting cycle.\n\nFull audit trail on every charge\n\nEvery line item on every invoice traces back to the load record, the tariff rule, or the accessorial event that produced it\n\n## Six capabilities. One financial close for every load.\nEach capability connects a step in the billing cycle to the load record it belongs to, so nothing has to be re-entered or reconciled after the fact.\n\nA\n\nTariff-Based Invoice Generation\n\nThe rate that was agreed is the rate on the invoice, calculated, not retyped.\n\nGenerate invoices from tariff tables, contract rates, or spot rates already on the load\n\nAccessorials, fuel surcharges, and additional charges applied from the same record\n\nInvoice document includes your branding, BOL reference, and POD attachment\n\nB\n\nCarrier Settlement\n\nWhat you owe the carrier is calculated the same way the invoice was, from the load record.\n\nCarrier pay calculated from the agreed rate on the load, not a manual entry after delivery\n\nSettlement documents generated and routed directly to the carrier\n\nFactoring integrations (Haul Pay, Triumph) pull from the same settled record\n\nCarrier Settlement Load 7201\n\nBoth paths use the same load record, so the financials match regardless of where they live\n\nD\n\nPOD-Triggered Billing\n\nDelivery confirmation starts the billing cycle automatically, not when someone remembers to.\n\nPOD upload from the Driver App or Carrier Portal triggers invoice creation\n\nNo manual step between delivery confirmation and billing workflow\n\nDispute workflows capture exceptions before the invoice leaves the system\n\nE\n\nDocument Generation\n\nEvery financial document produced from the load record that created it.\n\nInvoices, rate confirmations, carrier settlements, and driver pay statements generated in one place\n\nCustom branding, logo, and document layout configured during implementation\n\nDocuments attached to the load record and available to the Customer Portal\n\nF\n\nReporting & Business Intelligence\n\nEvery load, lane, customer, and margin decision reported from the same data that ran the operation\n\n## Why Billing and Reporting works better on Salesforce.\n**The load record that ran the operation is the same record the invoice comes from.** There is no translation step between what dispatch saw and what accounting bills.\n\nImplementation\n\n## Questions finance and operations ask before rolling out.\nCarrier pay is calculated from the agreed rate on the load record, the same record dispatch used. Settlement documents are generated and routed to the carrier, and factoring integrations like Haul Pay and Triumph connect to the settled amount directly.\n\n+",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "How to Automate Freight Invoice Reconciliation in Dynamics 365 ...",
+  "signal_type": "news",
+  "source_url": "https://avantiico.com/how-to-automate-freight-invoice-reconciliation-in-dynamics-365-finance/",
+  "published_date": "2025-09-16T16:32:53Z",
+  "snippet": "# How to Automate Freight Invoice Reconciliation in Dynamics 365\n## Understanding Freight Reconciliation in Dynamics 365 Finance\nFreight rates are calculated by a rate engine that gets associated with a relevant shipping carrier. When a load is confirmed, a freight bill gets generated, and freight rates are subsequently transferred to it. Freight rates are then allocated as miscellaneous charges to the relevant source document (i.e. purchase order, sales order, and/or transfer order), which will depend on the setup the business uses for the regular billing process\n\n**Matching** is the process of finding the freight bills that correspond to each freight invoice. Matching can be done by either matching the invoice lines one-by-one (manual matching), or by matching all available invoices at once (auto matching)\n\n## Matching Freight Invoices Manually in Dynamics 365 Finance\nThe reconciliation reason is what determines how the difference amounts are posted in the general ledger (GL). When the reconciliation of the whole invoices amount is accounted for, it gets submitted for approval, and subsequently, the journal is posted.In manual matching, all freight bill with positive amounts are available for matching. The user will only be able to match freight invoices with negative amounts to freight bills not fully matched",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "3PL Freight Reconciliation: Find & Fix Errors Before They Cost ...",
+  "signal_type": "news",
+  "source_url": "https://www.freightoptics.com/blog/3pl-freight-reconciliation-find-fix-errors-before-they-cost/",
+  "published_date": "2026-07-26T20:04:34Z",
+  "snippet": "# 3PL Freight Reconciliation: Find & Fix Errors Before They Cost\n## What Is 3PL Freight Reconciliation?\n- Match each shipment\u2019s weight, service level, and destination to your internal order or manifest data\n- Compare billed rates to what your contracts actually allow\n- Flag billing for canceled, delayed, or modified shipments, including ghost shipments\n- Catch duplicate invoice entries or repeated accessorial charges\n- Reveal gaps between what your 3PL was charged and what they passed through to you",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "3PL Freight Reconciliation: Find & Fix Errors Before They Cost ...",
+  "signal_type": "news",
+  "source_url": "https://www.zdscs.com/blog/3pl-freight-reconciliation-find-fix-errors-before-they-cost/",
+  "published_date": "2026-01-29T19:33:02Z",
+  "snippet": "# 3PL Freight Reconciliation: Find & Fix Errors Before They Cost\n## FAQ\nZero Down connects with your carriers, 3PLs, TMS, ERP, or accounting systems to automate the reconciliation process.",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Logistics ERP Automation for Freight Reconciliation",
+  "signal_type": "news",
+  "source_url": "https://sysgenpro.com/logistics-erp-automation-for-reducing-manual-reconciliation-in-freight-operations",
+  "published_date": "2026-05-16T21:18:49Z",
+  "snippet": "# Logistics ERP Automation for Reducing Manual Reconciliation in Freight Operations\n## Why manual reconciliation remains a structural problem in freight operations\n### A realistic enterprise scenario: reducing reconciliation effort across multi-carrier freight operations\nThe result is not full touchless processing for every shipment, nor should that be the target. The result is controlled exception management. Standard shipments move through automated billing and accrual workflows, while disputed or incomplete records are routed to operations, procurement, or finance with a full audit trail",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Invoice Reconciliation in SAP: Where It Breaks for Freight",
+  "signal_type": "news",
+  "source_url": "https://www.laneproof.com/blog/invoice-reconciliation-in-sap-freight-teams",
+  "published_date": "2026-05-23T08:49:35Z",
+  "snippet": "# Invoice Reconciliation in SAP: Where It Breaks for Freight Teams\n## Frequently Asked Questions\n### What are the four types of reconciliation?\nThe four commonly referenced types are: (1) bank reconciliation, matching bank statements to internal records; (2) vendor or AP reconciliation, matching vendor invoices to POs and receipts; (3) customer or AR reconciliation, matching customer payments to issued invoices; and (4) intercompany reconciliation, matching transactions between related business entities",
+  "tier": "company",
+  "source": "BraveContext",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "News \u2014 Northwind Group",
+  "signal_type": "news",
+  "source_url": "https://www.northwind-group.com/news",
+  "published_date": null,
+  "snippet": "Please contact northwind@5wpr.com for press opportunities \u00b7 Copyright 2026 Northwind Group",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Logistics ERP Automation for Freight Reconciliation",
+  "signal_type": "news",
+  "source_url": "https://sysgenpro.com/logistics-erp-automation-for-reducing-manual-reconciliation-in-freight-operations",
+  "published_date": "2026-05-16",
+  "snippet": "Operations teams no longer need to manually determine whether a shipment is billable, whether a carrier invoice is valid, or whether a warehouse event has been reflected in the ERP. The orchestration engine evaluates those conditions continuously and escalates only the exceptions that require human judgment. Freight reconciliation",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Freight Payments Explained: A Guide for Finance Teams",
+  "signal_type": "news",
+  "source_url": "https://tipalti.com/resources/learn/freight-payments/",
+  "published_date": "2026-07-08",
+  "snippet": "Automated Payment Reconciliation Accurate spend data integrated with your ERP.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Northwind",
+  "signal_type": "news",
+  "source_url": "https://www.vcbacked.co/company/northwind",
+  "published_date": "2021-12-06",
+  "snippet": "Northwind\nDec 6, 2021 \u2014 Northwind has raised $2.0M in total funding. The most recent round was Pre-Seed. The last funding was announced in December 2021.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Northwind Midstream raises $700m to fund expansion in New ...",
+  "signal_type": "news",
+  "source_url": "https://finance.yahoo.com/news/northwind-midstream-raises-700m-fund-100004099.html",
+  "published_date": null,
+  "snippet": "Northwind Midstream raises $700m to fund expansion in New ...\nNorthwind Midstream Partners has announced the completion of the issuance of a $700m senior secured first lien term loan.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Transportation Finance: From Freight Invoice to General Ledger",
+  "signal_type": "news",
+  "source_url": "https://corporate.nvisionglobal.com/the-last-mile-of-transportation-finance-is-the-general-ledger/",
+  "published_date": "2026-08-19",
+  "snippet": "<strong>Reconciliation should operate at both transaction and population levels</strong>. Transaction-level matching proves individual outcomes. Population-level controls help Finance identify missing batches, unexpected totals, aging exceptions, and trends",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Northwind: Funding, Team & Investors",
+  "signal_type": "news",
+  "source_url": "https://startupintros.com/orgs/northwind",
+  "published_date": null,
+  "snippet": "Northwind: Funding, Team & Investors\nPatients register and go through our digital questionnaire, uploading pictures of their affected skin. In under 12 hours the patient receives their own",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Northwind Climate Secures $1 Million in Pre-Seed Funding ...",
+  "signal_type": "news",
+  "source_url": "https://www.prnewswire.com/news-releases/northwind-climate-secures-1-million-in-pre-seed-funding-to-deliver-proprietary-business-intelligence-for-the-climate-economy-302417616.html",
+  "published_date": "2025-04-02",
+  "snippet": "Northwind Climate Secures $1 Million in Pre-Seed Funding ...\nApr 2, 2025 \u2014 Northwind Climate, a data platform and SaaS tool provider for the climate economy, announced the successful closure of its $1.05 million pre-seed funding round.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Freight Invoice Reconciliation: The Ultimate Guide",
+  "signal_type": "news",
+  "source_url": "https://shipware.com/blog/freight-invoice-reconciliation-guide/",
+  "published_date": "2026-04-01",
+  "snippet": "Our guide to freight invoice reconciliation shows you how to catch costly billing errors, prevent overcharges, and improve your cash flow. Protect your profits.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ },
+ {
+  "claim": "Behind the Freight - Truckstop",
+  "signal_type": "news",
+  "source_url": "https://truckstop.com/podcasts/",
+  "published_date": null,
+  "snippet": "Real conversations about freight trends, fraud, and running a profitable trucking business. Listen to <strong>Behind the Freight</strong>, a podcast by Truckstop.com.",
+  "tier": "company",
+  "source": "ParallelSearch",
+  "eligibility": "eligible"
+ }
+]

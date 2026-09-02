@@ -1068,6 +1068,17 @@ def main():
         sq = getattr(draft_res.ranked_prospect, "signal_quality", "ok")
         if sq == "thin":
             badge_text += " \u00b7 thin signal"
+        # Two different facts, and a card can carry either without the other. "thin"
+        # is about the relevance SCORE; this is about the middle term of the
+        # syllogism being absent -- the winning card evidences no pain we sell
+        # against, so the drafter was handed "We don't know their specific pain yet"
+        # to argue from. Measured across 38 runs, that was true of 32% of winners
+        # and nothing on this screen said so.
+        _win = getattr(draft_res.ranked_prospect, "winning_card", None)
+        _pain_id = getattr(getattr(_win, "pain_match", None), "pain_id", None)
+        _no_pain = _win is not None and _pain_id in (None, "general_news")
+        if _no_pain:
+            badge_text += " \u00b7 no pain matched"
         st.markdown(
             f"<span class='zchip {badge_cls}'>{html.escape(badge_text)}</span>",
             unsafe_allow_html=True,
@@ -1099,6 +1110,15 @@ def main():
         # --- Editable draft ---
         if getattr(draft_res, "offer_is_generic", False):
             st.warning("**No prospect-specific signal found.** The opener is company-level and the offer is generic — human judgment required before sending.")
+        elif _no_pain:
+            # Deliberately not a warning: the opener IS grounded in a real retrieved
+            # card, so this is a weaker claim than offer_is_generic, not the same one.
+            st.info(
+                "**The hook is grounded; the pain is not.** This card matched no pain in "
+                "`value_prop.yaml`, so the email argues from a generic problem statement "
+                "rather than one the evidence supports. The opener is still traceable — "
+                "the inference between it and the offer is the part to check."
+            )
         st.markdown("## The draft (editable)")
         if draft_res.draft_text:
             # The key must change when the draft does. Streamlit gives session_state

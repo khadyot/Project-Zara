@@ -117,11 +117,15 @@ async def process_prospect(prospect: Prospect, results: list[SourceResult], stri
     if vp_override:
         vp = {**vp, **vp_override}
 
-    # Task 5: Default hook to the hook whose card is winning_card
-    if hook is None and ranked_prospect.winning_card and ranked_prospect.hooks:
-        win_idx = next((i for i, c in enumerate(ranked_prospect.cards) if c is ranked_prospect.winning_card), None)
-        if win_idx is not None:
-            hook = next((h for h in ranked_prospect.hooks if h.card_index == win_idx), None)
+    # The winner's hook, bound by identity in _select_winner rather than recovered
+    # here. This block used to compare HookProposal.card_index -- an index into the
+    # relevance-sorted SHORTLIST -- against a position in `cards`, which is every
+    # card in retrieval order. The two spaces coincide only by accident, so the
+    # drafter usually got hook=None and fell back to the raw winning snippet,
+    # discarding the hook call's chosen fact AND its rationale; when the integers
+    # did collide it silently attached a hook belonging to a different card.
+    if hook is None:
+        hook = ranked_prospect.winning_hook
 
     if on_event:
         on_event({"type": "stage", "name": "writing draft", "status": "running"})

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only general value proposition language and a hypothesis about fulfillment data alignment, both supported by the evidence. No specific metrics, customer names, or factual claims about ShipBob or the prospect are invented."
+  },
+  "prompt_tokens": 924,
+  "completion_tokens": 792
+}

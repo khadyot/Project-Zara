@@ -162,6 +162,77 @@ def quotes_prospect(card: SignalCard, person_name: str) -> bool:
                for m in _QUOTED.finditer(hay))
 
 
+# Compass X: relevance is not permission. An announcement of the PROSPECT'S OWN
+# appointment scores well on every axis this ranker measures -- person-tier,
+# recent, and it genuinely evidences structural_complexity -- and it is unusable,
+# because the resulting email explains to a CFO that hiring a CFO creates
+# reconciliation work. It is what cut Jon Anderson from the demo set, and a live
+# run on 2026-09-02 produced it again for Devin Weil at person_authored with a
+# clean verification: the strongest claim tier the product has, on its weakest
+# possible reason to write.
+#
+# This cannot live in never_reference. That list matches topics, and appointments
+# are not an off-limits topic -- structural_complexity names "recent appointments
+# of new finance leadership" as an observable, so a colleague's appointment is
+# real evidence we want. What makes it unusable is RELATIONAL: the appointee is
+# the recipient. So it is computed here, against the prospect, like the namesake
+# check.
+_APPOINT_ROLE = (r"chief\s+[\w\s]{0,24}?officer|c[efotmr]o|president|founder|co-?founder"
+                 r"|controller|vice\s+president|vp|head\s+of\s+[\w\s]{2,24}"
+                 r"|director\s+of\s+[\w\s]{2,24}")
+
+_APPOINT = re.compile(
+    r"\b(?:appoint(?:s|ed|ing|ment)?|names?\s+(?!a\b)|named\s+(?:as\s+)?"
+    r"|welcom(?:e|es|ed)|hir(?:e|es|ed)\s+|promot(?:e|es|ed)\s+"
+    r"|join(?:s|ed|ing)?\s+(?:\w+\s+){0,3}?as\b|steps?\s+into\s+the\s+role"
+    r"|takes?\s+over\s+as|expands?\s+[\w\s]{0,24}team\s+with)\b", re.I)
+
+_FIRST_PERSON_JOIN = re.compile(
+    r"\b(?:i\s+(?:am|'m|have|'ve)?\s*(?:absolutely\s+|so\s+|very\s+)?"
+    r"(?:thrilled|excited|delighted|pleased|happy|proud)?[\s\w]{0,24}?"
+    r"(?:to\s+)?(?:have\s+)?join(?:ed|ing)?\b"
+    r"|i\s+(?:have\s+)?join(?:ed|ing)?\b"
+    r"|(?:thrilled|excited|delighted|pleased|proud)\s+to\s+(?:have\s+)?"
+    r"(?:join(?:ed|ing)?|be\s+join(?:ing)?)\b)", re.I)
+
+# A role named shortly after the join is what makes it employment rather than an
+# appearance on somebody's show. Without this the demo's hero card is flagged:
+# Chermaine Hu's post opens "I recently joined @Venture:F to talk about what
+# building modern issuer processing actually looks like", which is a podcast.
+_ROLE_NEAR = re.compile(r"\b(?:" + _APPOINT_ROLE + r"|team)\b", re.I)
+
+_APPOINTEE_NAME = re.compile(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]*\.?){1,2})\b")
+
+
+def is_own_appointment(card: SignalCard, person_name: str, proximity: str) -> bool:
+    """Is this card the announcement of the prospect's own hire?
+
+    Measured across all 181 recorded cards: 3 flagged, all of them genuine --
+    two Payouts Network releases naming Jon Anderson and one "DEVIN WEIL NEW
+    CHIEF FINANCIAL OFFICER". Zero false positives, including on the three
+    appointment cards about OTHER people at Payouts Network, which must survive.
+    """
+    if not person_name:
+        return False
+    text = f"{card.claim}\n{card.snippet or ''}"
+
+    # Their own post about the move. Requires a role, per _ROLE_NEAR above.
+    if proximity == "authored":
+        for m in _FIRST_PERSON_JOIN.finditer(text):
+            if _ROLE_NEAR.search(text[m.end(): m.end() + 130]):
+                return True
+
+    # A third party placing a NAMED person into a role. Whose hire it is decides
+    # everything: Payouts Network appointing Jon Anderson is unusable to Jon,
+    # while Payouts Network appointing a VP of Sales is evidence we want.
+    for m in _APPOINT.finditer(text):
+        window = text[max(0, m.start() - 90): m.end() + 90]
+        for cand in _APPOINTEE_NAME.findall(window):
+            if _same_person(cand, person_name):
+                return True
+    return False
+
+
 _ROLE_RE = re.compile(
     r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\s*[,\-—|]\s*"
     r"((?:Chief[\w\s]*Officer|C[EFTOM]O|President|Founder|Co-?founder|"
@@ -355,7 +426,7 @@ def _company_is_mentioned(card, prospect) -> bool:
     raw = (prospect.company or "").lower().strip()
     if not raw:
         return True
-    hay = f"{card.claim} {card.snippet[:500]} {card.source_url or ''}".lower()
+    hay = f"{card.claim} {clean_snippet(card.snippet)[:500]} {card.source_url or ''}".lower()
 
     # The whole name, as a phrase, always counts.
     if raw and raw in hay:
@@ -379,7 +450,27 @@ def _company_is_mentioned(card, prospect) -> bool:
     # match means the card is titled about them rather than merely adjacent.
     if len(tokens) == 1:
         return tokens[0] in card.claim.lower()
-    return any(t in hay for t in tokens)
+
+    # Every token, not any of them. The single-token path above was hardened after
+    # the C.H. Robinson incident and this branch was left as `any`, which fails for
+    # exactly the same reason one word ahead: a two-word company whose second word
+    # names its industry matches every page in that industry. "Northwind Freight"
+    # reduces to ('northwind', 'freight'), so "Freight invoice reconciliation in
+    # SAP" and "3PL freight reconciliation" both identified it.
+    #
+    # Measured 2026-09-02 on live retrieval for a company that does not exist:
+    # 20 of 21 cards passed under `any`, 1 under `all` -- and that one is a real
+    # Northwind Freight Systems in Ontario, which is a genuine namesake rather
+    # than noise and is precisely what the flag is for. Cost on real prospects is
+    # one card each on Modern Treasury and Payouts Network, none on the
+    # single-token names.
+    #
+    # Known limit: a long corporate name is harder to satisfy, so a card naming
+    # "Merrill Lynch" would not identify a prospect entered as "Bank of America
+    # Merrill Lynch". The exact phrase and its squashed form are both checked
+    # above, this only downweights rather than excluding outside strict mode, and
+    # no such prospect has been run. Revisit with data, not in anticipation.
+    return all(t in hay for t in tokens)
 
 
 def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict,
@@ -431,10 +522,15 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
 
 
 def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
-                   hooks: list) -> tuple[RankedCard | None, float | None, list]:
+                   hooks: list) -> tuple[RankedCard | None, float | None, list, object | None]:
     """Pick the winner from the shortlist, after the hooks have been articulated.
 
-    Returns `(winning_card, winning_score, surviving_hooks)`.
+    Returns `(winning_card, winning_score, surviving_hooks, winning_hook)`.
+
+    The fourth element exists because this is the ONLY scope that can bind a hook
+    to a card correctly -- `shortlist` is in scope here and `hook_for` keys on
+    identity. Callers that tried to recover it downstream had nothing but
+    `card_index` and the wrong list to apply it to; see the warning below.
 
     TWO INDEX SPACES, and conflating them is a live bug this signature exists to
     prevent. `HookProposal.card_index` indexes into `shortlist` -- the relevance-
@@ -449,7 +545,7 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     relevance -- the run loses its options, not its winner.
     """
     if not shortlist:
-        return None, None, []
+        return None, None, [], None
 
     hook_for = {}
     for h in hooks:
@@ -519,7 +615,7 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
     #
     # This is a preference, not a veto: an undated card that leads by a clear
     # margin still wins, because sometimes it really is the best thing we have.
-    win_final, win_card, _ = survivors[0]
+    win_final, win_card, win_hook = survivors[0]
     if win_card.recency_days is None:
         from zara.utils.config import load_value_prop
         try:
@@ -528,10 +624,10 @@ def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],
             margin = 0.15
         dated = [(f, c, h) for f, c, h in survivors if c.recency_days is not None]
         if dated and dated[0][0] >= win_final - margin:
-            win_final, win_card, _ = dated[0]
+            win_final, win_card, win_hook = dated[0]
             survivors = [dated[0]] + [x for x in survivors if x is not dated[0]]
     surviving_hooks = [h for _, _, h in survivors if h is not None]
-    return win_card, win_final, surviving_hooks
+    return win_card, win_final, surviving_hooks, win_hook
 
 
 class CardScoreOutput(BaseModel):
@@ -571,13 +667,16 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             excluded = f"eligibility: {card.eligibility}"
 
         if not excluded:
-            # Only the first 500 chars of the snippet are ever shown to the pain
-            # scorer, the hook prompt or the drafter, so the guardrail scopes to
-            # exactly what can reach a draft. Matching the full page body made a
-            # $250M funding story fire `never_reference: litigation` on boilerplate
+            # Scoped to the window the pain scorer sees, so the guardrail covers
+            # what can realistically reach a draft. Matching the full page body made
+            # a $250M funding story fire `never_reference: litigation` on boilerplate
             # buried far below the evidence -- the guardrail eating the signal it
-            # was never aimed at.
-            lower_text = f"{card.claim} {card.snippet[:500]}".lower()
+            # was never aimed at, so the bound stays.
+            #
+            # Cleaned first, same as the scorer: 500 raw characters of a LinkedIn
+            # card are mostly header and author bio, so the guardrail was reading
+            # furniture instead of the post it is meant to police.
+            lower_text = f"{card.claim} {clean_snippet(card.snippet)[:500]}".lower()
             for nr in never_reference:
                 nr_id = nr["id"]
                 terms = nr["terms"]
@@ -604,9 +703,16 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # run drafted "C.H. Robinson announced acquisition of DeSpir Logistics"
         # to a CFO at Midwest 3PL, and the verifier passed it clean because the
         # sentence is true. It is simply true about somebody else.
+        # Checked before the namesake guard so the more specific reason is the one
+        # rendered on the decision card.
+        if not excluded and not guardrail_hit:
+            if is_own_appointment(card, prospect.person_name if prospect else "", proximity):
+                guardrail_hit = ("own appointment: this announces the recipient's own hire — "
+                                 "relevant, and not a reason to write to them")
+
         if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
-                guardrail_hit = "possible namesake: company never mentioned in the evidence"
+                guardrail_hit = "possible namesake: the evidence does not fully name the company"
 
         if not excluded:
             to_score.append((i, card))
@@ -705,8 +811,13 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                     prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
                     
                 prompt += "\nCards:\n"
+                # clean_snippet, not the raw text. The drafter and the hook prompt
+                # were fixed in 4f8bc46; this call -- the one that decides which
+                # cards survive at all -- was left reading Exa's generated header
+                # and the author's bio block, roughly 290 of the 500 characters on
+                # a LinkedIn card. Cards were being scored on furniture.
                 for i, card in chunk:
-                    prompt += f"[{i}] {card.snippet[:500]}\n\n"
+                    prompt += f"[{i}] {clean_snippet(card.snippet)[:500]}\n\n"
                     
                 resp = await generate_content_with_retry(
                     prompt=prompt,
@@ -716,7 +827,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 )
                 
                 scores = resp.scores
-                found_strong_hook = False
                 for s in scores:
                     if s.index in ranked_cards_map:
                         rc = ranked_cards_map[s.index]
@@ -743,8 +853,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                                 recency_days=rc.recency_days, score=relevance, excluded=None,
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
-                            if final_score >= 0.8:
-                                found_strong_hook = True
                         else:
                             # B2: pain_match is None must contribute pain_score 0.0, as it already does.
                             relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
@@ -754,16 +862,6 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
                 
-                if found_strong_hook:
-                    for remain_idx in range(chunk_idx + chunk_size, len(to_score)):
-                        i, _ = to_score[remain_idx]
-                        rc = ranked_cards_map[i]
-                        ranked_cards_map[i] = RankedCard(
-                            card=rc.card, pain_match=None, proximity=rc.proximity,
-                            recency_days=rc.recency_days, score=0.0, excluded="skipped due to early exit (strong hook found)",
-                            guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
-                        )
-                    break
         except ProviderProbeFailedError as e:
             for i, card in to_score:
                 rc = ranked_cards_map[i]
@@ -809,6 +907,14 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # event, no reason to write today. When a company genuinely has nothing,
         # the honest output is the no-signal path and the banner that comes with
         # it, not a hook manufactured from a contact record.
+        # An announcement of the recipient's own hire cannot be the hook. Unlike the
+        # two filters around it this one drops to the honest empty set rather than
+        # keeping its cards: if the only thing we found about someone is that they
+        # got the job, we have no reason to write, and the no-signal path says so.
+        not_own = [c for c in eligible
+                   if not (c.guardrail_hit or "").startswith("own appointment")]
+        eligible = not_own
+
         real = [c for c in eligible if c.proximity != "database"]
         if real:
             eligible = real
@@ -820,7 +926,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
 
     hooks = await _articulate_hooks(prospect, shortlist, vp)
 
-    winning_card, winning_score, final_hooks = _select_winner(final_cards, shortlist, hooks)
+    winning_card, winning_score, final_hooks, winning_hook = _select_winner(final_cards, shortlist, hooks)
 
     # Compass I: degrade, but never silently. Both repaired seed runs land at ~0.30
     # -- the pick is right and the evidence is still thin, and the reviewer is told
@@ -830,7 +936,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
     return RankedProspect(
         prospect=prospect, cards=final_cards, icp_fit=icp_fit,
         winning_card=winning_card, winning_score=winning_score, signal_quality=signal_quality,
-        hooks=final_hooks, icp_notes=icp_notes
+        hooks=final_hooks, winning_hook=winning_hook, icp_notes=icp_notes
     )
 
 

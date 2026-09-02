@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains the sender's value proposition and general observations; all statements about ShipBob are supported by the evidence (e.g., the Anthropic\u2011verified fulfillment connector). No invented metrics, customer names, or specific claims about ShipBob lacking evidence are present."
+  },
+  "prompt_tokens": 951,
+  "completion_tokens": 238
+}

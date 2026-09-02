@@ -26,13 +26,43 @@ buyer_functions: "anyone owning or influencing operations/finance processes (CEO
 # to `general_news`. Rewritten against what the surviving sources actually return:
 # news (GoogleNews, ExaNews), authored/social (ExaLinkedIn, ExaYouTube, Apify),
 # company site (Jina), and open web (Tavily).
+# CHANGED 2026-09-02: every pain gains a person-tier observable, because measurement
+# said the set could only be satisfied by press releases.
+#
+# Across 238 scored cards in var/zara_runs.db, 77% matched no pain at all and landed
+# on `general_news` at the 0.30 floor. Everything scoring >=0.70 was a corporate
+# event -- "M&A acquisition disclosed", "Announces $200M funding", "Opened new
+# fulfillment center". Everything a person SAID failed, in the scorer's own words:
+# "Founder video, no observable pain", "Founders discuss PSP, no specific
+# observable", "Duplicate tech-stack interview, no observable pain".
+#
+# The cause was the shape of the lines below. Three pains asked for "an executive
+# describing [their own manual process]", and nobody publicly posts that their
+# month-end close is a mess. So the set was inverted against the proximity ladder:
+# `authored` (weight 4) matched a real pain 14% of the time while `company_action`
+# (weight 2) matched 33%, and 61% of winners came out company-tier.
+#
+# What executives DO publish is argument about their category. Chermaine Hu's post --
+# "legacy payments weren't built for the world fintech operates in now" -- is a CFO
+# making a substantive public claim about payment infrastructure, and it scored
+# `general_news` with the reason "CFO appointment news, no observable pain".
+#
+# Accepting a category argument as evidence is not a loosening. drafter.py already
+# REQUIRES the email's claim to be about the category and forbids asserting the
+# prospect's internals, so this aligns what the scorer will credit with what the
+# writer is allowed to say. The press-release observables are untouched.
 pains:
   - id: close_drag
     statement: "Month-end close drags because matching is manual across systems"
     observable_via:
-      - new finance leadership (CFO, VP Finance, Controller) appointed in the last 6 months
+      # "new finance leadership appointed" was removed here on 2026-09-02: it was
+      # duplicated verbatim on structural_complexity, which is why an appointment
+      # story could satisfy two pains at once, and why the only two `authored`
+      # cards that ever matched a pain matched THIS one on "New CFO appointment
+      # mentioned" -- the signal the own-appointment guardrail now blocks.
       - public mention of an ERP, close, or financial-reporting system migration or upgrade
       - an executive describing manual reporting, month-end, or data consolidation work
+      - the prospect publicly arguing about close cadence, reporting timelines, or the limits of finance systems — whether or not they claim it of their own company
 
   - id: silent_breaks
     statement: "Payment, ledger, and bank reconciliation breaks silently and surfaces late"
@@ -40,6 +70,7 @@ pains:
       - new payment methods, PSPs, acquirers, or geographies in news or product announcements
       - marketplace, partner, or multi-entity expansion that adds settlement paths
       - public incident, status-page, or outage history touching payments, billing, or settlement
+      - the prospect publicly arguing about payment rails, settlement, or reconciliation infrastructure — whether or not they claim it of their own company
 
   - id: linear_headcount
     statement: "Ops headcount scales linearly with transaction volume"
@@ -47,14 +78,17 @@ pains:
       - volume, GMV, order, or transaction growth milestones in news
       - rapid expansion into new markets, warehouses, or legal entities
       - an executive describing scaling operations, throughput, or process standardisation
+      - the prospect publicly arguing about operational scaling, headcount, or throughput limits — whether or not they claim it of their own company
 
   - id: spreadsheet_exceptions
     statement: "Exceptions are handled in spreadsheets with no audit trail"
+    # Zero matches in 238 scored cards. Its first line duplicated close_drag's
+    # ERP-migration observable, so it had nothing of its own to win on, and its
+    # second asked an executive to describe their own spreadsheet habit.
     observable_via:
-      - ERP or finance-system migration or implementation signals
-      - an executive describing manual reconciliation, exception handling, or spreadsheet reporting
       - publicly announced audit, compliance, or internal-controls initiatives
-      
+      - the prospect publicly arguing about manual workarounds, exception handling, audit trails, or spreadsheet-based process — whether or not they claim it of their own company
+
   - id: structural_complexity
     statement: "Rapid expansion, new leadership, or structural changes inherently create intercompany reconciliation sprawl"
     observable_via:
@@ -62,6 +96,7 @@ pains:
       - securing significant debt facilities, leases, or funding for expansion
       - M&A activity or corporate restructuring
       - reports of turning profitable or significant quarterly growth
+      - the prospect publicly arguing about the operational cost of expansion, entity structure, or post-acquisition integration — whether or not they claim it of their own company
 
 # ICP rubric — INFORMATIONAL ONLY. Never rejects a prospect. Deviations are computed
 # and surfaced on the decision card ("it is what it is" — stated, not gated).
@@ -142,6 +177,25 @@ proximity_weights:
 # scale with this number, so it is the main cost dial. Raising it costs tokens
 # against Groq's 8K/min bucket; lowering it risks dropping a hook. Measured safe
 # at 10: positions 5+ are uniformly company_action across all four snapshots.
+# Retrieval vocabulary — what we ask the web about, as opposed to what we score
+# against once it comes back.
+#
+# This is here rather than in a fetcher because it is policy: it decides what
+# retrieval can possibly find, and it has to be arguable without editing Python.
+# The old Exa fetchers hardcoded strings like "{company} news OR launch OR funding",
+# so changing a pain above changed scoring and left retrieval searching for the
+# same thing it always had.
+#
+# Drawn from the observable_via lines of the pains above. Keep it short — these
+# are appended to a company-scoped query, and a long tail of weak terms dilutes it.
+retrieval:
+  search_terms:
+    - reconciliation
+    - month-end close
+    - ERP migration
+    - payment operations
+    - billing
+
 ranker:
   card_cap: 10
 

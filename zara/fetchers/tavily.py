@@ -7,6 +7,10 @@ from zara.utils import budget
 
 TAVILY_URL = "https://api.tavily.com/search"
 
+# $30/month for 4,000 credits at the entry tier, one credit per search query.
+# Traced in reference/data-source-strategy.md.
+COST_PER_QUERY = 0.0075
+
 
 class TavilyFetcher:
     """Paid gap-filler. Fires only when free rungs + Exa yield thin person signal.
@@ -92,14 +96,14 @@ class TavilyFetcher:
 
         elapsed = int((time.time() - start) * 1000)
         if errors and not cards:
-            return self._result("failed", "; ".join(errors), [], start)
+            return self._result("failed", "; ".join(errors), [], start, len(query_plan) * COST_PER_QUERY)
         if not cards:
-            return self._result("empty", "no results", [], start)
-        return self._result("ok", None, cards, start)
+            return self._result("empty", "no results", [], start, len(query_plan) * COST_PER_QUERY)
+        return self._result("ok", None, cards, start, len(query_plan) * COST_PER_QUERY)
 
-    def _result(self, status, reason, cards, start) -> SourceResult:
+    def _result(self, status, reason, cards, start, cost_usd: float = 0.0) -> SourceResult:
         return SourceResult(
             source="Tavily", rung=1, status=status, reason=reason,
-            cards=cards, cost_usd=0.0,
+            cards=cards, cost_usd=cost_usd,
             elapsed_ms=int((time.time() - start) * 1000),
         )
