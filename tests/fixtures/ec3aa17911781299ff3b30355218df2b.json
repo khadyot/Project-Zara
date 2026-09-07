@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Episode Six raised $48M in a Series C round to expand go\u2011to\u2011market and scale its payments platform.",
+        "rationale": "As CFO and co\u2011founder you oversaw that capital raise and are responsible for stretching every dollar as the company scales.",
+        "bridge": "Our automation solution can help you reduce manual reconciliation costs, extending the impact of that funding on profitability.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In your recent LinkedIn post you emphasized replacing legacy payments with modern infrastructure across markets like Japan, Australia and Singapore.",
+        "rationale": "Your CFO role means you\u2019re focused on the cost and risk implications of legacy systems and on financing global expansion.",
+        "bridge": "Automating reconciliation\u2011heavy processes would lower operational expenses and risk as you modernize your stack worldwide.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "FinTech Futures reported that Episode Six secured $48M in Series C funding.",
+        "rationale": "Managing that new capital falls under your CFO purview, and you\u2019ll need to ensure it drives efficient growth.",
+        "bridge": "Our platform can deliver immediate cost savings on manual processes, helping you achieve a higher ROI on the fresh capital.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Episode Six partnered with FIS to launch an Issuing Hub that modernizes global card programs.",
+        "rationale": "As CFO, you\u2019ll be evaluating how this partnership affects revenue streams and operational costs.",
+        "bridge": "By automating the reconciliation workload tied to card issuance, our solution can amplify the efficiency gains from the Issuing Hub.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 1141,
+  "completion_tokens": 939
+}

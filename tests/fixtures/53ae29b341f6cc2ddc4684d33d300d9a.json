@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO interview only, no finance or payment observable"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn intro, no relevant finance or operational observable"
+      },
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Transaction list, no explicit payment method or system change"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mentions Dynamics 365 but no migration or upgrade announcement"
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "DOT funding announcement, unrelated to finance systems or payments"
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Award listings, no observable related to pains"
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Company directory, lacks finance or payment observable"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile, no finance leadership or system change"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Raised $50M funding, signals expansion and structural complexity"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Longer payment terms discussed, not new methods or incidents"
+      }
+    ]
+  },
+  "prompt_tokens": 2335,
+  "completion_tokens": 1726
+}

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO podcast content, no specific observable"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "close_drag",
+        "score": 1.0,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "finance efficiency podcast, no observable"
+      },
+      {
+        "index": 27,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "no observable matches"
+      },
+      {
+        "index": 25,
+        "matched_pain_id": "close_drag",
+        "score": 1.0,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "close_drag",
+        "score": 1.0,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "close_drag",
+        "score": 1.0,
+        "reason": "new CFO appointment announced"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "profile lacks new appointment evidence"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.9,
+        "reason": "launch of new fulfillment center indicates ops scaling"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "SEC filing contains no relevant observable"
+      }
+    ]
+  },
+  "prompt_tokens": 2002,
+  "completion_tokens": 1827
+}

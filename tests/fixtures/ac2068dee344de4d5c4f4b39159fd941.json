@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Episode Six partnered with Sharesies to launch New\u202fZealand\u2019s first spend\u2011to\u2011invest debit card.",
+        "rationale": "As CFO you\u2019re responsible for the financial viability of new products; launching a novel debit card introduces complex transaction reconciliation that can strain manual processes.",
+        "bridge": "Our automation solution can handle the high\u2011volume, reconciliation\u2011heavy flows of a spend\u2011to\u2011invest card, reducing manual effort and error.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In your recent Venture:F conversation you highlighted the challenges of legacy payments and the need for modern issuer processing across markets like Japan and the UK.",
+        "rationale": "Your focus on modernizing issuer infrastructure directly impacts the finance team\u2019s workload, especially around reconciling payments across multiple jurisdictions.",
+        "bridge": "We help operations teams automate those reconciliation\u2011heavy processes, letting your finance organization scale without adding headcount.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Episode\u202f139 featured Hu Capital founder Jerlisa \u201cJuju\u201d Fontaine, showcasing Episode Six\u2019s commitment to thought\u2011leadership content.",
+        "rationale": "While the piece isn\u2019t about you personally, as CFO the visibility of your company\u2019s leadership content supports brand credibility and can attract partners or investors.",
+        "bridge": "By automating back\u2011office reconciliation, your finance team can free up time to support more strategic initiatives like thought\u2011leadership campaigns.",
+        "strength": 0.61
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your recent feature in the Finance and Accounting Technology Briefing highlighted Episode Six\u2019s emphasis on a flexible, scalable tech stack for hyper\u2011growth finance.",
+        "rationale": "This directly speaks to your role as CFO, where choosing adaptable vendor solutions and minimizing manual processes are critical for rapid scaling.",
+        "bridge": "Our platform adds the automation layer you need, delivering flexible, scalable reconciliation that aligns with the tech\u2011stack principles you champion.",
+        "strength": 0.9
+      }
+    ]
+  },
+  "prompt_tokens": 1148,
+  "completion_tokens": 1069
+}

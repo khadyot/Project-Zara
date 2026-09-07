@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Spend-to-invest card and reconciliation workflow",
+    "draft_text": "Hi Chermaine,\n\nI'm Zamp from Zamp Technologies. We help operations teams automate manual, reconciliation-heavy processes.\n\nSaw that Episode Six and Sharesies launch New Zealand\u2019s First Spend-to-Invest Debit Card. I imagine keeping payment, ledger, and bank reconciliation records aligned across systems can become increasingly time-consuming.\n\nWe extract transaction data from your payment feeds and match it to ledger entries, reducing repetitive manual checks.\n\nCurious if this is something your finance team is thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2385,
+  "completion_tokens": 852
+}

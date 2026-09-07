@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references facts present in the evidence (Episode Six and Sharesies launch New Zealand\u2019s First Spend-to-Invest Debit Card) and makes generic value proposition statements. No invented metrics, customer names, or specific unsupported claims are present."
+  },
+  "prompt_tokens": 2770,
+  "completion_tokens": 370
+}

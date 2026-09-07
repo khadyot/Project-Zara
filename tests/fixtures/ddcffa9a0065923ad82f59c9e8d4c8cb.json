@@ -1,0 +1,14 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO featured in tech briefing; no observable matching any pain"
+      }
+    ]
+  },
+  "prompt_tokens": 1918,
+  "completion_tokens": 501
+}

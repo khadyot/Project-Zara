@@ -379,7 +379,25 @@ def _company_is_mentioned(card, prospect) -> bool:
     # match means the card is titled about them rather than merely adjacent.
     if len(tokens) == 1:
         return tokens[0] in card.claim.lower()
-    return any(t in hay for t in tokens)
+
+    # Every token, not any of them. The single-token path above was hardened after
+    # the C.H. Robinson incident and this branch was left as `any`, which fails for
+    # exactly the same reason one word ahead: a two-word company whose second word
+    # names its industry matches every page in that industry. "Northwind Freight"
+    # reduces to ('northwind', 'freight'), so generic freight-industry marketing
+    # copy identified it.
+    #
+    # Measured 2026-09-07 against live retrieval for a company that does not exist:
+    # under `any`, Riley Chen / Northwind Freight was drafted a real email built
+    # from a stranger's LinkedIn post and a logistics vendor's payment terms --
+    # the one demo prospect whose entire purpose is to show the product admitting
+    # it found nothing.
+    #
+    # Known limit: a long corporate name is harder to satisfy, so a card naming
+    # "Merrill Lynch" would not identify a prospect entered as "Bank of America
+    # Merrill Lynch". The exact phrase and its squashed form are both checked
+    # above, and outside strict mode this only downweights. Revisit with data.
+    return all(t in hay for t in tokens)
 
 
 def _compute_relevance(pain_score: float, proximity: str, recency_days: int | None, prox_val: dict,
@@ -606,7 +624,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # sentence is true. It is simply true about somebody else.
         if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
-                guardrail_hit = "possible namesake: company never mentioned in the evidence"
+                guardrail_hit = "possible namesake: the evidence does not fully name the company"
 
         if not excluded:
             to_score.append((i, card))

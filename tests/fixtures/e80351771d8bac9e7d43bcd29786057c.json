@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references supported facts (Episode Six's $48M raise) and makes generic, inferred statements about reconciliation challenges and Zamp's value proposition, which are permissible. No invented metrics, customer names, or specific prospect claims are present."
+  },
+  "prompt_tokens": 4502,
+  "completion_tokens": 275
+}

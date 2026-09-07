@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Congrats on your appointment as CFO at ShipMonk, announced 655 days ago.",
+        "rationale": "As the newly appointed CFO, you\u2019re responsible for scaling financial operations, which often involve manual, reconciliation\u2011heavy processes that can slow growth.",
+        "bridge": "Our platform automates those reconciliation tasks for operations teams, giving you cleaner data and more time to focus on strategic financial initiatives.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your announcement highlighted ShipMonk\u2019s growth and scaling ambitions under your financial leadership.",
+        "rationale": "In your CFO role, driving growth means handling larger transaction volumes and more complex accounting workflows, which can become bottlenecked by manual reconciliations.",
+        "bridge": "By automating reconciliation\u2011heavy processes, our solution helps your finance and operations teams keep pace with that growth without added manual effort.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Colleagues praised your strong, accountable leadership in finance.",
+        "rationale": "Accountability in the CFO role relies on accurate, timely financial data, and manual reconciliation can introduce errors and delays.",
+        "bridge": "Our automation tool ensures precise, real\u2011time reconciliations, supporting the high\u2011accountability standards you set for your finance organization.",
+        "strength": 0.7
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your March 2025 announcement celebrated your new CFO role and ShipMonk\u2019s commitment to best\u2011in\u2011class fulfillment.",
+        "rationale": "Overseeing financials for a fulfillment\u2011focused company means managing complex, high\u2011volume transactions where manual reconciliation can hinder efficiency and cost control.",
+        "bridge": "Our solution automates those reconciliation\u2011heavy processes, helping your operations team reduce manual effort and improve financial visibility.",
+        "strength": 0.85
+      }
+    ]
+  },
+  "prompt_tokens": 1643,
+  "completion_tokens": 866
+}

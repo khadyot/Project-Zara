@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only generic value propositions and references to TrueNorth's $50M raise, which are present in the evidence. It does not introduce any specific metrics, customer names, or factual claims unsupported by the provided snippets."
+  },
+  "prompt_tokens": 3241,
+  "completion_tokens": 302
+}

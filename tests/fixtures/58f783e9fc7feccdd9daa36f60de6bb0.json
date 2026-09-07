@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only general observations and value proposition language. It does not assert any specific metrics, customer names, or factual claims about Episode Six that are not supported by the provided evidence."
+  },
+  "prompt_tokens": 2237,
+  "completion_tokens": 453
+}
