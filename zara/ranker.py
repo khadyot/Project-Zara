@@ -201,7 +201,36 @@ _FIRST_PERSON_JOIN = re.compile(
 # building modern issuer processing actually looks like", which is a podcast.
 _ROLE_NEAR = re.compile(r"\b(?:" + _APPOINT_ROLE + r"|team)\b", re.I)
 
-_APPOINTEE_NAME = re.compile(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]*\.?){1,2})\b")
+# One capitalised, name-shaped word: "Glen", "Braganza", "J.", but not "CFO".
+_NAME_WORD = re.compile(r"\b[A-Z][a-z]+\.?\b|\b[A-Z]\.")
+
+
+def _name_candidates(window: str) -> list[str]:
+    """Every two- and three-word capitalised run in the window.
+
+    A single greedy regex cannot do this, and the two ways it fails are both live
+    wire-copy phrasings. CHANGED 2026-09-07, measured on Glen Braganza / Versapay.
+
+      "Versapay Names Glen Braganza CFO"
+          greedy, non-overlapping -> ["Versapay Names Glen"]. The given name is
+          consumed by a match that starts on the company, and "Braganza CFO"
+          cannot form a second candidate because CFO has no lowercase letter.
+
+      "Versapay Names Glen Braganza Chief Financial Officer"
+          overlapping but still greedy -> "Glen Braganza Chief", which
+          _same_person rejects because the last token is not the surname.
+
+    Both are the same headline about the same hire, and both must be caught. So
+    generate the candidates explicitly instead of hoping one pattern covers every
+    sentence shape. Cheap: these windows are 180 characters.
+    """
+    words = _NAME_WORD.findall(window)
+    out = []
+    for i in range(len(words)):
+        for n in (2, 3):
+            if i + n <= len(words):
+                out.append(" ".join(words[i:i + n]))
+    return out
 
 
 def is_own_appointment(card: SignalCard, person_name: str, proximity: str) -> bool:
@@ -227,7 +256,7 @@ def is_own_appointment(card: SignalCard, person_name: str, proximity: str) -> bo
     # while Payouts Network appointing a VP of Sales is evidence we want.
     for m in _APPOINT.finditer(text):
         window = text[max(0, m.start() - 90): m.end() + 90]
-        for cand in _APPOINTEE_NAME.findall(window):
+        for cand in _name_candidates(window):
             if _same_person(cand, person_name):
                 return True
     return False
@@ -797,8 +826,39 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # rendered on the decision card.
         if not excluded and not guardrail_hit:
             if is_own_appointment(card, prospect.person_name if prospect else "", proximity):
-                guardrail_hit = ("own appointment: this announces the recipient's own hire — "
-                                 "relevant, and not a reason to write to them")
+                # EXCLUDED in strict mode, not merely flagged. CHANGED 2026-09-07.
+                #
+                # A guardrail_hit only halves the score, and halving was not enough:
+                # an appointment story is person-tier, days old, and matches
+                # structural_complexity ("recent appointments of new finance
+                # leadership") at 0.8, so half of a very high number still wins.
+                #
+                # Measured live on Glen Braganza / Versapay, appointed CFO in
+                # August 2026: eleven cards flagged own-appointment, and one of them
+                # won at 0.588. The draft opened "Saw that Versapay named Glen
+                # Braganza CFO as the platform scales" -- telling the recipient
+                # about his own hire, in the third person.
+                #
+                # It had been masked. The pain scorer was under-delivering on this
+                # prospect (one score for ten cards, because most of them were the
+                # same story from different outlets), so the card was never scored
+                # and the run produced no winner. That looked like the guardrail
+                # working. Fixing the scorer revealed it never had.
+                #
+                # test_own_appointment_cannot_win_in_strict_mode passed throughout:
+                # its fixture's own-appointment card does not happen to win, and the
+                # assertion is conditional on there being a winner at all.
+                #
+                # Same strict/permissive split as never_reference above, and for the
+                # same reason: this is a judgment about what is WRITEABLE, not about
+                # what is true, so an operator who disagrees can drop to permissive
+                # and see it soft-flagged instead.
+                _msg = ("own appointment: this announces the recipient's own hire — "
+                        "relevant, and not a reason to write to them")
+                if strictness == "permissive":
+                    guardrail_hit = f"{_msg} (soft)"
+                else:
+                    excluded = _msg
 
         if not excluded and not guardrail_hit:
             if not _company_is_mentioned(card, prospect):
@@ -945,9 +1005,18 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             for chunk_idx in range(0, len(to_score), chunk_size):
                 chunk = to_score[chunk_idx:chunk_idx + chunk_size]
                 
-                prompt = ("Score each card against the following pains (0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. "
+                prompt = (f"Score each of the {len(chunk)} cards below against the following pains "
+                          "(0.0 to 1.0) on how well its snippet matches the 'observable_via' condition. "
                           "Output 'general_news' for matched_pain_id if it matches no pain but is interesting company/person news. "
-                          "Keep each reason to at most 15 words: name the observable that matched, or why none did.\n\nPains:\n")
+                          "Keep each reason to at most 15 words: name the observable that matched, or why none did.\n"
+                          # Near-duplicate cards are normal: one appointment story
+                          # arrives from six outlets. On a live Versapay run the
+                          # model answered ten such cards with a SINGLE object,
+                          # apparently collapsing them, and nine cards went unscored
+                          # into a run that then found no winner at all.
+                          f"Return exactly {len(chunk)} objects, one per card, indexed 0 to {len(chunk) - 1}. "
+                          "Several cards may describe the same event; score each one "
+                          "separately anyway and never merge or skip them.\n\nPains:\n")
                 for p in pains:
                     prompt += f"- ID: {p['id']}, Statement: {p['statement']}, Observable: {', '.join(p['observable_via'])}\n"
                     
@@ -991,6 +1060,42 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 # than absorbed. Duplicates are dropped: a second score for the same
                 # position is the model losing its place, and taking the later one
                 # would overwrite a good match with a worse one.
+                def _apply(card_id, s):
+                    if card_id not in ranked_cards_map:
+                        return
+                    rc = ranked_cards_map[card_id]
+                    if s.matched_pain_id and s.score > 0:
+                        pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
+                        final_score = s.score
+                        if rc.guardrail_hit:
+                            final_score = round(s.score * 0.5, 4)
+
+                        relevance = _compute_relevance(
+                            final_score, rc.proximity, rc.recency_days, prox_val,
+                            voice=quotes_prospect(rc.card, prospect.person_name),
+                        )
+                        # The docstring on _company_is_mentioned promised this
+                        # downweight; nothing applied it, so the flag was decoration.
+                        # A card that never names the company outscored every card
+                        # that did, and a CFO at Midwest 3PL got an email about
+                        # C.H. Robinson acquiring DeSpir Logistics. True sentence,
+                        # wrong company, verifier clean.
+                        if rc.guardrail_hit and rc.guardrail_hit.startswith("possible namesake"):
+                            relevance *= NAMESAKE_PENALTY
+                        ranked_cards_map[card_id] = RankedCard(
+                            card=rc.card, pain_match=pm, proximity=rc.proximity,
+                            recency_days=rc.recency_days, score=relevance, excluded=None,
+                            guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
+                        )
+                    else:
+                        # B2: pain_match is None must contribute pain_score 0.0, as it already does.
+                        relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
+                        ranked_cards_map[card_id] = RankedCard(
+                            card=rc.card, pain_match=None, proximity=rc.proximity,
+                            recency_days=rc.recency_days, score=relevance, excluded="matches no pain in value_prop",
+                            guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
+                        )
+
                 _seen: set[int] = set()
                 _dropped = 0
                 for s in scores:
@@ -998,40 +1103,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         _dropped += 1
                         continue
                     _seen.add(s.index)
-                    card_id = chunk[s.index][0]
-                    if card_id in ranked_cards_map:
-                        rc = ranked_cards_map[card_id]
-                        if s.matched_pain_id and s.score > 0:
-                            pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
-                            final_score = s.score
-                            if rc.guardrail_hit:
-                                final_score = round(s.score * 0.5, 4)
-                                
-                            relevance = _compute_relevance(
-                                final_score, rc.proximity, rc.recency_days, prox_val,
-                                voice=quotes_prospect(rc.card, prospect.person_name),
-                            )
-                            # The docstring on _company_is_mentioned promised this
-                            # downweight; nothing applied it, so the flag was decoration.
-                            # A card that never names the company outscored every card
-                            # that did, and a CFO at Midwest 3PL got an email about
-                            # C.H. Robinson acquiring DeSpir Logistics. True sentence,
-                            # wrong company, verifier clean.
-                            if rc.guardrail_hit and rc.guardrail_hit.startswith("possible namesake"):
-                                relevance *= NAMESAKE_PENALTY
-                            ranked_cards_map[card_id] = RankedCard(
-                                card=rc.card, pain_match=pm, proximity=rc.proximity,
-                                recency_days=rc.recency_days, score=relevance, excluded=None,
-                                guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
-                            )
-                        else:
-                            # B2: pain_match is None must contribute pain_score 0.0, as it already does.
-                            relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
-                            ranked_cards_map[card_id] = RankedCard(
-                                card=rc.card, pain_match=None, proximity=rc.proximity,
-                                recency_days=rc.recency_days, score=relevance, excluded="matches no pain in value_prop",
-                                guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
-                            )
+                    _apply(chunk[s.index][0], s)
 
                 # A scorer that answers a different question than the one asked is a
                 # defect, not noise, and it must be visible without a database query.
@@ -1040,6 +1112,28 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                           f"{len(chunk)} cards; {_dropped} rejected, "
                           f"{len(chunk) - len(_seen)} card(s) left unscored",
                           file=sys.stderr)
+
+                # Ask once more for the cards that did not come back. Stating the
+                # count above makes this rare; it does not make it impossible, and
+                # a silently unscored card is how the Versapay run lost nine of ten.
+                # One extra call, only when something is actually missing.
+                _missing = [i for i in range(len(chunk)) if i not in _seen]
+                if _missing and len(_missing) < len(chunk):
+                    retry_prompt = prompt + (
+                        f"\n\nYou returned {len(_seen)} of {len(chunk)} scores. Return ONLY the "
+                        f"missing ones now, for these indices: {_missing}. One object each.")
+                    try:
+                        resp2 = await generate_content_with_retry(
+                            prompt=retry_prompt, schema=BatchScoreOutput,
+                            system_instruction=sys_prompt, stage="ranker_pain_scoring",
+                        )
+                        scores = list(resp2.scores)
+                    except ProviderProbeFailedError:
+                        scores = []
+                    for s2 in scores:
+                        if s2.index in _missing and s2.index not in _seen:
+                            _seen.add(s2.index)
+                            _apply(chunk[s2.index][0], s2)
 
                 # Compass VII: a card we sent and got no answer for is not a card
                 # that scored zero. Left unlabelled it keeps excluded=None and

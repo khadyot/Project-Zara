@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Engineering velocity and data reconciliation",
+    "draft_text": "Hi Test,\n\nI'm Khadyot from Zamp. We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide.\n\nI read your post about boosting engineering velocity, especially your point about the 3x increase and the 50% cut in commit-to-push time after loading 500 repositories. Do you have a process for matching records across finance and ops systems as you scale?\n\nWe pull data from your finance and ops platforms, match records, and surface mismatches for review, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 3054,
+  "completion_tokens": 1504
+}

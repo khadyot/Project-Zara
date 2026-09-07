@@ -368,12 +368,19 @@ async def test_own_appointment_cannot_win_in_strict_mode(use_fixtures, monkeypat
                              load_snapshot("tests/fixtures/payoutsnetwork_snapshot.json"),
                              strictness="strict")
 
-    flagged = [c for c in rp.cards if (c.guardrail_hit or "").startswith("own appointment")]
+    # Reads both fields. Until 2026-09-07 this was a guardrail_hit, which only
+    # halved the score; it is now an exclusion in strict mode, because halving was
+    # measurably not enough (see the Versapay cases at the end of this file).
+    flagged = [c for c in rp.cards
+               if (c.guardrail_hit or "").startswith("own appointment")
+               or (c.excluded or "").startswith("own appointment")]
     assert flagged, "Jon Anderson's own appointment must be flagged"
     # Still rendered under "What it rejected" -- set aside, not hidden.
     assert all(c in rp.cards for c in flagged)
     if rp.winning_card is not None:
         assert not (rp.winning_card.guardrail_hit or "").startswith("own appointment"), \
+            "an own-appointment card must never become the hook"
+        assert not (rp.winning_card.excluded or "").startswith("own appointment"), \
             "an own-appointment card must never become the hook"
 
 
@@ -436,3 +443,136 @@ def test_aggregators_are_caught_behind_a_google_news_redirect(claim, is_row, lab
                       source_url="https://news.google.com/rss/articles/CBMiT0FV?oc=5",
                       published_date=None, snippet="", tier="company", source="GoogleNewsRSS")
     assert _is_directory_row(card) is is_row, label
+
+
+# --------------------------------------------------------------------------
+# Own appointment, unconditionally. Added 2026-09-07.
+#
+# test_own_appointment_cannot_win_in_strict_mode above passed the whole time this
+# was broken, for two reasons worth remembering: its assertion is conditional on a
+# winner existing, and its fixture's own-appointment card does not happen to be the
+# strongest thing in the pool. These build a pool where it IS the strongest, which
+# is the case that occurs in the wild every time someone is newly appointed.
+# --------------------------------------------------------------------------
+
+def _appointment_pool():
+    """What a freshly-appointed CFO's retrieval actually looks like: the same wire
+    story from six outlets, and nothing else with a date on it."""
+    cards = [
+        _card(f"Versapay Names Glen Braganza Chief Financial Officer ({i})",
+              "Versapay today announced the appointment of Glen Braganza as Chief "
+              "Financial Officer, effective immediately. Braganza joins from Worldpay.",
+              url=f"https://example.com/appointment{i}",
+              date="2026-08-21T00:00:00Z", tier="person", stype="news")
+        for i in range(6)
+    ]
+    weak = _card("Versapay publishes AR benchmark note",
+                 "Versapay published a short note on accounts receivable benchmarks.",
+                 url="https://www.versapay.com/blog/ar-note",
+                 date="2026-03-01T00:00:00Z")
+    return cards + [weak]
+
+
+def test_an_own_appointment_card_never_reaches_the_pain_scorer(monkeypatch):
+    """Halving was the old treatment and it was not enough: the story is
+    person-tier, days old, and matches structural_complexity at 0.8, so half of a
+    very high number still wins. Measured live on Glen Braganza at Versapay, where
+    one won at 0.588 and the draft opened "Saw that Versapay named Glen Braganza
+    CFO as the platform scales"."""
+    prospect = Prospect("Glen Braganza", "Versapay", "Chief Financial Officer")
+    prompt = _rank_capturing_shortlist(prospect, _appointment_pool(), monkeypatch)
+    assert "appointment of Glen Braganza" not in prompt, (
+        "an own-appointment card was sent to the pain scorer and can therefore win"
+    )
+    assert "accounts receivable benchmarks" in prompt, (
+        "the guardrail took the rest of the pool with it"
+    )
+
+
+def test_own_appointment_cards_stay_visible_as_rejected(monkeypatch):
+    """Set aside, not hidden. The decision card has to show what was refused and
+    why, or the guardrail is indistinguishable from a retrieval miss."""
+    import asyncio
+
+    import zara.ranker as ranker
+
+    async def fake(prompt, schema, system_instruction, stage="unknown"):
+        return schema(scores=[]) if stage == "ranker_pain_scoring" else schema(hooks=[])
+
+    monkeypatch.setattr(ranker, "generate_content_with_retry", fake)
+    results = [SourceResult(source="TestSource", rung=0, status="ok", reason=None,
+                            cards=_appointment_pool(), cost_usd=0.0, elapsed_ms=1)]
+    rp = asyncio.run(ranker.rank_prospect(
+        Prospect("Glen Braganza", "Versapay", "Chief Financial Officer"), results))
+
+    flagged = [c for c in rp.cards if (c.excluded or "").startswith("own appointment")]
+    assert len(flagged) == 6, f"expected all six appointment cards labelled, got {len(flagged)}"
+    assert rp.winning_card is None or not (
+        rp.winning_card.excluded or "").startswith("own appointment")
+
+
+def test_permissive_mode_downgrades_it_to_a_soft_flag(monkeypatch):
+    """Same split as never_reference. This is a judgment about what is WRITEABLE,
+    not about what is true, so an operator who disagrees can see it soft-flagged
+    rather than have the decision made for them."""
+    prospect = Prospect("Glen Braganza", "Versapay", "Chief Financial Officer")
+    import zara.ranker as ranker
+
+    captured = {}
+
+    async def fake(prompt, schema, system_instruction, stage="unknown"):
+        captured["prompt"] = prompt
+        raise RuntimeError("stop after shortlist")
+
+    monkeypatch.setattr(ranker, "generate_content_with_retry", fake)
+    results = [SourceResult(source="TestSource", rung=0, status="ok", reason=None,
+                            cards=_appointment_pool(), cost_usd=0.0, elapsed_ms=1)]
+    try:
+        asyncio.run(ranker.rank_prospect(prospect, results, strictness="permissive"))
+    except RuntimeError as e:
+        if "stop after shortlist" not in str(e):
+            raise
+    assert "appointment of Glen Braganza" in captured.get("prompt", ""), (
+        "permissive mode should still score it, flagged, not exclude it"
+    )
+
+
+@pytest.mark.parametrize("claim", [
+    # The headline form, which is how wire copy actually writes it. This is the
+    # shape that got through: the greedy scan matched "Versapay Names Glen" and
+    # consumed the given name, and "Braganza CFO" could not form a second
+    # candidate because CFO has no lowercase letter.
+    "Versapay Names Glen Braganza CFO as B2B Payments Platform Scales",
+    "Versapay Names Glen Braganza Chief Financial Officer",
+    "Versapay names former Worldpay exec Glen Braganza as new CFO",
+    # The press-release form, which always worked, kept so a future change
+    # cannot fix one and break the other.
+    "Versapay today announced the appointment of Glen Braganza as Chief Financial Officer",
+])
+def test_every_phrasing_of_his_own_hire_is_caught(claim):
+    from zara.ranker import is_own_appointment
+
+    card = _card(claim, claim, date="2026-08-21T00:00:00Z", tier="person", stype="news")
+    assert is_own_appointment(card, "Glen Braganza", "attributed"), (
+        f"not recognised as his own appointment: {claim!r}"
+    )
+
+
+@pytest.mark.parametrize("claim,person", [
+    # Somebody else's hire at the same company is evidence we WANT: it is a
+    # structural change we can legitimately write about.
+    ("Versapay Names Jamison Jaworski Chief Revenue Officer", "Glen Braganza"),
+    ("Payouts Network Names Jamison Jaworski as Chief Revenue Officer", "Keith Smith"),
+    # And an ordinary company action must not be dragged in by a loosened scan.
+    ("Versapay launches new accounts receivable automation for mid-market", "Glen Braganza"),
+])
+def test_someone_elses_appointment_still_survives(claim, person):
+    """The overlapping scan finds more candidate names, so the false-positive side
+    needs holding down explicitly. `is_own_appointment` was measured at zero false
+    positives across 181 recorded cards and must stay there."""
+    from zara.ranker import is_own_appointment
+
+    card = _card(claim, claim, date="2026-08-21T00:00:00Z", tier="person", stype="news")
+    assert not is_own_appointment(card, person, "attributed"), (
+        f"someone else's appointment was refused as {person}'s own: {claim!r}"
+    )

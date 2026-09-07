@@ -193,3 +193,83 @@ def test_a_card_the_scorer_ignored_is_labelled_not_silently_eligible(monkeypatch
         assert rc.excluded == "scorer returned no verdict for this card", (
             f"{marker} was skipped by the scorer but is still eligible"
         )
+
+
+# --------------------------------------------------------------------------
+# Under-delivery: the model answering fewer cards than it was asked about.
+# --------------------------------------------------------------------------
+
+def _rank_with_two_replies(prospect, cards, first, second, monkeypatch):
+    """A scorer that under-delivers, then answers the follow-up."""
+    import zara.ranker as ranker
+
+    calls = {"n": 0}
+
+    async def fake(prompt, schema, system_instruction, stage="unknown"):
+        if stage != "ranker_pain_scoring":
+            return schema(hooks=[])
+        calls["n"] += 1
+        return schema(scores=first if calls["n"] == 1 else second)
+
+    monkeypatch.setattr(ranker, "generate_content_with_retry", fake)
+    results = [SourceResult(source="TestSource", rung=0, status="ok", reason=None,
+                            cards=cards, cost_usd=0.0, elapsed_ms=1)]
+    rp = asyncio.run(ranker.rank_prospect(prospect, results))
+    return rp, calls["n"]
+
+
+def test_cards_the_scorer_skipped_are_asked_for_again(monkeypatch):
+    """Live Versapay run, 2026-09-07: ten cards went to the scorer -- most of them
+    the same CFO appointment from different outlets -- and it returned a SINGLE
+    object, apparently collapsing them. Nine cards went unscored into a run that
+    then found no winner at all. Near-duplicate cards are normal, so this cannot
+    be left to chance."""
+    prospect = Prospect("Sean Henry", "Stord")
+    ranked, calls = _rank_with_two_replies(
+        prospect, _three_cards_out_of_order(),
+        first=[{"index": 0, "matched_pain_id": "silent_breaks", "score": 0.8,
+                "reason": "VERDICT_NEW"}],
+        second=[{"index": 1, "matched_pain_id": "silent_breaks", "score": 0.7,
+                 "reason": "VERDICT_MID"},
+                {"index": 2, "matched_pain_id": "general_news", "score": 0.3,
+                 "reason": "VERDICT_OLD"}],
+        monkeypatch=monkeypatch,
+    )
+    assert calls == 2, "the unscored cards were never asked about again"
+    assert _reason_for(ranked, "MARKER_MID") == "VERDICT_MID"
+    assert _reason_for(ranked, "MARKER_OLD") == "VERDICT_OLD"
+
+
+def test_a_complete_reply_costs_no_second_call(monkeypatch):
+    """The retry is for a defect, not a routine. It must not double the cost of
+    every run against a Groq bucket the ranker already spends half of."""
+    prospect = Prospect("Sean Henry", "Stord")
+    _, calls = _rank_with_two_replies(
+        prospect, _three_cards_out_of_order(),
+        first=[{"index": i, "matched_pain_id": "general_news", "score": 0.3,
+                "reason": f"R{i}"} for i in range(3)],
+        second=[], monkeypatch=monkeypatch,
+    )
+    assert calls == 1
+
+
+def test_an_empty_reply_is_not_retried(monkeypatch):
+    """Nothing at all is a different failure from a partial answer -- a provider
+    problem, not a model losing its place -- and re-asking the same question
+    buys nothing. The cards are labelled unscored instead."""
+    prospect = Prospect("Sean Henry", "Stord")
+    ranked, calls = _rank_with_two_replies(
+        prospect, _three_cards_out_of_order(),
+        first=[], second=[], monkeypatch=monkeypatch,
+    )
+    assert calls == 1
+    assert all(c.excluded for c in ranked.cards if "MARKER_" in c.card.snippet)
+
+
+def test_the_prompt_states_how_many_objects_it_wants(monkeypatch):
+    """Cheapest half of the fix, and the one that stops the retry being needed."""
+    prospect = Prospect("Sean Henry", "Stord")
+    _, prompt = _rank_with_positional_scorer(
+        prospect, _three_cards_out_of_order(), scores=[], monkeypatch=monkeypatch)
+    assert "exactly 3 objects" in prompt
+    assert "never merge or skip" in prompt

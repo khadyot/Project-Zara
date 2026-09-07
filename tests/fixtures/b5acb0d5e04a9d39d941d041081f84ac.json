@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Your team boosted engineering velocity 3x and cut commit\u2011to\u2011push time by 50% after loading 500 repositories.",
+        "rationale": "While the role is unknown, this impressive engineering efficiency at ShipBob signals broader scaling pressures that finance and operations teams also contend with.",
+        "bridge": "Our solution does not directly address this content.",
+        "strength": 0.4
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob data analyst salaries in Bangor, ME were recently highlighted on Comparably.",
+        "rationale": "Salary visibility suggests a focus on data roles within ShipBob, indicating potential interest in better data integration across finance and ops.",
+        "bridge": "Our solution does not directly address this content.",
+        "strength": 0.3
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob just launched its first Anthropic\u2011verified fulfillment connector as part of its AI suite.",
+        "rationale": "Introducing AI\u2011driven connectors shows ShipBob\u2019s push to automate data flow across operational systems, a challenge finance teams also face when reconciling records.",
+        "bridge": "We connect finance and ops systems, match records across them, and surface the exceptions a person needs to decide, complementing your new fulfillment connector.",
+        "strength": 0.7
+      },
+      {
+        "card_index": 3,
+        "hook_text": "In your Spring\u202f2026 release, ShipBob highlighted new AI\u2011powered delivery date promises and consumer\u2011trusted tracking.",
+        "rationale": "Improving delivery predictability relies on accurate data across finance and operations, where mismatched records can cause exceptions that affect promised dates.",
+        "bridge": "Our platform can connect your finance and ops systems, match records across them, and surface any exceptions that could impact delivery promises.",
+        "strength": 0.65
+      }
+    ]
+  },
+  "prompt_tokens": 1237,
+  "completion_tokens": 1330
+}

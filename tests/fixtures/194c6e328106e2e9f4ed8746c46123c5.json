@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Music podcast, no finance observable."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CRO appointment, not finance leadership."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Acquisition of Payoneer (M&A activity)."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article on loyalty, no specific observable."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "New CFO appointment (finance leadership)."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Launch of real-time direct-to-bank transfers."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Real-time direct-to-bank transfers announced."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Expansion of global real-time payouts network."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.7,
+        "reason": "Finix adds new payment features."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Music interview, unrelated to finance."
+      }
+    ]
+  },
+  "prompt_tokens": 1610,
+  "completion_tokens": 1385
+}

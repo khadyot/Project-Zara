@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No finance or scaling observable; unrelated conversation."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Salary listing; no observable matching pains."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product launch; no relevant finance observable."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Release announcement; lacks pain observables."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Profile details; no matching finance observable."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Company description; no pain-related observable."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue figure; not explicit volume or finance pain."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "IPO bank hiring; not a confirmed financing event."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New supply chain officer; not finance leadership."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Operational advice; no specific company event."
+      }
+    ]
+  },
+  "prompt_tokens": 1634,
+  "completion_tokens": 1578
+}

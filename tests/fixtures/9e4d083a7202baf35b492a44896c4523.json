@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references the prospect's own statements (the 3x velocity increase and 50% commit-to-push reduction) which are present in the evidence, and includes only allowed value proposition language and generic connective phrasing. No invented metrics, customer names, or specific claims about the prospect/company are made beyond what the evidence supports."
+  },
+  "prompt_tokens": 2034,
+  "completion_tokens": 476
+}
