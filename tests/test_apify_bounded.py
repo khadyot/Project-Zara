@@ -39,3 +39,30 @@ async def test_actor_that_never_returns_is_bounded_and_reported_failed():
 
 def test_ceiling_exists_and_is_sane():
     assert 0 < APIFY_ACTOR_TIMEOUT <= 120
+
+
+def test_llm_fixtures_are_only_written_while_recording(tmp_path, monkeypatch):
+    """A production run must not edit the test corpus.
+
+    _record_fixture fired after every live response regardless of context, so the
+    deployed app wrote into tests/fixtures/ on every run and could overwrite a
+    recording the suite replays.
+    """
+    import os
+    from zara.utils import provider
+
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "tests" / "fixtures").mkdir(parents=True)
+
+    def wrote():
+        return list((tmp_path / "tests" / "fixtures").glob("*.json"))
+
+    for mode, should_write in (("", False), ("1", False), ("fill", True)):
+        for f in wrote():
+            f.unlink()
+        if mode:
+            monkeypatch.setenv("USE_FIXTURES", mode)
+        else:
+            monkeypatch.delenv("USE_FIXTURES", raising=False)
+        provider._record_fixture("p", "s", '{"a":1}', {"prompt_tokens": 1, "completion_tokens": 1})
+        assert bool(wrote()) is should_write, f"USE_FIXTURES={mode!r} wrote={bool(wrote())}"

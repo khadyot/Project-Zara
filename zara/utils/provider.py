@@ -181,6 +181,19 @@ def _record_fixture(prompt: str, system_instruction: str, content: str, usage: d
     # iterated on, not recorded, so it stops here rather than at each call site.
     if _stage.get() in _live_stages():
         return
+    # Record ONLY while deliberately recording. This used to fire after every live
+    # response in any context, so an ordinary production run -- the deployed app,
+    # a demo, anything -- wrote files into tests/fixtures/ and could overwrite an
+    # existing recording that the suite replays. Observed 2026-09-07: a live run
+    # left four new fixtures and one MODIFIED, silently moving the corpus under
+    # whoever ran the tests next.
+    #
+    # USE_FIXTURES=fill is the documented recording mode and the only one that
+    # should write. Under =1 a live call should not happen at all (a missing hash
+    # raises), and unset means production, which has no business editing tests.
+    # Same defect class as apify.py's unconditional fixture write.
+    if os.environ.get("USE_FIXTURES") != "fill":
+        return
     h = hashlib.md5((prompt + system_instruction).encode()).hexdigest()
     fixture_path = f"tests/fixtures/{h}.json"
     os.makedirs("tests/fixtures", exist_ok=True)
