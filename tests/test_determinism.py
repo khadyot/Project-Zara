@@ -3,7 +3,7 @@
 Card order used to come from fetcher *completion* order: `_gather_results`
 appended inside `_run_one` under `asyncio.gather`, so a slow fetcher landed last.
 Every sort in the ranker is a stable `list.sort`, so that order survived into the
-15-card hard cap and the winning-card pick -- meaning the same prospect could
+10-card hard cap and the winning-card pick -- meaning the same prospect could
 yield a different hook, draft and verifier verdict with no code change at all.
 
 That is not a cosmetic bug: it makes "did my change help?" unanswerable, which is

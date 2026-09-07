@@ -320,8 +320,27 @@ class RunTrace:
         except Exception:
             pass
 
+    # Streamlit signals "stop this script run" and "start it again" by raising.
+    # Neither is an error, and both reach trace_run's `except BaseException`.
+    # Matched by NAME rather than by import so telemetry keeps no dependency on
+    # Streamlit and stays usable from scripts and tests.
+    _CONTROL_FLOW_EXC = ("StopException", "RerunException", "RerunData",
+                         "CancelledError")
+
     def fail(self, exc, tb=None):
-        self.outcome, self.error = "crash", f"{type(exc).__name__}: {exc}"
+        name = type(exc).__name__
+        if name in self._CONTROL_FLOW_EXC:
+            # The run was interrupted, not broken. Recorded honestly -- the money
+            # was still spent and the partial trace is still worth keeping -- but
+            # NOT as a crash. Khadyot's 15:32 run on 2026-09-07 is logged as
+            # `crash / StopException` because a rerun landed mid-flight, and a
+            # History page showing crashes the product did not cause is worse
+            # than useless in front of someone evaluating it.
+            self.outcome = "interrupted"
+            self.error = f"{name}: run interrupted before it finished"
+            self.traceback = None
+            return
+        self.outcome, self.error = "crash", f"{name}: {exc}"
         self.traceback = (tb or "")[-4000:]
 
     # -- persistence ---------------------------------------------------------

@@ -155,3 +155,35 @@ def test_no_trace_means_no_writes_and_no_errors(store, use_fixtures):
     usage = conn.execute("SELECT * FROM usage").fetchall()
     assert len(usage) == 1, "usage MUST be written even without a trace"
     assert usage[0]["prompt_tokens"] == 5
+
+
+# --------------------------------------------------------------------------
+# An interruption is not a crash.
+# --------------------------------------------------------------------------
+
+def test_a_streamlit_rerun_is_recorded_as_interrupted_not_crashed():
+    """Khadyot's 15:32 run on 2026-09-07 is logged `crash / StopException`
+    because the script reran mid-flight. Streamlit raises to signal "stop this
+    script run"; it is control flow, not a product failure, and a History page
+    showing crashes the pipeline did not cause is worse than useless in front of
+    someone evaluating it."""
+    from zara.utils.telemetry import RunTrace
+
+    class StopException(Exception):
+        pass
+
+    t = RunTrace(None)
+    t.fail(StopException(), "some traceback")
+    assert t.outcome == "interrupted"
+    assert t.traceback is None, "an interruption has no traceback worth keeping"
+
+
+def test_a_real_error_is_still_a_crash_with_its_traceback():
+    """The other half: this must not become a way to hide genuine failures."""
+    from zara.utils.telemetry import RunTrace
+
+    t = RunTrace(None)
+    t.fail(ValueError("headcount was a string"), "Traceback (most recent call last): ...")
+    assert t.outcome == "crash"
+    assert "ValueError" in t.error
+    assert t.traceback

@@ -263,7 +263,9 @@ def render_run_history():
 
     labels = {}
     for r in runs:
-        v = r["verification_status"] or ("CRASH" if r["outcome"] == "crash" else "-")
+        v = r["verification_status"] or {
+            "crash": "CRASH", "interrupted": "INTERRUPTED"
+        }.get(r["outcome"], "-")
         labels[f"{(r['ts'] or '')[5:16]}  {r['person_name']} @ {r['company']}  ·  {v}  ·  {r['run_id']}"] = r
 
     choice = st.selectbox("Pick a run", list(labels.keys()))
@@ -282,6 +284,14 @@ def render_run_history():
         st.error(f"CRASHED: {r['error']}")
         with st.expander("Traceback"):
             st.code(r["traceback"] or "", language="python", wrap_lines=True)
+    elif r["outcome"] == "interrupted":
+        # Distinguished from a crash on purpose. Rerunning the script mid-flight
+        # -- clicking anything while a run is in progress -- raises through the
+        # pipeline, and reporting that as a product failure is a lie the History
+        # page tells about itself.
+        st.info("Interrupted before it finished: the page was rerun while this run "
+                "was in progress. Not a failure of the pipeline. Anything already "
+                "spent is still counted below.")
 
     st.markdown("## Draft")
     if r.get("offer_is_generic"):
