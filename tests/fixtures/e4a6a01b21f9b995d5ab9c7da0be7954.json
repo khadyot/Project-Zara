@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No observable matches."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product launch announcement, no pain observable."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Salary data, no observable matches."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 release news, no pain observable."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI connector launch, no observable matches."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast featuring partners, no observable matches."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "LinkedIn profile, no observable matches."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Company description, no observable matches."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue valuation news, no pain observable."
+      }
+    ]
+  },
+  "prompt_tokens": 1752,
+  "completion_tokens": 1203
+}

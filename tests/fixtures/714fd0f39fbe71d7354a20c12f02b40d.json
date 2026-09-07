@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only generic value propositions and references to entities (Test, Khadyot, Zamp, ShipBob) that are present in the evidence. No unsupported metrics, customer names, or specific factual claims are introduced."
+  },
+  "prompt_tokens": 981,
+  "completion_tokens": 606
+}

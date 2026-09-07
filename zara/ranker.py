@@ -906,20 +906,50 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                 # cards survive at all -- was left reading Exa's generated header
                 # and the author's bio block, roughly 290 of the 500 characters on
                 # a LinkedIn card. Cards were being scored on furniture.
-                for i, card in chunk:
-                    prompt += f"[{i}] {clean_snippet(card.snippet)[:500]}\n\n"
-                    
+                #
+                # CHANGED 2026-09-07. This used to label each card with its GLOBAL id
+                # (`[{i}]`, the index into all_cards) and read the reply back as
+                # `ranked_cards_map[s.index]`. The model ignored the labels and
+                # answered positionally, 0..n-1, and because positions are always
+                # valid global ids the `in ranked_cards_map` guard could never fire.
+                # It only ever rejected out-of-range.
+                #
+                # Measured on the Prajit Nanu / Nium run: ten cards were sent
+                # (18, 8, 25, 26, 9, 30, 27, 2, 1, 15) and ten DIFFERENT cards were
+                # scored (0-6, 8, 9, 10). Six cards were scored without being sent,
+                # five were sent and got nothing, and every reason in the log was
+                # correct for its position and wrong for its card. A US card-issuance
+                # launch -- a textbook silent_breaks observable -- was scored
+                # `general_news` against a LinkedIn anniversary post.
+                #
+                # The contract is now positional, which is what the model does anyway
+                # and what _articulate_hooks below has always done correctly.
+                for pos, (_i, card) in enumerate(chunk):
+                    prompt += f"[{pos}] {clean_snippet(card.snippet)[:500]}\n\n"
+
                 resp = await generate_content_with_retry(
                     prompt=prompt,
                     schema=BatchScoreOutput,
                     system_instruction=sys_prompt,
                     stage="ranker_pain_scoring",
                 )
-                
+
                 scores = resp.scores
+                # Silent acceptance is what hid the misindexing for two weeks, so a
+                # reply that does not answer the question asked is now reported rather
+                # than absorbed. Duplicates are dropped: a second score for the same
+                # position is the model losing its place, and taking the later one
+                # would overwrite a good match with a worse one.
+                _seen: set[int] = set()
+                _dropped = 0
                 for s in scores:
-                    if s.index in ranked_cards_map:
-                        rc = ranked_cards_map[s.index]
+                    if not (0 <= s.index < len(chunk)) or s.index in _seen:
+                        _dropped += 1
+                        continue
+                    _seen.add(s.index)
+                    card_id = chunk[s.index][0]
+                    if card_id in ranked_cards_map:
+                        rc = ranked_cards_map[card_id]
                         if s.matched_pain_id and s.score > 0:
                             pm = PainMatch(pain_id=s.matched_pain_id, score=s.score, reason=s.reason)
                             final_score = s.score
@@ -938,7 +968,7 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                             # wrong company, verifier clean.
                             if rc.guardrail_hit and rc.guardrail_hit.startswith("possible namesake"):
                                 relevance *= NAMESAKE_PENALTY
-                            ranked_cards_map[s.index] = RankedCard(
+                            ranked_cards_map[card_id] = RankedCard(
                                 card=rc.card, pain_match=pm, proximity=rc.proximity,
                                 recency_days=rc.recency_days, score=relevance, excluded=None,
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
@@ -946,12 +976,36 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
                         else:
                             # B2: pain_match is None must contribute pain_score 0.0, as it already does.
                             relevance = _compute_relevance(0.0, rc.proximity, rc.recency_days, prox_val)
-                            ranked_cards_map[s.index] = RankedCard(
+                            ranked_cards_map[card_id] = RankedCard(
                                 card=rc.card, pain_match=None, proximity=rc.proximity,
                                 recency_days=rc.recency_days, score=relevance, excluded="matches no pain in value_prop",
                                 guardrail_hit=rc.guardrail_hit, attributed_to=rc.attributed_to
                             )
-                
+
+                # A scorer that answers a different question than the one asked is a
+                # defect, not noise, and it must be visible without a database query.
+                if _dropped or len(_seen) != len(chunk):
+                    print(f"[ranker] pain scoring returned {len(scores)} scores for "
+                          f"{len(chunk)} cards; {_dropped} rejected, "
+                          f"{len(chunk) - len(_seen)} card(s) left unscored",
+                          file=sys.stderr)
+
+                # Compass VII: a card we sent and got no answer for is not a card
+                # that scored zero. Left unlabelled it keeps excluded=None and
+                # score=0.0 from the construction above, which makes "the scorer
+                # skipped it" indistinguishable on screen from "the scorer read it
+                # and found nothing" -- and leaves it eligible to be picked.
+                for _pos, (_cid, _c) in enumerate(chunk):
+                    if _pos in _seen:
+                        continue
+                    _rc = ranked_cards_map[_cid]
+                    ranked_cards_map[_cid] = RankedCard(
+                        card=_rc.card, pain_match=None, proximity=_rc.proximity,
+                        recency_days=_rc.recency_days, score=0.0,
+                        excluded="scorer returned no verdict for this card",
+                        guardrail_hit=_rc.guardrail_hit, attributed_to=_rc.attributed_to,
+                    )
+
         except ProviderProbeFailedError as e:
             for i, card in to_score:
                 rc = ranked_cards_map[i]

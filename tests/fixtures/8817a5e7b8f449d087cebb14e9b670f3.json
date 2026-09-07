@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick thought on your new connector",
+    "draft_text": "Hi Test,\n\nI'm Khadyot from Zamp. We connect finance and operations systems, match records across them, and surface exceptions for review.\n\nSaw that ShipBob launched its first Anthropic-verified fulfillment connector, anchoring its AI suite. I wonder if the data matching and exception handling that follows such a connector often becomes a focus for teams.\n\nWe align finance and ops data, reconcile records, and highlight mismatches, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2699,
+  "completion_tokens": 1030
+}

@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob just unveiled its first Anthropic\u2011verified fulfillment connector, anchoring its AI suite.",
+        "rationale": "This shows ShipBob is investing in AI\u2011verified data flows, a priority for anyone focused on reliable system integration even though the specific role is unknown.",
+        "bridge": "Our platform reconciles finance and operations records and surfaces exceptions, ensuring the AI\u2011verified connector works on clean, matched data across systems.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob\u2019s Spring\u202f2026 release promises brand\u2011level delivery dates, trusted tracking, and AI\u2011driven shipping in days.",
+        "rationale": "The announcement highlights ShipBob\u2019s push for AI\u2011enabled shipping accuracy, a concern for any stakeholder responsible for delivering on promised dates.",
+        "bridge": "By matching finance and ops data and surfacing mismatches, we help ShipBob keep those AI\u2011driven delivery promises reliable and auditable.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob now offers a Simulation Terminal in every sandbox to test fulfillment, receiving, and inventory adjustments end\u2011to\u2011end.",
+        "rationale": "Providing a sandbox simulation underscores ShipBob\u2019s focus on integration testing, which often uncovers data inconsistencies between finance and operations.",
+        "bridge": "Our solution automatically matches those finance\u2011ops records and flags exceptions, reducing the manual effort needed during simulation testing.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob\u2019s Operators podcast recently featured Justin of RomperJack and Adam of Route discussing partnership insights.",
+        "rationale": "The episode signals ShipBob\u2019s emphasis on ecosystem partnerships, relevant to anyone looking to streamline cross\u2011company data flows despite the role being unknown.",
+        "bridge": "Our platform delivers a unified view of finance and operations data, surfacing exceptions that can hinder partnership initiatives and joint workflows.",
+        "strength": 0.65
+      }
+    ]
+  },
+  "prompt_tokens": 1261,
+  "completion_tokens": 980
+}

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "No finance-related observable mentioned."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Music interview; no finance observable."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.9,
+        "reason": "Mentions crypto integration as new payment method."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.85,
+        "reason": "Announces CFO appointment, new finance leadership."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO bio mentions systems implementation, not explicit migration."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.85,
+        "reason": "CFO appointment announced, indicating leadership change."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Team list; no observable finance news."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CRO appointment press release, not finance leadership."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Acquisition news shows M&A activity, structural complexity."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Bank loyalty article; no specific finance observable."
+      }
+    ]
+  },
+  "prompt_tokens": 1693,
+  "completion_tokens": 1802
+}
