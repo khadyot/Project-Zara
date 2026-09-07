@@ -405,13 +405,20 @@ def check_offer_scope(draft_text: str, prospect: RankedProspect, value_prop: dic
             # grounded fact" -- and grounding is precisely the wrong remedy here.
             # The words ARE grounded; they are just not ours. Left as a bare
             # finding, the retry tried to ground them again and failed twice.
+            banned = ", ".join(f'"{w}"' for w in imported)
+            # Phrased as a ban list rather than a description of the problem.
+            # Measured on a Shippo retry: told to "delete those words and describe
+            # only the mechanism WHAT WE DO names", the model wrote a DIFFERENT
+            # sentence that imported a different noun from the same card. Naming
+            # the forbidden words, and naming the replacement vocabulary, leaves
+            # less room to comply in the wrong direction.
             findings.append(
-                f'offer scope: the sentence "{sentence}" describes what WE do using '
-                f'{", ".join(imported)}, which came from the prospect\'s material and '
-                f"is not in WHAT WE DO. Do NOT ground this and do NOT cite a source "
-                f"for it: delete those words from the sentence about us and describe "
-                f"only the mechanism WHAT WE DO names. Their subject matter may be "
-                f"what our work is applied TO, never a capability we claim."
+                f'offer scope: the sentence "{sentence}" claims WE do something the '
+                f"prospect's material describes, not something WHAT WE DO names. "
+                f"BANNED in any sentence whose subject is we/our: {banned}. Do NOT "
+                f"ground these and do NOT cite a source: rewrite that sentence using "
+                f"only nouns that already appear in WHAT WE DO. Their subject matter "
+                f"may be what our work is applied TO, never a capability we claim."
             )
     return findings
 
