@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references facts present in the evidence (ShipBob's Anthropic-verified connector, the sender's name Khadyot, company Zamp, and the generic value proposition). No unsupported metrics, customer names, or specific prospect claims are introduced."
+  },
+  "prompt_tokens": 1054,
+  "completion_tokens": 599
+}

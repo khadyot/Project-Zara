@@ -298,6 +298,101 @@ def check_attribution(draft_text: str, prospect: RankedProspect) -> list[str]:
     ]
 
 
+# Sentences whose subject is us. What follows the verb is a claim about our own
+# product, and nothing else in the verifier looks at those.
+_WE_SENTENCE = re.compile(r"(?:^|(?<=[.!?]\s))\s*(?:We|Our)\b[^.!?]*[.!?]", re.M)
+
+# Words that carry no domain. Everything left after these is a noun the sentence
+# is actually about.
+_SCOPE_STOPWORDS = frozenset("""
+a an and any are as at be been but by can data do does for from get gets give
+gives has have how in into is it its keep keeps make makes need needs of off on
+one only or our out over so than that the their them then there these they this
+those to up us use uses we what when where which while who why will with within
+you your across after against all also any both each either every into more most
+much no not other same some such
+team teams work works working thing things part parts way ways
+system systems platform platforms tool tools solution solutions product products
+record records entry entries transaction transactions account accounts ledger
+ledgers exception exceptions mismatch mismatches check checks report reports
+number numbers file files line lines item items list lists
+match matches matching reconcile reconciles reconciling connect connects
+connecting surface surfaces surfacing flag flags flagging pull pulls pulling
+spot spots spotting decide decides deciding run runs running
+finance financial ops operational operations existing manual repetitive
+""".split())
+
+_WORD = re.compile(r"[A-Za-z][A-Za-z0-9'\-]{2,}")
+
+
+def _content_nouns(text: str) -> set[str]:
+    return {w.lower() for w in _WORD.findall(text or "")} - _SCOPE_STOPWORDS
+
+
+def check_offer_scope(draft_text: str, prospect: RankedProspect, value_prop: dict) -> list[str]:
+    """Blocks the draft claiming we do something drawn from the PROSPECT'S domain.
+
+    The sibling of check_attribution, and it exists for the same structural
+    reason: this is a false statement with no ungrounded token in it, so neither
+    half of the existing verifier can see it.
+
+      * pass1_grounding extracts numbers, URLs, quotes and proper nouns and checks
+        each against the evidence. "USDC" and "crypto" ARE in the evidence -- they
+        came from the prospect's own post -- so they ground perfectly.
+      * pass2_llm_judge is scoped, in its own prompt, to facts "ABOUT THE PROSPECT
+        OR THEIR COMPANY", and instructed that "the sender's value proposition ...
+        must not be flagged". A sender overclaim is whitelisted by construction.
+
+    So nothing in the product verified anything we said about ourselves. Measured
+    twice: Flexport's draft claimed we "run frontier models to generate pricing
+    predictions", and after that was fixed the Nium draft claimed we "reconcile
+    fiat and crypto entries". Zamp does neither.
+
+    The test is an asymmetry, not a blocklist. Take the nouns in a sentence whose
+    subject is "we", and flag any that the prospect's evidence knows about and
+    WHAT WE DO does not. A word we never used to describe ourselves, appearing in
+    a sentence about ourselves, having arrived from their material, is the import
+    signature. Deterministic, and it costs no model call.
+    """
+    offer = " ".join(str(value_prop.get(k) or "") for k in ("product", "proof_point"))
+    ours = _content_nouns(offer)
+    for pain in value_prop.get("pains", []) or []:
+        if isinstance(pain, dict):
+            ours |= _content_nouns(pain.get("statement", ""))
+    # The sender's own names are never an import, whatever else they are.
+    for k in ("sender_name", "sender_company", "sender_person"):
+        ours |= _content_nouns(str(value_prop.get(k) or ""))
+
+    theirs = set()
+    for c in prospect.cards:
+        if c.excluded is None or c is prospect.winning_card:
+            theirs |= _content_nouns(c.card.claim) | _content_nouns(c.card.snippet)
+    # Their own identity is theirs to be described by; it is not a capability.
+    theirs -= _content_nouns(prospect.prospect.person_name or "")
+    theirs -= _content_nouns(prospect.prospect.company or "")
+
+    findings = []
+    for m in _WE_SENTENCE.finditer(draft_text):
+        sentence = m.group(0).strip()
+        imported = sorted((_content_nouns(sentence) & theirs) - ours)
+        if imported:
+            # Worded as an instruction, not just a complaint. This string is fed
+            # back to the drafter as a revision note under a header that says
+            # "an unsupported claim that must be removed or replaced with a
+            # grounded fact" -- and grounding is precisely the wrong remedy here.
+            # The words ARE grounded; they are just not ours. Left as a bare
+            # finding, the retry tried to ground them again and failed twice.
+            findings.append(
+                f'offer scope: the sentence "{sentence}" describes what WE do using '
+                f'{", ".join(imported)}, which came from the prospect\'s material and '
+                f"is not in WHAT WE DO. Do NOT ground this and do NOT cite a source "
+                f"for it: delete those words from the sentence about us and describe "
+                f"only the mechanism WHAT WE DO names. Their subject matter may be "
+                f"what our work is applied TO, never a capability we claim."
+            )
+    return findings
+
+
 async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: dict,
                        strictness: str = "strict") -> VerificationResult:
     # Compass I: The no_signal note skips grounding extraction.
@@ -327,6 +422,7 @@ async def verify_draft(draft_text: str, prospect: RankedProspect, value_prop: di
         pass
 
     ungrounded = check_attribution(draft_text, prospect) + check_recency(draft_text, prospect, value_prop)
+    ungrounded += check_offer_scope(draft_text, prospect, value_prop)
     ungrounded += pass1_grounding(draft_text, prospect, value_prop, strictness=strictness)
     if ungrounded:
         return VerificationResult(

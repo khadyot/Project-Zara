@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob just launched its first Anthropic\u2011verified fulfillment connector, anchoring its AI suite.",
+        "rationale": "Your role isn\u2019t specified, so the company\u2011level AI investment is the relevant fact \u2013 it signals ShipBob is expanding data flows between fulfillment, finance and operations.",
+        "bridge": "Our platform connects the finance and ops systems you already run, matches records across them, and surfaces the exceptions you need to decide on as new AI\u2011driven data streams are added.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob announced its Spring 2026 release featuring AI that ships in days, along with promised delivery dates and trusted tracking.",
+        "rationale": "Without a known role, the headline AI rollout is the key company fact \u2013 it will generate more cross\u2011system activity that needs reconciliation.",
+        "bridge": "We match records across your finance and operations platforms and surface any mismatches, helping you keep AI\u2011accelerated fulfillment accurate and accountable.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 2,
+        "hook_text": "In 2021, ShipBob was seeking banks to support its planned 2024 IPO.",
+        "rationale": "Your role is unknown, so the financial\u2011planning context is the hook \u2013 preparing for an IPO typically involves tight alignment of finance data across systems.",
+        "bridge": "Our solution links the finance and ops systems you already use, matches records, and surfaces exceptions, giving you the data confidence needed for IPO readiness.",
+        "strength": 0.6
+      },
+      {
+        "card_index": 3,
+        "hook_text": "In 2020, ShipBob hired a new chief supply chain officer from Amazon.",
+        "rationale": "Since the role isn\u2019t identified, the leadership change is the salient company fact \u2013 a new supply\u2011chain head often drives tighter integration between operations and finance.",
+        "bridge": "By connecting your finance and ops platforms, matching records, and surfacing exceptions, we help the new supply\u2011chain leader maintain data integrity across the organization.",
+        "strength": 0.55
+      }
+    ]
+  },
+  "prompt_tokens": 869,
+  "completion_tokens": 982
+}

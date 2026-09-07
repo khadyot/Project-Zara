@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I noticed Test Co is hiring a Software Engineer.",
+        "rationale": "The role is unknown, so I\u2019m highlighting the company-level hiring activity, which suggests growth and likely new data integration work.",
+        "bridge": "As you expand your engineering team, keeping finance and ops systems in sync and surfacing record exceptions will let the new engineer focus on building features rather than reconciling data.",
+        "strength": 0.6
+      }
+    ]
+  },
+  "prompt_tokens": 755,
+  "completion_tokens": 361
+}

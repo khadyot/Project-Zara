@@ -1167,7 +1167,31 @@ async def _articulate_hooks(prospect: Prospect, top_cards: list[RankedCard], vp:
         "rationale (why this matters to THIS person — tie it to their actual role when the role is known "
         "and related to the pain; if the role is unknown or unrelated, hook on the company-level fact and "
         "say so plainly in the rationale — never invent a role connection), "
-        "bridge (how it connects to what we sell), "
+        # The bridge is drafter.py's instruction for paragraph 3: "If a line above
+        # said how this connects to what we sell, follow it rather than inventing a
+        # different connection." So whatever capability the bridge names, the email
+        # will claim. Paragraph 3 carries the rule against importing a mechanism
+        # from the prospect's domain; the sentence it is told to obey did not, and
+        # the guard protected the paragraph while the contamination arrived
+        # upstream of it.
+        #
+        # Measured twice. Flexport: WHAT WE SELL named no mechanism and the bridge
+        # supplied one, so the draft said we "run frontier models to generate
+        # pricing predictions". Nium, 2026-09-07, after WHAT WE SELL was fixed: the
+        # bridge read "match fiat and crypto transaction records" and the draft
+        # said "we reconcile fiat and crypto entries". Zamp does not reconcile
+        # crypto. Neither is catchable downstream -- pass 1 grounds proper nouns
+        # and those tokens ARE in the evidence, and the judge is scoped to invented
+        # claims about the PROSPECT, not about the sender.
+        "bridge (how what they did connects to what we sell). The bridge may only "
+        "describe capabilities named in WHAT WE SELL above, in ITS vocabulary. Never "
+        "borrow a noun from the card to describe what WE do: if the card is about "
+        "crypto, or freight, or claims, we still do exactly what WHAT WE SELL says "
+        "and nothing more. Name the work of theirs it applies TO, not a new thing we "
+        "supposedly handle. So \"we match records across the systems on both sides of "
+        "an acquisition\", never \"we match crypto and fiat records\". Do not open with \"Our platform\" or \"We provide a tool "
+        "that\". If WHAT WE SELL does not reach this card, say so plainly instead of "
+        "inventing a connection), "
         "strength (0.0-1.0 overall hook quality). Only use facts present in the snippets. "
         "TIMEFRAME: each card states its age. Be honest about it. Never call something recent, "
         "new, or 'just' anything unless it is under six months old. For older material name the "

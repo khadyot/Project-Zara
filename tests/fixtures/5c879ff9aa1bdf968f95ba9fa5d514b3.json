@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob just launched its first Anthropic\u2011verified fulfillment connector, anchoring its AI suite.",
+        "rationale": "The role is unknown, so we highlight the company\u2011level AI integration that signals a focus on data\u2011driven fulfillment.",
+        "bridge": "Matching records across finance and ops systems and surfacing exceptions can keep the data feeding that connector accurate and actionable.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob\u2019s Spring\u202f2026 release introduced AI that ships in days alongside promised delivery dates and trusted tracking.",
+        "rationale": "The role is unknown; we point to the recent AI\u2011focused product launch that underscores a need for reliable cross\u2011system data.",
+        "bridge": "Our capability to match records across finance and ops systems and surface exceptions ensures the underlying data supporting those AI features remains clean.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob announced it is hiring banks for its 2024 IPO.",
+        "rationale": "The role is unknown, so we reference the company\u2011level finance activity that will require tight data reconciliation ahead of the IPO.",
+        "bridge": "Matching records across finance and ops systems and surfacing exceptions can help maintain the data integrity needed for IPO preparation.",
+        "strength": 0.72
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob recently appointed a former Amazon executive as its chief supply chain officer.",
+        "rationale": "The role is unknown; we note the leadership change that likely drives a focus on integrated supply\u2011chain data.",
+        "bridge": "Ensuring consistent, exception\u2011free data across finance and operations can be achieved by matching records and surfacing anomalies for the new leader.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 893,
+  "completion_tokens": 1094
+}

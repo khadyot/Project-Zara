@@ -576,10 +576,25 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     #
     # The posture is now chosen from what the evidence actually supports.
     if _stance == "evidenced_pain":
-        prompt += ("  Second: what you imagine that means for the work, hedged, in this shape:\n"
-                   "  \"I imagine <gerund naming the actual work> can become increasingly\n"
-                   "  time-consuming.\" Name the real artifacts, the way the person doing the job\n"
-                   "  would: \"keeping <the actual records> aligned across <the actual systems>\",\n"
+        # CHANGED 2026-09-07. This was ONE mandatory sentence, so every
+        # evidenced-pain email in a batch opened its second thought with the same
+        # eleven words. That is the tell the whole antitemplate effort exists to
+        # remove, and it is the one a recipient forwarded two of these to a
+        # colleague would spot first.
+        #
+        # The shape was licensed for two properties, and all three below keep
+        # them: it HEDGES, and its subject is the WORK rather than the recipient's
+        # people. What it is not licensed for is being compulsory.
+        prompt += ("  Second: what you imagine that means for the work. It must be HEDGED --\n"
+                   "  a thought you are offering, not a diagnosis you are delivering -- and its\n"
+                   "  subject must be THE WORK, never their team. Pick whichever of these three\n"
+                   "  the evidence actually fits, and do not use the same one twice in a batch:\n"
+                   "    \"I imagine <gerund naming the actual work> can become increasingly\n"
+                   "    time-consuming.\"\n"
+                   "    \"My guess is <the actual work> is where that gets fiddly.\"\n"
+                   "    \"Usually the awkward part of <the actual work> is <the specific thing>.\"\n"
+                   "  Name the real artifacts, the way the person doing the job would:\n"
+                   "  \"keeping <the actual records> aligned across <the actual systems>\",\n"
                    "  \"keeping up with <the actual work the evidence implies>\". \"keeping things\n"
                    "  aligned\" names nothing and is the version every prospect gets.\n")
     elif _stance == "achievement":

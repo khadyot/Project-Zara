@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references supported evidence (ShipBob's AI connector) and makes permissible value\u2011proposition statements; it does not include any invented metrics, customer names, or specific claims about ShipBob that lack evidence."
+  },
+  "prompt_tokens": 1054,
+  "completion_tokens": 266
+}

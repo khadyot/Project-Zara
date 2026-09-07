@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw that Test Co is hiring a Software Engineer.",
+        "rationale": "Since the specific role of the hiring manager isn\u2019t disclosed, I\u2019m focusing on the company\u2019s growth signal, which often involves expanding the team that builds and maintains finance\u2011ops integrations.",
+        "bridge": "Our solution connects the finance and ops systems you already run, matches records across them, and surfaces the exceptions a person needs to decide.",
+        "strength": 0.6
+      }
+    ]
+  },
+  "prompt_tokens": 779,
+  "completion_tokens": 445
+}
