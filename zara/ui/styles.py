@@ -363,7 +363,12 @@ div[data-testid="stText"] > pre{
    Numbers are right-aligned with tabular figures so digits stack. */
 .zrow{
   display:grid;
-  grid-template-columns:11px minmax(0,18rem) 7.5rem minmax(0,1fr) auto auto;
+  /* The claim gets room to be read, the reason gets the slack, and the link is
+     bounded so it can never starve the reason. It did exactly that once: adding
+     the link as a free `auto` column squeezed .zr-detail, which wraps, and every
+     reason collapsed into a column of one word per line. Thirty rows became a
+     28,000px page. Bounded columns and nowrap are what stop it recurring. */
+  grid-template-columns:11px minmax(0,26rem) 9rem minmax(6rem,1fr) minmax(0,9rem) auto;
   align-items:baseline;
   gap:var(--s-2);
   padding:7px 0;
@@ -394,6 +399,7 @@ div[data-testid="stText"] > pre{
   color:var(--slate);text-decoration:none;
   border-bottom:1px solid var(--rule, currentColor);
   white-space:nowrap;justify-self:end;
+  overflow:hidden;text-overflow:ellipsis;max-width:100%;
 }
 .zrow .zr-link:hover{color:var(--zamp-blue,#005EFF);}
 .zrow.is-muted .zr-link{opacity:.75;}
@@ -402,8 +408,21 @@ div[data-testid="stText"] > pre{
   font-size:var(--t-label);font-weight:600;
   text-transform:uppercase;letter-spacing:var(--track-label);
   color:var(--slate);
+  /* nowrap, like every other cell in this row. "COMPANY ACTION" is two words and
+     did not fit 7.5rem once uppercased and tracked out, so it wrapped and made
+     the row twice as tall as its neighbours -- on precisely the company-tier
+     rows, which are the majority. Predates the link column; found by measuring
+     rendered row heights rather than reading the CSS. */
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.zrow .zr-detail{color:var(--stone);overflow:hidden;text-overflow:ellipsis;}
+/* nowrap, like .zr-name above. Without it this cell wraps, and a narrow
+   column turns "outside the top 10 by relevance (hard cap)" into eight
+   stacked lines. Ellipsis is the honest failure here: the reason is a
+   label, not prose, and the full text is one hover away. */
+.zrow .zr-detail{
+  color:var(--stone);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 .zrow .zr-value{
   color:var(--slate);font-variant-numeric:tabular-nums;
   text-align:right;white-space:nowrap;
@@ -670,6 +689,7 @@ section[data-testid="stSidebar"] textarea{color:var(--cream-paper)!important;}
 
 
 import html as _html
+import re as _re
 
 
 def render_brand():
@@ -698,6 +718,11 @@ def render_page_header(eyebrow, title, sub=None):
     st.markdown("".join(parts), unsafe_allow_html=True)
 
 
+def _strip_tags(v: str) -> str:
+    """Visible text of a pre-escaped HTML cell, for use in a title attribute."""
+    return _re.sub(r"<[^>]+>", "", v)
+
+
 def _link_cell(url, text=None) -> str:
     """The source link, as its own cell. Empty span when there is no URL, so the
     grid keeps its columns and rows stay aligned."""
@@ -706,8 +731,10 @@ def _link_cell(url, text=None) -> str:
     from zara.ui.text import link_label
     href = _html.escape(str(url), quote=True)
     label = _html.escape(text or link_label(url, limit=24))
-    return (f"<a class='zr-link' href='{href}' target='_blank' rel='noopener'>"
-            f"{label}</a>")
+    # The full URL on hover: the label is a shortened host and the whole point of
+    # this cell is being able to check where a card came from.
+    return (f"<a class='zr-link' href='{href}' target='_blank' rel='noopener' "
+            f"title='{href}'>{label}</a>")
 
 
 def zrow(name, state=None, detail=None, value=None, status=None,
@@ -730,11 +757,19 @@ def zrow(name, state=None, detail=None, value=None, status=None,
     if fill is not None: cls += " has-fill"
 
     dot = f"<span class='status-dot status-{status}'></span>" if status else "<span></span>"
+    # Every text cell in this row ellipsizes, which is the right failure for a
+    # scannable table and the wrong one if the truncated text is unrecoverable.
+    # title= puts the full string one hover away, so the row can stay one line
+    # without hiding anything. Escaped separately: `escape=False` callers pass
+    # HTML for the visible cell, and that markup must not end up inside an
+    # attribute.
+    def _t(v):
+        return f" title=\"{_html.escape(str(v), quote=True)}\"" if v else ""
     out = (
         f"<div class='{cls}'>{dot}"
-        f"<span class='zr-name'>{e(name)}</span>"
+        f"<span class='zr-name'{_t(name if escape else _strip_tags(str(name)))}>{e(name)}</span>"
         f"<span class='zr-state'>{e(str(state).replace('_', ' ')) if state else ''}</span>"
-        f"<span class='zr-detail'>{e(detail) if detail else ''}</span>"
+        f"<span class='zr-detail'{_t(detail)}>{e(detail) if detail else ''}</span>"
         f"{_link_cell(link, link_text)}"
         f"<span class='zr-value'>{e(value) if value else ''}</span>"
         f"</div>"

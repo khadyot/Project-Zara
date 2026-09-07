@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Interview about delivery speed, no finance observable"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder story on LinkedIn, no finance observable"
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mission statement on Amazon\u2011like delivery, no finance observable"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Quote about inventory placement, no finance observable"
+      },
+      {
+        "index": 35,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Supply\u2011chain comment and COO promotion, not finance leadership"
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.7,
+        "reason": "Announced $100M funding round for expansion"
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tariff impact interview, unrelated to finance observables"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile details, no finance observable"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0,
+        "reason": "Listing of funding rounds, no explicit announcement"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article about logistics platform, no finance observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1860,
+  "completion_tokens": 2041
+}

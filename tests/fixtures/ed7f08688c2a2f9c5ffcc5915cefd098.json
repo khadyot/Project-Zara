@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The email contains only generic value propositions, supported statements, and evidence\u2011based references. No invented metrics, customer names, or specific claims about the prospect are present."
+  },
+  "prompt_tokens": 957,
+  "completion_tokens": 417
+}

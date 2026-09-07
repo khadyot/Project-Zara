@@ -502,27 +502,55 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
     if voice and proximity != "authored":
         prox_mult *= VOICE_BONUS
 
-    # Gentle on purpose: an old card should lose ties, not be disqualified. The
-    # honesty guard already forces the draft to name the period rather than call
-    # a five-year-old podcast "recent".
-    if recency_days is None:
-        # Below every "known and younger than two years" tier on purpose. This sat
-        # at 0.9 -- ABOVE the 0.85 and 0.75 given to cards whose age we actually
-        # knew -- so not knowing a date scored better than knowing an inconvenient
-        # one. That is how an undated "CFO Pros on the Move" listicle beat a dated
-        # $250M funding round and produced "New finance chief" about someone three
-        # and a half years into the job. Compass VII: absence is not evidence.
-        rec_mult = 0.8
-    elif recency_days <= 180:
-        rec_mult = 1.0
-    elif recency_days <= 365:
-        rec_mult = 0.95
-    elif recency_days <= 730:
-        rec_mult = 0.85
-    else:
-        rec_mult = 0.75
-
+    rec_mult = recency_multiplier(recency_days)
     return pain_score * prox_mult * rec_mult
+
+
+# Relevance halves every year. One sentence, no arbitrary lines, and it keeps
+# falling instead of flattening.
+#
+# The curve this replaces was `<=180d 1.0 / <=365d 0.95 / <=730d 0.85 / older
+# 0.75`, and the bug was the last bucket: 0.75 applied identically at 731 days and
+# at 10,000 days, so age simply stopped mattering after two years. Measured on the
+# real function, that let a 2022 press release (pain 0.9, company tier) score
+# 0.3375 and beat a post the prospect had written thirty days earlier at 0.3000.
+# A 2019 podcast beat this month's company news. Khadyot caught it by running it
+# and asking why a four-year-old card had won.
+#
+# It was also internally inconsistent. The verifier's check_recency already treats
+# anything past stale_days (180) as too old to call recent, so the ranker was
+# handing the drafter winners the verifier then forbade describing as news. The
+# knee now sits at that same 180-day mark, so the two agree on what "old" means.
+#
+# Buckets were dropped rather than re-cut because they create cliffs: Chermaine
+# Hu's post is 186 days old, and any boundary near six months decides her run on
+# which side of a line she happens to land. A smooth decay has no such artifact.
+RECENCY_HALF_LIFE_DAYS = 365.0
+# Never zero. Compass I is degrade, never refuse: an ancient card must still be
+# able to win when it is genuinely the only thing there is, and then say so.
+RECENCY_FLOOR = 0.05
+# Undated must sit BELOW knowing a card is fresh and ABOVE knowing it is ancient:
+# not knowing is worse than good news and better than bad news. It sat at 0.9
+# once, above the 0.85 and 0.75 given to cards whose age was known, so ignorance
+# outscored an inconvenient fact -- which is how an undated listicle beat a dated
+# $250M round and produced "New finance chief" about someone three and a half
+# years into the job.
+#
+# Expressed as an age on the curve rather than as a bare number, so it cannot
+# drift out of that ordering when the half-life is tuned. Two years is where the
+# old bucketed scheme started calling things ancient, and the pair of tests in
+# test_selection_guards bracket it: undated must lose to a 700-day card and beat
+# an 1,883-day one. Deriving it keeps that true by construction.
+UNDATED_EQUIVALENT_DAYS = 760.0
+RECENCY_UNDATED = 0.5 ** (UNDATED_EQUIVALENT_DAYS / RECENCY_HALF_LIFE_DAYS)
+
+
+def recency_multiplier(recency_days: int | None) -> float:
+    """How much a card's age discounts it. 1.0 today, halving every year."""
+    if recency_days is None:
+        return RECENCY_UNDATED
+    days = max(0, int(recency_days))
+    return max(RECENCY_FLOOR, 0.5 ** (days / RECENCY_HALF_LIFE_DAYS))
 
 
 def _select_winner(final_cards: list[RankedCard], shortlist: list[RankedCard],

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "All factual statements in the draft (Series D raise over $100M and warehouse network >1,000 facilities) are supported by the provided evidence; no unsupported metrics, customer names, or fabricated quotes are present."
+  },
+  "prompt_tokens": 2528,
+  "completion_tokens": 427
+}

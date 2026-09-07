@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob just announced its first Anthropic\u2011verified fulfillment connector as part of its AI suite (published 21 days ago).",
+        "rationale": "Even though we don\u2019t know your exact title, anyone overseeing finance or operations at ShipBob needs confidence that AI\u2011driven fulfillment actions are based on synchronized data across systems.",
+        "bridge": "Our platform links your finance and ops tools, matches records in real time, and surfaces any mismatches, ensuring the new AI connector works on clean, aligned data.",
+        "strength": 0.88
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In the Spring\u202f2026 release, ShipBob highlighted AI that can ship orders in days, along with promised delivery dates and trusted tracking (published 105 days ago).",
+        "rationale": "For a finance or ops leader, rapid AI\u2011enabled shipping amplifies the impact of any data gaps between billing, inventory, and shipping, making exception visibility critical.",
+        "bridge": "By continuously reconciling finance and operations records and flagging exceptions, our solution lets your AI engine deliver on those promised delivery dates without costly mismatches.",
+        "strength": 0.86
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob reported $97.7\u202fM estimated ARR and a $1\u202fB valuation for 2024 (published 270 days ago).",
+        "rationale": "At a company of this scale, finance and operations teams face complex, high\u2011volume data flows where even small reconciliation errors can affect margins and investor confidence.",
+        "bridge": "Our system automatically matches transactions across your ERP, accounting, and warehouse platforms, surfacing exceptions before they impact your bottom line.",
+        "strength": 0.84
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob\u2019s Simulation Terminal now lets sandbox users run full\u2011lifecycle fulfillment, receiving, and inventory adjustments without touching real inventory (date unknown).",
+        "rationale": "While we don\u2019t know your role, anyone responsible for integrating finance or ops systems will need a safe way to validate data flows before production.",
+        "bridge": "Our platform can be used in those simulations to verify that record matching and exception handling work correctly across all connected systems.",
+        "strength": 0.87
+      }
+    ]
+  },
+  "prompt_tokens": 982,
+  "completion_tokens": 1466
+}

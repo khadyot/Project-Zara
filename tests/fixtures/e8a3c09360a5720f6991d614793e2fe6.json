@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Connecting finance and ops data at Stord",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect finance and operations systems, match records across them, and surface exceptions for review.\n\nSaw that Stord raised over $100 million in a Series D round and expanded its warehouse network to more than 1,000 facilities. I imagine keeping records aligned across an expanding set of logistics and finance platforms can become increasingly time-consuming.\n\nWe match data from your finance and ops tools, reconcile discrepancies, and highlight outliers, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 3507,
+  "completion_tokens": 962
+}

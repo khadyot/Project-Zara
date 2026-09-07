@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Your May\u202f2022 $100M+ Series\u202fD announcement highlighted rapid scaling to over 1,000 warehouses and 1,000+ employees.",
+        "rationale": "As CEO you\u2019re steering massive operational growth, which creates fragmented finance\u2011ops data that can hide costly inefficiencies.",
+        "bridge": "Our platform stitches finance and operations systems together, matches records across your expanding network, and surfaces exceptions so you can keep scaling without hidden cost leaks.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your recent LinkedIn post celebrating a $250M raise at a $3B valuation underscores the pressure to sustain Amazon\u2011level delivery for brands.",
+        "rationale": "Leading Stord as CEO means you must ensure the logistics engine scales while keeping cost visibility tight for investors and customers.",
+        "bridge": "By connecting your finance and ops platforms, we surface real\u2011time cost exceptions, turning fulfillment spend into a clear, controllable metric for growth decisions.",
+        "strength": 0.9
+      },
+      {
+        "card_index": 2,
+        "hook_text": "In your Kleiner\u202fPerkins interview you described operating in \"bounder mode\"\u2014as if it were your last capital.",
+        "rationale": "That mindset puts cash efficiency and disciplined spending at the forefront of your CEO agenda, especially as you expand the business.",
+        "bridge": "Our solution reconciles financial and operational data across the company, surfacing wasteful exceptions before they drain limited capital.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 3,
+        "hook_text": "You said the best sales pitch is turning a 10\u201115% shipping cost into a value engine for brands.",
+        "rationale": "As CEO you aim to convert logistics spend into a competitive advantage, which requires precise visibility into where those costs arise.",
+        "bridge": "We match records across finance and ops, surface the exact cost drivers, and enable you to transform the shipping expense into a measurable value engine.",
+        "strength": 0.85
+      }
+    ]
+  },
+  "prompt_tokens": 2214,
+  "completion_tokens": 1008
+}

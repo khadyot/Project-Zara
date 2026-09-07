@@ -783,7 +783,14 @@ def main():
         "for review. Nothing is ever sent.",
     )
 
-    _, col_main, _ = st.columns([1, 4, 1])
+    # Was [1, 4, 1]: two thirds of a 1200px measure, so roughly 780px of content
+    # in the middle of whatever width the display actually has. That measure is
+    # right for reading the draft and wrong for everything tabular next to it --
+    # the rejected list and the source table were being squeezed into a column
+    # narrow enough that the reason cell had no room left, which is half of why
+    # that panel looked the way it did. Wider, and the prose still sits inside
+    # --page-max rather than running edge to edge.
+    _, col_main, _ = st.columns([1, 12, 1])
     with col_main:
         if developer_mode_unlocked(admin_pass):
             st.markdown("<div class='eyebrow'>Advanced Configuration</div>", unsafe_allow_html=True)
