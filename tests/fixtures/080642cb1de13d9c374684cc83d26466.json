@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only statements present in the evidence (e.g., the description of connecting finance and ops systems, the sender and company names) and no invented metrics, customer names, or specific prospect claims unsupported by the snippets."
+  },
+  "prompt_tokens": 667,
+  "completion_tokens": 361
+}

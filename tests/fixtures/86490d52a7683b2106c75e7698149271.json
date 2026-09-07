@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Interview about delivery speeds, no finance observable."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile announcement, no finance observable."
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mission statement on delivery, no finance observable."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast discusses warehouse growth, no finance observable."
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Quote on supply chain differentiation, no finance observable."
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Announces $100M funding round, indicating expansion financing."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Video on post-tariff strategy, no finance observable."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn bio, no finance observable."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.9,
+        "reason": "Lists 2026 funding rounds, showing expansion financing."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article on $3bn platform, no finance observable."
+      }
+    ]
+  },
+  "prompt_tokens": 1947,
+  "completion_tokens": 1680
+}

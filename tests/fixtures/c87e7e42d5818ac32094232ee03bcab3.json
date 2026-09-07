@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains only statements supported by the provided evidence: the description of connecting finance and ops systems, the reference to Sean Henry's comments about delivery as a storefront and filling the Amazon gap, and the mention of Khadyot and Zamp, which are present in the evidence. No unsupported metrics, fabricated customer names, or invented facts are present."
+  },
+  "prompt_tokens": 3541,
+  "completion_tokens": 607
+}

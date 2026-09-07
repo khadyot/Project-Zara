@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 26,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 36,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches any pain."
+      }
+    ]
+  },
+  "prompt_tokens": 1906,
+  "completion_tokens": 924
+}

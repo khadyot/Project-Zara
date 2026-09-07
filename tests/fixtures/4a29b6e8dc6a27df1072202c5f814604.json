@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only references the 2026 funding round, which is present in the evidence, and uses generic statements about data alignment. It does not introduce any unsupported metrics, fabricated customer names, or specific prospect claims."
+  },
+  "prompt_tokens": 3047,
+  "completion_tokens": 236
+}

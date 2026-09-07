@@ -1,6 +1,7 @@
 import streamlit as st
 import asyncio
 import html
+import time
 import json
 import yaml
 import os
@@ -703,7 +704,23 @@ def main():
         if (os.environ.get("ZARA_ADMIN_PASSWORD") or "").strip():
             admin_pass = st.text_input("Admin Password", type="password")
 
-        st.markdown("<br><div class='eyebrow-sm'>2. Demo mode (offline)</div>", unsafe_allow_html=True)
+        # Depth is a choice, not a constant. `profile` has always been a parameter
+        # of the pipeline -- lean leaves rungs 2-4 empty, standard adds the Apify
+        # LinkedIn actors -- and app.py hardcoded "standard" in three places, so
+        # every prospect paid for the deep path whether they were worth it or not.
+        # An SDR working a low-priority name should be able to say "answer now".
+        # Measured: lean ~20s, standard ~49s on the same prospect.
+        st.markdown("<br><div class='eyebrow-sm'>2. Research depth</div>", unsafe_allow_html=True)
+        _fast = st.toggle(
+            "Answer now (skip deep sources)",
+            value=False,
+            help="Runs the free and search rungs only. About twice as fast and a "
+                 "little cheaper. Costs you company headcount, so ICP fit comes "
+                 "back unknown -- stated on the decision card, not hidden.",
+        )
+        run_profile = "lean" if _fast else "standard"
+
+        st.markdown("<br><div class='eyebrow-sm'>3. Demo mode (offline)</div>", unsafe_allow_html=True)
         demo_mode = st.checkbox(
             "Demo mode (offline)",
             help="Replay a recorded prospect with zero network calls. The pipeline runs "
@@ -759,7 +776,8 @@ def main():
         },
         "strictness": "permissive" if "Permissive" in strictness else "strict",
         "use_exa": use_exa,
-        "use_apify": use_apify
+        "use_apify": use_apify,
+        "profile": run_profile,
     }
 
     if demo_mode and replay_snapshot:
@@ -951,22 +969,26 @@ def main():
                 # one place it never fired, and two prospects could go out with
                 # character-identical closing lines.
                 _batch = st.session_state.setdefault("draft_batch", antitemplate.DraftBatch())
-                with trace_run(prospect, trigger="ui", profile="standard") as t, \
+                _profile = settings.get("profile", "standard")
+                with trace_run(prospect, trigger="ui", profile=_profile) as t, \
                         antitemplate.using(_batch):
                     tr["id"] = t.run_id
                     return await run_end_to_end_pipeline(
-                        prospect, profile="standard", settings=settings,
+                        prospect, profile=_profile, settings=settings,
                         on_event=lambda e: (t.event(e), on_event(e))[1],
                     )
 
             with st.status("Zara is researching...", expanded=_show_detail()) as status:
                 tr = {}
                 try:
+                    _t0 = time.time()
                     results, draft_res = asyncio.run(run_backend(tr))
+                    _elapsed = time.time() - _t0
                     st.session_state["zara_cache"] = {
                         "prospect": prospect, "results": results,
                         "draft_res": draft_res, "settings": settings,
                         "run_id": tr.get("id"),
+                        "elapsed_s": _elapsed,
                     }
                     status.update(label="Done — draft ready for review", state="complete", expanded=False)
                     if tr.get("id"):
@@ -1090,6 +1112,47 @@ def main():
             f"<span class='zchip {badge_cls}'>{html.escape(badge_text)}</span>",
             unsafe_allow_html=True,
         )
+
+        # --- What this run cost you -------------------------------------------
+        # Both numbers already existed and neither was ever shown: wall time was
+        # thrown away at the call site, and cost_usd sits on every SourceResult
+        # and was summed nowhere. A run that takes 20s and one that takes 50s are
+        # different products to an SDR working a list, and the difference is a
+        # choice they are now making -- so show them the bill for it.
+        _elapsed_s = cache.get("elapsed_s")
+        _run_cost = sum((getattr(r, "cost_usd", 0.0) or 0.0) for r in results)
+        _n_cards = sum(len(r.cards) for r in results)
+        _profile_used = (cache.get("settings") or {}).get("profile", "standard")
+        _paid = [r for r in results if (getattr(r, "cost_usd", 0.0) or 0.0) > 0]
+        bits = []
+        if _elapsed_s:
+            bits.append(f"<b>{_elapsed_s:.1f}s</b>")
+        bits.append(f"<b>${_run_cost:.4f}</b>")
+        bits.append(f"{_n_cards} cards")
+        bits.append("answer now" if _profile_used == "lean" else "full depth")
+        st.markdown(
+            "<div class='zrun'>" + " <span class='zrun-sep'>·</span> ".join(bits) + "</div>",
+            unsafe_allow_html=True,
+        )
+        with st.expander("What that cost went on"):
+            if _paid:
+                for r in sorted(_paid, key=lambda x: -(x.cost_usd or 0)):
+                    zrow(r.source, state=r.status,
+                         detail=(f"{len(r.cards)} cards" if r.status == "ok"
+                                 else short_reason(r.reason)),
+                         value=f"${r.cost_usd:.4f}", status=r.status)
+            else:
+                st.caption("Nothing billable ran. Free sources answered this one.")
+            if _profile_used == "lean":
+                st.caption(
+                    "Answer now skipped the deep rungs. That is why ICP fit reads "
+                    "unknown: company headcount only ever arrives with them."
+                )
+            st.caption(
+                "Model calls are on a free tier and bill nothing here, so this is "
+                "retrieval spend only. The month-to-date figure in the sidebar "
+                "counts what sources report and resets when the app restarts."
+            )
 
         # --- Hook options panel ---
         st.markdown("## Hook options")

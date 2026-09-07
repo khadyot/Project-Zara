@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "AI-verified fulfillment data integration",
+    "draft_text": "Hi Test,\n\nI'm Khadyot from Zamp. We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide.\n\nSaw that ShipBob launched its first Anthropic-verified fulfillment connector, anchoring its AI suite. I wonder if the new AI-verified data streams will create reconciliation steps that need close monitoring.\n\nWe match AI-verified fulfillment records to finance and ops systems and surface any mismatches for review, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2706,
+  "completion_tokens": 1249
+}

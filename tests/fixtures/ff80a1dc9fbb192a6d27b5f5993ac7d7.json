@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email does not contain any invented metrics, customer names, or specific claims about the prospect that are unsupported by the provided evidence. All references, such as Stord filling the gap left by Amazon, are present in the evidence, and the rest of the content is generic value proposition or connective language."
+  },
+  "prompt_tokens": 3597,
+  "completion_tokens": 576
+}

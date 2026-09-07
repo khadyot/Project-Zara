@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Aligning finance and ops records at scale",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide.\n\nSaw that Stord ships 50 million packages annually. I imagine keeping finance and operations records aligned across multiple systems can become increasingly time-consuming.\n\nWe match finance and ops records, surface mismatches, and reduce repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2755,
+  "completion_tokens": 1161
+}

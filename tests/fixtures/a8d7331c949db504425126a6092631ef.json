@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Ten years after founding Stord, you\u2019ve raised $250\u202fM at a $3\u202fB valuation to give independent brands Amazon\u2011level delivery experiences.",
+        "rationale": "As CEO driving massive growth, you need seamless alignment between finance and operations to protect margins and scale efficiently.",
+        "bridge": "Our platform links your finance and ops systems, matches records, and surfaces exceptions so you can keep growth profitable.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "You grew Stord from bootstrapped roots to 11 warehouses covering over 3\u202fmillion\u202fsq\u202fft serving brands like Athletic Greens and Native.",
+        "rationale": "Overseeing that rapid warehouse expansion, you must reconcile financial data with operational performance across many locations.",
+        "bridge": "We connect finance and ops data across sites, automatically matching records and flagging anomalies to keep expansion lean.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your $3\u202fbn logistics platform is now being highlighted for driving digital supply\u2011chain transformation.",
+        "rationale": "Leading a digital\u2011first logistics company, you rely on clean, integrated data to deliver on that promise.",
+        "bridge": "Our solution synchronizes finance and operations records, surfacing exceptions that could disrupt digital performance.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 3,
+        "hook_text": "You emphasize operating Stord in \u2018bounder mode,\u2019 treating every dollar as if it were your last to maintain a startup mindset.",
+        "rationale": "Maintaining that disciplined capital approach while scaling operations creates a need for tight financial\u2011operational visibility.",
+        "bridge": "Our tool matches financial and operational data in real time, highlighting mismatches so you can stay lean without sacrificing growth.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 1365,
+  "completion_tokens": 1024
+}

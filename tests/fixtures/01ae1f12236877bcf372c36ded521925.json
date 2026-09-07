@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "From college dropout to leading a unicorn that ships 50\u202fmillion packages annually.",
+        "rationale": "As Stord\u2019s Co\u2011Founder & CEO, you\u2019ve proven you can scale massive logistics operations while keeping costs low, a challenge that hinges on tight alignment between finance and operations.",
+        "bridge": "Our platform continuously matches finance and ops records and surfaces exceptions, giving you real\u2011time insight to keep that rapid growth efficient and cost\u2011effective.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your recent LinkedIn post highlighted Stord\u2019s $250\u202fM raise and the mission to give brands Amazon\u2011level delivery while preserving brand identity.",
+        "rationale": "Driving that brand\u2011first delivery experience at scale requires flawless coordination of financial and operational data, something you directly oversee as CEO.",
+        "bridge": "By reconciling finance and ops systems and flagging mismatches, our solution helps you protect brand experience while managing the financial complexity of rapid growth.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your latest article positions Stord as a $3\u202fbn digital supply\u2011chain platform.",
+        "rationale": "Leading a digital logistics platform means decisions are only as good as the data feeding them, a priority for a CEO focused on operational excellence.",
+        "bridge": "Our technology ensures finance and operations data stay synchronized and surfaces any exceptions, so you can make confident, data\u2011driven decisions across the supply chain.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 3,
+        "hook_text": "In your 2024 interview you emphasized operating Stord in \u2018bounder mode,\u2019 treating every dollar like the last.",
+        "rationale": "That frugal, capital\u2011efficient mindset makes precise visibility into financial\u2011operational health critical for you as CEO.",
+        "bridge": "Our platform matches records across finance and ops, surfacing costly exceptions before they drain capital, helping you stretch every investment further.",
+        "strength": 0.8
+      }
+    ]
+  },
+  "prompt_tokens": 1351,
+  "completion_tokens": 1292
+}

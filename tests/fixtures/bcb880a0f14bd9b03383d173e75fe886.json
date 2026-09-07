@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email contains no invented metrics, customer names, or specific claims about Sean Henry or Stord that are unsupported by the provided evidence. All statements are either supported by the evidence or are permissible value proposition language."
+  },
+  "prompt_tokens": 1867,
+  "completion_tokens": 326
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Funding round and data alignment",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect finance and ops systems, match records across them, and surface exceptions for review.\n\nSaw that Stord announced a 2026 funding round on Tracxn. I imagine keeping records aligned across finance and operations platforms can become increasingly time-consuming.\n\nWe reconcile data between those systems, flagging mismatches so you can focus on the underlying issues rather than manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2617,
+  "completion_tokens": 787
+}

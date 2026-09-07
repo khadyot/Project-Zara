@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Interview about delivery speed; no finance observable."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile; no relevant observable."
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mission statement on delivery; no finance observable."
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Quote on supply\u2011chain importance; not finance\u2011related."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder story; no observable matching pains."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.6,
+        "reason": "Warehouse and square\u2011foot expansion indicates transaction volume growth."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Discussion of culture; no finance observable."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn bio; no relevant observable."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.8,
+        "reason": "Funding round signals expansion financing."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article on platform scale; no specific finance observable."
+      }
+    ]
+  },
+  "prompt_tokens": 1750,
+  "completion_tokens": 1317
+}

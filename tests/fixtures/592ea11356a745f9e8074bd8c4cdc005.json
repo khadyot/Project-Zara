@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Interview about delivery speeds, no finance observable"
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder story announcement, no finance observable"
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mission statement on Amazon-like delivery, no finance observable"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Quote on Amazon inventory placement, no finance observable"
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Supply\u2011chain differentiator quote, no finance observable"
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.9,
+        "reason": "50\u202fmillion packages shipped annually indicates volume growth"
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO discusses culture, no finance observable"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile summary, no finance observable"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.7,
+        "reason": "2026 funding round announced, financing for expansion"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article on $3bn logistics platform, no finance observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1794,
+  "completion_tokens": 1391
+}

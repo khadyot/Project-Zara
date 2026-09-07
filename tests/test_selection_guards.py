@@ -375,3 +375,64 @@ async def test_own_appointment_cannot_win_in_strict_mode(use_fixtures, monkeypat
     if rp.winning_card is not None:
         assert not (rp.winning_card.guardrail_hit or "").startswith("own appointment"), \
             "an own-appointment card must never become the hook"
+
+
+# --------------------------------------------------------------------------
+# Company-data aggregators. Added 2026-09-07 after live runs kept handing the
+# top of the decision card to a listing page.
+# --------------------------------------------------------------------------
+
+def _card_at(url):
+    from zara.models import SignalCard
+    return SignalCard(claim="x", signal_type="news", source_url=url,
+                      published_date=None, snippet="", tier="company", source="s")
+
+
+@pytest.mark.parametrize("url,is_row,label", [
+    ("https://tracxn.com/d/companies/stord/__x", True, "Tracxn beat the founder's own post"),
+    ("https://getlatka.com/companies/flexport", True, "GetLatka revenue page"),
+    ("https://builtin.com/company/episode-six", True, "BuiltIn profile"),
+    ("https://www.bloomberg.com/profile/company/EPSX:US", True, "generated company profile"),
+    ("https://www.reuters.com/companies/FLXP.O", True, "generated company page"),
+    # The other half of the rule: these hosts also publish real journalism, and
+    # banning the host would throw the evidence out with the directory row.
+    ("https://www.reuters.com/business/finance/a-real-story-2026", False, "Reuters reporting"),
+    ("https://www.freightwaves.com/news/flexport-expansion", False, "trade reporting"),
+    ("https://www.linkedin.com/posts/rpetersen_x", False, "an authored post"),
+])
+def test_company_databases_are_database_tier(url, is_row, label):
+    from zara.ranker import _is_directory_row
+    assert _is_directory_row(_card_at(url)) is is_row, label
+
+
+def test_a_funding_listicle_loses_to_the_founders_own_post():
+    """The ordering observed on a live Stord run, before the demotion.
+
+    The Tracxn page was fresh (20d) and the post was not (104d), so recency alone
+    could not fix this: the listing page has to stop claiming company_action.
+    """
+    from zara.ranker import _compute_relevance
+    listicle = _compute_relevance(0.9, "database", 20, WEIGHTS)
+    own_post = _compute_relevance(0.5, "authored", 104, WEIGHTS)
+    assert own_post > listicle
+
+
+@pytest.mark.parametrize("claim,is_row,label", [
+    ("In the news: Stord - 2026 Funding Rounds & List of Investors - Tracxn", True,
+     "the exact card that beat the founder's own post on a live run"),
+    ("In the news: Flexport Revenue 2024: $1.5B ARR, $8B Valuation - GetLatka", True, "GetLatka"),
+    ("In the news: Flexport takes fulfillment network international - FreightWaves", False,
+     "trade reporting must keep company_action"),
+    ("In the news: Capital One highlights Discover, Brex integration - American Banker", False,
+     "trade reporting"),
+    ("In the news: Some story - Reuters", False, "a wire service is not an aggregator"),
+])
+def test_aggregators_are_caught_behind_a_google_news_redirect(claim, is_row, label):
+    """Google News returns news.google.com/rss/articles/CBMi..., so the host check
+    cannot see the destination. The publisher survives only in the title."""
+    from zara.ranker import _is_directory_row
+    from zara.models import SignalCard
+    card = SignalCard(claim=claim, signal_type="news",
+                      source_url="https://news.google.com/rss/articles/CBMiT0FV?oc=5",
+                      published_date=None, snippet="", tier="company", source="GoogleNewsRSS")
+    assert _is_directory_row(card) is is_row, label

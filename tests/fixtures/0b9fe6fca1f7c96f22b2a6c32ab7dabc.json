@@ -1,0 +1,29 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob launched its first Anthropic\u2011verified fulfillment connector, anchoring its AI suite.",
+        "rationale": "Although your specific role is unknown, this signals that ShipBob is layering advanced AI verification onto its fulfillment workflows, which will generate new data streams that finance and operations teams must reconcile.",
+        "bridge": "Our platform can automatically match the AI\u2011verified fulfillment data with your existing finance and ops systems, surfacing any exceptions before they become costly issues.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "ShipBob's Spring 2026 release promises delivery dates brands can guarantee, tracking consumers can trust, and AI that ships in days.",
+        "rationale": "Without a known role, the key takeaway is that ShipBob is emphasizing predictable delivery and AI\u2011driven shipping, which creates additional operational and financial metrics that need to stay in sync.",
+        "bridge": "Our solution links those promised delivery dates and AI\u2011generated shipping events to your finance and ops records, instantly flagging any mismatches for quick decision\u2011making.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob\u2019s Simulation Terminal is now available in all sandbox accounts, enabling merchants to simulate the full fulfillment lifecycle without real inventory.",
+        "rationale": "Since the role is unknown, the relevance lies in ShipBob\u2019s focus on integration testing, which produces simulated data that finance and operations teams must validate before production.",
+        "bridge": "We can ingest the simulated fulfillment, receiving, and inventory data, match it across your finance and ops platforms, and surface any exceptions so you can validate integrations with confidence.",
+        "strength": 0.8
+      }
+    ]
+  },
+  "prompt_tokens": 947,
+  "completion_tokens": 853
+}

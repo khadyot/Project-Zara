@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft contains only supported statements (Khadyot, Zamp, ShipBob's Anthropic\u2011verified connector) and generic value\u2011proposition language. No invented metrics, customer names, or specific prospect claims are present."
+  },
+  "prompt_tokens": 992,
+  "completion_tokens": 451
+}

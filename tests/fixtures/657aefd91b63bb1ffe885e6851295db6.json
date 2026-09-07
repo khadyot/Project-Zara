@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Stord just closed a $250\u202fmillion round, pushing its valuation to $3\u202fbillion.",
+        "rationale": "As CEO, Sean is now managing a larger war chest and must ensure scaling delivers revenue growth while controlling costs and meeting Amazon\u2011level delivery expectations.",
+        "bridge": "Our platform links finance and operations systems, matches records, and surfaces exceptions so the new capital is spent on the right initiatives and cost\u2011saving opportunities.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "A Tracxn report released 20\u202fdays ago catalogues Stord\u2019s latest funding rounds and investors.",
+        "rationale": "Understanding the investor landscape is a top priority for Sean in his role as CEO, influencing reporting, governance, and strategic allocation of resources.",
+        "bridge": "By reconciling finance and ops data, our solution provides clear visibility into how each investor\u2019s capital is being used and flags exceptions that could impact performance.",
+        "strength": 0.7
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Stord is being described as a $3\u202fbillion logistics platform reshaping digital commerce supply chains.",
+        "rationale": "Sean must keep the digital backbone scalable and free of data silos that could undermine the speed and cost advantages promised to brands.",
+        "bridge": "Our system unifies finance and operations records, surfacing exceptions that could disrupt the seamless logistics experience Stord delivers.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 3,
+        "hook_text": "In a 448\u2011day\u2011old interview Sean highlighted Stord\u2019s mission to give brands Amazon\u2011like delivery speeds while operating \u2018as if it were the last capital\u2019.",
+        "rationale": "This frugal growth mindset means Sean is keen on tools that prevent waste and quickly surface costly mismatches between finance and ops.",
+        "bridge": "Our platform matches records across those systems and flags exceptions, aligning with his \u2018last\u2011capital\u2019 discipline and supporting efficient scaling.",
+        "strength": 0.82
+      }
+    ]
+  },
+  "prompt_tokens": 1324,
+  "completion_tokens": 1366
+}

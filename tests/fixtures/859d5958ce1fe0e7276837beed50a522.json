@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw Stord\u2019s latest funding round highlighted on Tracxn just 20 days ago.",
+        "rationale": "As Co\u2011Founder & CEO, you\u2019re steering capital deployment and growth, so staying aware of investor activity is a top priority.",
+        "bridge": "Our platform can help you allocate that new capital efficiently by reconciling finance and ops systems, matching records, and surfacing exceptions that could waste resources.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your LinkedIn post from about 104 days ago celebrating Stord\u2019s $250\u202fmillion raise and $3\u202fbillion valuation caught my eye.",
+        "rationale": "That milestone reflects the strategic growth you champion as CEO, highlighting the need for scalable, integrated operations.",
+        "bridge": "By connecting your finance and operations data, we ensure the rapid scaling you\u2019re pursuing is underpinned by clean, exception\u2011free information.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your newsroom notes that Stord recently secured over $100\u202fmillion in Series\u202fD funding, bringing total capital to $325\u202fmillion.",
+        "rationale": "As the leader driving technology investment, you\u2019ll want every dollar to translate into operational efficiency and revenue growth.",
+        "bridge": "Our solution eliminates data silos between finance and ops, matching records and surfacing exceptions so the new funding drives measurable ROI.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 3,
+        "hook_text": "The recent article \u2018How a $3\u202fbn Logistics Platform is Driving Commerce Supply Chain Digital\u2019 highlighted Stord\u2019s market impact.",
+        "rationale": "Positioning Stord as a digital supply\u2011chain leader aligns with your vision as CEO to set industry standards.",
+        "bridge": "Our technology complements that vision by ensuring the underlying finance\u2011ops data is accurate and actionable, enabling faster decision\u2011making for your customers.",
+        "strength": 0.82
+      }
+    ]
+  },
+  "prompt_tokens": 1790,
+  "completion_tokens": 1248
+}

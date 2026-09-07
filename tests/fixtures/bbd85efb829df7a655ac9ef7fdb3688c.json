@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question about your fulfillment experience",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide.\n\nI read your post about delivering Amazon-level experiences, especially your point about the physical experience of receiving an order being as important as the product itself. I wonder how you currently reconcile the data between finance and operations to keep that experience consistent?\n\nWe match finance and ops records and surface any mismatches, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 3017,
+  "completion_tokens": 1331
+}

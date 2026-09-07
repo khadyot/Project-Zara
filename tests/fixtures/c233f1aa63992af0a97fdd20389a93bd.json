@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Interview intro, no explicit observable."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder story, no observable mentioned."
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Mission statement, lacks concrete observable."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Promotional call, no observable evidence."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Discussion of Amazon inventory placement, no observable."
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Quote on supply chain disruptions, no specific observable."
+      },
+      {
+        "index": 12,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.7,
+        "reason": "Announces $100M funding, indicates expansion funding."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile, no new finance leadership or funding."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.7,
+        "reason": "Lists 2026 funding round, shows significant financing."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Article title about platform, no observable detail."
+      }
+    ]
+  },
+  "prompt_tokens": 1895,
+  "completion_tokens": 1654
+}

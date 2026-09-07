@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Quick question",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect finance and operations systems, match records across them, and surface exceptions for review.\n\nI read your post about the importance of the physical delivery experience, especially your point that Stord fills the gap Amazon left for independent brands. I wonder how you currently surface delivery-related cost opportunities across your finance and ops data?\n\nWe match records between finance and operations platforms and surface any mismatches, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 3023,
+  "completion_tokens": 1026
+}

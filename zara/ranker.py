@@ -271,6 +271,57 @@ _DIRECTORY_HOSTS = (
     "leadiq.com", "success.ai", "equilar.com", "owler.com", "pitchbook.com",
     "clearbit.com", "hunter.io", "snov.io", "uplead.com", "adapt.io",
     "crunchbase.com", "peopledatalabs.com",
+    # COMPANY-data aggregators, added 2026-09-07. The list above was built from
+    # PEOPLE databases and stopped there, so a scraped company row still scored
+    # `company_action` -- the same weight as the company actually doing
+    # something. Crunchbase and PitchBook were already here; their direct
+    # equivalents were not, and they win constantly. Every one of these was
+    # observed beating real evidence in a live run this session:
+    #   "Stord - 2026 Funding Rounds & List of Investors - Tracxn" beat the
+    #     founder's own post about starting the company
+    #   "Flexport Revenue 2024: $1.5B ARR, $8B Valuation - GetLatka"
+    #   "Episode Six Revenue 2024: $29.4M ARR, $67M Raised - GetLatka"
+    #   "Episode Six Inc - Company Profile and News - Bloomberg Markets"
+    # A row in a company database is not the company doing anything, and
+    # "I saw your funding-rounds listing page" is not a reason to write.
+    "tracxn.com", "getlatka.com", "latka.com", "builtin.com", "preqin.com",
+    "growjo.com", "cbinsights.com", "similarweb.com", "wellfound.com",
+    "angel.co", "craft.co", "zippia.com", "leadgenius.com",
+)
+
+# Google News hands back an opaque redirect -- news.google.com/rss/articles/CBMi...
+# -- so the host check above is blind to where the story actually came from. The
+# publisher survives only in the title, which Google formats as "Headline -
+# Publisher". Measured: a Tracxn funding listicle reached a live decision card
+# through this path and outranked the founder's own post, because Tavily's copy of
+# the same page was correctly demoted while the Google News copy was not.
+#
+# Only aggregator BRANDS belong here. Reuters and Bloomberg publish real
+# journalism under the same redirect and must keep company_action; they are
+# handled by path, above.
+_AGGREGATOR_PUBLISHERS = (
+    "tracxn", "getlatka", "latka", "crunchbase", "pitchbook", "owler", "growjo",
+    "cb insights", "cbinsights", "builtin", "built in", "zoominfo", "zippia",
+    "craft.co", "similarweb", "preqin", "leadiq", "rocketreach", "apollo.io",
+)
+
+
+def _aggregator_by_byline(claim: str) -> bool:
+    """Publisher named in a Google News title, when the URL cannot say."""
+    if not claim:
+        return False
+    tail = claim.rsplit(" - ", 1)[-1].strip().lower()
+    if not tail or len(tail) > 40:
+        return False
+    return any(a == tail or tail.endswith(a) for a in _AGGREGATOR_PUBLISHERS)
+
+
+# General news sites that ALSO host generated company-profile pages. Banning the
+# host would throw away their journalism, which is real evidence; only the
+# directory path is a directory row.
+_DIRECTORY_PATHS = (
+    "/profile/company/", "/companies/", "/company-profile", "/organization/",
+    "/profiles/company", "/quote/",
 )
 
 
@@ -285,7 +336,14 @@ def _is_directory_row(card: SignalCard) -> bool:
     # fetcher that happened to find it.
     if "linkedin.com/in/" in url:
         return True
-    return any(h in url for h in _DIRECTORY_HOSTS)
+    if any(h in url for h in _DIRECTORY_HOSTS):
+        return True
+    # Bloomberg and Reuters publish both reporting and generated company pages.
+    # The path separates them, so the reporting keeps its company_action tier.
+    if any(seg in url for seg in _DIRECTORY_PATHS):
+        return True
+    # Last resort, for redirect URLs that hide their destination.
+    return _aggregator_by_byline(card.claim or "")
 
 
 def _compute_proximity(card: SignalCard, prospect: Prospect | None = None) -> Literal["authored", "colleague_authored", "attributed", "company_action", "database"]:

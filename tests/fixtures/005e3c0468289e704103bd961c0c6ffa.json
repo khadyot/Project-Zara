@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Connecting finance and ops data",
+    "draft_text": "Hi Sean,\n\nI'm Khadyot from Zamp. We connect finance and operations systems, match records across them, and surface exceptions for decision makers.\n\nI read your post about delivery being the new storefront for independent brands, especially your point that Stord fills the gap Amazon leaves for brands. I wonder how you currently surface financial exceptions that arise from fulfillment data?\n\nWe align finance and ops data streams, match each transaction, and highlight mismatches, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 3023,
+  "completion_tokens": 1021
+}

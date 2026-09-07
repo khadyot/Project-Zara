@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only includes the metric 'Stord ships 50 million packages annually', which is supported by the evidence. All other statements are generic, self-referential, or hypothesis-based and do not fabricate facts, metrics, or customer names."
+  },
+  "prompt_tokens": 2148,
+  "completion_tokens": 659
+}

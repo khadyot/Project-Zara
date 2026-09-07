@@ -428,6 +428,17 @@ div[data-testid="stText"] > pre{
   text-align:right;white-space:nowrap;
 }
 .zrow.is-muted{opacity:.62;}
+
+/* What the run cost, directly under the claim-strength chip. Quiet: it is a
+   receipt, not a headline. Tabular figures so the seconds and the dollars do not
+   jitter between runs. */
+.zrun{
+  margin:var(--s-2) 0 0;
+  font-size:var(--t-meta);color:var(--slate);
+  font-variant-numeric:tabular-nums;
+}
+.zrun b{font-weight:600;color:var(--midnight-ink);}
+.zrun-sep{color:var(--ash);margin:0 .15rem;}
 .zrow.is-alert .zr-state{color:var(--midnight-ink);}
 
 /* A quota row carries a fill level. A 2px rule under the row reads at a
