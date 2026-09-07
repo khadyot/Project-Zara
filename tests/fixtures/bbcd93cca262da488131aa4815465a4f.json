@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Congrats on your new CFO role",
+    "draft_text": "Hi Devin,\n\nI'm Zamp from Zamp Technologies. I'm reaching out because intercompany reconciliation sprawl may be an area we could help with.\n\nI read your post announcing your new CFO role, especially your point about scaling while maintaining a best-in-class fulfillment experience. I imagine keeping reconciliation records aligned across multiple systems can become increasingly time\u2011consuming.\n\nWe extract transaction data from source systems and match it to ledger entries, reducing repetitive manual checks.\n\nCurious if this is something your finance team is thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2866,
+  "completion_tokens": 934
+}

@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw the TechCrunch story from Dec\u202f2021 about TrueNorth raising $50\u202fM to empower independent truckers.",
+        "rationale": "Northwind Freight operates in the trucking ecosystem; even without knowing Riley's exact role, the funding highlights industry pressure to improve efficiency for independent truckers, which is relevant to any operations team at the company.",
+        "bridge": "Our platform automates the manual, reconciliation\u2011heavy processes that still burden truck\u2011operator workflows, helping Northwind capture the efficiency gains that TrueNorth's investment is targeting.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 1,
+        "hook_text": "I noticed the 2021 interview with HAI Robotics CEO Richie\u202fChen on Source Code Capital.",
+        "rationale": "The interview signals a broader push toward automation in logistics, a theme likely pertinent to Northwind Freight's operations even though Riley's specific role is unknown.",
+        "bridge": "Our solution complements robotics initiatives by handling the back\u2011office reconciliation work that robots can't yet automate, delivering end\u2011to\u2011end operational efficiency.",
+        "strength": 0.65
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Your introduction mentioned that you run an international freight forwarding business focused on air, sea, and multimodal routes from China to Europe, America, and Asia.",
+        "rationale": "This directly identifies Riley as a freight forwarder managing complex, multi\u2011modal shipments, which involve many manual data handoffs and reconciliation steps.",
+        "bridge": "Our automation tool eliminates those manual reconciliation tasks, giving you faster, error\u2011free visibility across air, sea, and land legs so you can focus on scaling your network.",
+        "strength": 0.92
+      },
+      {
+        "card_index": 3,
+        "hook_text": "The property list includes an address on Northwind\u202fDr, linking to Northwind Freight\u2019s location.",
+        "rationale": "Although the snippet is a raw data dump, the presence of a Northwind\u202fDr address confirms the company's physical footprint, indicating they likely manage sizable logistics operations.",
+        "bridge": "Companies with extensive logistics footprints often wrestle with manual reconciliation across sites; our platform centralizes and automates those processes, reducing overhead for Northwind Freight.",
+        "strength": 0.55
+      }
+    ]
+  },
+  "prompt_tokens": 1741,
+  "completion_tokens": 1449
+}

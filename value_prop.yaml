@@ -139,16 +139,20 @@ never_reference:
     terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
   # Found on real data, not imagined: the ShipMonk snapshot carries three cards
   # about a breach exposing 13,689 of their customer Trezor's records, 11 days old
-  # NOTE 2026-09-07: the term is "breach expos", not "breach exposes". Terms are
-  # word-boundary PREFIX matched, and the live story about that same incident reads
-  # "ShipMonk Breach Exposed 67,000 Customers' Data" -- which the inflected form
-  # missed while the recorded snapshot caught. A rule written against recorded data
-  # meets a world that rephrases. Checked for over-fire against "breach of contract".
   # and therefore near the top on recency. Leading outreach with a prospect's
   # security incident is indefensible, and nothing above mentioned breaches.
-  # Terms are prefix-matched, so "breach" covers breached/breaches. Kept narrow
-  # where a bare word would over-fire: "security incident" not "incident",
-  # "exposed customer" not "exposed".
+  #
+  # Terms are word-boundary PREFIX matched, so "breach" would cover
+  # breached/breaches. Kept narrow where a bare word would over-fire: "security
+  # incident" not "incident", "exposed customer" not "exposed".
+  #
+  # The term is "breach expos", not "breach exposes". Measured 2026-09-07: the
+  # live story about that same ShipMonk incident reads "Trezor Says ShipMonk
+  # Breach Exposed 67,000 U.S. Customers' Data", which the inflected form missed
+  # while the recorded snapshot's "data breach exposes" caught. The guardrail
+  # passed its own fixture and let the real headline through. A rule written
+  # against recorded data meets a world that rephrases. Checked for over-fire
+  # against "breach of contract claim settled": no false positive.
   - id: data_breach
     terms: [data breach, breach impacts, breach puts, breach expos, security incident, ransomware, hacked, cyberattack, cyber attack, phishing risk, exposed customer, exposed personal, leaked records, credential stuffing]
 

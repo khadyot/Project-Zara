@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "In your 186\u2011day\u2011old conversation you highlighted how legacy payments aren\u2019t built for today\u2019s fintech world and the need for modern issuer processing.",
+        "rationale": "As CFO you\u2019re responsible for the cost and efficiency of the payments stack, and legacy systems drive manual, reconciliation\u2011heavy work that hurts margins.",
+        "bridge": "Our platform automates those manual reconciliation processes, letting you modernize infrastructure without adding operational overhead.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "You explained in the Finance and Accounting Technology Briefing how Episode Six scales finance without endlessly adding headcount.",
+        "rationale": "Keeping the finance team lean while supporting hyper\u2011growth is a core CFO priority, especially when manual processes consume valuable resources.",
+        "bridge": "By automating reconciliation\u2011heavy tasks, our solution frees your team to focus on strategic work instead of repetitive data entry.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "You pointed out that tightening working capital requires accelerating receivables and managing payables strategically.",
+        "rationale": "Cash\u2011flow acceleration is a direct CFO concern, and manual reconciliation slows the speed at which receivables can be booked and funds released.",
+        "bridge": "Our automation speeds up receivable and payable reconciliation, helping you improve working\u2011capital efficiency.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 3,
+        "hook_text": "You co\u2011founded Episode Six to modernize payments infrastructure and leave legacy technology behind.",
+        "rationale": "Driving a shift away from legacy systems is a strategic CFO mandate, especially when those systems force costly manual reconciliation.",
+        "bridge": "Our technology replaces legacy, reconciliation\u2011heavy workflows with automated, scalable processes that align with your modernization goals.",
+        "strength": 0.78
+      }
+    ]
+  },
+  "prompt_tokens": 1482,
+  "completion_tokens": 869
+}

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO post about legacy payments, no specific observable."
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Video about founder journey, no finance observable."
+      },
+      {
+        "index": 16,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Feature on tech stack, no explicit ERP or payment change."
+      },
+      {
+        "index": 23,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Duplicate tech stack feature, no observable pain."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Company overview, no new leadership or system change."
+      },
+      {
+        "index": 24,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Logo collage, no relevant finance observable."
+      },
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Discussion on finance leadership, no new appointment mentioned."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile summary, no recent leadership change."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast unrelated to finance systems or payments."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.9,
+        "reason": "Launch of spend-to-invest debit card, new payment method."
+      }
+    ]
+  },
+  "prompt_tokens": 2036,
+  "completion_tokens": 1635
+}

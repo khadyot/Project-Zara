@@ -456,14 +456,18 @@ def _company_is_mentioned(card, prospect) -> bool:
     # exactly the same reason one word ahead: a two-word company whose second word
     # names its industry matches every page in that industry. "Northwind Freight"
     # reduces to ('northwind', 'freight'), so "Freight invoice reconciliation in
-    # SAP" and "3PL freight reconciliation" both identified it.
+    # SAP" and generic freight-industry marketing copy both identified it.
     #
-    # Measured 2026-09-02 on live retrieval for a company that does not exist:
-    # 20 of 21 cards passed under `any`, 1 under `all` -- and that one is a real
-    # Northwind Freight Systems in Ontario, which is a genuine namesake rather
-    # than noise and is precisely what the flag is for. Cost on real prospects is
-    # one card each on Modern Treasury and Payouts Network, none on the
-    # single-token names.
+    # Measured twice, independently, which is why both notes are kept.
+    # 2026-09-02, on cached retrieval for a company that does not exist: 20 of 21
+    # cards passed under `any`, 1 under `all` -- and that one is a real Northwind
+    # Freight Systems in Ontario, a genuine namesake, which is what the flag is
+    # for. Cost on real prospects is one card each on Modern Treasury and Payouts
+    # Network, none on the single-token names.
+    # 2026-09-07, live, before this landed on the deployed build: Riley Chen /
+    # Northwind Freight was drafted a real email built from a stranger's LinkedIn
+    # post and a logistics vendor's payment terms -- the one demo prospect whose
+    # entire purpose is to show the product admitting it found nothing.
     #
     # Known limit: a long corporate name is harder to satisfy, so a card naming
     # "Merrill Lynch" would not identify a prospect entered as "Bank of America

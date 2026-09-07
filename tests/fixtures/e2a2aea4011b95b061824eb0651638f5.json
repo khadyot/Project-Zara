@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Snippet only comments on legacy payments, no observable."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Video about founder, no finance or payment observable."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview about tech stack, no explicit migration or manual reporting."
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Duplicate CFO interview, lacks explicit observable."
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Team page with logos, no relevant observable."
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Career story about promotion, unrelated observable."
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Funding and leadership list, no new finance system mention."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Profile summary, no observable about processes or systems."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast on career advice, no finance/payment observable."
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.9,
+        "reason": "Announces new debit card product, new payment method."
+      }
+    ]
+  },
+  "prompt_tokens": 2118,
+  "completion_tokens": 1640
+}

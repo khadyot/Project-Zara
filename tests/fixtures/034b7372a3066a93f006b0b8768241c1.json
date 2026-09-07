@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "No observable: only CFO discussion, no new leadership or system change."
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "structural_complexity",
+        "score": 1.0,
+        "reason": "New CFO appointment announced, matches finance leadership observable."
+      },
+      {
+        "index": 14,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast about efficiency, lacks new leadership or system change."
+      },
+      {
+        "index": 25,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Content about exercise/KPIs, unrelated to finance observables."
+      },
+      {
+        "index": 23,
+        "matched_pain_id": "structural_complexity",
+        "score": 1.0,
+        "reason": "Announcement of new CFO, satisfies finance leadership observable."
+      },
+      {
+        "index": 24,
+        "matched_pain_id": "structural_complexity",
+        "score": 1.0,
+        "reason": "Same new CFO announcement, meets finance leadership observable."
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "structural_complexity",
+        "score": 1.0,
+        "reason": "Social post announcing new CFO, matches finance leadership observable."
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Profile shows CFO start Oct 2024, beyond 6\u2011month window."
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.9,
+        "reason": "Launch of new fulfillment center indicates warehouse expansion, matches scaling ops observable."
+      },
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "SEC proxy filing, no relevant finance leadership or operational change mentioned."
+      }
+    ]
+  },
+  "prompt_tokens": 2002,
+  "completion_tokens": 1981
+}
