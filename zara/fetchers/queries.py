@@ -54,7 +54,20 @@ def build_query_plan(prospect: Prospect, value_prop: dict) -> tuple[str, list[st
 
     queries = []
     if person and company:
-        queries.append(f'"{person}" {company} interview podcast post')
+        # The person query used to be `"{person}" {company} interview podcast
+        # post`, which asks only whether the person shows up anywhere. The
+        # search_terms went to the COMPANY query alone, so nothing in the plan
+        # ever looked for the person arguing about the category -- which is the
+        # one thing the pains were rewritten in September to be able to credit
+        # ("the prospect publicly arguing about payment rails, settlement, or
+        # reconciliation infrastructure"). Retrieval and scoring were asking for
+        # different things.
+        #
+        # Two terms, not five. This is a keyword query competing for slots in a
+        # fixed pool of ten results, and a long tail of weak terms dilutes the
+        # name that has to match.
+        queries.append(f'"{person}" {company} interview podcast post '
+                       + " ".join(terms[:2]))
     if company:
         queries.append(f'"{company}" announcement expansion funding launch')
         queries.append(f'"{company}" ' + " ".join(terms[:5]))

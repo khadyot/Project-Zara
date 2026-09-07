@@ -48,6 +48,20 @@ async def _gather_results(fetcher_tasks: list, results: list[SourceResult], rung
     # on_event still fires on completion, so the live progress stream is unchanged.
     results.extend(await asyncio.gather(*(_run_one(f, t) for f, t in fetcher_tasks)))
 
+# How much person-tier evidence rung 0 must produce before the paid rungs are
+# judged unnecessary. Two, because one card is a single point of failure: a
+# namesake, a directory row, or a colleague's post all read as person tier at
+# retrieval time and only fail later, in the ranker.
+#
+# This was an inline `>= 2` until 2026-09-07, and worse, it was uncountable.
+# Rung 0 is GoogleNews plus Jina; Jina is always company tier, and GoogleNews
+# queried the company alone, so the gate protecting spend on PERSON signal was
+# driven by a query that could not produce person signal. It now can
+# (news.py asks for the person by name), which is what makes this threshold mean
+# something rather than merely fire.
+PERSON_SIGNAL_FLOOR = 2
+
+
 async def run_pipeline(
     prospect: Prospect,
     rung0_fetchers: list,
@@ -61,8 +75,9 @@ async def run_pipeline(
 ) -> list[SourceResult]:
     """
     Executes the retrieval pipeline according to the cost-ordered escalation ladder.
-    With gap_filler_gate=True, rung 0 executes first; if it yields >= 2 person-tier
-    cards, all paid rungs are skipped with a gap_filler reason.
+    With gap_filler_gate=True, rung 0 executes first; if it yields at least
+    PERSON_SIGNAL_FLOOR person-tier cards, all paid rungs are skipped with a
+    gap_filler reason.
     """
     results: list[SourceResult] = []
 
@@ -77,7 +92,7 @@ async def run_pipeline(
         person_signal_count = sum(
             1 for r in results if r.status == "ok" for c in r.cards if c.tier == "person"
         )
-        gate_skip_paid = person_signal_count >= 2
+        gate_skip_paid = person_signal_count >= PERSON_SIGNAL_FLOOR
         if on_event:
             on_event({"type": "stage", "name": "gap-filler gate", "status": "done",
                       "detail": f"{person_signal_count} person signals — paid rungs {'skipped' if gate_skip_paid else 'will run'}"})
