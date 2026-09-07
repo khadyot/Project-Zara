@@ -363,7 +363,7 @@ div[data-testid="stText"] > pre{
    Numbers are right-aligned with tabular figures so digits stack. */
 .zrow{
   display:grid;
-  grid-template-columns:11px minmax(0,18rem) 7.5rem minmax(0,1fr) auto;
+  grid-template-columns:11px minmax(0,18rem) 7.5rem minmax(0,1fr) auto auto;
   align-items:baseline;
   gap:var(--s-2);
   padding:7px 0;
@@ -385,6 +385,18 @@ div[data-testid="stText"] > pre{
   margin-left:.5rem;white-space:nowrap;
 }
 .zrow .zr-src:hover{color:var(--zamp-blue,#005EFF);}
+/* The link as its OWN cell, not hung off the end of the claim. It used to live
+   inside .zr-name, which ellipsizes -- so on exactly the rows worth checking, the
+   ones with long headlines, the link was the first thing clipped. A panel whose
+   whole purpose is "go and look for yourself" hid the link on its longest rows. */
+.zrow .zr-link{
+  font-size:var(--t-label);font-weight:500;
+  color:var(--slate);text-decoration:none;
+  border-bottom:1px solid var(--rule, currentColor);
+  white-space:nowrap;justify-self:end;
+}
+.zrow .zr-link:hover{color:var(--zamp-blue,#005EFF);}
+.zrow.is-muted .zr-link{opacity:.75;}
 .zrow.is-muted .zr-src{opacity:.75;}
 .zrow .zr-state{
   font-size:var(--t-label);font-weight:600;
@@ -686,8 +698,21 @@ def render_page_header(eyebrow, title, sub=None):
     st.markdown("".join(parts), unsafe_allow_html=True)
 
 
+def _link_cell(url, text=None) -> str:
+    """The source link, as its own cell. Empty span when there is no URL, so the
+    grid keeps its columns and rows stay aligned."""
+    if not url:
+        return "<span></span>"
+    from zara.ui.text import link_label
+    href = _html.escape(str(url), quote=True)
+    label = _html.escape(text or link_label(url, limit=24))
+    return (f"<a class='zr-link' href='{href}' target='_blank' rel='noopener'>"
+            f"{label}</a>")
+
+
 def zrow(name, state=None, detail=None, value=None, status=None,
-         fill=None, muted=False, alert=False, escape=True):
+         fill=None, muted=False, alert=False, escape=True, link=None,
+         link_text=None):
     """One row of the app's only tabular vocabulary.
 
     Sources, quota headroom, stalls and stages are all this shape:
@@ -710,6 +735,7 @@ def zrow(name, state=None, detail=None, value=None, status=None,
         f"<span class='zr-name'>{e(name)}</span>"
         f"<span class='zr-state'>{e(str(state).replace('_', ' ')) if state else ''}</span>"
         f"<span class='zr-detail'>{e(detail) if detail else ''}</span>"
+        f"{_link_cell(link, link_text)}"
         f"<span class='zr-value'>{e(value) if value else ''}</span>"
         f"</div>"
     )

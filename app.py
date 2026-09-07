@@ -1258,13 +1258,13 @@ def main():
                     if c.guardrail_hit:
                         reason = f"{reason} \u00b7 {c.guardrail_hit}"
                     zrow(
-                        _claim_with_link(c),
+                        clean_claim(c.card.claim),
                         state=c.proximity,
                         detail=short_reason(reason, limit=64),
                         value=f"{c.score:.2f}",
                         status="empty",
                         alert=bool(c.guardrail_hit),
-                        escape=False,
+                        link=getattr(c.card, "source_url", None),
                     )
                 # The zero-score tail is real evidence that was considered and
                 # never contended. Counting it keeps that honest without
@@ -1279,30 +1279,50 @@ def main():
                     )
                     for c in unranked:
                         zrow(
-                            _claim_with_link(c),
+                            clean_claim(c.card.claim),
                             state=c.proximity,
                             detail=short_reason(c.excluded or "matched no pain", limit=64),
                             value="0.00",
                             status="empty",
                             muted=True,
-                            escape=False,
+                            link=getattr(c.card, "source_url", None),
                         )
 
         # --- Sources ---
-        with st.expander(f"Sources ({len(results)})"):
-            _SW = {"ok": "ok", "empty": "empty",
-                   "skipped": "not consulted", "failed": "unavailable"}
-            for r in sorted(results, key=lambda x: (x.rung, x.source)):
-                zrow(
-                    r.source,
-                    state=_SW.get(r.status, r.status),
-                    detail=(f"{len(r.cards)} cards" if r.status == "ok"
-                            else short_reason(r.reason)),
-                    value=f"rung {r.rung}",
-                    status=r.status,
-                    muted=(r.status == "skipped"),
-                    alert=(r.status == "failed"),
-                )
+        # The five retired ATS sources are deliberately still reported: "we did not
+        # look here, and here is the date we decided to stop" is a different claim
+        # from "we looked and found nothing", and showing it is the whole of
+        # Compass VII. But they are five of nineteen rows and they never change,
+        # so they sit behind their own line rather than diluting the live ones.
+        from zara.orchestrator import RETIRED_SOURCES
+        live = [r for r in results if r.source not in RETIRED_SOURCES]
+        retired = [r for r in results if r.source in RETIRED_SOURCES]
+
+        def _source_row(r):
+            zrow(
+                r.source,
+                state=_SW.get(r.status, r.status),
+                detail=(f"{len(r.cards)} cards" if r.status == "ok"
+                        else short_reason(r.reason)),
+                value=f"rung {r.rung}",
+                status=r.status,
+                muted=(r.status == "skipped"),
+                alert=(r.status == "failed"),
+            )
+
+        _SW = {"ok": "ok", "empty": "empty",
+               "skipped": "not consulted", "failed": "unavailable"}
+        with st.expander(f"Sources ({len(live)} consulted, {len(retired)} retired)"):
+            for r in sorted(live, key=lambda x: (x.rung, x.source)):
+                _source_row(r)
+            if retired:
+                st.markdown(
+                    f"<div class='eyebrow-sm'>Retired &mdash; not consulted, "
+                    f"and that is a decision, not a gap</div>",
+                    unsafe_allow_html=True)
+                st.caption(short_reason(retired[0].reason) or "")
+                for r in sorted(retired, key=lambda x: x.source):
+                    _source_row(r)
 
 if __name__ == "__main__":
     main()
