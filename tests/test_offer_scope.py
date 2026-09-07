@@ -137,3 +137,56 @@ def test_the_check_actually_runs_inside_verify_draft():
     from zara.verifier import verify_draft
 
     assert "check_offer_scope" in inspect.getsource(verify_draft)
+
+
+# --------------------------------------------------------------------------
+# False positives are worse than misses: a blocked good draft is a visible
+# failure, and this check runs on every send.
+# --------------------------------------------------------------------------
+
+def test_it_ignores_cards_the_drafter_never_saw():
+    """Scoped to the winning card. Measured on a live Shippo run, 2026-09-07:
+    checking every eligible card blocked "surface exceptions for review" because
+    "review" appeared somewhere in a 47-card pool. The draft is written from the
+    winning card and the hook built on it; a card the drafter never saw cannot be
+    the source of a borrowed capability."""
+    from zara.verifier import check_offer_scope
+
+    rp = _prospect("Nium acquired a crypto company.")
+    unused = SignalCard(claim="Unrelated pool card", signal_type="news",
+                        source_url="https://example.com/x", published_date=None,
+                        snippet="Quarterly telemetry dashboards and lidar arrays.",
+                        tier="company", source="Tavily")
+    rp.cards.append(RankedCard(card=unused, pain_match=None, proximity="company_action",
+                               recency_days=None, score=0.0, excluded=None))
+
+    draft = "We match records across those systems and surface exceptions on the dashboards."
+    assert check_offer_scope(draft, rp, VP) == [], (
+        "a word from a card the drafter never used was treated as an import"
+    )
+
+
+@pytest.mark.parametrize("sentence", [
+    "We connect finance and ops systems, match records across them, and surface exceptions for review.",
+    "We match records across both systems and flag mismatches, reducing repetitive manual effort.",
+    "We connect the systems on both sides and surface the exceptions that need a decision.",
+])
+def test_ordinary_business_english_is_not_an_import(sentence):
+    """"review", "effort", "process", "detail" are how anyone describes any work.
+    Flagging them makes the check fire on drafts that are entirely honest."""
+    from zara.verifier import check_offer_scope
+
+    ev = ("Shippo launched an Estimate API for delivery dates. The review process "
+          "took real effort across the team.")
+    assert check_offer_scope(sentence, _prospect(ev), VP) == []
+
+
+def test_a_prospect_with_no_winning_card_is_not_checked():
+    """The no_signal path has no evidence to import FROM, and its draft is the
+    most constrained one the product writes."""
+    from zara.verifier import check_offer_scope
+
+    rp = RankedProspect(prospect=Prospect("Prajit Nanu", "Nium", "Co-Founder & CEO"),
+                        cards=[], icp_fit="unknown", winning_card=None,
+                        winning_score=None)
+    assert check_offer_scope("We reconcile crypto entries.", rp, VP) == []

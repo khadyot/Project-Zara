@@ -320,6 +320,14 @@ match matches matching reconcile reconciles reconciling connect connects
 connecting surface surfaces surfacing flag flags flagging pull pulls pulling
 spot spots spotting decide decides deciding run runs running
 finance financial ops operational operations existing manual repetitive
+review reviews reviewing effort efforts process processes step steps
+detail details issue issues problem problems change changes result results
+time times day days week weeks month months year years today
+new old good better best big small fast slow easy hard clear
+first second next last other another few many much less least
+company companies business businesses customer customers client clients
+people person staff headcount hire hires team-level
+side sides both across between during before after while since
 """.split())
 
 _WORD = re.compile(r"[A-Za-z][A-Za-z0-9'\-]{2,}")
@@ -363,10 +371,25 @@ def check_offer_scope(draft_text: str, prospect: RankedProspect, value_prop: dic
     for k in ("sender_name", "sender_company", "sender_person"):
         ours |= _content_nouns(str(value_prop.get(k) or ""))
 
+    # Scoped to the WINNING card, not to every eligible card.
+    #
+    # The draft is written from the winning card and the hook built on it. A card
+    # the drafter never saw cannot be the source of a borrowed capability, and
+    # including them turns any word that happens to appear anywhere in retrieval
+    # into an accusation. Measured on a live Shippo run, 2026-09-07: the
+    # unscoped version blocked "surface exceptions for review" and "reducing
+    # manual reconciliation effort" because "review" and "effort" appeared
+    # somewhere in the pool. Both are ordinary English and neither is a
+    # capability claim.
+    #
+    # Frequency was tried first and does not discriminate: "crypto" appeared in 0
+    # of 6 eligible cards on one Nium run and "review" in 0 of 7 on the Shippo
+    # one. What separates a real import is not how often the word occurs, it is
+    # whether the draft took it from the thing it is writing about.
+    win = prospect.winning_card
     theirs = set()
-    for c in prospect.cards:
-        if c.excluded is None or c is prospect.winning_card:
-            theirs |= _content_nouns(c.card.claim) | _content_nouns(c.card.snippet)
+    if win is not None:
+        theirs = _content_nouns(win.card.claim) | _content_nouns(win.card.snippet)
     # Their own identity is theirs to be described by; it is not a capability.
     theirs -= _content_nouns(prospect.prospect.person_name or "")
     theirs -= _content_nouns(prospect.prospect.company or "")
