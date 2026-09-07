@@ -195,11 +195,6 @@ proximity_weights:
   company_action: 2
   database: 1
 
-# How many cards reach the pain scorer, after sorting by proximity and recency.
-# The ranker is roughly half a run's token spend and both prompt and completion
-# scale with this number, so it is the main cost dial. Raising it costs tokens
-# against Groq's 8K/min bucket; lowering it risks dropping a hook. Measured safe
-# at 10: positions 5+ are uniformly company_action across all four snapshots.
 # Retrieval vocabulary — what we ask the web about, as opposed to what we score
 # against once it comes back.
 #
@@ -220,7 +215,45 @@ retrieval:
     - billing
 
 ranker:
+  # How many cards reach the pain scorer, after the pre-sort by proximity x
+  # recency. The ranker is roughly half a run's token spend and both prompt and
+  # completion scale with this number, so it is the main cost dial. Raising it
+  # costs tokens against Groq's 8K/min bucket; lowering it risks dropping a hook.
+  # Measured safe at 10: positions 5+ are uniformly company_action across all
+  # four snapshots.
   card_cap: 10
+
+  # Of those slots, how many are held back for the freshest DATED card whatever
+  # its tier. A blended pre-score lets one proximity tier crowd out the newest
+  # thing that happened to this company, and "we never looked at the biggest news
+  # of the quarter" is not a defensible way to lose a hook. Was a hardcoded 3.
+  recency_reserve: 3
+
+  # And how many are held for the highest-proximity PERSON-tier card, dated or
+  # not. The recency reserve cannot do this job: it filters on a known date, and
+  # the person-tier material worth having (interviews, quoted articles, most of
+  # what Tavily and Parallel return) usually arrives undated.
+  #
+  # Added 2026-09-07 after the Prajit Nanu / Nium run returned 40 cards whose only
+  # `authored` item was a 592-day-old LinkedIn post. Leading with what the person
+  # said is the product's whole thesis; it should not have to win that on a score
+  # which structurally favours dated company press releases.
+  #
+  # ONE, not two, and the difference was measured rather than guessed. Every slot
+  # here is taken from the head, which is the part decided on merit. Swept 0-2
+  # against five cards chosen beforehand as ones a defensible shortlist should
+  # keep: at 1 the shortlists hold four of the five, at 2 they hold three.
+  #
+  # What 1 costs, stated: Modern Treasury's "Acquires Beam" M&A card falls out of
+  # the top ten. What it buys is Fulfyld's founder writing "I (AJ Khanijow) am the
+  # founder and CEO", which the old ordering cut. Trading a company milestone for
+  # the prospect's own words is precisely the trade the proximity ladder exists to
+  # make, so this is the ladder working rather than a regression to absorb.
+  person_reserve: 1
+
+  # How many of the surviving cards get a hook articulated. Each one is prompt and
+  # completion tokens on the same Groq bucket as the scorer. Was a hardcoded 4.
+  hook_shortlist: 4
 
 # Guardrails applied after drafting.
 #

@@ -842,17 +842,18 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
             # cap before its relevance is ever computed.
             if prox != "authored" and quotes_prospect(card, prospect.person_name if prospect else ""):
                 prox_mult *= VOICE_BONUS
-            if rec is None:
-                rec_mult = 0.8
-            elif rec <= 180:
-                rec_mult = 1.0
-            elif rec <= 365:
-                rec_mult = 0.95
-            elif rec <= 730:
-                rec_mult = 0.85
-            else:
-                rec_mult = 0.75
-            return prox_mult * rec_mult
+            # CHANGED 2026-09-07. This carried its own copy of the four-bucket step
+            # curve that a6be978 replaced everywhere else, so the gate deciding
+            # WHICH cards get scored believed a 2019 card was worth 0.75 while
+            # scoring believed 0.023. The admission gate kept spending its ten
+            # slots on cards the scorer would then bury. One curve, one opinion
+            # about age.
+            #
+            # This is a real tightening for undated cards: the old local bucket
+            # gave them 0.8, the shared curve gives 0.236. Most interview and
+            # quote cards arrive undated, so on its own this change would starve
+            # the person tier -- which is what person_reserve below exists to stop.
+            return prox_mult * recency_multiplier(rec)
 
         to_score.sort(key=lambda item: (_pre_score(item), _tiebreak(item[1])), reverse=True)
 
@@ -864,16 +865,66 @@ async def rank_prospect(prospect: Prospect, results: list[SourceResult], strictn
         # biggest news of the quarter" is not a defensible way to lose a hook.
         # The cap is unchanged, so this costs no extra tokens.
         reserve = int(vp.get("ranker", {}).get("recency_reserve", 3))
-        if reserve > 0 and len(to_score) > card_cap:
-            head = to_score[:max(0, card_cap - reserve)]
-            chosen = {id(item) for item in head}
+        # ADDED 2026-09-07. The reserve above protects the freshest DATED card, and
+        # its `is not None` filter means an undated card can never be promoted into
+        # it -- reference/ranking-audit/README.md already called this "blind to the
+        # one source it exists to protect". Now that the pre-score uses the real
+        # recency curve, undated cards fall from 0.8 to 0.236, and the person-tier
+        # material that arrives undated (interviews, quoted articles, most things
+        # Tavily and Parallel return) would be cut before it was ever read.
+        #
+        # Measured on Prajit Nanu / Nium, 2026-09-07: 40 cards retrieved, and the
+        # only `authored` card in the run was a 592-day-old LinkedIn post. The whole
+        # thesis of this product is leading with what the PERSON said, so the person
+        # tier gets guaranteed slots rather than having to win them on a blended
+        # score that structurally favours dated company press releases.
+        person_reserve = int(vp.get("ranker", {}).get("person_reserve", 2))
+        if (reserve > 0 or person_reserve > 0) and len(to_score) > card_cap:
+            head = to_score[:max(0, card_cap - reserve - person_reserve)]
+            picked = {id(item) for item in head}
+
+            # Freshest dated card, whatever its tier.
             dated = [it for it in to_score
-                     if id(it) not in chosen and _compute_recency(it[1].published_date) is not None]
+                     if id(it) not in picked and _compute_recency(it[1].published_date) is not None]
             dated.sort(key=lambda it: (_compute_recency(it[1].published_date), _tiebreak(it[1])))
             promoted = dated[:reserve]
-            picked = {id(it) for it in head} | {id(it) for it in promoted}
+            picked |= {id(it) for it in promoted}
+
+            # Highest-proximity person-tier card, DATED OR NOT.
+            #
+            # Ordered by PROXIMITY first, not by the blended pre-score. Measured on
+            # the Episode Six snapshot: ordering this reserve by pre-score put a
+            # LinkedIn directory row ("Mentioned on: Chermaine Hu", 33 days old,
+            # proximity `database`) at 0.235, above her actual recorded interview
+            # ("CFO Chermaine Hu on Episode Six's tech stack", undated, proximity
+            # `attributed`) at 0.177 -- and the interview was cut. A reserve ordered
+            # by the same score that already failed the person tier just re-runs the
+            # competition it exists to bypass.
+            #
+            # `database` is excluded outright. Directory rows carry the lowest
+            # proximity weight for a reason: a listing that a person exists is not
+            # that person on the record, and spending a guaranteed slot on one buys
+            # nothing the pain scorer can use.
+            def _person_key(it):
+                card = it[1]
+                prox = _compute_proximity(card, prospect)
+                mult = prox_val.get(prox, 0) / max_prox
+                if prox != "authored" and quotes_prospect(card, prospect.person_name if prospect else ""):
+                    mult *= VOICE_BONUS
+                # Recency only breaks ties inside a proximity tier, so a fresh
+                # interview beats a stale one without a fresh anything beating an
+                # interview.
+                return (mult, recency_multiplier(_compute_recency(card.published_date)))
+
+            person = [it for it in to_score
+                      if id(it) not in picked and it[1].tier == "person"
+                      and _compute_proximity(it[1], prospect) != "database"]
+            person.sort(key=lambda it: (_person_key(it), _tiebreak(it[1])), reverse=True)
+            promoted_person = person[:person_reserve]
+            picked |= {id(it) for it in promoted_person}
+
             remainder = [it for it in to_score if id(it) not in picked]
-            to_score = head + promoted + remainder
+            to_score = head + promoted + promoted_person + remainder
         for i, card in to_score[card_cap:]:
             rc = ranked_cards_map[i]
             ranked_cards_map[i] = RankedCard(

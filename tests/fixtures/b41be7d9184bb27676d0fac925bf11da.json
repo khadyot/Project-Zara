@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The email only contains generic value propositions and references to facts present in the evidence (ShipBob's Anthropic-verified connector, the prospect name Test, and the sender's identity Khadyot/Zamp). No unsupported metrics, customer names, or specific claims about the prospect are introduced."
+  },
+  "prompt_tokens": 1052,
+  "completion_tokens": 580
+}

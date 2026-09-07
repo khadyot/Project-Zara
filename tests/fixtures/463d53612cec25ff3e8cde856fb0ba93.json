@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "No observable matches"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Product launch announcement"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Spring 2026 release announcement"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Professional profile publication"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Company description lacks observable"
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue and valuation report"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "structural_complexity",
+        "score": 0.7,
+        "reason": "Hiring banks for IPO signals funding expansion"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "New chief supply chain officer appointment"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": null,
+        "score": 0.0,
+        "reason": "Operational advice, no observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1592,
+  "completion_tokens": 1716
+}

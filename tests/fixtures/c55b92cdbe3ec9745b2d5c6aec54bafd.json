@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "AI\u2011driven fulfillment and data integration",
+    "draft_text": "Hi Test,\n\nI'm Khadyot from Zamp. We connect finance and operations systems, match records across them, and surface the exceptions a person needs to decide.\n\nSaw that ShipBob launched its first Anthropic-verified fulfillment connector, anchoring its AI suite. I wonder if the data integration work that follows that launch often brings mismatched records and hidden exceptions.\n\nWe match finance and ops records and surface any mismatches, reducing the need for manual reconciliation checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2706,
+  "completion_tokens": 1274
+}
