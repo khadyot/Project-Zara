@@ -4,6 +4,15 @@ import json
 import asyncio
 from apify_client import ApifyClient
 from zara.models import Prospect, SourceResult, SignalCard
+from zara.utils.provider import remaining_time
+
+# Ceiling on one actor, independent of the run deadline. Measured 2026-09-07:
+# ApifyLinkedInCompanyFetcher held a run for 1,988 seconds -- 33 minutes -- when
+# Apify's own log showed the actor SUCCEEDED at 13.5s. RUN_DEADLINE_SECONDS did
+# not help: remaining_time() was consulted only by the model provider, so every
+# fetcher in the pipeline was unbounded and the "run deadline" bounded only the
+# LLM calls.
+APIFY_ACTOR_TIMEOUT = 45.0
 
 class ApifyBaseFetcher:
     def __init__(self):
@@ -27,19 +36,32 @@ class ApifyBaseFetcher:
         if not self.client:
             return SourceResult(source=source_name, rung=rung, status="skipped", reason="no APIFY_API_TOKEN", cards=[], cost_usd=0.0, elapsed_ms=0)
             
+        # Whatever is left of the run, capped. Both calls below are blocking SDK
+        # calls handed to a thread, and asyncio.wait_for cannot kill a thread --
+        # it returns control to the pipeline and leaves the thread to finish on
+        # its own. That is the point: the run stops being held hostage. The
+        # thread is abandoned, not stopped, and that is an accepted cost.
+        budget = remaining_time()
+        budget = APIFY_ACTOR_TIMEOUT if budget is None else max(1.0, min(budget, APIFY_ACTOR_TIMEOUT))
         try:
-            run = await asyncio.to_thread(
-                self.client.actor(actor_id).call, run_input=run_input
+            run = await asyncio.wait_for(
+                asyncio.to_thread(self.client.actor(actor_id).call, run_input=run_input),
+                timeout=budget,
             )
             dataset_id = run.default_dataset_id
-            dataset_items = await asyncio.to_thread(
-                self.client.dataset(dataset_id).list_items
+            dataset_items = await asyncio.wait_for(
+                asyncio.to_thread(self.client.dataset(dataset_id).list_items),
+                timeout=max(1.0, budget - (time.time() - start)),
             )
-            
-            # Save fixture
-            os.makedirs("tests/fixtures/apify", exist_ok=True)
-            with open(fixture_path, "w") as f:
-                json.dump(dataset_items.items, f, indent=2)
+
+            # Only while deliberately recording. This used to run after EVERY
+            # successful live call, so any live run silently rewrote the recorded
+            # corpus and the test fixtures moved under whoever ran next -- the
+            # same family of footgun as recording with fixtures off.
+            if os.getenv("USE_FIXTURES") == "fill":
+                os.makedirs("tests/fixtures/apify", exist_ok=True)
+                with open(fixture_path, "w") as f:
+                    json.dump(dataset_items.items, f, indent=2)
                 
             cards = self._parse_items(dataset_items.items, source_name, tier, signal_type)
             if not cards:
@@ -55,6 +77,14 @@ class ApifyBaseFetcher:
                 cards=cards,
                 cost_usd=projected_cost, elapsed_ms=int((time.time() - start)*1000)
             )
+        except asyncio.TimeoutError:
+            # `failed`, never `empty`. "we could not look" and "there was nothing
+            # there" are opposite claims, and collapsing them is the one mistake
+            # this file's own rules call out by name.
+            return SourceResult(
+                source=source_name, rung=rung, status="failed",
+                reason=f"timeout: actor did not return within {budget:.0f}s",
+                cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000))
         except Exception as e:
             return SourceResult(source=source_name, rung=rung, status="failed", reason=str(e), cards=[], cost_usd=0.0, elapsed_ms=int((time.time() - start)*1000))
             
