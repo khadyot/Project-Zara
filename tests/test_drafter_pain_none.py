@@ -46,7 +46,16 @@ async def test_winning_card_without_pain_match_drafts():
         res = await draft_email(prospect, VALUE_PROP, strictness="strict")
     assert res.draft_text == "Hi Dimitri, ..."
     prompt = gen.call_args.kwargs["prompt"]
-    assert "We don't know their specific pain yet" in prompt
+    # CHANGED 2026-09-07. This used to assert the literal "We don't know their
+    # specific pain yet, but we want to start a conversation...", which paired with
+    # a compulsory pain sentence downstream was an instruction to improvise one.
+    # What matters is not the wording but the contract: with no pain matched, the
+    # prompt must say so and must forbid inventing one.
+    assert "No pain is evidenced" in prompt
+    assert "Do NOT assert, imply or imagine one" in prompt
+    # And the writer must not be handed the mandatory "I imagine <x> can become
+    # increasingly time-consuming" shape, which is what manufactured the pain.
+    assert "can become increasingly" not in prompt
 
 
 @pytest.mark.asyncio

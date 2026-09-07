@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Flexport just launched fulfillment services in Canada and the United Kingdom.",
+        "rationale": "As CEO, expanding fulfillment into new regions creates fresh finance\u2011ops integration challenges that you\u2019ll need to monitor for cost control and service consistency.",
+        "bridge": "Our platform can automatically match the new fulfillment financial data with your operational systems and surface any mismatches or exceptions for quick decision\u2011making.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your AI\u2011powered ocean\u2011freight pricing agent now predicts market prices in 10 minutes with only 1% error versus a two\u2011day manual process.",
+        "rationale": "Speeding up pricing directly impacts the bottom line, and as CEO you\u2019re focused on scaling that efficiency across the business.",
+        "bridge": "By linking the AI pricing outputs to your finance and ops records, our solution highlights pricing exceptions and ensures the numbers you see are reconciled across all systems.",
+        "strength": 0.9
+      },
+      {
+        "card_index": 2,
+        "hook_text": "In your 2025 interview you explained how tariffs force companies to constantly adapt their supply\u2011chain strategies.",
+        "rationale": "Navigating tariff volatility is a strategic priority for a CEO, requiring real\u2011time visibility into both financial exposure and operational adjustments.",
+        "bridge": "Our system continuously matches finance and ops data, surfacing tariff\u2011related exceptions so you can act before they affect cash flow or delivery performance.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your recent tweet showcased a Flexport\u2011liveried 747\u2011400 freighter crossing the U.S., highlighting asset visibility.",
+        "rationale": "Asset visibility ties directly to cost management and operational reliability\u2014key concerns for a CEO overseeing a global logistics network.",
+        "bridge": "We connect the financial records of asset utilization with operational tracking data, flagging any discrepancies that could impact profitability.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 1407,
+  "completion_tokens": 895
+}

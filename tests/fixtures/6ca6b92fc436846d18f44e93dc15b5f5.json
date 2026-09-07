@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.9,
+        "reason": "expanding into Japan, Australia, Singapore, Hong Kong, UK"
+      },
+      {
+        "index": 11,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO profile, no specific pain observable"
+      },
+      {
+        "index": 28,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CFO interview on tech stack, no matching observable"
+      },
+      {
+        "index": 27,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "operations across 45+ countries indicate scaling transaction volume"
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "team page logos, no relevant observable"
+      },
+      {
+        "index": 30,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "finance leadership discussion, lacks concrete pain indicator"
+      },
+      {
+        "index": 29,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "company description of payment platform, no pain observable"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile post, no observable matching pains"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "close_drag",
+        "score": 0.6,
+        "reason": "mentions ERP export for payment reconciliation and audit trail"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "silent_breaks",
+        "score": 0.8,
+        "reason": "launch of New Zealand spend-to-invest debit card adds new payment method"
+      }
+    ]
+  },
+  "prompt_tokens": 2001,
+  "completion_tokens": 2169
+}

@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 0,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tariff briefing podcast, no specific observable"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI pricing LinkedIn post, unrelated to pains"
+      },
+      {
+        "index": 2,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tariff drama podcast, no observable"
+      },
+      {
+        "index": 3,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "LinkedIn profile snippet, no relevant observable"
+      },
+      {
+        "index": 4,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO transition announcement, not finance leadership"
+      },
+      {
+        "index": 5,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Infrastructure description, no explicit observable"
+      },
+      {
+        "index": 6,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Diversity statement, unrelated to pains"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Launches fulfillment services in Canada and UK"
+      },
+      {
+        "index": 8,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue figures, not specific observable"
+      },
+      {
+        "index": 9,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Company overview, no observable"
+      }
+    ]
+  },
+  "prompt_tokens": 1933,
+  "completion_tokens": 1669
+}

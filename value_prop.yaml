@@ -5,7 +5,17 @@
 #
 # Decided 2026-08-23. Change it deliberately — every ranking decision downstream depends on it.
 
-product: "We help operations teams automate manual, reconciliation-heavy processes"
+# CHANGED 2026-09-07. The old string was "We help operations teams automate manual,
+# reconciliation-heavy processes". It named no mechanism, and its only verb was
+# "automate" -- which drafter.py paragraph 3 explicitly BANS as "the category, not
+# the operation". So the prompt demanded a mechanism from a source that had none and
+# forbade its only verb, and the model resolved the contradiction by importing a
+# mechanism from the prospect's own domain: a Flexport draft claimed we "run frontier
+# models to generate pricing predictions". The verifier cannot catch that -- pass 1
+# extracts numbers, URLs, quotes and proper nouns, and that sentence has none, while
+# the judge is scoped to invented claims about the PROSPECT, not about the sender.
+# Naming the operation is the fix: now there is something true to describe.
+product: "We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide"
 
 # Who this lands with. Guidance only — never a gate. Best-effort tie to the person's
 # actual role when known; if unknown or unrelated, hook company-level and say so.
@@ -129,25 +139,34 @@ never_reference:
     terms: [ousted, fired, stepped down amid, terminated for, forced out, removed as ceo]
   # Found on real data, not imagined: the ShipMonk snapshot carries three cards
   # about a breach exposing 13,689 of their customer Trezor's records, 11 days old
+  # NOTE 2026-09-07: the term is "breach expos", not "breach exposes". Terms are
+  # word-boundary PREFIX matched, and the live story about that same incident reads
+  # "ShipMonk Breach Exposed 67,000 Customers' Data" -- which the inflected form
+  # missed while the recorded snapshot caught. A rule written against recorded data
+  # meets a world that rephrases. Checked for over-fire against "breach of contract".
   # and therefore near the top on recency. Leading outreach with a prospect's
   # security incident is indefensible, and nothing above mentioned breaches.
   # Terms are prefix-matched, so "breach" covers breached/breaches. Kept narrow
   # where a bare word would over-fire: "security incident" not "incident",
   # "exposed customer" not "exposed".
   - id: data_breach
-    terms: [data breach, breach impacts, breach puts, breach exposes, security incident, ransomware, hacked, cyberattack, cyber attack, phishing risk, exposed customer, exposed personal, leaked records, credential stuffing]
+    terms: [data breach, breach impacts, breach puts, breach expos, security incident, ransomware, hacked, cyberattack, cyber attack, phishing risk, exposed customer, exposed personal, leaked records, credential stuffing]
 
 # DECIDED: omitted by default in strict mode. Permissive mode allows this benchmark.
 proof_point: ""
 
-# DECIDED 2026-08-23 by the human: sign as the company.
-# The drafter must sign exactly as configured and must not invent a human signer.
-sender_name: "Zamp"
+# CHANGED 2026-09-07, superseding the 2026-08-23 "sign as the company" ruling.
+# identity_line() guards against person == company, but "zamp" != "zamp
+# technologies" passed that guard, so every email opened "I'm Zamp from Zamp
+# Technologies." -- a company introducing itself twice, which announces
+# automation before the first full stop. A cold email is from a person.
+# The drafter must still sign exactly as configured and must not invent a signer.
+sender_name: "Khadyot"
 # Who the email says it is. Not a fabricated human -- the company speaking in the
 # first person, which is what the hand-written drafts do: "I'm Zamp from Zamp
 # Technologies." Empty is still honest and degrades to "I'm reaching out from
 # <company>"; it just is not the voice those drafts set.
-sender_person: "Zamp"
+sender_person: "Khadyot"
 # The entity the email introduces itself as, in "I'm <person> from <company>".
 # It was a literal in drafter.py until 2026-08-29, which meant every email
 # introduced itself as Zamp Technologies whatever the sidebar said -- and, worse,
@@ -155,7 +174,7 @@ sender_person: "Zamp"
 # against the string values in this file, so a name that lived in code and not
 # here read as an invented proper noun. Empty is allowed and degrades the
 # introduction to sender_name; it never breaks the draft.
-sender_company: "Zamp Technologies"
+sender_company: "Zamp"
 # Describes the ask, it is not the sentence. Written as a sentence, it WAS the
 # sentence: four consecutive drafts closed "Worth a 15-minute call next week?"
 # verbatim, which is the clearest mass-mail tell a batch of emails can carry.

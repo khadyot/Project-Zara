@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The email only references Flexport's AI pricing post and lane forecast timing, which are supported by the evidence. No unsupported metrics, customer names, or fabricated quotes about the prospect are present; the sender's value proposition is permissible."
+  },
+  "prompt_tokens": 3768,
+  "completion_tokens": 533
+}

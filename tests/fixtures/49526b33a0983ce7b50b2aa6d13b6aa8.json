@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Your recent podcast on modern issuer processing across Japan, Australia, Singapore, Hong Kong and the UK highlighted the challenges of legacy payments systems.",
+        "rationale": "As CFO overseeing global growth, you need clear visibility across finance and operations in those markets, and legacy systems can create data silos that hinder decision\u2011making.",
+        "bridge": "Our platform connects the finance and ops systems you already use, matches records across them, and surfaces exceptions so you can act quickly on cross\u2011border issues.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Your 14\u2011year M&A banking background at Morgan Stanley and leadership of financial strategy for 45+ countries demonstrate deep expertise in complex financial ecosystems.",
+        "rationale": "Managing strategy across so many jurisdictions means reconciling disparate data sources, a common pain point for CFOs handling global operations.",
+        "bridge": "We unify those finance and ops data streams, automatically matching records and flagging anomalies to keep your global strategy on track.",
+        "strength": 0.8
+      },
+      {
+        "card_index": 2,
+        "hook_text": "The launch of New\u202fZealand\u2019s first spend\u2011to\u2011invest debit card with Sharesies showcased Episode Six\u2019s innovative product rollout.",
+        "rationale": "Introducing a new card product requires tight coordination between issuing, ledger, and finance teams, where mismatched records can delay launches and affect compliance.",
+        "bridge": "Our solution continuously matches transaction data across issuing and ledger systems, surfacing exceptions before they impact product performance.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Your profile notes you serve as Co\u2011founder and CFO of Episode Six, steering both finance and operational growth.",
+        "rationale": "In that dual role, aligning financial reporting with operational metrics is critical, yet often hampered by fragmented systems.",
+        "bridge": "We provide a single view that links finance and ops data, automatically reconciling records and highlighting outliers for faster, more accurate decisions.",
+        "strength": 0.7
+      }
+    ]
+  },
+  "prompt_tokens": 1122,
+  "completion_tokens": 1115
+}

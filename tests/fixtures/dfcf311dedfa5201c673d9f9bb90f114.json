@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Flexport just opened fulfillment centers in Mississauga, Canada and Manchester, UK, extending your end\u2011to\u2011end network into two of the world\u2019s biggest consumer markets.",
+        "rationale": "As CEO, Ryan Petersen is focused on scaling operations while keeping cost and compliance tight; new international hubs add layers of finance and ops data that must stay synchronized to avoid costly exceptions.",
+        "bridge": "Our platform automatically matches financial records with operational events across those new sites, surfacing any mismatches so you can act before they impact cash flow or delivery performance.",
+        "strength": 0.92
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Flexport\u2019s latest press release spotlights the same Canada/UK fulfillment launch, reinforcing the strategic push into high\u2011growth markets.",
+        "rationale": "For a CEO championing growth, repeated messaging signals a need for consistent reporting across marketing, sales, and finance to prove ROI on the new facilities.",
+        "bridge": "By reconciling finance and ops data in real time, our solution gives you a single view of the fulfillment rollout\u2019s financial impact, highlighting exceptions that could erode margins.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Flexport introduced an AI\u2011powered ocean\u2011freight pricing engine that predicts lane rates in 10 minutes with 1% error versus a two\u2011day manual process.",
+        "rationale": "Ryan Petersen cares about leveraging AI to cut cycle times and improve pricing accuracy, but the model\u2019s outputs must align with accounting and billing systems to realize true cost savings.",
+        "bridge": "Our system links the AI pricing results directly to your finance ledger, automatically flagging any pricing\u2011to\u2011cost mismatches so you can approve rates without manual reconciliation.",
+        "strength": 0.95
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Flexport\u2019s blog post on the Canada/UK fulfillment launch is being shared across Twitter, LinkedIn, and Facebook, amplifying the announcement.",
+        "rationale": "From a CEO perspective, coordinated social promotion drives demand, which in turn creates more transactions that need to be tracked across finance and operations for accurate performance measurement.",
+        "bridge": "Our platform ingests those transaction spikes, matches them to the corresponding financial entries, and surfaces any exceptions\u2014ensuring the marketing lift translates into clean, auditable revenue.",
+        "strength": 0.71
+      }
+    ]
+  },
+  "prompt_tokens": 2335,
+  "completion_tokens": 815
+}

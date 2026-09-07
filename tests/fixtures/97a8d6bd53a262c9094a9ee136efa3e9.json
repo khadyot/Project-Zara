@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "AI pricing and data reconciliation",
+    "draft_text": "Hi Ryan,\n\nI'm Khadyot from Zamp. We connect the systems finance and ops already run on, match records across them, and surface the exceptions a person needs to decide.\n\nI read your post about AI-powered pricing for ocean freight, especially your point about lane-level rate forecasts in ten minutes with about 1% error. What I keep seeing next is the need to reconcile those forecasts with existing finance and ops data to spot exceptions.\n\nWe match finance and ops records, surface mismatches, and highlight exceptions for review, reducing repetitive manual checks.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2694,
+  "completion_tokens": 1022
+}

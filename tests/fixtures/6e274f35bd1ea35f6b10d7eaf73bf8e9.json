@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "AI pricing for ocean freight",
+    "draft_text": "Hi Ryan,\n\nI'm Zamp from Zamp Technologies. I'm reaching out because AI-powered ocean freight pricing may be an area we could help with.\n\nI read your post about AI-powered pricing for ocean freight, especially your point about the AI agent delivering lane forecasts in ten minutes. I imagine processing the myriad market signals and aligning them with internal rates can become increasingly time-consuming.\n\nWe ingest internal rates, communications, and external market data, then run frontier models to generate pricing predictions, reducing manual data aggregation.\n\nCurious if this is something you're thinking about right now? Happy to connect for a quick chat.\n\nBest,\nZamp"
+  },
+  "prompt_tokens": 2760,
+  "completion_tokens": 1024
+}

@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "Flexport recently introduced an AI\u2011powered ocean freight pricing engine that predicts market rates in 10 minutes with just 1% error.",
+        "rationale": "As CEO, Ryan Petersen is focused on leveraging technology to cut manual effort and improve pricing accuracy, directly impacting margins and scalability.",
+        "bridge": "Our automation platform can similarly replace multi\u2011day, reconciliation\u2011heavy pricing workflows with fast, data\u2011driven processes, delivering the same speed and precision at lower cost.",
+        "strength": 0.9
+      },
+      {
+        "card_index": 1,
+        "hook_text": "Flexport\u2019s latest funding round was reported 12 days ago, underscoring strong investor confidence.",
+        "rationale": "Funding drives growth initiatives that the CEO must execute efficiently, making operational cost control a top priority.",
+        "bridge": "By automating manual, reconciliation\u2011intensive tasks, our solution helps ensure that new capital translates into streamlined operations rather than hidden overhead.",
+        "strength": 0.7
+      },
+      {
+        "card_index": 2,
+        "hook_text": "Flexport just launched fulfillment services in Canada and the United Kingdom.",
+        "rationale": "Expanding into new markets adds complexity to logistics and finance teams, a challenge the CEO must manage to maintain service quality.",
+        "bridge": "Our technology can automate cross\u2011border transaction reconciliation, reducing manual effort and error as the fulfillment network scales.",
+        "strength": 0.75
+      },
+      {
+        "card_index": 3,
+        "hook_text": "Flexport was named a 2026 TIME100 Most Influential Company 130 days ago.",
+        "rationale": "This high\u2011profile recognition raises expectations for operational excellence, a responsibility that sits with the CEO.",
+        "bridge": "Our automation tools help uphold those standards by eliminating manual reconciliation bottlenecks, keeping back\u2011office processes as impressive as the brand.",
+        "strength": 0.65
+      }
+    ]
+  },
+  "prompt_tokens": 958,
+  "completion_tokens": 1028
+}

@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only contains generic value proposition language and inference about the prospect's challenges, which are supported by the evidence. It does not introduce any specific metrics, fabricated customer names, or unsupported factual claims."
+  },
+  "prompt_tokens": 3037,
+  "completion_tokens": 275
+}

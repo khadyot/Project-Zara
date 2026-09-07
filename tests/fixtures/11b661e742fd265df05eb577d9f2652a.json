@@ -1,0 +1,15 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "I saw Test Co. is hiring a Software Engineer.",
+        "rationale": "The hiring signal shows the company is expanding its engineering capacity, which often brings new data\u2011integration projects that can strain existing finance\u2011ops reconciliation processes.",
+        "bridge": "Our platform automatically matches records across finance and operations systems and surfaces exceptions, letting new engineers focus on building features instead of manual data reconciliation.",
+        "strength": 0.62
+      }
+    ]
+  },
+  "prompt_tokens": 644,
+  "completion_tokens": 402
+}

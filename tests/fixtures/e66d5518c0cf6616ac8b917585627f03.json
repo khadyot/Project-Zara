@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI pricing announcement, no pain observable"
+      },
+      {
+        "index": 15,
+        "matched_pain_id": "linear_headcount",
+        "score": 1.0,
+        "reason": "Canada/UK expansion indicates operational scaling"
+      },
+      {
+        "index": 13,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Blog share links, no explicit pain observable"
+      },
+      {
+        "index": 7,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Podcast about founder, no pain observable"
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tariff commentary, unrelated to defined pains"
+      },
+      {
+        "index": 30,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Executive profile, no pain observable"
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO appointment, not finance leadership"
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "linear_headcount",
+        "score": 1.0,
+        "reason": "Fulfillment launch in Canada/UK shows market expansion"
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue figures, no explicit scaling observable"
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Founder bio, no pain observable"
+      }
+    ]
+  },
+  "prompt_tokens": 2004,
+  "completion_tokens": 1665
+}

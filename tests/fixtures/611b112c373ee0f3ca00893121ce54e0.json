@@ -1,0 +1,68 @@
+{
+  "content": {
+    "scores": [
+      {
+        "index": 18,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "AI pricing launch, no ERP or finance observable."
+      },
+      {
+        "index": 10,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO interview on tariffs, unrelated to listed pains."
+      },
+      {
+        "index": 26,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Tariff commentary, no matching observable."
+      },
+      {
+        "index": 30,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO profile snapshot, no pain observable."
+      },
+      {
+        "index": 36,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO transition announcement, not finance leadership change."
+      },
+      {
+        "index": 35,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Service overview, no explicit finance or scaling observable."
+      },
+      {
+        "index": 37,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Governance processes mention, lacks specific observable."
+      },
+      {
+        "index": 0,
+        "matched_pain_id": "linear_headcount",
+        "score": 0.8,
+        "reason": "Launches fulfillment in Canada/UK, shows market expansion."
+      },
+      {
+        "index": 1,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "Revenue figures reported, no volume or scaling observable."
+      },
+      {
+        "index": 17,
+        "matched_pain_id": "general_news",
+        "score": 0.3,
+        "reason": "CEO profile description, no observable matching pains."
+      }
+    ]
+  },
+  "prompt_tokens": 1966,
+  "completion_tokens": 1595
+}

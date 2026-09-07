@@ -144,6 +144,39 @@ def identity_line(value_prop: dict) -> str:
     return f"I'm reaching out from {entity}."
 
 
+def evidence_stance(winning_card, pain_match) -> str:
+    """What posture the email may honestly take toward this evidence.
+
+    Three, because there are three genuinely different situations and the prompt
+    used to have one sentence for all of them:
+
+      evidenced_pain  a pain in value_prop actually matched. The email may say
+                      the work is getting heavier, because something outside our
+                      own writing says so.
+      achievement     they shipped, launched, raised or closed something, and no
+                      pain matched. Telling someone the problem they just solved
+                      is hard is the worst available move, and it was compulsory.
+      unevidenced     nothing matched and nothing was announced. No pain may be
+                      asserted at all; the honest move is to ask.
+
+    Deliberately lexical and deliberately not a model call. This decides only which
+    paragraph the writer is handed, it is cheap to read in the decision card, and a
+    wrong answer degrades tone rather than truth.
+    """
+    if pain_match is not None and pain_match.pain_id != "general_news":
+        return "evidenced_pain"
+    signal = (getattr(winning_card.card, "signal_type", "") or "").lower()
+    if signal in ("product", "funding"):
+        return "achievement"
+    claim = (winning_card.card.claim or "").lower()
+    announced = ("launch", "introducing", "introduces", "announc", "unveil", "releases",
+                 "rolls out", "goes live", "raises", "raised", "acquires", "acquired",
+                 "partners with", "expands into", "opens ")
+    if any(w in claim for w in announced):
+        return "achievement"
+    return "unevidenced"
+
+
 def function_word(title: str | None) -> str | None:
     """The function a title owns, for "your <function> team".
 
@@ -340,7 +373,17 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     pain_statement = ""
     pm = winning_card.pain_match
     if pm is None or pm.pain_id == "general_news":
-        pain_statement = "We don't know their specific pain yet, but we want to start a conversation about how we help companies in their space."
+        # CHANGED 2026-09-07. This used to read "We don't know their specific pain
+        # yet, but we want to start a conversation about how we help companies in
+        # their space." Paired with a compulsory pain sentence in the prompt, that
+        # is an instruction to improvise: the writer was told to start a
+        # conversation and given nothing true to start it from, so it manufactured
+        # a pain out of the prospect's own announcement. Say the actual state of
+        # knowledge instead, and forbid the invention explicitly.
+        pain_statement = ("No pain is evidenced. Nothing we retrieved says anything is "
+                          "slow, manual, broken or growing for them. Do NOT assert, imply "
+                          "or imagine one: write from what WE do and what they actually "
+                          "said or did, and leave the question open.")
         pain_reason = ""
     else:
         pain_reason = pm.reason
@@ -348,6 +391,8 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
             if p["id"] == pm.pain_id:
                 pain_statement = p["statement"]
                 break
+
+    _stance = evidence_stance(winning_card, pm)
 
     attribution_line = ""
     if winning_card.proximity == "colleague_authored":
@@ -393,6 +438,13 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
         prompt += f"  age: {age_phrase}\n"
         prompt += f"  whose words these are: {attribution_line}\n"
         prompt += f"WHY IT MATTERS: {hook.rationale}\n"
+        # The hook already reasons about how this evidence connects to what we sell,
+        # and until 2026-09-07 nothing downstream ever read it. On the Flexport run
+        # the bridge said "replace multi-day, reconciliation-heavy pricing workflows"
+        # -- correct, on-message, and discarded, while paragraph 3 improvised "run
+        # frontier models to generate pricing predictions" instead. Hand it over.
+        if getattr(hook, "bridge", None):
+            prompt += f"  how it connects to what we sell: {hook.bridge}\n"
     else:
         prompt += f"EVIDENCE (the only facts you may use): {clean_snippet(winning_card.card.snippet)}\n"
         prompt += f"  age: {age_phrase}\n"
@@ -472,21 +524,19 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
 
     prompt += ("PARAGRAPH 1 -- WHO YOU ARE. Two sentences. The first is fixed, word for word:\n"
                f"  \"{identity}\"\n")
-    if _is_authored:
-        # The example used to be "the complexity that comes with expanding payment
-        # operations", which is Episode Six's world and nobody else's. Every
-        # example in this prompt is now a shape with the content marked out, so it
-        # teaches the sentence without handing over a vocabulary.
-        prompt += ("Then ONE sentence naming the area you think you could help with, hedged and\n"
-                   "general, in this shape: \"I'm reaching out because <the area of work their\n"
-                   "evidence points at> may be an area we could help with.\" It names the\n"
-                   "territory, not a diagnosis of them, and it does not yet mention the\n"
-                   "evidence. That is paragraph 2's job. Fill the angle brackets from THIS\n"
-                   "prospect and WHAT WE DO, never with the words of the example, and end the\n"
-                   "sentence with a full stop.\n\n")
-    else:
-        prompt += ("Then ONE sentence saying plainly what we do, drawn from WHAT WE DO above. No\n"
-                   "hedge needed here: it is a fact about us, not a claim about them.\n\n")
+    # CHANGED 2026-09-07. The authored branch used to require a second shape here:
+    # "I'm reaching out because <area> may be an area we could help with." It said
+    # nothing paragraph 2 was not about to say better, so every authored email spent
+    # a sentence announcing its own subject before reaching it. Read end to end,
+    # that is the sentence that made the draft feel generated: it is pure throat
+    # clearing, and it is the only line in the email that carries no information at
+    # all. Both branches now do the same, simpler thing, which WHAT WE DO can
+    # finally support because it names an operation rather than a category.
+    prompt += ("Then ONE sentence saying plainly what we do, drawn from WHAT WE DO above. No\n"
+               "hedge needed here: it is a fact about us, not a claim about them. Do not\n"
+               "announce that you are reaching out, and do not name the topic you are about\n"
+               "to raise: paragraph 2 raises it, and saying it twice reads as a form letter\n"
+               "that lost its place.\n\n")
 
     prompt += "PARAGRAPH 2 -- WHAT YOU SAW, AND WHAT YOU MAKE OF IT. Two sentences, in one\nparagraph.\n"
     if _is_authored:
@@ -515,13 +565,42 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
                    "  transaction volumes\" states as fact something the evidence does not\n"
                    "  report, and the verifier blocks the whole draft for it. Consequences are\n"
                    "  the next sentence's job, where they are hedged and marked as yours.\n")
-    prompt += ("  Second: what you imagine that means for the work, hedged, in this shape:\n"
-               "  \"I imagine <gerund naming the actual work> can become increasingly\n"
-               "  time-consuming.\" Name the real artifacts, the way the person doing the job\n"
-               "  would: \"keeping <the actual records> aligned across <the actual systems>\",\n"
-               "  \"keeping up with <the actual work the evidence implies>\". \"keeping things\n"
-               "  aligned\" names nothing and is the version every prospect gets.\n"
-               "  The subject is the WORK, never their people:\n"
+    # CHANGED 2026-09-07. This sentence used to be a single mandatory shape:
+    # "I imagine <gerund> can become increasingly time-consuming." It was compulsory
+    # whatever the evidence said, so when nothing matched a pain the writer had a
+    # pain-shaped hole and the only material to fill it with was the prospect's own
+    # post. Ryan Petersen, who had just announced his team cut ocean-freight pricing
+    # to ten minutes, was told that processing market signals "can become
+    # increasingly time-consuming". The signal was true and the inference was wrong,
+    # which is this project's own named edge case, hard-coded into the prompt.
+    #
+    # The posture is now chosen from what the evidence actually supports.
+    if _stance == "evidenced_pain":
+        prompt += ("  Second: what you imagine that means for the work, hedged, in this shape:\n"
+                   "  \"I imagine <gerund naming the actual work> can become increasingly\n"
+                   "  time-consuming.\" Name the real artifacts, the way the person doing the job\n"
+                   "  would: \"keeping <the actual records> aligned across <the actual systems>\",\n"
+                   "  \"keeping up with <the actual work the evidence implies>\". \"keeping things\n"
+                   "  aligned\" names nothing and is the version every prospect gets.\n")
+    elif _stance == "achievement":
+        prompt += ("  Second: they are describing something they BUILT or SHIPPED or CLOSED. Do\n"
+                   "  NOT tell them that the thing they just solved is hard or time-consuming:\n"
+                   "  they solved it, they know, and saying so is the single most patronising\n"
+                   "  move available. Take their point seriously and go one step PAST it, to the\n"
+                   "  work that starts once that thing is working, and only where WHAT WE DO\n"
+                   "  actually reaches. Hedge it, and make it a thought rather than a diagnosis:\n"
+                   "  \"the part that usually gets harder after that is <the adjacent work>\" or\n"
+                   "  \"what I keep seeing next is <the adjacent work>\". If you cannot name an\n"
+                   "  adjacent problem WE solve, do not invent one: ask what they are seeing.\n")
+    else:
+        prompt += ("  Second: nothing in the evidence names a problem, so do NOT assert one. You\n"
+                   "  may not claim, imply, or imagine that anything is hard, slow, manual or\n"
+                   "  growing: no pain has been evidenced and inventing one is the failure this\n"
+                   "  whole system exists to avoid. Say what made you write, in one hedged line\n"
+                   "  tied to WHAT WE DO, and put the uncertainty in the open: a question about\n"
+                   "  how they handle it is better than a guess about whether it hurts.\n")
+
+    prompt += ("  The subject is the WORK, never their people:\n"
                "  \"your reconciliation load is growing\" and \"finance teams allocate extra staff\"\n"
                "  are claims about the inside of a company you cannot see, and are blocked.\n"
                "  Never invent a quantity or an outcome: no percentages, no hours saved, no\n"
@@ -538,6 +617,13 @@ async def draft_email(ranked_prospect: RankedProspect, value_prop: dict, strictn
     prompt += ("PARAGRAPH 3 -- WHAT WE DO ABOUT IT. ONE sentence, at most 25 words. The\n"
                "subject is \"we\", and the sentence describes the MECHANISM named in WHAT WE DO\n"
                "above: what is actually done, to what.\n"
+               # The bridge, when the hook produced one, is the connection already
+               # reasoned about upstream. Following it is what stops this paragraph
+               # reaching into the prospect's domain for a mechanism we do not have.
+               "If a line above said how this connects to what we sell, follow it rather than\n"
+               "inventing a different connection. Everything you say we do must come from WHAT\n"
+               "WE DO: never describe a capability drawn from the PROSPECT'S own work, however\n"
+               "well it fits the story. That is how an email ends up claiming we do their job.\n"
                # Every draft in the first recording of this shape read "...that
                # automate ...". "Automate" is the category, not the operation, and
                # it is the word every one of these emails reaches for first.

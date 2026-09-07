@@ -1,0 +1,36 @@
+{
+  "content": {
+    "hooks": [
+      {
+        "card_index": 0,
+        "hook_text": "ShipBob\u2019s new Simulation Terminal lets merchants run full\u2011cycle fulfillment, receiving, and inventory adjustments in sandbox without touching real stock.",
+        "rationale": "The role of Test is unknown, but anyone responsible for integration testing would value a sandbox that eliminates risk to live inventory.",
+        "bridge": "Our platform can automatically match the simulated operations data with finance records and surface any mismatches before the system goes live.",
+        "strength": 0.85
+      },
+      {
+        "card_index": 1,
+        "hook_text": "In the Spring\u202f2026 release, ShipBob announced delivery\u2011date guarantees, trusted tracking, and AI that can ship orders in days.",
+        "rationale": "The role of Test is unknown; these new promises affect both the financial side (cost of guarantees) and operational side (delivery execution).",
+        "bridge": "By reconciling promised delivery dates with actual financial outcomes, our solution surfaces exceptions when costs exceed expectations.",
+        "strength": 0.78
+      },
+      {
+        "card_index": 2,
+        "hook_text": "ShipBob just launched the first Anthropic\u2011verified fulfillment connector, extending its AI suite.",
+        "rationale": "The role of Test is unknown, but AI\u2011driven fulfillment creates new data flows between operations and finance that need alignment.",
+        "bridge": "Our system can ingest the connector\u2019s data, match it to accounting entries, and highlight any discrepancies across the two domains.",
+        "strength": 0.82
+      },
+      {
+        "card_index": 3,
+        "hook_text": "ShipBob reported a 2024 estimated ARR of $97.7\u202fM and a $1\u202fB valuation.",
+        "rationale": "The role of Test is unknown; the scale of the business suggests complex finance\u2011ops integration challenges.",
+        "bridge": "Our platform helps enterprises of this size keep finance and operations data synchronized, surfacing exceptions that could impact reported ARR.",
+        "strength": 0.75
+      }
+    ]
+  },
+  "prompt_tokens": 982,
+  "completion_tokens": 1225
+}

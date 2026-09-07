@@ -1,0 +1,8 @@
+{
+  "content": {
+    "subject": "Modern issuer processing and data alignment",
+    "draft_text": "Hi Chermaine,\n\nI'm Khadyot from Zamp. We connect finance and ops systems, match records across them, and surface exceptions for decision making.\n\nI read your post about modern issuer processing, especially your point that legacy payments weren\u2019t built for the world fintech operates in today. I imagine keeping records aligned across multiple markets can become increasingly time-consuming.\n\nWe pull data from your existing finance and ops platforms, reconcile it, and highlight mismatches, reducing repetitive manual checks.\n\nCurious if this is something your finance team is thinking about right now? Happy to connect for a quick chat.\n\nBest,\nKhadyot"
+  },
+  "prompt_tokens": 2836,
+  "completion_tokens": 840
+}

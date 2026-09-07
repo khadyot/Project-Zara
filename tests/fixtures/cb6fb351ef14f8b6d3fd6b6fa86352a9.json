@@ -1,0 +1,8 @@
+{
+  "content": {
+    "passed": true,
+    "reason": "The draft email only uses names and statements present in the evidence (Test, Khadyot, Zamp, ShipBob's Anthropic-verified connector) and makes general inferences about data flow and reconciliation, which are allowed. No invented metrics, customer names, or specific unsupported claims are present."
+  },
+  "prompt_tokens": 954,
+  "completion_tokens": 387
+}
