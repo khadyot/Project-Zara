@@ -576,8 +576,8 @@ def _compute_relevance(pain_score: float, proximity: str, recency_days: int | No
     proximate it is, which is the whole point.
 
     `proximity_weights` in value_prop.yaml stays the single source of truth; it is
-    normalised here at runtime rather than duplicated, because the Settings UI can
-    rewrite those weights and a hardcoded divisor would silently go stale.
+    normalised here at runtime rather than duplicated: a hardcoded divisor goes
+    silently stale the moment someone edits the weights in the file.
     """
     max_prox = max(prox_val.values()) if prox_val else 1.0
     if max_prox == 0:

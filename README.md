@@ -119,7 +119,9 @@ has caught real non-determinism that a single green run hid.
 
 `value_prop.yaml` is the brain: the pains signals are scored against, each with the observables
 that would evidence it; the ICP rubric; the proximity weights; and the `never_reference`
-guardrails. The Settings UI edits it visually behind a developer-mode password.
+guardrails. It is edited as a file. There is no settings UI: the visual editor that used to
+sit behind a developer-mode password was removed on 2026-09-08 because it disagreed with the
+file it was editing (details in the sidebar comment in `app.py`).
 
 **Who the email is from** is configuration, not code:
 
@@ -137,8 +139,8 @@ the verifier grounds proper nouns against the string values of `value_prop.yaml`
 sender name that lives in code is a name no evidence contains, and the draft gets
 blocked for saying who sent it.
 
-The Settings UI sits behind developer mode, which opens only against
-`ZARA_ADMIN_PASSWORD`. There is no default: unset means it never opens.
+These are changed by editing `value_prop.yaml`. `ZARA_ADMIN_PASSWORD` and
+`zara/ui/auth.py` are still present but currently gate nothing.
 
 ICP is **informational and never rejects a prospect**. If someone typed this name in, assume
 they had a reason; a headcount mismatch is a note on the card, not a veto.

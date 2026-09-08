@@ -190,8 +190,8 @@ async def test_parallel_search_degrades_without_a_key(monkeypatch):
 def test_retrieval_vocabulary_comes_from_config_not_code():
     """Editing a pain's vocabulary in value_prop must change what we search for.
 
-    The Exa fetchers hardcode their queries, so the Settings UI could rewrite the
-    pains and retrieval would go on asking for the same thing.
+    The Exa fetchers hardcoded their queries, so the pains could be rewritten in
+    value_prop.yaml and retrieval would go on asking for the same thing.
     """
     from zara.fetchers.queries import build_query_plan
     from zara.models import Prospect

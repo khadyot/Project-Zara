@@ -4,7 +4,7 @@ The old fetchers hardcoded their queries as f-strings -- `f"{company} news OR
 launch OR funding"` -- which put two things in the wrong place. The `OR` is
 keyword-search idiom handed to a neural engine, where it is embedded as literal
 text rather than parsed as an operator. And the pain vocabulary lived in Python,
-so editing a pain in the Settings UI silently did not change what we searched for.
+so editing a pain in value_prop.yaml silently did not change what we searched for.
 
 Retrieval vocabulary is policy. It belongs in value_prop.yaml next to the pains it
 serves, for the same reason `never_reference` does: it has to be arguable without

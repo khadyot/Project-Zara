@@ -3,7 +3,6 @@ import asyncio
 import html
 import time
 import json
-import yaml
 import os
 import glob
 import hmac
@@ -50,7 +49,6 @@ from zara.models import Prospect
 from zara import antitemplate
 from zara.orchestrator import run_end_to_end_pipeline
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
-from zara.ui.auth import developer_mode_unlocked
 from zara.ui.text import clean_claim, short_reason, link_label
 
 
@@ -690,13 +688,26 @@ def main():
         proof_point = st.text_area(
             "Proof Point (Optional)", value=_vp_defaults.get("proof_point", ""), height=80)
         
-        # Strictness, the per-source checkboxes and the developer-mode password box
-        # were all removed from the sidebar. Each was a switch from an earlier stage
-        # of the build that no longer has a decision behind it: strictness is strict,
-        # every free source should always run, and a password box for a panel that
-        # cannot open (ZARA_ADMIN_PASSWORD is unset) is furniture that asks the
-        # operator a question with no right answer. The settings still exist and the
-        # code paths are unchanged -- they are just not choices this screen offers.
+        # Strictness and the per-source checkboxes were removed from the sidebar:
+        # each was a switch from an earlier stage of the build with no decision
+        # left behind it. Strictness is strict, every free source should always
+        # run. The settings still exist and the code paths are unchanged -- they
+        # are just not choices this screen offers.
+        #
+        # The Admin Password box went with them on 2026-09-08, along with the
+        # Visual Settings Engine it unlocked. That panel was removed rather than
+        # repaired because it was wrong in three ways at once, and a config editor
+        # that quietly disagrees with the config is worse than no editor. Its
+        # Weights tab wrote four proximity keys over a file that has five, so one
+        # save deleted `colleague_authored` and the ranker then scored every
+        # colleague card at `prox_val.get(prox, 0)` -- zero -- with nothing on
+        # screen to say so. Three of its four ICP controls read keys that do not
+        # exist in value_prop.yaml (`icp.sectors`, `icp.vetoes`, `buyer_titles`)
+        # and wrote keys nothing reads. And saving rewrote the whole file through
+        # yaml.dump, which strips every comment in it -- the comments being where
+        # the reasoning for each constant actually lives. Editing the yaml is the
+        # supported path. zara/ui/auth.py stays: the gate itself was never the
+        # defect, and reinstating a fixed panel should not mean rewriting it.
         strictness = "Brand Safety (Strict)"
         use_exa = True
         use_apify = True
@@ -708,11 +719,6 @@ def main():
             help="Open the live retrieval and model-call log while a run is in flight. "
                  "Off by default so the decision card is what you see when it finishes.",
         )
-
-        # Only offer the developer gate when there is something it can unlock.
-        admin_pass = ""
-        if (os.environ.get("ZARA_ADMIN_PASSWORD") or "").strip():
-            admin_pass = st.text_input("Admin Password", type="password")
 
         # Depth is a choice, not a constant. `profile` has always been a parameter
         # of the pipeline -- lean leaves rungs 2-4 empty, standard adds the Apify
@@ -820,107 +826,6 @@ def main():
     # --page-max rather than running edge to edge.
     _, col_main, _ = st.columns([1, 12, 1])
     with col_main:
-        if developer_mode_unlocked(admin_pass):
-            st.markdown("<div class='eyebrow'>Advanced Configuration</div>", unsafe_allow_html=True)
-            st.markdown("## Visual Settings Engine")
-            st.info("You are editing the engine configuration visually. Changes take effect on the next run.")
-            try:
-                with open("value_prop.yaml", "r") as f:
-                    vp = yaml.safe_load(f)
-                
-                tab1, tab2, tab3, tab4 = st.tabs(["ICP & Targeting", "Weights", "Pains Engine", "Guardrails"])
-                
-                # Mutable state for saving
-                new_vp = vp.copy()
-                
-                with tab1:
-                    st.subheader("Headcount Criteria")
-                    colA, colB = st.columns(2)
-                    with colA:
-                        hc_min = st.number_input("Min Headcount", value=vp.get('icp', {}).get('headcount', {}).get('preferred_min', 50))
-                    with colB:
-                        hc_max = st.number_input("Max Headcount", value=vp.get('icp', {}).get('headcount', {}).get('preferred_max', 500))
-                    new_vp['icp'] = new_vp.get('icp', {})
-                    new_vp['icp']['headcount'] = {"preferred_min": hc_min, "preferred_max": hc_max}
-                    
-                    st.subheader("Target Sectors")
-                    sectors_str = "\n".join(vp.get('icp', {}).get('sectors', []))
-                    new_sectors = st.text_area("Sectors (one per line)", value=sectors_str, height=100)
-                    new_vp['icp']['sectors'] = [s.strip() for s in new_sectors.split("\n") if s.strip()]
-                    
-                    st.subheader("Buyer Titles")
-                    titles_str = "\n".join(vp.get('buyer_titles', []))
-                    new_titles = st.text_area("Titles (one per line)", value=titles_str, height=100)
-                    new_vp['buyer_titles'] = [t.strip() for t in new_titles.split("\n") if t.strip()]
-
-                with tab2:
-                    st.subheader("Signal Proximity Weights")
-                    st.markdown("Controls tie-breaking logic in the Ranker.")
-                    pw = vp.get("proximity_weights", {"authored": 4, "attributed": 3, "company_action": 2, "database": 1})
-                    authored_w = st.slider("Authored (LinkedIn Posts)", 1, 10, pw.get("authored", 4))
-                    attributed_w = st.slider("Attributed (News Quotes)", 1, 10, pw.get("attributed", 3))
-                    company_action_w = st.slider("Company Action (Press Releases)", 1, 10, pw.get("company_action", 2))
-                    database_w = st.slider("Database (Job Postings, Firmographics)", 1, 10, pw.get("database", 1))
-                    new_vp['proximity_weights'] = {
-                        "authored": authored_w,
-                        "attributed": attributed_w,
-                        "company_action": company_action_w,
-                        "database": database_w
-                    }
-                    
-                with tab3:
-                    st.subheader("Pain Points")
-                    pains = vp.get("pains", [])
-                    new_pains = []
-                    for i, p in enumerate(pains):
-                        with st.expander(f"Pain: {p.get('id', f'Pain {i}')}"):
-                            pid = st.text_input("ID", value=p.get('id', ''), key=f"pid_{i}")
-                            stmt = st.text_input("Statement", value=p.get('statement', ''), key=f"stmt_{i}")
-                            obs_str = "\n".join(p.get('observable_via', []))
-                            obs = st.text_area("Observable Via (one per line)", value=obs_str, height=100, key=f"obs_{i}")
-                            new_pains.append({
-                                "id": pid,
-                                "statement": stmt,
-                                "observable_via": [o.strip() for o in obs.split("\n") if o.strip()]
-                            })
-                    new_vp['pains'] = new_pains
-                    
-                with tab4:
-                    st.subheader("Firmographic Vetoes")
-                    vetoes_str = "\n".join(vp.get('icp', {}).get('vetoes', []))
-                    new_vetoes = st.text_area("Vetoes (one per line)", value=vetoes_str, height=100)
-                    new_vp['icp']['vetoes'] = [v.strip() for v in new_vetoes.split("\n") if v.strip()]
-                    
-                    st.subheader("Never Reference Topics")
-                    st.markdown("Signals containing these topics will be immediately blocked.")
-                    nr = vp.get("never_reference", [])
-                    new_nr = []
-                    for i, n in enumerate(nr):
-                        with st.expander(f"Topic: {n.get('id', f'Topic {i}')}"):
-                            nid = st.text_input("Topic ID", value=n.get('id', ''), key=f"nid_{i}")
-                            terms_str = ", ".join(n.get('terms', []))
-                            terms = st.text_input("Trigger Terms (comma separated)", value=terms_str, key=f"nterms_{i}")
-                            new_nr.append({
-                                "id": nid,
-                                "terms": [t.strip() for t in terms.split(",") if t.strip()]
-                            })
-                    new_vp['never_reference'] = new_nr
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("Deploy Engine Updates", type="primary", use_container_width=True):
-                    with open("value_prop.yaml", "w") as f:
-                        yaml.dump(new_vp, f, sort_keys=False)
-                    # load_value_prop is lru_cached, so the engine keeps serving the
-                    # pre-save config until the process restarts. Without this the next
-                    # run silently uses the old settings (D19).
-                    from zara.utils.config import load_value_prop
-                    load_value_prop.cache_clear()
-                    st.success("Configuration successfully deployed!")
-            except Exception as e:
-                st.error(f"Failed to load config: {e}")
-            st.markdown("---")
-        
-        
         with st.form("prospect_form"):
             col1, col2 = st.columns(2)
             with col1:

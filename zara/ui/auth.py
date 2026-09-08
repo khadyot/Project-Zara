@@ -4,6 +4,12 @@ This lived in app.py as `admin_pass == "123"` -- a literal, in a public
 repository, gating the panel that rewrites value_prop.yaml (the engine's brain)
 on a publicly reachable URL.
 
+Currently unused. The Visual Settings Engine this gated was removed from app.py
+on 2026-09-08 (three defects, listed in the sidebar comment there), so nothing
+calls this right now. It is kept, and kept tested, because the gate was not what
+was broken -- reinstating a fixed panel should be a matter of calling this again,
+not of rewriting the password check a second time.
+
 It lives here rather than in app.py so it can be tested: importing app.py
 executes Streamlit at module level, which is why tests/test_ui_imports.py
 compiles that file instead of importing it. A gate nothing can test is a gate

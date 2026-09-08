@@ -13,7 +13,7 @@ Status: **working local prototype.** Retrieval → rank → draft → verify all
 ## Stack (decided, built)
 
 - **Python 3.13 + asyncio**, venv at `./venv` (use `./venv/bin/python`)
-- **Streamlit UI** (`app.py`, port 8501) with Visual Settings Engine (Developer Mode password gate, tabs: ICP & Targeting / Weights / Pains Engine / Guardrails) serializing into `value_prop.yaml`
+- **Streamlit UI** (`app.py`, port 8501). Read-only over config: `value_prop.yaml` is edited as a file, not through the app. The Visual Settings Engine (Developer Mode gate, four tabs, serialized back into `value_prop.yaml`) was removed on 2026-09-08 -- it dropped `colleague_authored` from `proximity_weights` on every save, three of its four ICP controls bound to keys that do not exist, and `yaml.dump` stripped the file's comments. `zara/ui/auth.py` kept, unused.
 - **Providers:** Groq `openai/gpt-oss-120b` (primary) → Gemini `gemini-2.5-flash` → Z.ai GLM (fallback chain in `zara/utils/provider.py`). Groq keys pool round-robin (`GROQ_API_KEY`, `_2..10`).
 - **Search:** `PARALLEL_API_KEY` (rung 1 primary), `EXA_API_KEY`, `TAVILY_API_KEY`; `BRAVE_SEARCH_API_KEY` present but not wired into the ladder
 - **Orchestration target:** n8n Cloud (planned, Slice 3); CLI `python -m zara.probe`; FastAPI `POST /pipeline/run`
