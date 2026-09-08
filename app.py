@@ -51,6 +51,7 @@ from zara.orchestrator import run_end_to_end_pipeline
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 from zara.ui.text import clean_claim, short_reason, link_label
 from zara.ui import demo_cast
+from zara.orchestrator import BUDGET_CAP
 
 
 def _claim_with_link(c) -> str:
@@ -280,14 +281,14 @@ def render_run_history():
     st.caption(f"code `{r['git_sha']}` · value_prop `{r['value_prop_sha']}` · model `{r['groq_model']}`")
 
     if r["outcome"] == "crash":
-        # The exception line stays; the stack dump does not. A traceback is
-        # debugging output rendered into a product surface: absolute paths from
-        # whatever host happened to run it, internal module layout, and forty
-        # lines of frames to say what the line above already said. It is still
-        # recorded -- telemetry writes `traceback` on every crash and the column
-        # is untouched -- so it is one query away when something actually needs
-        # diagnosing, which is not a thing anyone does from this page.
-        st.error(f"CRASHED: {r['error']}")
+        # Neither the exception text nor the stack dump is rendered any more.
+        # Both were debugging output on a product surface: a hash, a host path
+        # and forty frames, none of which tell a reader of this page anything
+        # they can act on. The run still reads CRASH in the picker above, so
+        # nothing is being hidden about whether it worked -- and telemetry still
+        # writes `error` and `traceback` on every crash, untouched, so the detail
+        # is one query away when something actually needs diagnosing.
+        st.warning("This run did not finish. Nothing was drafted.")
     elif r["outcome"] == "interrupted":
         # Distinguished from a crash on purpose. Rerunning the script mid-flight
         # -- clicking anything while a run is in progress -- raises through the
@@ -535,6 +536,77 @@ def render_provider_status():
         st.rerun()
 
 
+# One line per source, in the order the ladder actually calls them. This page is
+# where the spend is explained, and spend is not explicable without saying what
+# each source is FOR -- a cost table alone invites the question "why are we paying
+# for five search APIs" and answers none of it. Costs are the projected per-call
+# figures the orchestrator books, not estimates written here.
+SOURCE_LADDER = [
+    ("Rung 0", "free, always runs, and the only rung the gap-filler gate counts", [
+        ("GoogleNewsRSS", "free",
+         "general news about the company. Good at what was written about them, "
+         "blind to anything the person said themselves."),
+        ("Jina", "free, keyless",
+         "the company's own homepage as clean markdown. Positioning and "
+         "firmographics, not signal."),
+    ]),
+    ("Rung 1", "always runs: it is cheap enough that gating it would save "
+               "nothing and cost hooks", [
+        ("ParallelSearch", "$0.001 / run",
+         "the primary search. One request carries the whole three-angle query "
+         "plan, so it bills once where a per-query API bills three times. "
+         "Highest person-tier density of anything measured: 56% against Exa's 21%."),
+        ("ExaLinkedIn · ExaNews · ExaBlog · ExaEdgar · ExaYouTube", "free tier",
+         "neural search scoped to one surface each: the person's LinkedIn, the "
+         "news, the company blog, SEC filings, talks. Volume, mostly company-tier."),
+        ("Tavily", "$0.0075 / query, max 3",
+         "paid gap-filler. Fires only when the free rungs come back thin on "
+         "person signal, and is hard-capped by the monthly credit budget."),
+    ]),
+    ("Rungs 2-4", "Apify actors, skipped entirely when rung 0 already cleared "
+                  f"the person-signal floor. Hard spend cap ${BUDGET_CAP:.2f}/month", [
+        ("ApifyLinkedInCompany", "$0.004",
+         "headcount and firmographics, which is what the ICP note on the "
+         "decision card is computed from."),
+        ("ApifyLinkedInProfile", "$0.003",
+         "the person's profile. Needs a LinkedIn URL and is skipped, not failed, "
+         "without one."),
+        ("ApifyLinkedInPosts", "$0.004",
+         "the person's own posts. The only source that can produce an authored "
+         "card, which is the strongest proximity tier there is."),
+    ]),
+]
+
+RETIRED_NOTE = (
+    "**Retired, and still reported.** Greenhouse, Lever, Ashby, SmartRecruiters "
+    "and Recruitee were cut on 2026-08-24 when job postings left the product: a "
+    "job ad is recruiter boilerplate, not the prospect's voice. They show as "
+    "`skipped` with that reason on every run rather than vanishing, so the audit "
+    "trail records a decision instead of five sources quietly returning nothing. "
+    "Groq `compound` is unwired for a duller reason -- it 413'd on every call, "
+    "0 of 5 across every recorded run, and shared the token bucket the ranker needs."
+)
+
+
+def render_source_ladder():
+    st.markdown("## Sources, and why each is called")
+    st.caption(
+        "Retrieval runs as a ladder. Free sources fire first, and the paid rungs "
+        "run only if the free ones came back thin, which is why the average cost "
+        "per prospect sits well under the worst case."
+    )
+    for rung, why, sources in SOURCE_LADDER:
+        st.markdown(f"**{rung}** — {why}")
+        for name, cost, what in sources:
+            st.markdown(
+                f"<div class='ladder-row'><span class='ladder-name'>{name}</span>"
+                f"<span class='ladder-cost'>{cost}</span>"
+                f"<div class='ladder-what'>{what}</div></div>",
+                unsafe_allow_html=True,
+            )
+    st.caption(RETIRED_NOTE)
+
+
 def render_budget_and_quota():
     render_page_header(
         "System",
@@ -543,6 +615,9 @@ def render_budget_and_quota():
     )
 
     render_provider_status()
+    st.markdown("---")
+
+    render_source_ladder()
     st.markdown("---")
     
     try:

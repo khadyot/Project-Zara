@@ -528,11 +528,44 @@ div[data-testid="stText"] > pre{
   padding:var(--s-4);
   background-color:var(--pure-white);
   box-shadow:0 24px 48px rgba(245,67,32,.15);
-  margin:var(--s-3) 0 var(--s-4);
+  /* Auto side margins, not 0. 62ch is the right measure for reading an email
+     and the wrong thing to pin to the left edge of a 1200px page: on History,
+     where nothing wraps the content in a narrower column, the box sat in the
+     left two thirds under a full-width metric row and read as a layout bug
+     rather than a deliberate measure. Centred, the measure looks chosen. */
+  margin:var(--s-3) auto var(--s-4);
   font-size:var(--t-body);
   line-height:1.7;
   color:var(--midnight-ink);
   max-width:62ch;
+}
+
+/* Budget page: the source ladder. Name and cost on one line, the reason
+   underneath in the quiet colour, so the page can be skimmed for what things
+   cost and read for why they are called. */
+.ladder-row{
+  border-top:1px solid var(--fog);
+  padding:10px 0 12px;
+}
+.ladder-name{
+  font-weight:600;
+  font-size:var(--t-body);
+  color:var(--midnight-ink);
+}
+.ladder-cost{
+  float:right;
+  font-size:var(--t-label);
+  letter-spacing:var(--track-ui);
+  color:var(--ember-coral);
+  white-space:nowrap;
+}
+.ladder-what{
+  clear:both;
+  font-size:var(--t-meta);
+  line-height:var(--lh-meta);
+  color:var(--stone);
+  margin-top:2px;
+  max-width:78ch;
 }
 
 .score-badge{
