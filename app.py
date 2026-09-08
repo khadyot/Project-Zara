@@ -280,9 +280,14 @@ def render_run_history():
     st.caption(f"code `{r['git_sha']}` · value_prop `{r['value_prop_sha']}` · model `{r['groq_model']}`")
 
     if r["outcome"] == "crash":
+        # The exception line stays; the stack dump does not. A traceback is
+        # debugging output rendered into a product surface: absolute paths from
+        # whatever host happened to run it, internal module layout, and forty
+        # lines of frames to say what the line above already said. It is still
+        # recorded -- telemetry writes `traceback` on every crash and the column
+        # is untouched -- so it is one query away when something actually needs
+        # diagnosing, which is not a thing anyone does from this page.
         st.error(f"CRASHED: {r['error']}")
-        with st.expander("Traceback"):
-            st.code(r["traceback"] or "", language="python", wrap_lines=True)
     elif r["outcome"] == "interrupted":
         # Distinguished from a crash on purpose. Rerunning the script mid-flight
         # -- clicking anything while a run is in progress -- raises through the
