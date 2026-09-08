@@ -50,6 +50,7 @@ from zara import antitemplate
 from zara.orchestrator import run_end_to_end_pipeline
 from zara.ui.styles import (CUSTOM_CSS, render_brand, render_page_header, zrow)
 from zara.ui.text import clean_claim, short_reason, link_label
+from zara.ui import demo_cast
 
 
 def _claim_with_link(c) -> str:
@@ -752,6 +753,39 @@ def main():
                 )
             else:
                 st.warning("No snapshots found, demo mode will still hit the network.")
+
+            # Picking a snapshot fills the prospect form with the identity that
+            # snapshot was recorded against. Not a convenience: name, company and
+            # title all reach the prompts, the prompts are hashed, and the hash is
+            # the fixture key, so a snapshot run against a mistyped title does not
+            # degrade -- it raises FileNotFoundError. Retyping three fields from a
+            # cheat sheet was the only thing standing between the demo and that,
+            # and "Chief Financial Officer" versus "CFO" is exactly the kind of
+            # difference a person makes under pressure and cannot see afterwards.
+            #
+            # Written into session_state rather than passed as `value=`, because
+            # the widgets live in a form further down the same script run: setting
+            # the state here is what makes the fields already correct when they are
+            # drawn, instead of correct one rerun late. Only on a CHANGE of
+            # snapshot, so anything typed over the top survives.
+            ident = demo_cast.for_snapshot(replay_snapshot)
+            if st.session_state.get("_demo_snapshot_filled") != replay_snapshot:
+                st.session_state["p_name"] = ident.person_name if ident else ""
+                st.session_state["p_company"] = ident.company if ident else ""
+                # Empty is a recorded value in its own right: Riley Chen with a
+                # title is a crash row in the run store, without one is an ok row.
+                st.session_state["p_title"] = (ident.title or "") if ident else ""
+                st.session_state["p_domain"] = ""
+                st.session_state["p_linkedin"] = ""
+                st.session_state["_demo_snapshot_filled"] = replay_snapshot
+            # Two snapshots were never recorded against a person on the app path.
+            # Clearing rather than leaving the last prospect in place is the whole
+            # point: fields carried over from the previous selection would run one
+            # person's name against another company's retrieval, which is a
+            # plausible-looking screen and a wrong one.
+            if not ident:
+                st.caption("No recorded prospect for this snapshot. Typing one will "
+                           "miss the fixtures and go live.")
             os.environ["USE_FIXTURES"] = "1"
             # Replaying recorded prompts means replaying the clock they were
             # recorded against: card age is written into the prompt, and the
@@ -761,21 +795,15 @@ def main():
         else:
             os.environ.pop("USE_FIXTURES", None)
             os.environ.pop("ZARA_NOW", None)
+            # so that re-entering demo mode on the same snapshot fills again
+            st.session_state.pop("_demo_snapshot_filled", None)
 
-        st.markdown("---")
-        from zara.utils import budget
-        try:
-            tv = budget.get_credit_usage("tavily")
-            st.markdown(
-                f"<span class='zquiet'>tavily </span>"
-                f"<span class='zaccent'>{tv['used']}</span>"
-                f"<span class='zquiet'>/{tv['limit']} credits &middot; apify </span>"
-                f"<span class='zaccent'>${budget.get_mtd_spend():.3f}</span>"
-                f"<span class='zquiet'> MTD</span>",
-                unsafe_allow_html=True,
-            )
-        except Exception:
-            pass
+        # The sidebar used to end with a tavily-credits and apify-MTD strip. Two
+        # numbers out of the eight sources the ladder can call, on the screen
+        # where you research a prospect rather than the one where you look at
+        # spend, and picked because those two happen to expose a balance. A
+        # partial meter reads as the whole picture, which is the failure the
+        # budget page exists to avoid. View -> Budget has all of it.
 
     settings = {
         "identity": {
@@ -828,14 +856,15 @@ def main():
     with col_main:
         with st.form("prospect_form"):
             col1, col2 = st.columns(2)
+            # Keyed so demo mode can prefill them from the sidebar above.
             with col1:
-                name = st.text_input("Prospect Name", placeholder="e.g. Dimitri Dadiomov")
+                name = st.text_input("Prospect Name", key="p_name", placeholder="e.g. Dimitri Dadiomov")
             with col2:
-                company = st.text_input("Company", placeholder="e.g. Modern Treasury")
+                company = st.text_input("Company", key="p_company", placeholder="e.g. Modern Treasury")
                 
-            title = st.text_input("Title / Role (Optional)", placeholder="e.g. VP Finance")
-            domain = st.text_input("Domain (Optional)", placeholder="e.g. moderntreasury.com")
-            linkedin = st.text_input("LinkedIn URL (Optional)", placeholder="https://linkedin.com/in/...")
+            title = st.text_input("Title / Role (Optional)", key="p_title", placeholder="e.g. VP Finance")
+            domain = st.text_input("Domain (Optional)", key="p_domain", placeholder="e.g. moderntreasury.com")
+            linkedin = st.text_input("LinkedIn URL (Optional)", key="p_linkedin", placeholder="https://linkedin.com/in/...")
             
             submitted = st.form_submit_button("Run Zara Pipeline", type="primary")
             
@@ -938,12 +967,16 @@ def main():
 
         # --- Regeneration controls ---
         st.markdown("## Regenerate")
-        col_style, col_regen, col_deep = st.columns([2, 1, 1])
-        with col_style:
-            style = st.selectbox("Draft style", [
-                "auto", "observation-led", "question-led", "peer-to-peer",
-                "insight-led", "congratulation-led", "story-led",
-            ])
+        # The Draft style selector is gone. It appended one line to the prompt
+        # ("Email opening style: question-led") on top of the house style rules
+        # the drafter already enforces and the verifier already polices, so the
+        # visible effect ranged from nothing to a draft that had to be rewritten
+        # for format. It also changed the prompt, and therefore its hash, which is
+        # what demo mode keys fixtures on -- so the one control that could not
+        # work offline sat next to the two buttons that could. `style` stays a
+        # parameter of process_prospect and draft_email, defaulted to "auto";
+        # nothing sets it to anything else now.
+        col_regen, col_deep = st.columns([1, 1])
         with col_regen:
             regen = st.button("Regenerate", type="primary", use_container_width=True)
         with col_deep:
@@ -982,13 +1015,13 @@ def main():
 
         if regen:
             with st.status("Redrafting...", expanded=_show_detail()):
-                _, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style))
+                _, draft_res, new_run_id = asyncio.run(redraft(hook=None))
                 st.session_state["zara_cache"]["draft_res"] = draft_res
                 st.session_state["zara_cache"]["run_id"] = new_run_id
 
         if deep:
             with st.status("Running Tavily deep search...", expanded=_show_detail()) as dstat:
-                results, draft_res, new_run_id = asyncio.run(redraft(hook=None, style_name=style, trigger="ui_boost", fetch_tavily=True))
+                results, draft_res, new_run_id = asyncio.run(redraft(hook=None, trigger="ui_boost", fetch_tavily=True))
                 st.session_state["zara_cache"]["results"] = results
                 st.session_state["zara_cache"]["draft_res"] = draft_res
                 st.session_state["zara_cache"]["run_id"] = new_run_id
@@ -1085,7 +1118,7 @@ def main():
                     st.markdown(f"**Bridge to offer:** {h.bridge}")
                     if st.button(f"Draft with this hook", key=f"hook_{i}", use_container_width=True):
                         with st.status("Redrafting with selected hook...", expanded=_show_detail()):
-                            _, draft_res, new_run_id = asyncio.run(redraft(hook=h, style_name=style))
+                            _, draft_res, new_run_id = asyncio.run(redraft(hook=h))
                             st.session_state["zara_cache"]["draft_res"] = draft_res
                             st.session_state["zara_cache"]["run_id"] = new_run_id
                         st.rerun()

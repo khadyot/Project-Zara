@@ -23,6 +23,7 @@ os.environ["ZARA_NOW"] = FIXTURE_CLOCK
 from zara import antitemplate  # noqa: E402
 from zara.models import Prospect  # noqa: E402
 from zara.orchestrator import run_end_to_end_pipeline  # noqa: E402
+from zara.ui import demo_cast  # noqa: E402
 
 IDENTITY = {
     "sender_name": "Zamp",
@@ -30,29 +31,29 @@ IDENTITY = {
     "proof_point": None,
 }
 
+# The identities live in zara/ui/demo_cast.py, because the app prefills the same
+# table into the prospect form and a second copy here is a second copy that can
+# disagree. Order is preserved from that module and is load-bearing: the
+# repetition check compares each draft against the ones already drafted in the
+# batch, so a different order is a different prompt is a different hash.
+#
+# Dropped from the set, snapshots and fixtures kept on disk:
+#   Jon Anderson / Payouts Network -- 2026-08-28. His winning card is the
+#     announcement of his own appointment, so the email tells a CFO that hiring a
+#     CFO creates reconciliation work. The card is also undated and the drafter
+#     kept calling it recent, which the verifier correctly blocked on the app
+#     path. The fix is a guardrail against pitching someone their own hire; that
+#     is a product change, not a demo change.
+#   AJ Khanijow / Fulfyld -- 2026-08-28. Cleaning the snippets changed the hook
+#     prompt, a different card won, and its evidence went from 71 days old to
+#     665. The draft is clean and the age label is honest, but a personalisation
+#     demo whose hook is 22 months old argues against itself.
+#   Midwest 3PL -- its name reduces to "midwest", a common word, so entity
+#     resolution kept pulling regional roundups instead of the firm.
+# scripts/try_draft.py can still run any of them.
 PAIRS = [
-    ("Devin Weil", "ShipMonk", "Chief Financial Officer", "shipmonk"),
-    ("Chermaine Hu", "Episode Six", "Co-Founder & Chief Financial Officer", "episodesix"),
-    # Jon Anderson dropped 2026-08-28. His winning card is the announcement of his
-    # own appointment, so the email tells a CFO that hiring a CFO creates
-    # reconciliation work. The card is also undated, and the drafter kept calling
-    # it recent, which the verifier correctly blocked on the app path. The right
-    # fix is a guardrail against pitching someone their own hire; that is a
-    # product change, not a demo change, and it is not being rushed before a
-    # recording. Snapshot and fixtures stay on disk.
-    # ("Jon Anderson", "Payouts Network", "Chief Financial Officer", "payoutsnetwork"),
-    # Midwest 3PL was dropped: its name reduces to "midwest", a common word, so
-    # entity resolution kept pulling regional roundups instead of the firm.
-    # Fulfyld is coined, obscure, and a single facility in Madison, Alabama.
-    # Fulfyld dropped from the demo set 2026-08-28. Cleaning the snippets changed
-    # the hook prompt, so a different card won and its winning evidence went from
-    # 71 days old to 665. The draft is clean and the age label is honest, but a
-    # personalisation demo whose hook is 22 months old argues against itself.
-    # Snapshot and fixtures stay on disk; scripts/try_draft.py can still run it.
-    # ("AJ Khanijow", "Fulfyld", "Founder & Chief Executive Officer", "fulfyld"),
-    # The no-signal path, kept from the original set. Its fallback prompt now
-    # inherits _STYLE_RULES, which it never used to.
-    ("Riley Chen", "Northwind Freight", None, "no_signal"),
+    (d.person_name, d.company, d.title, d.slug)
+    for d in demo_cast.CAST if d.in_demo_set
 ]
 
 

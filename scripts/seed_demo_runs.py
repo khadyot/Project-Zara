@@ -19,6 +19,11 @@ import asyncio
 import os
 import sys
 
+# Deliberately NOT zara/ui/demo_cast.py's table. That one is the app path, where
+# the identity has to match a recorded prompt hash. This one only needs to fill
+# the Run History dashboard on a fresh deploy, so it uses invented people against
+# public companies -- note Riley Chen carries a title here and none there, which
+# is two different recordings of the same snapshot and is correct.
 DEMOS = [
     ("Alex Rivera",  "ShipBob",         "VP Finance",        "tests/fixtures/shipbob_snapshot.json"),
     ("Sam Okafor",   "Versapay",        "Controller",        "tests/fixtures/versapay_snapshot.json"),
